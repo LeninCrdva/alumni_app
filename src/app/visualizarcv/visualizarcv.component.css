@@ -1,0 +1,65 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+
+}
+
+h2 {
+    text-align: center;
+    color: #008080;
+}
+.containerpd {
+    margin: 0 auto;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 500px; /* Ancho fijo */
+    height: 200px; /* Altura fija */
+    max-width: 100%;
+  }
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
+
+label {
+    font-weight: bold;
+    color: #008080;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #008080;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.myButton {
+    background-color: #008080; /* Color de fondo */
+    border: none; /* Remueve el borde */
+    color: white; /* Color del texto */
+    padding: 15px 32px; /* Espacio alrededor del texto */
+    text-align: center; /* Centra el texto */
+    font-weight: bold;
+    display: inline-flexbox;
+    font-size: 16px; /* Tamaño del texto */
+    margin: 4px 2px;
+    display: flex;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    border-radius: 4px; /* Bordes redondeados */
+  }

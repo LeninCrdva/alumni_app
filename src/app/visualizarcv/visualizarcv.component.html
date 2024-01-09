@@ -1,0 +1,55 @@
+<h2>Información de Currículum</h2>
+
+<div class="containerpd">
+    <div class="info">
+        <label for="fname">Nombre:</label>
+        <p id="fname">John Doe</p>
+    </div>
+    
+    <div class="info">
+        <label for="email">Correo electrónico:</label>
+        <p id="email">johndoeexample.com</p>
+    </div>
+    
+    <div class="info">
+        <label for="phone">Teléfono:</label>
+        <p id="phone">123-456-7890</p>
+    </div>
+</div>
+
+<h3>Educación</h3>
+<table>
+    <tr>
+        <th>Título</th>
+        <th>Institución</th>
+        <th>Fecha</th>
+    </tr>
+    <tr *ngFor="let item of data.education">
+        <td>{{ item.title }}</td>
+        <td>{{ item.institution }}</td>
+        <td>{{ item.date }}</td>
+    </tr>
+</table>
+
+<h3>Preferencias de Trabajo</h3>
+<table>
+    <tr>
+        <th>Preferencia</th>
+    </tr>
+    <tr *ngFor="let item of data.jobPreferences">
+        <td>{{ item.title }}</td>
+    </tr>
+</table>
+
+<h3>Referencias</h3>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+    </tr>
+    <tr *ngFor="let item of data.references">
+        <td>{{ item.name }}</td>
+        <td>{{ item.phone }}</td>
+    </tr>
+</table>
+<button class="myButton">Activar Perfil</button>
