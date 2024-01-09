@@ -49,3 +49,17 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+.myButton {
+    background-color: #008080; /* Color de fondo */
+    border: none; /* Remueve el borde */
+    color: white; /* Color del texto */
+    padding: 15px 32px; /* Espacio alrededor del texto */
+    text-align: center; /* Centra el texto */
+    font-weight: bold;
+    display: inline-flexbox;
+    font-size: 16px; /* Tamaño del texto */
+    margin: 4px 2px;
+    display: flex;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    border-radius: 4px; /* Bordes redondeados */
+  }
