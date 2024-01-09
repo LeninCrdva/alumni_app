@@ -7,6 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { FormpreguntaasComponent } from './formpreguntaas/formpreguntaas.component';
 import { PerfiluserComponent } from './perfiluser/perfiluser.component';
+import { RegisterComponent } from './register/register.component';
+import { ProvinciaComponent } from './provincia/provincia.component';
+import { CiudadesComponent } from './ciudades/ciudades.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { PerfiluserComponent } from './perfiluser/perfiluser.component';
     LoginComponent,
     HomeComponent,
     FormpreguntaasComponent,
-    PerfiluserComponent
+    PerfiluserComponent,
+    RegisterComponent,
+    ProvinciaComponent,
+    CiudadesComponent,
   ],
   imports: [
     BrowserModule,
