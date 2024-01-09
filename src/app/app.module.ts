@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { FormpreguntaasComponent } from './formpreguntaas/formpreguntaas.component';
 import { PerfiluserComponent } from './perfiluser/perfiluser.component';
 import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
+import { SlidebarComponent } from './modules/slidebar/slidebar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PostulacionesComponent } from './pages/postulaciones/postulaciones.comp
     HomeComponent,
     FormpreguntaasComponent,
     PerfiluserComponent,
-    PostulacionesComponent
+    PostulacionesComponent,
+    SlidebarComponent
   ],
   imports: [
     BrowserModule,
