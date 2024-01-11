@@ -16,6 +16,7 @@ const routes: Routes = [
   {path: 'perfil-usuario',component: PerfiluserComponent},
   {path:'postulaciones',component:PostulacionesComponent},
   {path: 'curriculum',component:VisualizarcvComponent},
+ // { path: 'register-provincias', component: RegistroProvinciasComponent}
 ];
 
 @NgModule({
