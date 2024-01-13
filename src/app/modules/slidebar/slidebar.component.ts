@@ -7,7 +7,7 @@ var submenu_opacity_animation: boolean = true;
 @Component({
   selector: 'app-slidebar',
   templateUrl: './slidebar.component.html',
-  styleUrls: ['./slidebar.component.css', './more.css']
+  styleUrls: ['./slidebar.component.css', '../../../assets/css/app.min.css', '../../../assets/css/style.css']
 })
 export class SlidebarComponent implements OnInit {
 
