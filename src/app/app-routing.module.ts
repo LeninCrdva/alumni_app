@@ -8,6 +8,7 @@ import { PerfiluserComponent } from './perfiluser/perfiluser.component';
 import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
 import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
 import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
+import { ParametrospreguntasComponent } from './parametrospreguntas/parametrospreguntas.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,6 +19,8 @@ const routes: Routes = [
   {path:'postulaciones',component:PostulacionesComponent},
   {path: 'curriculum',component:VisualizarcvComponent},
   {path: 'candidato-details',component:DetallescandidatoComponent},
+  {path:'parametros-preguntas', component:ParametrospreguntasComponent}
+  
  // { path: 'register-provincias', component: RegistroProvinciasComponent}
 ];
 

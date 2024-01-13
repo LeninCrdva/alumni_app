@@ -11,6 +11,7 @@ import { PostulacionesComponent } from './pages/postulaciones/postulaciones.comp
 import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
 import { SlidebarComponent } from './modules/slidebar/slidebar.component';
 import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
+import { ParametrospreguntasComponent } from './parametrospreguntas/parametrospreguntas.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DetallescandidatoComponent } from './detallescandidato/detallescandidat
     VisualizarcvComponent,
    // RegistroProvinciasComponent
    SlidebarComponent,
-   DetallescandidatoComponent
+   DetallescandidatoComponent,
+   ParametrospreguntasComponent
   ],
   imports: [
     BrowserModule,
