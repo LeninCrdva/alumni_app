@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { PerfiluserComponent } from './perfiluser/perfiluser.component';
 import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
 import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
+import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'perfil-usuario',component: PerfiluserComponent},
   {path:'postulaciones',component:PostulacionesComponent},
   {path: 'curriculum',component:VisualizarcvComponent},
+  {path: 'candidato-details',component:DetallescandidatoComponent},
  // { path: 'register-provincias', component: RegistroProvinciasComponent}
 ];
 
