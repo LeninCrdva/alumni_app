@@ -1,0 +1,25 @@
+#progress {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    height: 65px;
+    width: 65px;
+    display: none;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0 0 18px rgba(255, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 3;
+}
+
+#progress-value {
+    display: block;
+    height: calc(100% - 15px);
+    width: calc(100% - 15px);
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    color: #b30000;
+}
