@@ -9,8 +9,8 @@ import { FormpreguntaasComponent } from './formpreguntaas/formpreguntaas.compone
 import { PerfiluserComponent } from './perfiluser/perfiluser.component';
 import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
 import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
-import { ProvinciaServiceService } from './provincia-service.service'
 import { SlidebarComponent } from './modules/slidebar/slidebar.component';
+import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
 
 
 @NgModule({
@@ -23,13 +23,14 @@ import { SlidebarComponent } from './modules/slidebar/slidebar.component';
     PostulacionesComponent,
     VisualizarcvComponent,
    // RegistroProvinciasComponent
-   SlidebarComponent
+   SlidebarComponent,
+   DetallescandidatoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [ProvinciaServiceService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
