@@ -7,7 +7,7 @@
     display: none;
     place-items: center;
     border-radius: 50%;
-    box-shadow: 0 0 18px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 18px rgba(0, 21, 255, 0.2);
     cursor: pointer;
     z-index: 3;
 }
@@ -21,5 +21,5 @@
     display: grid;
     place-items: center;
     font-size: 30px;
-    color: #b30000;
+    color: #0018b3;
 }

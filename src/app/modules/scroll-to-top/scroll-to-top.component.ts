@@ -59,7 +59,7 @@ export class ScrollToTopComponent implements OnInit {
     this.renderer.setStyle(
       this.scrollProgress,
       'background',
-      `conic-gradient(#ff0000 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`
+      `conic-gradient(#193e94 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`
     );
   }
 }

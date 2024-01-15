@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SlidebarComponent } from './modules/slidebar/slidebar.component';
-import { InitComponent } from './pages/init/init.component';
 import { ScrollToTopComponent } from './modules/scroll-to-top/scroll-to-top.component';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { ScrollToTopComponent } from './modules/scroll-to-top/scroll-to-top.comp
   declarations: [
     AppComponent,
     SlidebarComponent,
-    InitComponent,
     ScrollToTopComponent,
   ],
   providers: [],
