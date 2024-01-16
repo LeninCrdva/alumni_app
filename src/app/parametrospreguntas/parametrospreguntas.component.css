@@ -1,0 +1,7 @@
+.modal-backdrop {
+    z-index: 1040 !important; /* Asegúrate de que este valor sea menor que el del modal */
+}
+
+.modal {
+    z-index: 1050 !important; /* Asegúrate de que este valor sea mayor que el del modal-backdrop */
+}
