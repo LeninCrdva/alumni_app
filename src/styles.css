@@ -4,8 +4,9 @@
 /*=============== VARIABLES CSS ===============*/
 :root {
     /*========== Colores ==========*/
-    --alumni-color: hwb(227 0% 6%);
+    --alumni-color: hsl(222, 59%, 57%);
     --alumni-dark: hsl(224, 82%, 47%);
+    --white-color: hsl(0, 0%, 100%);
 
     /*========== Font y tipografia ==========*/
     --body-font: 'Poppins', sans-serif;
