@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SlidebarComponent } from './modules/slidebar/slidebar.component';
 import { ScrollToTopComponent } from './modules/scroll-to-top/scroll-to-top.component';
+import { LoginComponent } from './modules/login/login.component';
+import { RegisterComponent } from './modules/register/register.component';
 
 @NgModule({
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
@@ -14,6 +16,8 @@ import { ScrollToTopComponent } from './modules/scroll-to-top/scroll-to-top.comp
     AppComponent,
     SlidebarComponent,
     ScrollToTopComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
