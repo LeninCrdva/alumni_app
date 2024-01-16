@@ -28,3 +28,8 @@ body {
     background-size: cover;
     background-position: center;
 }
+
+.scroll-register {
+    height: 44rem;
+    overflow-y: auto;
+}
