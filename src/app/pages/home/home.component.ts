@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, Renderer2, ElementRef } from '@angular/core';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-home',
@@ -6,9 +7,13 @@ import { Component, OnInit, HostListener, Renderer2, ElementRef } from '@angular
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  
   constructor(private renderer: Renderer2, private el: ElementRef) { }
-
+  
+  options: AnimationOptions = {
+    path: '../../assets/anims/Anim_1.json',
+  };
+  
   ngOnInit(): void {
     this.toggleMenu('.navbar', '#menu-icon');
   }
