@@ -13,7 +13,7 @@
                     <div class="mb-4">
                         <label for="InputNombreU" class="form-label font-weight-bold">Nombre de Usuario</label>
                         <input type="email" class="form-control bg-dark-x border-0" id="InputEmail1"
-                            placeholder="Ingresa tu Nombre de Usuario" aria-describedby="emailHelp">
+                            placeholder="Ingresa tu nombre de usuario" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-4">
                         <label for="InputPassword1" class="form-label font-weight-bold">Contraseña</label>
@@ -27,7 +27,7 @@
             </div>
             <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
                 <p class="d-inline-block mb-0">¿Todavia no tienes una cuenta?</p> <a href=""
-                    class="text-light font-weight-bold text-decoration-none"> Crea una ahora</a>
+                    class="text-light font-weight-bold text-decoration-none" [routerLink]="['/account/register']" routerLinkActive="router-link-active"> Crea una ahora</a>
             </div>
         </div>
     </div>

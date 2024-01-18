@@ -7,17 +7,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SlidebarComponent } from './components/slidebar/slidebar.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
-import { LoginComponent } from './pages/authentication/login/login.component';
-import { RegisterComponent } from './pages/authentication/register/register.component';
+import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
+import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 
 @NgModule({
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   declarations: [
     AppComponent,
+    LayoutBaseComponent,
+    LayoutSystemComponent,
     SlidebarComponent,
-    ScrollToTopComponent,
-    LoginComponent,
-    RegisterComponent,
+    ScrollToTopComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
