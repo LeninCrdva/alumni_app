@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './modules/authentication/login/login.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
+import { PostulacionesComponent } from './pages/alumni/postulaciones/postulaciones.component';
+import { PerfilUsuarioComponent } from './pages/alumni/perfil-usuario/perfil-usuario.component';
 
 const routes: Routes = [
   // { path: '**', redirectTo: '' },
@@ -10,6 +12,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'alumni/postulaciones', component: PostulacionesComponent },
+  { path: 'alumni/perfil', component: PerfilUsuarioComponent },
 ];
 
 

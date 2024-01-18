@@ -56,7 +56,7 @@ header {
     align-items: center;
     justify-content: space-between;
     background: transparent;
-    padding: 28px 0;
+    padding: 28px 90px;
     transition: all .50s ease;
 }
 
@@ -111,17 +111,12 @@ header.abajo {
     width: 50px;
 }
 
-.nav__burger,
-.nav__close {
+.nav__burger {
     cursor: pointer;
     font-size: 30px;
     color: var(--white-color);
     z-index: 999;
     transition: opacity .1s, transform .4s;
-}
-
-.nav__close {
-    opacity: 0;
 }
 
 /* Dispositivos grandes */
@@ -141,30 +136,19 @@ header.abajo {
         padding: 5px 0;
         margin: 0px 20px;
     }
-
-    /* Mostrar el icono de la hambuerguesa */
+    
     .show-icon .nav__burger {
-        opacity: 0;
-        transform: rotate(90deg);
-    }
-
-    .show-icon .nav__close {
-        opacity: 1;
         transform: rotate(90deg);
     }
 }
 
 @media (max-width: 1090px) {
-    #menu-icon {
-        display: block;
-    }
-
     .navbar {
         position: absolute;
         top: 100%;
         right: -100%;
         width: 270px;
-        height: 35vh;
+        height: 20rem;
         background: var(--alumni-color);
         display: flex;
         flex-direction: column;
