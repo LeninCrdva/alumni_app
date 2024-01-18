@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './modules/authentication/login/login.component';
-import { RegisterComponent } from './modules/authentication/register/register.component';
+import { LoginComponent } from './pages/authentication/login/login.component';
+import { RegisterComponent } from './pages/authentication/register/register.component';
 import { PostulacionesComponent } from './pages/alumni/postulaciones/postulaciones.component';
 import { PerfilUsuarioComponent } from './pages/alumni/perfil-usuario/perfil-usuario.component';
 
