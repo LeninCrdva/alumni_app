@@ -9,6 +9,7 @@ import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
 import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
 import { ParametrospreguntasComponent } from './parametrospreguntas/parametrospreguntas.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
+import { StateListComponent } from './state-list/state-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'person-details',component:DetallescandidatoComponent},
   {path:'parametros-preguntas', component:ParametrospreguntasComponent},
   {path: 'company-details' , component: CompanyDetailsComponent},
+  {path:'estados', component: StateListComponent},    
  // { path: 'register-provincias', component: RegistroProvinciasComponent}
 ];
 
