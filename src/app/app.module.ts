@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { FormpreguntaasComponent } from './formpreguntaas/formpreguntaas.component';
-import { PerfiluserComponent } from './perfiluser/perfiluser.component';
 import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
 import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
 import { SlidebarComponent } from './modules/slidebar/slidebar.component';
 import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
 import { InitComponent } from './pages/init/init.component';
+import { CompanyDetailsComponent } from './company-details/company-details.component';
+import { StateListComponent } from './state-list/state-list.component';
 
 
 @NgModule({
@@ -20,13 +21,13 @@ import { InitComponent } from './pages/init/init.component';
     LoginComponent,
     HomeComponent,
     FormpreguntaasComponent,
-    PerfiluserComponent,
     PostulacionesComponent,
     VisualizarcvComponent,
-   // RegistroProvinciasComponent
    SlidebarComponent,
    DetallescandidatoComponent,
-   InitComponent
+   InitComponent,
+   CompanyDetailsComponent,
+   StateListComponent
   ],
   imports: [
     BrowserModule,

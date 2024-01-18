@@ -1,65 +1,72 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
 }
-
-h2 {
-    text-align: center;
-    color: #008080;
-}
-.containerpd {
-    margin: 0 auto;
-    padding: 20px;
+body{
+    background: lightblue;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 500px; /* Ancho fijo */
-    height: 200px; /* Altura fija */
-    max-width: 100%;
-  }
-.info {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0px;
+    min-height: 100vh;
 }
-
-label {
-    font-weight: bold;
-    color: #008080;
-}
-
-table {
+.container{
+    position: relative;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    max-width: 1000px;
+    min-height: 1000px;
+    margin: 50px;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    box-shadow: 0 35px 55px rgba(0, 0, 0, 0.1);
 }
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+.container .left_side{
+    position: relative;
+    background-color: #003147;
+    padding: 40px;
 }
-
-th {
-    background-color: #008080;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-.myButton {
-    background-color: #008080; /* Color de fondo */
-    border: none; /* Remueve el borde */
-    color: white; /* Color del texto */
-    padding: 15px 32px; /* Espacio alrededor del texto */
-    text-align: center; /* Centra el texto */
-    font-weight: bold;
-    display: inline-flexbox;
-    font-size: 16px; /* Tamaño del texto */
-    margin: 4px 2px;
+.profileText{
+    position: relative;
     display: flex;
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    border-radius: 4px; /* Bordes redondeados */
-  }
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.profileText .imgBx{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profileText .imgBx img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profileText h2{
+    color: #fff;
+    font-size: 1.5em;
+    margin: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+.profileText h2 span{
+    font-size: 0.8em;
+    font-weight: 300;
+    
+}
+
+.container .right_side{
+    position: relative;
+    background-color: #fff;
+    padding: 40px;
+}
