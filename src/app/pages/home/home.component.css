@@ -107,8 +107,7 @@ header.abajo {
 }
 
 .nav__toggle {
-    position: relative;
-    width: 50px;
+    display: flex;
 }
 
 .nav__burger {

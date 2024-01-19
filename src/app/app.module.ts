@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SlidebarComponent } from './components/slidebar/slidebar.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
@@ -16,7 +15,6 @@ import { LayoutSystemComponent } from './layout/layout-system/layout-system.comp
     AppComponent,
     LayoutBaseComponent,
     LayoutSystemComponent,
-    SlidebarComponent,
     ScrollToTopComponent
   ],
   providers: [],

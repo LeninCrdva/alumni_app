@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { AlumniRoutingModule } from './alumni-routing.module';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
-        PerfilUsuarioComponent
+        PerfilUsuarioComponent,
+        UsuarioFormComponent,
+        PerfilUsuarioComponent,
+        DashboardComponent
     ],
     imports: [
         CommonModule,
         AlumniRoutingModule,
-        UsuarioFormComponent,
-        PerfilUsuarioComponent,
     ]
 })
 
-export class HomeModule { }
+export class AlumniModule { }

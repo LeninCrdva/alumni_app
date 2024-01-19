@@ -10,4 +10,4 @@ import { CommonModule } from '@angular/common';
     ]
 })
 
-export class HomeModule { }
+export class AdminModule { }
