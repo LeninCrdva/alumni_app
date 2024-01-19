@@ -19,10 +19,10 @@ const routes: Routes = [
     path: 'System', component: LayoutSystemComponent,
     children: [
       { path: 'alumni', loadChildren: () => import('./pages/alumni/alumni.module').then((m) => m.AlumniModule) },
-      { path: 'administrador', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) }
+      { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) }
     ], // Steve: Revisar esto: canActivate: [AuthGuard]
   },
-  { path: 'System', redirectTo: 'System', pathMatch: 'full' },
+  // { path: 'System', redirectTo: 'System', pathMatch: 'full' },
 
   // Ruta inicial
   { path: '**', redirectTo: 'Inicio', pathMatch: 'full' },
