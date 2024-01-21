@@ -1,5 +1,5 @@
-export class Provincia {
+export interface Provincia {
     id?: number;
-    'nombre': string;
-    'paisId': number;
+    nombre: string;
+    paisId: number;
 }

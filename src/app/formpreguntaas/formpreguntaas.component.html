@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+      
+      <!-- Muestra solo las preguntas de la página actual -->
+      <div class="container">
+      <div *ngFor="let question of getQuestionsForCurrentPage(); let i = index">
+        <label>{{ question.label }}</label>
+        <input [type]="question.type" [name]="question.label" [required]="question.required" ngModel>
+      </div>
+    </div>
+    <div *ngFor="let page of getPages()" class="numeric_pages">
+        <button (click)="setCurrentPage(page)">{{ page }}</button>
+      </div>
+      <button type="submit" class="btnsubmit">Submit</button> 
+</body>
+</html>
