@@ -60,14 +60,13 @@ export class LoginComponent {
     }
   private redirectBasedOnAuthorities(authorities: string[]): void {
     // Redirigir según el rol del usuario
-    if (authorities.includes('ROL_ADMINISTRADOR')) {
-      this.router.navigate(['system/admin']);
-    } else if (authorities.includes('ROL_EMPRESARIO')) {
+    if (authorities.includes('ADMIN')) {
+      this.router.navigate(['account/register']);
+    } else if (authorities.includes('ROLE_USER')) {
       this.router.navigate(['/user']);
     } else {
-      if (authorities.includes('ROL_GRADUADO')) {
-        this.router.navigate(['/user']);
-      }
+      // Página predeterminada si el rol no está especificado
+     // this.router.navigate(['/']);
     }
   }
 }
