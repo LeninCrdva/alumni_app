@@ -11,42 +11,64 @@
                 <h1 class="font-weight-bold mb-4">Crear Cuenta</h1>
                 <form class="mb-5">
                     <div class="mb-4">
-                        <label for="InputNombres" class="form-label font-weight-bold">Nombres</label>
-                        <input type="text" class="form-control bg-dark-x border-0" id="InputNombres"
-                            placeholder="Ingresa tu Nombre">
+                        <label for="InputNombreM" class="form-label font-weight-bold">Primer Nombre</label>
+                        <input type="text" class="form-control bg-dark-x border-0" id="InputNombreM"
+                            placeholder="Ingresa tu primer Nombre">
                     </div>
                     <div class="mb-4">
-                        <label for="InputApellidos" class="form-label font-weight-bold">Apellidos</label>
-                        <input type="text" class="form-control bg-dark-x border-0" id="InputApellidos"
-                            placeholder="Ingresa tu Apellidos">
+                        <label for="InputNombreP" class="form-label font-weight-bold">Segundo Nombre</label>
+                        <input type="text" class="form-control bg-dark-x border-0" id="InputNombreP"
+                            placeholder="Ingresa tu segundo Nombre">
                     </div>
                     <div class="mb-4">
-                        <label for="InputCedula" class="form-label font-weight-bold">Cedula</label>
+                        <label for="InputApellidoM" class="form-label font-weight-bold">Primer Apellido</label>
+                        <input type="text" class="form-control bg-dark-x border-0" id="InputApellidoM"
+                            placeholder="Ingresa tu primer Apellido">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="InputApellidoP" class="form-label font-weight-bold">Segundo Apellido</label>
+                        <input type="text" class="form-control bg-dark-x border-0" id="InputApellidoP"
+                            placeholder="Ingresa tu segundo Apellidos">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="InputCedula" class="form-label font-weight-bold">Cédula</label>
                         <input type="text" class="form-control bg-dark-x border-0" id="InputCedula"
                             placeholder="Ingresa tu Cedula">
                     </div>
                     <div class="mb-4">
-                        <label for="InputTelefono" class="form-label font-weight-bold">Telefono</label>
+                        <label for="InputTelefono" class="form-label font-weight-bold">Teléfono</label>
                         <input type="text" class="form-control bg-dark-x border-0" id="InputTelefono"
                             placeholder="Ingresa tu Telefono">
                     </div>
                     <div class="mb-4">
+                        <label for="InputFechaNacimiento" class="form-label font-weight-bold">Fecha de
+                            Nacimiento</label>
+                        <input type="date" class="form-control bg-dark-x border-0" id="InputFechaNacimiento"
+                            placeholder="Ingresa tu fecha de nacimiento">
+                    </div>
+                    <div class="mb-4">
                         <label for="InputNombreUsuario" class="form-label font-weight-bold">Nombre de Usuario</label>
                         <input type="text" class="form-control bg-dark-x border-0" id="InputNombreUsuario"
-                            placeholder="Ingresa tu nombre de usuario" aria-describedby="emailHelp">
+                            placeholder="Ingresa tu Nombre de usuario">
                     </div>
                     <div class="mb-4">
                         <label for="InputPassword" class="form-label font-weight-bold">Contraseña</label>
                         <input type="password" class="form-control bg-dark-x border-0 mb-2"
-                            placeholder="Ingresa tu contraseña" id="InputPassword1">
-                        <a href="" id="emailHelp" class="form-text text-muted text-decoration-none">¿Has olvidado tu
-                            contraseña?</a>
+                            placeholder="Ingresa tu contraseña" id="InputPassword">
+                    </div>
+                    <div class="mb-4">
+                        <label for="inputFoto" class="form-label font-weight-bold">Foto</label>
+                        <input type="file" class="form-control bg-dark-x border-0" id="inputFoto"
+                            accept=".png, .jpeg, .jpg" placeholder="Ingresa tu Telefono">
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Registrar</button>
                 </form>
                 <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
                     <p class="d-inline-block mb-0">¿Ya tienes una cuenta?</p> <a href=""
-                        class="text-light font-weight-bold text-decoration-none" [routerLink]="['/account/login']" routerLinkActive="router-link-active"> Inicia Sesion</a>
+                        class="text-light font-weight-bold text-decoration-none" [routerLink]="['/account/login']"
+                        routerLinkActive="router-link-active"> Inicia Sesion</a>
                 </div>
             </div>
         </div>

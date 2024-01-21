@@ -9,21 +9,41 @@
             </div>
             <div class="align-self-center w-100 px-lg-5 py-lg-4 p-4">
                 <h1 class="font-weight-bold mb-4">Bienvenido</h1>
-                <form class="mb-5">
+                <form [formGroup]="loginForm" class="mb-5" (ngSubmit)="login(template)">
                     <div class="mb-4">
-                        <label for="InputNombreU" class="form-label font-weight-bold">Nombre de Usuario</label>
-                        <input type="email" class="form-control bg-dark-x border-0" id="InputEmail1"
-                            placeholder="Ingresa tu nombre de usuario" aria-describedby="emailHelp">
+                      <label for="InputEmail1" class="form-label font-weight-bold">Nombre de Usuario</label>
+                      <input type="email" class="form-control bg-dark-x border-0" id="InputEmail1"
+                             formControlName="username" placeholder="Ingresa tu nombre de usuario" aria-describedby="usernameError">
+                      <div id="usernameError" class="text-danger" *ngIf="loginForm.get('username')?.hasError('required') && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+                        El nombre de usuario es obligatorio.
+                      </div>
                     </div>
                     <div class="mb-4">
-                        <label for="InputPassword1" class="form-label font-weight-bold">Contraseña</label>
-                        <input type="password" class="form-control bg-dark-x border-0 mb-2"
-                            placeholder="Ingresa tu contraseña" id="InputPassword1">
-                        <a href="" id="emailHelp" class="form-text text-muted text-decoration-none">¿Has olvidado tu
-                            contraseña?</a>
+                      <label for="InputPassword1" class="form-label font-weight-bold">Contraseña</label>
+                      <input type="password" class="form-control bg-dark-x border-0 mb-2"
+                             formControlName="password" placeholder="Ingresa tu contraseña" id="InputPassword1" aria-describedby="passwordError">
+                      <div id="passwordError" class="text-danger" *ngIf="loginForm.get('password')?.hasError('required') && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                        La contraseña es obligatoria.
+                      </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-                </form>
+                  
+                    <!-- Modal -->
+                    <ng-template #template>
+                      <div class="modal-header">
+                        <h4 class="modal-title">Mensaje</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p *ngIf="mensaje === 'success'">Inicio de sesión exitoso.</p>
+                        <p *ngIf="mensaje === 'error'">Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>
+                      </div>
+                    </ng-template>
+                  </form>
+                  
+                  
             </div>
             <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
                 <p class="d-inline-block mb-0">¿Todavia no tienes una cuenta?</p> <a href=""
