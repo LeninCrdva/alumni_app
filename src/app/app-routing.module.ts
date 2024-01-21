@@ -25,7 +25,7 @@ const routes: Routes = [
   // { path: 'System', redirectTo: 'System', pathMatch: 'full' },
 
   // Ruta inicial
-  { path: '**', redirectTo: 'Inicio', pathMatch: 'full' },
+  { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];
 
 
