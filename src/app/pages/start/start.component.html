@@ -52,39 +52,36 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                            <div class="feature feature-transition bg-light p-4 py-5 shadow rounded text-center">
-                                
+                            <div class="feature feature-transition" style="background-color: #001F3F; color: #ffffff; padding: 2rem; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; text-align: center;">
                                 <!-- <ng-lottie [options]="options"></ng-lottie> -->
-                                
-                                <h5 class="title mt-3">Alumni</h5>
-                                <p class="text-muted">It is a long established fact that a reader will be of a page
-                                    reader will be
-                                    of a page when looking at its layout. </p>
-                                <a [routerLink]="['/account/login']" routerLinkActive="router-link-active" class="text-dark">-- Acceder --<i
-                                        class="mdi mdi-chevron-right"></i></a>
+                                <h5 class="title mt-3"class="text-white">Alumni</h5>
+                                <p class="text-light">
+                                  Espacio dedicado a los graduados que desean aprovechar las oportunidades profesionales disponibles. En esta sección, los graduados encontrarán recursos y información valiosa.</p>
+                                  <a (click)="loginAsGraduado()"  class="text-white" class="accesolog">-- Acceder --<i
+                                      class="mdi mdi-chevron-right"></i>
+                                  </a>
+                              </div>
+                        </div><!--end col-->
+
+                        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                            <div class="feature feature-transition" style="background-color: #001F3F; color: #ffffff; padding: 2rem; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; text-align: center;">
+                                <h5 class="title mt-3"class="text-white">Administrador</h5>
+                                <p class="text-light">Espacio dedicado dedicada para que el administrador del sistema pueda ingresar y gestionar las funcionalidades de la plataforma de manera efectiva y eficiente.</p>
+                                <a (click)="loginAsAdmin()"  class="text-white" class="accesolog">-- Acceder --<i
+                                        class="mdi mdi-chevron-right"></i>
+                                </a>
                             </div>
                         </div><!--end col-->
 
                         <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                            <div class="feature feature-transition p-4 py-5 shadow rounded text-center">
-                                <h5 class="title mt-3">Administrador</h5>
-                                <p class="text-muted">It is a long established fact that a reader will be of a page when
-                                    reader will
-                                    be of a page looking at its layout. </p>
-                                <a [routerLink]="['/account/login']" routerLinkActive="router-link-active" class="text-dark">-- Acceder --<i
-                                        class="mdi mdi-chevron-right"></i></a>
-                            </div>
-                        </div><!--end col-->
-
-                        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                            <div class="feature feature-transition bg-light p-4 py-5 shadow rounded text-center">
+                            <div class="feature feature-transition" style="background-color: #001F3F; color: #ffffff; padding: 2rem; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; text-align: center;">
                                 <img src="cdn/images/charity/heart.svg" class="avatar avatar-small" alt="">
-                                <h5 class="title mt-3">Empresario o Empleador</h5>
-                                <p class="text-muted">It is a long established fact that a reader will be of a page when
-                                    reader will
-                                    be of a page looking at its layout. </p>
-                                <a [routerLink]="['/account/login']" routerLinkActive="router-link-active" class="text-dark">-- Acceder --<i
-                                        class="mdi mdi-chevron-right"></i></a>
+                                <h5 class="title mt-3"class="text-white">Empresario o Empleador</h5>
+                                <p class="text-light">Espacio dedicado para que los empresarios puedan presentar y ofrecer oportunidades laborales teniendo la posibilidad de compartir sus ofertas de empleo</p>
+                                <a (click)="loginAsEmpresario()"  class="text-white" class="accesolog">-- Acceder --<i
+                                    class="mdi mdi-chevron-right"></i>
+                                </a>
+                                  
                             </div>
                         </div><!--end col-->
                     </div><!--end row-->
