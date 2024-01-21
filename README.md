@@ -1,3 +1,11 @@
+# LIBRERIAS NECESARIAS
+
+- npm i lottie-web ngx-lottie
+- npm i bootstrap@5.3.2 --save
+- npm install jquery --save
+- npm install popper.js --save
+- npm install @angular/router --save
+
 # Alumnifrontapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
