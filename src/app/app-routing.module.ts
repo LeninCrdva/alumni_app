@@ -10,6 +10,8 @@ import { DetallescandidatoComponent } from './detallescandidato/detallescandidat
 import { ParametrospreguntasComponent } from './parametrospreguntas/parametrospreguntas.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { StateListComponent } from './state-list/state-list.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
+import { JobDetailsCandidatesComponent } from './job-details-candidates/job-details-candidates.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,7 +23,10 @@ const routes: Routes = [
   {path: 'person-details',component:DetallescandidatoComponent},
   {path:'parametros-preguntas', component:ParametrospreguntasComponent},
   {path: 'company-details' , component: CompanyDetailsComponent},
-  {path:'estados', component: StateListComponent},    
+  {path:'estados', component: StateListComponent},   
+  {path: 'job-detail', component:JobDetailsComponent}, 
+  {path: 'job-detail-candidates', component:JobDetailsCandidatesComponent}, 
+
  // { path: 'register-provincias', component: RegistroProvinciasComponent}
 ];
 
