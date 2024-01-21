@@ -15,6 +15,8 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
 import { StateListComponent } from './state-list/state-list.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { JobDetailsCandidatesComponent } from './job-details-candidates/job-details-candidates.component';
+import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
+import { SectorEmpresarialCrudComponent } from './sector-empresarial-crud/sector-empresarial-crud.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { JobDetailsCandidatesComponent } from './job-details-candidates/job-deta
    CompanyDetailsComponent,
    StateListComponent,
    JobDetailsComponent,
-   JobDetailsCandidatesComponent
+   JobDetailsCandidatesComponent,
+   CarrerasCrudComponent,
+   SectorEmpresarialCrudComponent
   ],
   imports: [
     BrowserModule,
