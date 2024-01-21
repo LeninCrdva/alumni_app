@@ -56,12 +56,11 @@
                                 <ng-lottie [options]="options_Anim2"></ng-lottie>
 
                                 <h5 class="title mt-3">Alumni</h5>
-                                <p class="text-muted">It is a long established fact that a reader will be of a page
-                                    reader will be
-                                    of a page when looking at its layout. </p>
+                                <p class="text-muted">Espacio dedicado a los graduados que desean aprovechar las oportunidades profesionales disponibles. 
+                                    En esta sección, los graduados encontrarán recursos y información valiosa.</p>
 
                                 <br>
-                                <button [routerLink]="['/account/login']" routerLinkActive="router-link-active"
+                                <button (click)="loginAsGraduado()"
                                     class="btn btn-oblong btn-outline-primary btn-block mg-b-10">Acceder</button>
                             </div>
                         </div>
@@ -71,12 +70,11 @@
                                 <ng-lottie [options]="options_Anim4"></ng-lottie>
 
                                 <h5 class="title mt-3">Empresario o Empleador</h5>
-                                <p class="text-muted">It is a long established fact that a reader will be of a page when
-                                    reader will
-                                    be of a page looking at its layout. </p>
+                                <p class="text-muted">Espacio dedicado para que los empresarios puedan presentar y ofrecer oportunidades 
+                                    laborales teniendo la posibilidad de compartir sus ofertas de empleo </p>
 
                                 <br>
-                                <button [routerLink]="['/account/login']" routerLinkActive="router-link-active"
+                                <button (click)="loginAsEmpresario()"
                                     class="btn btn-oblong btn-outline-primary btn-block mg-b-10">Acceder</button>
                             </div>
                         </div>
@@ -86,12 +84,11 @@
                                 <ng-lottie [options]="options_Anim5"></ng-lottie>
 
                                 <h5 class="title mt-3">Administrador</h5>
-                                <p class="text-muted">It is a long established fact that a reader will be of a page when
-                                    reader will
-                                    be of a page looking at its layout. </p>
+                                <p class="text-muted">Espacio dedicado dedicada para que el administrador del sistema pueda ingresar 
+                                    y gestionar las funcionalidades de la plataforma de manera efectiva y eficiente.</p>
 
                                 <br>
-                                <button [routerLink]="['/account/login']" routerLinkActive="router-link-active"
+                                <button (click)="loginAsAdmin()"
                                     class="btn btn-oblong btn-outline-primary btn-block mg-b-10">Acceder</button>
                             </div>
                         </div>

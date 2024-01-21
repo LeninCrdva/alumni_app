@@ -1,14 +1,16 @@
 import { Component, OnInit, HostListener, Renderer2, ElementRef } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-
+  private readonly ROL_ADMINISTRADOR = 'ROL_ADMINISTRADOR';
+  private readonly ROL_EMPRESARIO = 'ROL_EMPRESARIO';
+  private readonly ROL_GRADUADO = 'ROL_GRADUADO';
   // Note: Animaciones
   
   options_Anim2: AnimationOptions = {
@@ -25,12 +27,28 @@ export class StartComponent implements OnInit {
   options_Anim5: AnimationOptions = {
     path: '../../../assets/anims/Anim_5.json',
   };
+  loginAsAdmin(): void {
+    localStorage.setItem('userRole', this.ROL_ADMINISTRADOR);
+    this.router.navigate(['/account/login']);
+  }
+  loginAsEmpresario(): void {
+    localStorage.setItem('userRole', this.ROL_EMPRESARIO);
+    this.router.navigate(['/account/login']);
+  }
+
+  loginAsGraduado(): void {
+    localStorage.setItem('userRole', this.ROL_GRADUADO);
+    this.router.navigate(['/account/login']);
+  }
+  private navigateToRegister(): void {
+    this.router.navigate(['/register'], { queryParams: { role: localStorage.getItem('userRole') } });
+  }
   
   animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
   }
   
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private renderer: Renderer2, private el: ElementRef, private router: Router) { }
 
   ngOnInit(): void {
     this.toggleMenu('.navbar', '#menu-icon');
