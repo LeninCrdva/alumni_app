@@ -1,41 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { FormpreguntaasComponent } from './formpreguntaas/formpreguntaas.component';
+import { PerfiluserComponent } from './perfiluser/perfiluser.component';
 import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
 import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
 import { SlidebarComponent } from './modules/slidebar/slidebar.component';
 import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
 import { InitComponent } from './pages/init/init.component';
-import { CompanyDetailsComponent } from './company-details/company-details.component';
-import { StateListComponent } from './state-list/state-list.component';
-import { JobDetailsComponent } from './job-details/job-details.component';
-import { JobDetailsCandidatesComponent } from './job-details-candidates/job-details-candidates.component';
-import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
-import { SectorEmpresarialCrudComponent } from './sector-empresarial-crud/sector-empresarial-crud.component';
 
 
 @NgModule({
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     FormpreguntaasComponent,
+    PerfiluserComponent,
     PostulacionesComponent,
     VisualizarcvComponent,
+   // RegistroProvinciasComponent
    SlidebarComponent,
    DetallescandidatoComponent,
-   InitComponent,
-   CompanyDetailsComponent,
-   StateListComponent,
-   JobDetailsComponent,
-   JobDetailsCandidatesComponent,
-   CarrerasCrudComponent,
-   SectorEmpresarialCrudComponent
+   InitComponent
   ],
   imports: [
     BrowserModule,
