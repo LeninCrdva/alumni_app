@@ -13,6 +13,8 @@ import { DetallescandidatoComponent } from './detallescandidato/detallescandidat
 import { InitComponent } from './pages/init/init.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { StateListComponent } from './state-list/state-list.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
+import { JobDetailsCandidatesComponent } from './job-details-candidates/job-details-candidates.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { StateListComponent } from './state-list/state-list.component';
    DetallescandidatoComponent,
    InitComponent,
    CompanyDetailsComponent,
-   StateListComponent
+   StateListComponent,
+   JobDetailsComponent,
+   JobDetailsCandidatesComponent
   ],
   imports: [
     BrowserModule,
