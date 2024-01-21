@@ -7,13 +7,13 @@ import { AnimationOptions } from 'ngx-lottie';
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-  
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
-  
+
   options: AnimationOptions = {
-    path: '../../assets/anims/Anim_1.json',
+    path: '../../../assets/anims/Anim_1.json',
   };
   
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
+
   ngOnInit(): void {
     this.toggleMenu('.navbar', '#menu-icon');
   }
@@ -26,6 +26,31 @@ export class StartComponent implements OnInit {
     } else {
       this.renderer.removeClass(header, 'abajo');
     }
+
+    this.checkSectionInView();
+  }
+
+  private checkSectionInView(): void {
+    const sections = this.el.nativeElement.querySelectorAll('section');
+    const navLinks = this.el.nativeElement.querySelectorAll('header nav a');
+    const top = window.scrollY;
+
+    sections.forEach((sec: { offsetTop: number; offsetHeight: any; getAttribute: (arg0: string) => any; }) => {
+      const offset = sec.offsetTop - 150;
+      const height = sec.offsetHeight;
+      const id = sec.getAttribute('id');
+
+      if (top >= offset && top < offset + height) {
+        navLinks.forEach((link: { classList: { remove: (arg0: string) => void; }; }) => {
+          link.classList.remove('active');
+        });
+
+        const activeLink = this.el.nativeElement.querySelector(`header nav a[href*=${id}]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+        }
+      }
+    });
   }
 
   private toggleMenu(navId: string, burgerId: string): void {

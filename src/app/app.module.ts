@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 
 @NgModule({
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
@@ -15,7 +17,7 @@ import { LayoutSystemComponent } from './layout/layout-system/layout-system.comp
     AppComponent,
     LayoutBaseComponent,
     LayoutSystemComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

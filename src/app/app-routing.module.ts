@@ -6,6 +6,11 @@ import { LayoutSystemComponent } from './layout/layout-system/layout-system.comp
 const routes: Routes = [
   {
     path: 'account',
+    redirectTo: 'account/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'account',
     loadChildren: () => import('./pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
   },
   {
@@ -14,7 +19,6 @@ const routes: Routes = [
       { path: '', loadChildren: () => import('./pages/start/start.module').then((m) => m.StartModule) }
     ]
   },
-
   {
     path: 'system', component: LayoutSystemComponent,
     children: [
@@ -22,15 +26,13 @@ const routes: Routes = [
       { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) }
     ], // Steve: Revisar esto: canActivate: [AuthGuard]
   },
-  // { path: 'System', redirectTo: 'System', pathMatch: 'full' },
 
   // Ruta inicial
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];
 
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

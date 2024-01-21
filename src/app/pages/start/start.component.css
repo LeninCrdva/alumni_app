@@ -99,7 +99,6 @@ header.abajo {
 
 .navbar a:hover {
     color: var(--alumni-color);
-    font-weight: bold;
 }
 
 .navbar a.active {
