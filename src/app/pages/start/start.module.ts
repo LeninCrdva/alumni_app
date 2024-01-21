@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './home-routing.module';
+import { StartComponent } from './start.component';
 import { LottieModule } from 'ngx-lottie';
+import { StartRoutingModule } from './start-routing.module';
 import player from 'lottie-web';
 
 // Note: Para las imagenes animadas
@@ -12,13 +12,13 @@ export function playerFactory() {
 
 @NgModule({
   declarations: [
-    HomeComponent
+    StartComponent
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule,
+    StartRoutingModule,
     LottieModule.forRoot({ player: playerFactory })
   ]
 })
 
-export class HomeModule { }
+export class StartModule { }

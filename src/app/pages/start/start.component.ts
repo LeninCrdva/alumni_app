@@ -2,11 +2,11 @@ import { Component, OnInit, HostListener, Renderer2, ElementRef } from '@angular
 import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-start',
+  templateUrl: './start.component.html',
+  styleUrls: ['./start.component.css']
 })
-export class HomeComponent implements OnInit {
+export class StartComponent implements OnInit {
   
   constructor(private renderer: Renderer2, private el: ElementRef) { }
   

@@ -9,14 +9,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
   },
   {
-    path: 'Inicio', component: LayoutBaseComponent,
+    path: 'inicio', component: LayoutBaseComponent,
     children: [
-      { path: '', loadChildren: () => import('./pages/home/home.module').then((m) => m.HomeModule) }
+      { path: '', loadChildren: () => import('./pages/start/start.module').then((m) => m.StartModule) }
     ]
   },
 
   {
-    path: 'System', component: LayoutSystemComponent,
+    path: 'system', component: LayoutSystemComponent,
     children: [
       { path: 'alumni', loadChildren: () => import('./pages/alumni/alumni.module').then((m) => m.AlumniModule) },
       { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) }
