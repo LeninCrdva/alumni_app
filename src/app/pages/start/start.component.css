@@ -45,6 +45,7 @@ li {
 * ----------------------------------------------------------------------------------------
 */
 
+
 header {
     position: fixed;
     color: white;
@@ -105,6 +106,7 @@ header.abajo {
 .navbar a.active {
     color: var(--alumni-color);
 }
+
 
 .nav__toggle {
     display: flex;
@@ -179,7 +181,23 @@ header.abajo {
         padding: 5px 60px;
     }
 }
-
+/* Estilos para la clase accesolog */
+.accesolog {
+    color: #ffffff; /* Color por defecto */
+    transition: color 0.3s ease, cursor 0.3s ease; /* Transición suave para color y cursor */
+  
+    /* Pseudoclase para el estado de :hover (ratón encima) */
+    &:hover {
+      color: #CCCCCC; /* Cambiar el color cuando el ratón está encima */
+      cursor: pointer; /* Cambiar el cursor a una mano con un dedo señalando */
+    }
+  
+    /* Pseudoclase para el estado de :active (ratón pulsado) */
+    &:active {
+      color: #999999; /* Cambiar el color cuando el ratón está pulsado */
+    }
+  }
+  
 /*
 * ----------------------------------------------------------------------------------------
 * 01.END NAV BAR
