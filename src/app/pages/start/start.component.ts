@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, Renderer2, ElementRef } from '@angular/core';
+import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
@@ -8,9 +9,26 @@ import { AnimationOptions } from 'ngx-lottie';
 })
 export class StartComponent implements OnInit {
 
-  options: AnimationOptions = {
-    path: '../../../assets/anims/Anim_1.json',
+  // Note: Animaciones
+  
+  options_Anim2: AnimationOptions = {
+    path: '../../../assets/anims/Anim_2.json',
   };
+  
+  options_Anim3: AnimationOptions = {
+    path: '../../../assets/anims/Anim_3.json',
+  };
+  options_Anim4: AnimationOptions = {
+    path: '../../../assets/anims/Anim_4.json',
+  };
+  
+  options_Anim5: AnimationOptions = {
+    path: '../../../assets/anims/Anim_5.json',
+  };
+  
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
   
   constructor(private renderer: Renderer2, private el: ElementRef) { }
 

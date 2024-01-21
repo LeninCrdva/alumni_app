@@ -9,15 +9,14 @@ import player from 'lottie-web';
 export function playerFactory() {
   return player;
 }
-
 @NgModule({
   declarations: [
     StartComponent
   ],
   imports: [
-    LottieModule.forRoot({ player: playerFactory }),
     CommonModule,
     StartRoutingModule,
+    LottieModule.forRoot({ player: playerFactory }),
   ]
 })
 

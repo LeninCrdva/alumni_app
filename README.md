@@ -5,6 +5,7 @@
 - npm install jquery --save
 - npm install popper.js --save
 - npm install @angular/router --save
+- npm i ngx-bootstrap
 
 # Alumnifrontapp
 

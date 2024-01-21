@@ -11,8 +11,11 @@ import { LayoutSystemComponent } from './layout/layout-system/layout-system.comp
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 
+export function playerFactory() {
+  return player;
+}
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ModalModule.forRoot()],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
   declarations: [
     AppComponent,
     LayoutBaseComponent,

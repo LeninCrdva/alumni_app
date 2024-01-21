@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +6,5 @@ import { AnimationOptions } from 'ngx-lottie';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  options2: AnimationOptions = {
-    path: '../../../../assets/Anim_1.json',
-  };
 
 }

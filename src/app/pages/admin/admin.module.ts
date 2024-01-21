@@ -3,12 +3,6 @@ import { CommonModule } from '@angular/common';
 import { UsuariosFormComponent } from './usuarios-form/usuarios-form.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminRoutingModule } from './admin-routing.module';
-import { LottieModule } from 'ngx-lottie';
-import player from 'lottie-web';
-
-export function playerFactory() {
-  return player;
-}
 
 @NgModule({
     declarations: [
@@ -18,8 +12,7 @@ export function playerFactory() {
   ],
     imports: [
         CommonModule,
-      AdminRoutingModule,
-      LottieModule.forRoot({ player: playerFactory })
+        AdminRoutingModule
     ]
 })
 
