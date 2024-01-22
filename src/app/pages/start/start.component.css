@@ -349,9 +349,9 @@ header.abajo {
 
 .home_bg:before {
     background: rgba(25, 31, 43, 0.83);
+    filter: alpha(opacity=80);
     content: "";
     height: 100%;
-    filter: alpha(opacity=80);
     position: absolute;
     width: 100%;
 }

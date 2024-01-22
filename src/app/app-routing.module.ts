@@ -1,31 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
-import { HomeComponent } from './home/home.component';
-import{LoginComponent} from './login/login.component';
-import { FormpreguntaasComponent } from './formpreguntaas/formpreguntaas.component';
-import { RegisterComponent } from './register/register.component';
-import { PerfiluserComponent } from './perfiluser/perfiluser.component';
-import { PostulacionesComponent } from './pages/postulaciones/postulaciones.component';
-import { VisualizarcvComponent } from './visualizarcv/visualizarcv.component';
-import { DetallescandidatoComponent } from './detallescandidato/detallescandidato.component';
-import { ParametrospreguntasComponent } from './parametrospreguntas/parametrospreguntas.component';
-
-const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  {path: 'login',component: LoginComponent},
-  { path: 'preguntas', component: FormpreguntaasComponent},
-  {path: 'register',component: RegisterComponent},
-  {path: 'perfil-usuario',component: PerfiluserComponent},
-  {path:'postulaciones',component:PostulacionesComponent},
-  {path: 'curriculum',component:VisualizarcvComponent},
-  {path: 'candidato-details',component:DetallescandidatoComponent},
-  {path:'parametros-preguntas', component:ParametrospreguntasComponent}
-  
- // { path: 'register-provincias', component: RegistroProvinciasComponent}
-=======
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -51,9 +28,11 @@ const routes: Routes = [
     ], // Steve: Revisar esto: canActivate: [AuthGuard]
   },
 
+  // Ruta para manejar errores 404
+  { path: '404', component: NotFoundComponent },
+
   // Ruta inicial
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
->>>>>>> parent of b58325d (Cambios (TODO BIEN))
 ];
 
 @NgModule({
