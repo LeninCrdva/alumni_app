@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ExperienciaService {
 
-  urlEndPoint = MAIN_ROUTE + '/experiencias';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/experiencias';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

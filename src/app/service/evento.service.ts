@@ -9,7 +9,7 @@ import { Evento } from '../Models/evento';
 })
 export class EventoService {
 
-  urlEndPoint = MAIN_ROUTE + '/eventos';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/eventos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

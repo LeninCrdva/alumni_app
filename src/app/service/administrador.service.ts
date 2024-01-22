@@ -9,7 +9,7 @@ import { Administrador } from '../Models/administrador';
 })
 export class AdministradorService {
 
-  urlEndPoint = MAIN_ROUTE + '/administradores';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/administradores';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

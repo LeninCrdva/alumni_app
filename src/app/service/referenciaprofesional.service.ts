@@ -9,7 +9,7 @@ import { Referencias_profesionales } from '../Models/referencia_profesional';
 })
 export class ReferenciaProfesionalService {
 
-  urlEndPoint = MAIN_ROUTE + '/referencias-profesionales';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/referencias-profesionales';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

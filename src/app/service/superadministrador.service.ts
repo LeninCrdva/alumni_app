@@ -9,7 +9,7 @@ import { Superadmin } from '../Models/superadmin';
 })
 export class SuperAdministradorService {
 
-  urlEndPoint = MAIN_ROUTE + '/superadmin';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/superadmin';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

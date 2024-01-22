@@ -9,7 +9,7 @@ import { Referencias_personales } from '../Models/referencia_personal';
 })
 export class ReferenciaPersonalService {
 
-  urlEndPoint = MAIN_ROUTE + '/referencias-personales';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/referencias-personales';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

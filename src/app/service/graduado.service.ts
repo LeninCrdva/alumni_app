@@ -9,7 +9,7 @@ import { Graduado } from '../Models/graduado';
 })
 export class GraduadoService {
 
-  urlEndPoint = MAIN_ROUTE + '/graduados';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/graduados';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

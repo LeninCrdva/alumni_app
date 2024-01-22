@@ -9,7 +9,7 @@ import { Carrera } from '../Models/carrera';
 })
 export class CarreraService {
 
-  urlEndPoint = MAIN_ROUTE + '/carreras';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/carreras';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

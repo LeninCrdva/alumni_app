@@ -9,7 +9,7 @@ import { Rol } from '../Models/rol';
 })
 export class RolService {
 
-    urlEndPoint = MAIN_ROUTE + '/roles';
+    urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/roles';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

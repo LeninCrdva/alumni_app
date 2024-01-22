@@ -9,7 +9,7 @@ import { Capacitacion } from '../Models/capacitacion';
 })
 export class CapacitacionService {
 
-  urlEndPoint = MAIN_ROUTE + '/capacitacion';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/capacitacion';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

@@ -9,7 +9,7 @@ import { Periodo } from '../Models/periodo';
 })
 export class PeriodoService {
 
-  urlEndPoint = MAIN_ROUTE + '/periodos';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/periodos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

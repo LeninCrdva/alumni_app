@@ -9,7 +9,7 @@ import { Empresario } from '../Models/empresario';
 })
 export class EmpresarioService {
 
-  urlEndPoint = MAIN_ROUTE + '/empresarios';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/empresarios';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

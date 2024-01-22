@@ -9,7 +9,7 @@ import { Ciudad } from '../Models/ciudad';
 })
 export class CiudadService {
   
-  urlEndPoint = MAIN_ROUTE + '/ciudades';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/ciudades';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

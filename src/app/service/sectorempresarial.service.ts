@@ -9,7 +9,7 @@ import { sectorempresarial } from '../Models/sectorEmpresarial';
 })
 export class SectorEmpresarialService {
 
-    urlEndPoint = MAIN_ROUTE + '/sectoresEmpresariales';
+    urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/sectoresEmpresariales';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

@@ -9,7 +9,7 @@ import { Titulo } from '../Models/titulo';
 })
 export class TituloService {
 
-  urlEndPoint = MAIN_ROUTE + '/titulos';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/titulos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

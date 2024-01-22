@@ -9,7 +9,7 @@ import { Provincia } from '../Models/provincia';
 })
 export class ProvinciaService {
 
-  urlEndPoint = MAIN_ROUTE + '/provincias';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/provincias';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

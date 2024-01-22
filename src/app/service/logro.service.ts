@@ -9,7 +9,7 @@ import { Logro } from '../Models/logro';
 })
 export class LogroService {
 
-  urlEndPoint = MAIN_ROUTE + '/logros';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/logros';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

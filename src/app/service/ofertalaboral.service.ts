@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class OfertalaboralService {
 
-  urlEndPoint = MAIN_ROUTE + '/ofertas-laborales';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/ofertas-laborales';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 
