@@ -50,7 +50,7 @@
                         <a href=""><i data-feather="pie-chart"></i>
                             <span>Estadisticas</span><i class="accordion-icon fa fa-angle-left"></i></a>
                         <ul class="sub-menu">
-                            <li><a href="#">Perfil</a></li>
+                            <li><a href="chart-apex.html">Perfil</a></li>
                         </ul>
                     </li>
 
@@ -118,8 +118,8 @@
                         <!--================================-->
                         <li class="list-inline-item dropdown">
                             <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="select-profile">Bienvenido Angel Steve</span>
-                                <img src="../../../assets/imgs/User_Icon.png" class="img-fluid wd-35 ht-35 rounded-circle" alt="">
+                                <span class="select-profile">Bienvenido "Nombre de Usuario"</span>
+                                <img src="assets/images/hombre.png" class="img-fluid wd-35 ht-35 rounded-circle" alt="">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-profile shadow-2">
                                 <div class="user-profile-area">
@@ -166,25 +166,41 @@
         <!--/ Page Header End -->
         <!--================================-->
 
+        <!-- Page Inner Start -->
+        <!--================================-->
         <div class="page-inner">
+            <!-- Main Wrapper -->
+            <div id="main-wrapper">
+                <!--================================-->
+                <!-- Breadcrumb Start -->
+                <!--================================-->
+                <div class="pageheader pd-t-25 pd-b-35">
+                    <div class="pd-t-5 pd-b-5">
+                        <h1 class="pd-0 mg-3 tx-20" style="font-size: 28px; margin: 2rem 0;">[Pagina A Cargar]</h1>
+                    </div>
+                </div>
+                <!--/ Breadcrumb End -->
+                <!--================================-->
+            </div>
+            <!--/ Main Wrapper End -->
+
+
             <!--/ Mostrar Contenido -->
             <router-outlet></router-outlet>
             <!--================================-->
         </div>
 
+        <!--/ Page Inner End -->
+        <!--================================-->
         <!-- Page Footer Start -->
         <!--================================-->
         <footer class="page-footer">
             <div class="pd-t-4 pd-b-0 pd-x-20">
-                <div class="tx-10 text-center">
-                    <p class="pd-y-10 mb-0">
-                        <span class="copyright-text">Copyright&copy; 2024 | Todos los derechos reservados. |
-                            ALUMNI</span>
-                    </p>
+                <div class="tx-10 tx-uppercase">
+                    <p class="pd-y-10 mb-0">Copyright&copy; 2024 | Todos los derechos reservados. | ALUMNI</p>
                 </div>
             </div>
         </footer>
-
         <!--/ Page Footer End -->
     </div>
     <!--/ Page Content End -->

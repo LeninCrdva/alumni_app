@@ -1,3 +1,24 @@
+/*****************************************************************************
+******************************************************************************
+###  Template Name: Metrical - Multipurpose Admin Dashboard Template
+###  Template URI: https://wrapcoders.xyz/metrical/ 
+###  Author: URI: http://wrapcoders.xyz/
+###  Description: Metrical is the ultimate admin template for Twitter Bootstrap. It’s what we’re calling the best the admin template for Bootstrap to date. It has a unique, pixel-perfect design, and many fully customized widgets. We gave special attention to design and focussed on building a versatile admin template that could work for an almost unlimited range of applications.
+###  Version: 1.0.0
+******************************************************************************
+******************************************************************************/
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900');
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,400i,500,700,900');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:200,300,400,400i,500,500i,600,600i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+span.tx-gradinet {
+    -webkit-text-fill-color: transparent;
+    background-image: -webkit-radial-gradient(circle, #051937, #004d7a, #008793, #00bf72, #a8eb12)
+}
+
 a {
     color: #101c29;
     font-weight: 500
@@ -20,6 +41,221 @@ body {
     color: #8392a5;
     text-align: left;
     background-color: #fff
+}
+
+.tx-dark {
+    color: #101c29
+}
+
+.tx-lato {
+    font-family: 'Lato', sans-serif
+}
+
+.tx-rubik {
+    font-family: 'Rubik', sans-serif
+}
+
+.tx-roboto {
+    font-family: 'Roboto', sans-serif
+}
+
+.tx-open-sans {
+    font-family: 'Open Sans', sans-serif
+}
+
+.tx-ibm {
+    font-family: 'IBM Plex Sans', sans-serif
+}
+
+.tx-poppins {
+    font-family: 'Poppins', sans-serif
+}
+
+.bg-facebook {
+    color: #fff;
+    background: #3b5998 !important
+}
+
+.bg-twitter {
+    color: #fff;
+    background: #00aced !important
+}
+
+.bg-instagram {
+    color: #fff;
+    background: #da2e76 !important
+}
+
+.bg-linkedin {
+    color: #fff;
+    background: #4875b4 !important
+}
+
+.bg-google-plus {
+    color: #fff;
+    background: #d34836 !important
+}
+
+.bg-dribbble {
+    color: #fff;
+    background: #ea4c8a !important
+}
+
+.bg-flickr {
+    color: #fff;
+    background: #ff0084 !important
+}
+
+.bg-google {
+    color: #fff;
+    background: #fb4104 !important
+}
+
+.bg-youtube {
+    color: #fff;
+    background: #f70000 !important
+}
+
+.bg-pinterest {
+    color: #fff;
+    background: #c51f26 !important
+}
+
+.tx-facebook {
+    color: #3b5998
+}
+
+.tx-twitter {
+    color: #00aced
+}
+
+.tx-instagram {
+    color: #da2e76
+}
+
+.tx-linkedin {
+    color: #4875b4
+}
+
+.tx-google-plus {
+    color: #d34836
+}
+
+.tx-dribbble {
+    color: #ea4c8a
+}
+
+.tx-flickr {
+    color: #ff0084
+}
+
+.tx-google {
+    color: #fb4104
+}
+
+.tx-youtube {
+    color: #f70000
+}
+
+.tx-pinterest {
+    color: #c51f26
+}
+
+.bg-gray {
+    background: #e0e7fd
+}
+
+.bg-soft-primary {
+    background-color: rgba(93, 120, 255, .15) !important;
+    color: #5dabff !important
+}
+
+.bg-soft-secondary {
+    background-color: rgba(143, 147, 148, 0.15) !important;
+    color: #7d7f80 !important
+}
+
+.bg-soft-warning {
+    background-color: rgba(243, 170, 18, .15) !important;
+    color: hsl(41, 90%, 51%) !important
+}
+
+.bg-soft-success {
+    background-color: rgba(43, 173, 13, 0.15) !important;
+    color: #2bad0d !important
+}
+
+.bg-soft-danger {
+    background-color: rgba(244, 67, 54, .15) !important;
+    color: #ff2b2b !important
+}
+
+.bg-soft-teal {
+    background-color: rgba(74, 199, 236, .15) !important;
+    color: #4ac7ec !important
+}
+
+.bg-soft-pink {
+    background-color: rgba(255, 93, 160, .15) !important;
+    color: #ff5da0 !important
+}
+
+.custom-text-primary {
+    color: #5dabff
+}
+
+.custom-text-primary:hover {
+    color: #000;
+    text-decoration: none;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    transition: all .5s
+}
+
+.btn-custom-primary {
+    color: #fff;
+    background-color: #5dabff;
+    border-color: #5dabff;
+    text-transform: capitalize
+}
+
+.btn-custom-primary:hover {
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    transition: all .5s
+}
+
+.ht-38 {
+    height: 38px
+}
+
+.card-icon-primary {
+    color: #5dabff !important;
+    background: rgba(5, 88, 183, 0.10) !important
+}
+
+.card-icon-danger {
+    color: #dc3545 !important;
+    background: rgba(220, 53, 69, .10) !important
+}
+
+.card-icon-success {
+    color: #28a745 !important;
+    background: rgba(40, 167, 69, .10) !important
+}
+
+.card-icon-warning {
+    color: #ffc107 !important;
+    background: rgba(234, 147, 12, 0.1) !important
+}
+
+.card-icon-teal {
+    color: #17a2b8 !important;
+    background: rgba(23, 162, 184, 0.1) !important
 }
 
 .page-container {
@@ -79,23 +315,9 @@ _::future,
 }
 
 .page-footer {
-    background-color: #18224c;
-    color: #fff;
-}
-
-.page-footer .tx-10 {
-    font-size: 12px;
-}
-
-.page-footer .pd-y-10 {
-    padding: 2rem;
-}
-
-.copyright-text {
-    font-weight: bold;
-    font-style: italic;
-    text-transform: uppercase;
-    font-size: 14px;
+    background: #f9f9fc;
+    border: 1px solid rgba(230, 230, 230, 0.7);
+    border-left: none
 }
 
 .page-header {

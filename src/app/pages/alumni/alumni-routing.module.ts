@@ -7,12 +7,10 @@ import { StateListComponent } from './state-list/state-list.component';
 import { SectorEmpresarialCrudComponent } from './sector-empresarial-crud/sector-empresarial-crud.component';
 import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
-import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'perfil', component: PerfilUsuarioComponent },
     { path: 'postulaciones', component: PostulacionesComponent },
     { path: 'parametros-preguntas', component: ParametrosPreguntasComponent },
     { path: 'estados', component: StateListComponent },
