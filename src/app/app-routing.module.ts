@@ -4,6 +4,7 @@ import { LayoutBaseComponent } from './layout/layout-client/layout-base.componen
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GraduadosListComponent } from './pages/alumni/graduados-list/graduados-list.component';
+import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {path:'graduados-list', component: GraduadosListComponent},
+  {path:'usuarios-list', component: UsuariosListComponent},
+
   {
     path: 'account',
     loadChildren: () => import('./pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
