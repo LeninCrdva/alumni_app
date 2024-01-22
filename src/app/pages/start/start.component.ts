@@ -12,21 +12,18 @@ export class StartComponent implements OnInit {
   private readonly ROL_EMPRESARIO = 'ROL_EMPRESARIO';
   private readonly ROL_GRADUADO = 'ROL_GRADUADO';
   // Note: Animaciones
-  
+
+  options_Anim1: AnimationOptions = {
+    path: '../../../assets/anims/Anim_1.json',
+  };
+
   options_Anim2: AnimationOptions = {
     path: '../../../assets/anims/Anim_2.json',
   };
-  
   options_Anim3: AnimationOptions = {
     path: '../../../assets/anims/Anim_3.json',
   };
-  options_Anim4: AnimationOptions = {
-    path: '../../../assets/anims/Anim_4.json',
-  };
   
-  options_Anim5: AnimationOptions = {
-    path: '../../../assets/anims/Anim_5.json',
-  };
   loginAsAdmin(): void {
     localStorage.setItem('userRole', this.ROL_ADMINISTRADOR);
     this.router.navigate(['/account/login']);
@@ -43,11 +40,11 @@ export class StartComponent implements OnInit {
   private navigateToRegister(): void {
     this.router.navigate(['/register'], { queryParams: { role: localStorage.getItem('userRole') } });
   }
-  
+
   animationCreated(animationItem: AnimationItem): void {
     console.log(animationItem);
   }
-  
+
   constructor(private renderer: Renderer2, private el: ElementRef, private router: Router) { }
 
   ngOnInit(): void {

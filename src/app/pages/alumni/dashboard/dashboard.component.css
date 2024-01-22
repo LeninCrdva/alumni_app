@@ -26,10 +26,11 @@
 
 ul.page-breadcrumb {
     padding-top: 30px;
+    padding-right: 30px;
 }
 
 ul.page-breadcrumb li span {
-    color: #fff;
+    color: #ffffff;
     font-size: 16px;
     text-transform: capitalize;
 }
@@ -49,6 +50,7 @@ ul.page-breadcrumb li a {
     color: #fff;
     font-size: 16px;
     text-transform: capitalize;
+    text-decoration: none;
 }
 
 ul.page-breadcrumb li a:hover {
@@ -71,7 +73,6 @@ ul.page-breadcrumb li a:hover {
 }
 
 .parallax {
-    /* Create the parallax scrolling effect */
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
