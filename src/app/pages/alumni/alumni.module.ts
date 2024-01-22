@@ -7,6 +7,7 @@ import { StateListComponent } from './state-list/state-list.component';
 import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
 import { SectorEmpresarialCrudComponent } from './sector-empresarial-crud/sector-empresarial-crud.component';
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.componen
         StateListComponent,
         CarrerasCrudComponent,
         SectorEmpresarialCrudComponent,
-        OfertaDetalleComponent
+        OfertaDetalleComponent,
+        PerfilUsuarioComponent
     ],
     imports: [
         CommonModule,

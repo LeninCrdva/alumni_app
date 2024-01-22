@@ -10,6 +10,7 @@ import { LayoutBaseComponent } from './layout/layout-client/layout-base.componen
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export function playerFactory() {
   return player;
@@ -21,6 +22,7 @@ export function playerFactory() {
     LayoutBaseComponent,
     LayoutSystemComponent,
     ScrollToTopComponent,
+    NotFoundComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
       { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) }
     ], // Steve: Revisar esto: canActivate: [AuthGuard]
   },
+
+  // Ruta para manejar errores 404
+  { path: '404', component: NotFoundComponent },
 
   // Ruta inicial
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
