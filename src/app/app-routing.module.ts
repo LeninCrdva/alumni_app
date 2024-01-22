@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { GraduadosListComponent } from './pages/alumni/graduados-list/graduados-list.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
     redirectTo: 'account/login',
     pathMatch: 'full'
   },
+  {path:'graduados-list', component: GraduadosListComponent},
   {
     path: 'account',
     loadChildren: () => import('./pages/authentication/authentication.module').then((m) => m.AuthenticationModule)

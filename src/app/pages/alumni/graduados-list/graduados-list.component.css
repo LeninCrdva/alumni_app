@@ -1,65 +1,134 @@
+/* styles.css */
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
+    font-family: Poppins, 'sans-serif';
+    margin: 0;
+    padding: 0;
 }
 
 #search {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 20px;
+	border-radius: 50px;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-size: 18px;
+	color: #2c3e50;
+	border: 1px solid #ddd;
+	outline: none;
+	transition: 0.3s;
+	position: relative;
+	transform: translateX(-50%);
+	left: 50%;
+}
+
+#search:focus {
+	width: 90%;
+}
+
+#search::placeholder {
+	color: #aaa;
+}
+
+#search:hover {
+	background-color: #f1f1f1;
+}
+
+#search::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	background-image: url("https://img.icons8.com/ios-filled/50/000000/search.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	opacity: 0.5;
+	transition: opacity 0.3s ease;
+}
+
+#search:hover::before {
+	opacity: 1;
 }
 
 #card-container {
-	display: flex;
-	flex-wrap: wrap;
-	margin: 0 auto;
-	max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px auto;
+	padding-left: 15vh;
 }
 
 .card {
-	background-color: #f1f1f1;
-	border: 1px solid #ddd;
-	height: 300px;
-	width: 300px;
-	margin: 10px;
-	position: relative;
-	overflow: hidden;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    height: 300px;
+    width: 300px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    background: #2c3e50;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 
 .card .info {
-	padding: 20px;
-	height: 80%;
+	margin-top: 10px;
+    padding: 20px;
+    height: 80%;
 }
 
 .card .info h2 {
-	margin: 0 0 10px;
+    margin: 0 0 10px;
+	margin-left: 100px;
+	font-size: 22px;
+	color: #2c3e50;
 }
 
 .card .info p {
-	margin: 0;
-	margin-bottom: 5px;
+    margin: 0;
+    margin-bottom: 5px;
+	
 }
 
 .card .details {
-	background-color: rgba(0, 0, 0, 0.6);
-	color: #fff;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 20%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transform: translateY(100%);
-	transition: transform 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
 }
 
 .card:hover .details {
-	transform: translateY(0);
+    transform: translateY(0);
+}
+
+button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
