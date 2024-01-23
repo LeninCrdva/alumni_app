@@ -34,7 +34,8 @@ const routes: Routes = [
     path: 'system', component: LayoutSystemComponent,
     children: [
       { path: 'alumni', loadChildren: () => import('./pages/alumni/alumni.module').then((m) => m.AlumniModule) },
-      { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) }
+      { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) },
+      { path: 'company', loadChildren: () => import('./pages/company/company.module').then((m) => m.CompanyModule) }
     ], // Steve: Revisar esto: canActivate: [AuthGuard]
   },
 

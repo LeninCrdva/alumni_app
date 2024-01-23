@@ -8,6 +8,7 @@ import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
 import { SectorEmpresarialCrudComponent } from './sector-empresarial-crud/sector-empresarial-crud.component';
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
         CarrerasCrudComponent,
         SectorEmpresarialCrudComponent,
         OfertaDetalleComponent,
-        PerfilUsuarioComponent
+        PerfilUsuarioComponent,
+        PerfilFormComponent
     ],
     imports: [
         CommonModule,
