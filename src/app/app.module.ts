@@ -12,6 +12,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { UsuariosListsComponent } from './usuarios-lists/usuarios-lists.component';
+import { PycListComponent } from './pyc-list/pyc-list.component';
 
 export function playerFactory() {
   return player;
@@ -25,6 +26,7 @@ export function playerFactory() {
     ScrollToTopComponent,
     NotFoundComponent,
     UsuariosListsComponent,
+    PycListComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

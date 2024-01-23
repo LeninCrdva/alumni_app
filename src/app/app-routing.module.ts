@@ -5,6 +5,8 @@ import { LayoutSystemComponent } from './layout/layout-system/layout-system.comp
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GraduadosListComponent } from './pages/alumni/graduados-list/graduados-list.component';
 import { UsuariosListsComponent } from './usuarios-lists/usuarios-lists.component';
+import { PycListComponent } from './pyc-list/pyc-list.component';
+import { ParametrosPreguntasComponent } from './pages/alumni/parametros-preguntas/parametros-preguntas.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,9 @@ const routes: Routes = [
   },
   {path:'graduados-list', component: GraduadosListComponent},
   {path:'usuarios-list', component: UsuariosListsComponent},
+  {path:'pyc-list', component: PycListComponent},
+  {path:'para', component: ParametrosPreguntasComponent},
+
 
   {
     path: 'account',
