@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Example</title>
+</head>
+<body>
+    <input type="text" id="searchInput" onkeyup="search()" placeholder="Search...">
+    <table id="myTable">
+        <thead>
+            <tr>
+              <th (click)="sortByName()">Name</th>
+              <th (click)="sortByCountry()">Country</th>
+              <th (click)="sortByAge()">Age</th>
+            </tr>
+          </thead>
+        <tbody>
+          <tr *ngFor="let item of datos">
+            <td>{{ item.id }}</td>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.descripcion }}</td>
+          </tr>
+            <!-- More rows can be added here -->
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button class="page-btn" onclick="previousPage()">&laquo;</button>
+        <span id="pageNum"></span>
+        <button class="page-btn" onclick="nextPage()">&raquo;</button>
+    </div>
+
+</body>
+</html>

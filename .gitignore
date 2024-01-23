@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+src/app/app-routing.module.ts
+src/app/app.module.ts
+src/app/app-routing.module.ts
