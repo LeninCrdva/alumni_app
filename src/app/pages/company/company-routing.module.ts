@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostulacionesComponent } from '../alumni/postulaciones/postulaciones.component';
+import { PostulacionesAddFormComponent } from './postulaciones-add-form/postulaciones-add-form.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
-    { path: 'add_postulaciones_form', component: PostulacionesComponent },
+    { path: 'postulaciones_form', component: PostulacionesAddFormComponent },
 ];
 
 @NgModule({
@@ -13,4 +13,4 @@ const routes: Routes = [
     exports: [RouterModule]
 })
 
-export class AlumniRoutingModule { }
+export class CompanyRoutingModule { }

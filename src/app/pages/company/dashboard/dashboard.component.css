@@ -1,83 +1,85 @@
-/** =============== PARTE DEL FONDO PARALLAX EN EL INICIO DE CADA PAGINA ===============*/
-
-.page-title {
-    display: block;
-    padding-top: 130px;
-    padding-bottom: 80px;
-    position: relative;
-}
-
-.page-title span {
-    text-transform: capitalize;
-}
-
-.page-title h1 {
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
-    position: relative;
-}
-
-.page-title .page-breadcrumb {
+/*Cards*/
+.container-card {
     width: 100%;
+    display: flex;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.title-cards {
+    width: 100%;
+    max-width: 1080px;
+    margin: auto;
+    padding: 20px;
+    margin-top: 20px;
     text-align: center;
-    position: relative;
+    color: #7a7a7a;
+    font-weight: bold;
 }
 
-ul.page-breadcrumb {
-    padding-top: 30px;
-    padding-right: 30px;
+.card {
+    width: 100%;
+    margin: 20px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+    transition: all 400ms ease-out;
+    cursor: default;
 }
 
-ul.page-breadcrumb li span {
-    color: #ffffff;
-    font-size: 16px;
-    text-transform: capitalize;
+.card:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3%);
 }
 
-ul.page-breadcrumb li {
-    color: #fff;
+.card img {
+    width: 100%;
+    height: 210px;
+}
+
+.card .contenido-card {
+    padding: 15px;
+    text-align: center;
+}
+
+.card .contenido-card h3 {
+    margin-bottom: 15px;
+    color: #7a7a7a;
+}
+
+.card .contenido-card p {
+    line-height: 1.8;
+    color: #6a6a6a;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.card .contenido-card a {
     display: inline-block;
-    list-style: none;
-}
-
-ul.page-breadcrumb li i {
-    font-size: 16px;
-    padding: 0 10px;
-}
-
-ul.page-breadcrumb li a {
-    color: #fff;
-    font-size: 16px;
-    text-transform: capitalize;
+    padding: 10px;
+    margin-top: 10px;
     text-decoration: none;
+    color: #2f6ecc;
+    border: 1px solid #2f5bcc;
+    border-radius: 4px;
+    transition: all 400ms ease;
+    margin-bottom: 5px;
 }
 
-ul.page-breadcrumb li a:hover {
-    color: #6984ff;
-    font-weight: bold;
+.card .contenido-card a:hover {
+    background: #3d92ed;
+    color: #fff;
 }
 
-.page-title-bg {
-    background-image: url(../../../../assets/imgs/bg/FondoDesc.jpg);
+@media only screen and (min-width:320px) and (max-width:768px) {
+    .container-card {
+        flex-wrap: wrap;
+    }
+
+    .card {
+        margin: 15px;
+    }
 }
 
-.bg-overlay-black::before {
-    background: rgba(0, 0, 0, 0.7);
-    content: "";
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-.parallax {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-/** =============== FIN DE LA PARTE DEL FONDO EN EL INICIO DE CADA PAGINA ===============*/
+/*Fin-Cards*/

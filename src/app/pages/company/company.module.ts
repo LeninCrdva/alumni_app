@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlumniRoutingModule } from './company-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostulacionesComponent } from '../alumni/postulaciones/postulaciones.component';
+import { PostulacionesAddFormComponent } from './postulaciones-add-form/postulaciones-add-form.component';
+import { CompanyRoutingModule } from './company-routing.module';
 
 @NgModule({
     declarations: [
         DashboardComponent,
-        PostulacionesComponent
+        PostulacionesAddFormComponent
     ],
     imports: [
         CommonModule,
-        AlumniRoutingModule,
+        CompanyRoutingModule,
     ]
 })
 
-export class AlumniModule { }
+export class CompanyModule { }

@@ -8,6 +8,7 @@ import { SectorEmpresarialCrudComponent } from './sector-empresarial-crud/sector
 import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'carrera', component: CarrerasCrudComponent },
     { path: 'sector-empresarial', component: SectorEmpresarialCrudComponent },
     { path: 'oferta-detalle', component: OfertaDetalleComponent },
+    { path: 'perfil-form', component: PerfilFormComponent },
 ];
 
 @NgModule({
