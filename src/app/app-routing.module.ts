@@ -4,7 +4,7 @@ import { LayoutBaseComponent } from './layout/layout-client/layout-base.componen
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GraduadosListComponent } from './pages/alumni/graduados-list/graduados-list.component';
-import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
+import { UsuariosListsComponent } from './usuarios-lists/usuarios-lists.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {path:'graduados-list', component: GraduadosListComponent},
-  {path:'usuarios-list', component: UsuariosListComponent},
+  {path:'usuarios-list', component: UsuariosListsComponent},
 
   {
     path: 'account',
