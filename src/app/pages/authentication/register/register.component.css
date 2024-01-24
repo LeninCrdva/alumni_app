@@ -28,6 +28,10 @@ body {
     background-size: cover;
     background-position: center;
 }
+.image-container {
+    margin-top: 20px; 
+  }
+  
 
 .scroll-register {
     height: 44rem;

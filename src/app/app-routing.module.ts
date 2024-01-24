@@ -9,17 +9,16 @@ import { PycListComponent } from './pyc-list/pyc-list.component';
 import { ParametrosPreguntasComponent } from './pages/alumni/parametros-preguntas/parametros-preguntas.component';
 
 const routes: Routes = [
+  { path: 'graduados-list', component: GraduadosListComponent },
+  { path: 'usuarios-list', component: UsuariosListsComponent },
+  { path: 'pyc-list', component: PycListComponent },
+  { path: 'para', component: ParametrosPreguntasComponent },
+  
   {
     path: 'account',
     redirectTo: 'account/login',
     pathMatch: 'full'
   },
-  {path:'graduados-list', component: GraduadosListComponent},
-  {path:'usuarios-list', component: UsuariosListsComponent},
-  {path:'pyc-list', component: PycListComponent},
-  {path:'para', component: ParametrosPreguntasComponent},
-
-
   {
     path: 'account',
     loadChildren: () => import('./pages/authentication/authentication.module').then((m) => m.AuthenticationModule)

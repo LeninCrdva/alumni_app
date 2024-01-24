@@ -1,29 +1,38 @@
 // asset.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+const FILES_API = 'http://localhost:8080/assets/';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AssetService {
-  private baseUrl = 'http://localhost:8080/assets';
 
-  constructor(private http: HttpClient) { }
 
-  uploadFile(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('multipartFile', file);
+  constructor(private httpClient: HttpClient) { }
 
-    return this.http.post(`${this.baseUrl}/upload`, formData);
+  upload(multipartFile: File): Observable<HttpEvent<any>> {
+
+    const formData: FormData = new FormData();
+    formData.append('multipartFile', multipartFile);
+    const req = new HttpRequest('POST', `${FILES_API}upload/`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.httpClient.request(req);
   }
 
-  getObjectUrl(key: string): string {
-    return `${this.baseUrl}/get-object?key=${key}`;
+  getFile(filename: string) {
+    return this.httpClient.get(`${FILES_API}get-object/${filename} `);
   }
 
-  deleteObject(key: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete-object?key=${key}`);
+  delete(filename: string) {
+    return this.httpClient.get(`${FILES_API}delete-object/${filename} `);
+  }
+
+  public post(url: string, body: any) {
+    return this.httpClient.post(url, body); // POST  
   }
 }

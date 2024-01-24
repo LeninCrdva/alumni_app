@@ -1,116 +1,144 @@
 <section>
-    <div class="row g-0">
-        <div class="col-lg-7 d-none d-lg-block">
-            <div class="carousel-item img-1 min-vh-100 active"></div>
-        </div>
-        <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
-            <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 mb-auto w-100">
-                <img src="../../../../assets/imgs/ALumni_Logo_Dark_Large.png" class="img-fluid" />
-            </div>
-            <div class="align-self-center w-100 px-lg-5 py-lg-4 p-4 scroll-register">
-                <h1 class="font-weight-bold mb-4">Crear Cuenta</h1>
-                <form class="mb-5" [formGroup]="registerForm" (ngSubmit)="register()">
-                    <div class="mb-4">
-                      <label for="InputNombreM" class="form-label font-weight-bold">Primer Nombre</label>
-                      <input type="text" formControlName="primerNombre" class="form-control bg-dark-x border-0" id="InputNombreM"
-                        placeholder="Ingresa tu primer Nombre">
-                      <!-- Mostrar mensaje de error para el campo primerNombre -->
-                      <div *ngIf="registerForm.get('primerNombre') && registerForm.get('primerNombre')">
-                        El primer nombre es obligatorio.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputNombreP" class="form-label font-weight-bold">Segundo Nombre</label>
-                      <input type="text" formControlName="segundoNombre" class="form-control bg-dark-x border-0" id="InputNombreP"
-                        placeholder="Ingresa tu segundo Nombre">
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputApellidoM" class="form-label font-weight-bold">Primer Apellido</label>
-                      <input type="text" formControlName="primerApellido" class="form-control bg-dark-x border-0" id="InputApellidoM"
-                        placeholder="Ingresa tu primer Apellido">
-                      <!-- Mostrar mensaje de error para el campo primerApellido -->
-                      <div *ngIf="registerForm.get('primerApellido') && registerForm.get('primerApellido')">
-                        El primer apellido es obligatorio.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputApellidoP" class="form-label font-weight-bold">Segundo Apellido</label>
-                      <input type="text" formControlName="segundoApellido" class="form-control bg-dark-x border-0" id="InputApellidoP"
-                        placeholder="Ingresa tu segundo Apellido">
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputCedula" class="form-label font-weight-bold">Cédula</label>
-                      <input type="text" formControlName="cedula" class="form-control bg-dark-x border-0" id="InputCedula"
-                        placeholder="Ingresa tu Cedula">
-                      <!-- Mostrar mensaje de error para el campo cedula -->
-                      <div *ngIf="registerForm.get('cedula')&& registerForm.get('cedula')">
-                        La cédula es obligatoria.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputTelefono" class="form-label font-weight-bold">Teléfono</label>
-                      <input type="text" formControlName="telefono" class="form-control bg-dark-x border-0" id="InputTelefono"
-                        placeholder="Ingresa tu Telefono">
-                      <!-- Mostrar mensaje de error para el campo telefono -->
-                      <div *ngIf="registerForm.get('telefono') && registerForm.get('telefono')">
-                        El teléfono es obligatorio.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputFechaNacimiento" class="form-label font-weight-bold">Fecha de Nacimiento</label>
-                      <input type="date" formControlName="fechaNacimiento" class="form-control bg-dark-x border-0" id="InputFechaNacimiento"
-                        placeholder="Ingresa tu fecha de nacimiento">
-                      <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
-                      <div *ngIf="registerForm.get('fechaNacimiento') && registerForm.get('fechaNacimiento')">
-                        La fecha de nacimiento es obligatoria.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputNombreUsuario" class="form-label font-weight-bold">Nombre de Usuario</label>
-                      <input type="text" formControlName="nombreUsuario" class="form-control bg-dark-x border-0" id="InputNombreUsuario"
-                        placeholder="Ingresa tu Nombre de usuario">
-                      <!-- Mostrar mensaje de error para el campo nombreUsuario -->
-                      <div *ngIf="registerForm.get('nombreUsuario')&& registerForm.get('nombreUsuario')">
-                        El nombre de usuario es obligatorio.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="InputPassword" class="form-label font-weight-bold">Contraseña</label>
-                      <input type="password" formControlName="clave" class="form-control bg-dark-x border-0 mb-2"
-                        placeholder="Ingresa tu contraseña" id="InputPassword">
-                      <!-- Mostrar mensaje de error para el campo clave -->
-                      <div *ngIf="registerForm.get('clave') && registerForm.get('clave')">
-                        La contraseña es obligatoria.
-                      </div>
-                    </div>
-                  
-                    <div class="mb-4">
-                      <label for="inputFoto" class="form-label font-weight-bold">Foto</label>
-                      <input type="file" formControlName="inputFoto" class="form-control bg-dark-x border-0" id="inputFoto"
-                        accept=".png, .jpeg, .jpg" placeholder="Ingresa tu foto">
-                      <!-- Mostrar mensaje de error para el campo inputFoto -->
-                      <div *ngIf="registerForm.get('inputFoto') && registerForm.get('inputFoto')">
-                        La foto es obligatoria.
-                      </div>
-                    </div>
-                  
-                    <button type="submit" class="btn btn-primary w-100">Registrar</button>
-                  </form>
-                  
-                <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
-                    <p class="d-inline-block mb-0">¿Ya tienes una cuenta?</p> <a href=""
-                        class="text-light font-weight-bold text-decoration-none" [routerLink]="['/account/login']"
-                        routerLinkActive="router-link-active"> Inicia Sesion</a>
-                </div>
-            </div>
-        </div>
+  <div class="row g-0">
+    <div class="col-lg-7 d-none d-lg-block">
+      <div class="carousel-item img-1 min-vh-100 active"></div>
     </div>
+    <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
+      <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 mb-auto w-100">
+        <img src="../../../../assets/imgs/ALumni_Logo_Dark_Large.png" class="img-fluid" />
+      </div>
+      <div class="align-self-center w-100 px-lg-5 py-lg-4 p-4 scroll-register">
+        <h1 class="font-weight-bold mb-4">Crear Cuenta</h1>
+        <form class="mb-5" [formGroup]="registerForm" (ngSubmit)="register()">
+          <div class="mb-4">
+            <label for="InputNombreM" class="form-label font-weight-bold">Primer Nombre</label>
+            <input type="text" formControlName="primerNombre" class="form-control bg-dark-x border-0" id="InputNombreM"
+              placeholder="Ingresa tu primer Nombre">
+            <!-- Mostrar mensaje de error para el campo primerNombre -->
+            <div class="text-danger" *ngIf="registerForm.get('primerNombre')?.hasError('required') && registerForm.get('primerNombre')?.touched">
+              El primer nombre es obligatorio.
+            </div>
+            
+          </div>
+
+          <div class="mb-4">
+            <label for="InputNombreP" class="form-label font-weight-bold">Segundo Nombre</label>
+            <input type="text" formControlName="segundoNombre" class="form-control bg-dark-x border-0" id="InputNombreP"
+              placeholder="Ingresa tu segundo Nombre">
+               <!-- Mostrar mensaje de error para el campo segundoNombre -->
+            <div class="text-danger" *ngIf="registerForm.get('segundoNombre')?.hasError('required') && registerForm.get('segundoNombre')?.touched">
+              El segundo nombre es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputApellidoM" class="form-label font-weight-bold">Primer Apellido</label>
+            <input type="text" formControlName="primerApellido" class="form-control bg-dark-x border-0"
+              id="InputApellidoM" placeholder="Ingresa tu primer Apellido">
+            <!-- Mostrar mensaje de error para el campo primerApellido -->
+            <div class="text-danger" *ngIf="registerForm.get('primerApellido')?.hasError('required') && registerForm.get('primerApellido')?.touched">
+              El primer apellido es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputApellidoP" class="form-label font-weight-bold">Segundo Apellido</label>
+            <input type="text" formControlName="segundoApellido" class="form-control bg-dark-x border-0"
+              id="InputApellidoP" placeholder="Ingresa tu segundo Apellido">
+              <!-- Mostrar mensaje de error para el campo segundoApellido -->
+            <div class="text-danger" *ngIf="registerForm.get('segundoApellido')?.hasError('required') && registerForm.get('segundoApellido')?.touched">
+              El segundo apellido es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputCedula" class="form-label font-weight-bold">Cédula</label>
+            <input type="text" formControlName="cedula" class="form-control bg-dark-x border-0" id="InputCedula"
+              placeholder="Ingresa tu Cedula">
+            <!-- Mostrar mensaje de error para el campo cedula -->
+            <div class="text-danger" *ngIf="registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched">
+             La cedula es obligatoria.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputTelefono" class="form-label font-weight-bold">Teléfono</label>
+            <input type="text" formControlName="telefono" class="form-control bg-dark-x border-0" id="InputTelefono"
+              placeholder="Ingresa tu Telefono">
+            <!-- Mostrar mensaje de error para el campo telefono -->
+             <div class="text-danger" *ngIf="registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched">
+              El telefono es obligatoria.
+             </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputFechaNacimiento" class="form-label font-weight-bold">Fecha de Nacimiento</label>
+            <input type="date" formControlName="fechaNacimiento" class="form-control bg-dark-x border-0"
+              id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+            <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
+            <div class="text-danger" *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
+              La fecha es obligatoria.
+             </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputNombreUsuario" class="form-label font-weight-bold">Nombre de Usuario</label>
+            <input type="text" formControlName="nombreUsuario" class="form-control bg-dark-x border-0"
+              id="InputNombreUsuario" placeholder="Ingresa tu Nombre de usuario">
+            <!-- Mostrar mensaje de error para el campo nombreUsuario -->
+            <div class="text-danger" *ngIf="registerForm.get('nombreUsuario')?.hasError('required') && registerForm.get('nombreUsuario')?.touched">
+              El nombre de usuario es obligatoria.
+             </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="InputPassword" class="form-label font-weight-bold">Contraseña</label>
+            <input type="password" formControlName="clave" class="form-control bg-dark-x border-0 mb-2"
+              placeholder="Ingresa tu contraseña" id="InputPassword">
+            <!-- Mostrar mensaje de error para el campo clave -->
+            <div class="text-danger" *ngIf="registerForm.get('clave')?.hasError('required') && registerForm.get('clave')?.touched">
+              La contraseña es obligatoria.
+             </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="inputFoto" class="form-label font-weight-bold">Subir Foto de perfil</label>
+            <input type="file" (change)="capturarFile($event)" class="form-control bg-dark-x border-0" id="inputFoto"
+              accept=".png, .jpeg, .jpg" placeholder="Selecciona tu foto">
+
+           
+            <!-- Vista previa de la imagen seleccionada -->
+            <div class="preview-img" *ngIf="previsualizacion">
+              <button class="clear-image" type="button" (click)="clearImage()"class="form-control bg-dark-x border-0">
+                Cancelar
+              </button>
+              <div class="image-container">
+                <img [src]="previsualizacion" alt="" width="100" height="100" />
+              </div>
+            </div>
+
+
+
+
+            <!-- Mostrar mensaje de error para el campo inputFoto -->
+
+
+            <!-- Botón para subir la foto de perfil -->
+            <div class="wrapper-button" *ngIf="previsualizacion">
+
+            </div>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary w-100" >Registrar</button>
+        </form>
+
+        <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
+          <p class="d-inline-block mb-0">¿Ya tienes una cuenta?</p> <a href=""
+            class="text-light font-weight-bold text-decoration-none" [routerLink]="['/account/login']"
+            routerLinkActive="router-link-active"> Inicia Sesion</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
