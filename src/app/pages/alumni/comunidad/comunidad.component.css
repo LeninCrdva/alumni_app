@@ -1,0 +1,49 @@
+.bg-half-260 {
+    padding: 260px 0;
+    background-size: cover;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+    position: relative;
+    background-position: center center;
+}
+
+.bg-overlay {
+    background-color: rgba(24, 24, 24, 0.7);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rounded {
+    border-radius: 5px !important;
+}
+
+@media (max-width: 767px) {
+
+    .bg-home,
+    .bg-half-170,
+    .bg-half-260,
+    .swiper-slider-hero .swiper-container .swiper-slide,
+    .main-slider .slides .bg-slider {
+        padding: 150px 0;
+        height: auto !important;
+    }
+    
+    .online-hero-img img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (min-width: 576px) {
+    .candidate-detail .candidate-detail-top {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+}
