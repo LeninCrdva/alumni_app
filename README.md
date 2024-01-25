@@ -6,6 +6,8 @@
 - npm install popper.js --save
 - npm install @angular/router --save
 - npm i ngx-bootstrap
+- npm install --save sweetalert2
+
 
 # Alumnifrontapp
 
