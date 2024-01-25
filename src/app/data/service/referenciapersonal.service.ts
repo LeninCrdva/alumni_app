@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Referencias_personales } from '../data/model/referencia_personal';
+import { Referencias_personales } from '../model/referencia_personal';
 
 @Injectable({
   providedIn: 'root'

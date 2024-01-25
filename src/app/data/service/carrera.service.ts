@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { Observable } from 'rxjs';
-import { Carrera } from '../data/model/carrera';
+import { Carrera } from '../model/carrera';
 
 @Injectable({
   providedIn: 'root'

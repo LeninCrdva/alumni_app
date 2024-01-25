@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
-import { Rol } from '../data/model/rol';
+import { Rol } from '../model/rol';
 
 @Injectable({
     providedIn: 'root'
