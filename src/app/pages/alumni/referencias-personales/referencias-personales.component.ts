@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-referencias-personales',
   templateUrl: './referencias-personales.component.html',
-  styleUrl: './referencias-personales.component.css'
+  styleUrls: ['./referencias-personales.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class ReferenciasPersonalesComponent {
 

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-experiencia',
   templateUrl: './experiencia.component.html',
-  styleUrl: './experiencia.component.css'
+  styleUrls: ['./experiencia.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class ExperienciaComponent {
 

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
-  styleUrl: './titulos.component.css'
+  styleUrls: ['./titulos.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class TitulosComponent {
 

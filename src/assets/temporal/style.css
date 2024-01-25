@@ -12,7 +12,6 @@
  *     09.  C.T.A                *
  *     10.  Team                 *
  *     11.  Testimonial          *
- *     12.  Pricing              *
  *     13.  Work / Portfolio     *
  *     14.  Blog / News          *
  *     15.  Countdown            *
@@ -3786,57 +3785,6 @@ p {
   left: 10%;
 }
 
-.pricing.price-bundle,
-.pricing.price-table {
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-
-.pricing.price-bundle .price-img {
-  position: absolute;
-  top: 30%;
-  right: 24px;
-  -webkit-transform: translateY(-30%);
-  transform: translateY(-30%);
-  opacity: 0.05;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-
-.pricing.price-bundle:hover {
-  -webkit-transform: translateY(-7px);
-  transform: translateY(-7px);
-  -webkit-box-shadow: 0 10px 25px rgba(60, 72, 88, 0.15) !important;
-  box-shadow: 0 10px 25px rgba(60, 72, 88, 0.15) !important;
-}
-
-.pricing.price-bundle:hover .price-img {
-  opacity: 0.1;
-}
-
-.pricing.price-table .price-top,
-.pricing.price-table .price-content,
-.pricing.price-table .price-feature .table-addon {
-  -webkit-transition: all 0.4s ease;
-  transition: all 0.4s ease;
-}
-
-.pricing.price-table:hover {
-  -webkit-transform: scale(1.01);
-  transform: scale(1.01);
-  -webkit-box-shadow: 0 10px 25px rgba(60, 72, 88, 0.15) !important;
-  box-shadow: 0 10px 25px rgba(60, 72, 88, 0.15) !important;
-}
-
-.pricing.price-table:hover .price-top {
-  background: #f7f7ff;
-}
-
-.pricing.price-table:hover .price-content,
-.pricing.price-table:hover .price-feature .table-addon {
-  color: #003cc9;
-}
-
 .container-filter li a {
   font-size: 14px;
   padding: 0px 5px;
@@ -3988,76 +3936,6 @@ p {
 .work-container.work-grid:hover .content {
   -webkit-transform: translateY(0);
   transform: translateY(0);
-}
-
-.blog-post .blog-img .author-desc {
-  bottom: 20px;
-  left: 10px;
-}
-
-.blog-post .blog-img .author-desc .author .name:hover {
-  color: #003cc9 !important;
-}
-
-.blog-post .blog-content h5 {
-  line-height: 1.3;
-}
-
-.blog-post .blog-content .title {
-  font-size: 18px !important;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-.blog-post .blog-content .title:hover {
-  color: #003cc9 !important;
-}
-
-.blog-post .blog-content .post-meta .like:hover,
-.blog-post .blog-content .post-meta .comment:hover,
-.blog-post .blog-content .post-meta .read:hover,
-.blog-post .blog-content .post-meta .tag:hover {
-  color: #003cc9 !important;
-}
-
-.blog-post .blog-content .post-meta .like:focus .like-icon {
-  color: #d6374a;
-  fill: #d6374a;
-}
-
-.blog-post:hover {
-  -webkit-transform: translateY(-10px);
-  transform: translateY(-10px);
-}
-
-.blog-post:hover.single-blog-post {
-  -webkit-transform: translateY(0px);
-  transform: translateY(0px);
-}
-
-.blog-post:hover .blog-img .overlay {
-  opacity: 0.6;
-}
-
-.blog-post:hover .blog-img .author-desc {
-  opacity: 1;
-}
-
-.blog-post .blog-img .overlay,
-.blog-post .blog-img .author-desc,
-.popular-tour .overlay {
-  position: absolute;
-  opacity: 0;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-.blog-post .blog-img .overlay,
-.popular-tour .overlay {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
 
 .sticky-bar {

@@ -15,6 +15,7 @@ import { TitulosComponent } from './titulos/titulos.component';
 import { ReferenciasPersonalesComponent } from './referencias-personales/referencias-personales.component';
 import { OfertasDeTrabajoComponent } from './ofertas-de-trabajo/ofertas-de-trabajo.component';
 import { ComunidadComponent } from './comunidad/comunidad.component';
+import { ReferenciasLaboralesComponent } from './referencias-laborales/referencias-laborales.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { ComunidadComponent } from './comunidad/comunidad.component';
         TitulosComponent,
         ReferenciasPersonalesComponent,
         OfertasDeTrabajoComponent,
-        ComunidadComponent
+        ComunidadComponent,
+        ReferenciasLaboralesComponent
     ],
     imports: [
         CommonModule,

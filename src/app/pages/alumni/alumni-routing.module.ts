@@ -15,6 +15,7 @@ import { ReferenciasPersonalesComponent } from './referencias-personales/referen
 import { ComunidadComponent } from './comunidad/comunidad.component';
 import { ExperienciaComponent } from './experiencia/experiencia.component';
 import { CapacitacionesComponent } from './capacitaciones/capacitaciones.component';
+import { ReferenciasLaboralesComponent } from './referencias-laborales/referencias-laborales.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
     { path: 'capacitaciones', component: CapacitacionesComponent },
     { path: 'titulos', component: TitulosComponent },
     { path: 'referencias-personales', component: ReferenciasPersonalesComponent },
+    { path: 'referencias-laborales', component: ReferenciasLaboralesComponent },
     
     // NOTE: OFERTAS
     { path: 'postulaciones', component: PostulacionesComponent },
