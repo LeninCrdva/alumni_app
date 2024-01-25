@@ -8,10 +8,10 @@ import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
 export class LayoutSystemComponent implements OnInit {
   showAdminOptions = false;
   showEmpresarioOptions = false;
-  showAlumniOptions = true;
+  showAlumniOptions = false;
 
   activeMenuItem: string = 'Dashboard';
-  rolType: string = 'Alumni';
+  rolType: string = '';
   activeDropdown: string | null = null;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
@@ -30,6 +30,27 @@ export class LayoutSystemComponent implements OnInit {
   }
 
   private checkUserRole() {
+    const userRole = localStorage.getItem('userRole');
+    console.log(userRole);
+    if(userRole=='ROL_ADMINISTRADOR'){
+      this.showAdminOptions = true;
+      this.rolType='Admin';
+    }
+    else{
+       if(userRole=='ROL_EMPRESARIO'){
+      
+        this.showEmpresarioOptions = true;
+        this.rolType='Empresario';
+
+       }
+       else{
+         if(userRole=='ROL_GRADUADO'){
+          this.showAlumniOptions = true;
+          this.rolType='Alumni';
+          
+         }
+       }
+    }
     // private checkUserRole(authorities: string[]): void {
     // !Terminar de implementar
     // this.showAdminOptions = authorities.includes('ROL_ADMINISTRADOR');
