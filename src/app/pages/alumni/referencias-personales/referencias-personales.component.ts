@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class ReferenciasPersonalesComponent {
 
+  editarClicked = false;
+
+  onEditarClick(): void {
+    this.editarClicked = true;
+  }
 }
