@@ -6,6 +6,7 @@ import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'postulaciones_form', component: OfertasLaboralesComponent },
+    { path: 'postulaciones_form', component: OfertasLaboralesComponent },
 ];
 
 @NgModule({

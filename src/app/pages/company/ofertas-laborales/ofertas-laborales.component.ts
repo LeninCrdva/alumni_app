@@ -6,9 +6,14 @@ import { Component } from '@angular/core';
   styleUrl: './ofertas-laborales.component.css'
 })
 export class OfertasLaboralesComponent {
+
   editarClicked = false;
 
   onEditarClick(): void {
     this.editarClicked = true;
+  }
+
+  onRegistrarClick(): void {
+    this.editarClicked = false;
   }
 }
