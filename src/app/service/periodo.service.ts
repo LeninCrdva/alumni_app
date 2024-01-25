@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Periodo } from '../Models/periodo';
+import { Periodo } from '../data/model/periodo';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Superadmin } from '../Models/superadmin';
+import { Superadmin } from '../data/model/superadmin';
 
 @Injectable({
   providedIn: 'root'

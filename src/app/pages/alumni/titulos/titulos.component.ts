@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TituloService } from '../../../service/titulo.service';
 
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
   styleUrls: ['./titulos.component.css', '../../../../assets/prefabs/headers.css']
 })
-export class TitulosComponent {
+export class TitulosComponent implements OnInit {
 
   editarClicked = false;
 
@@ -16,4 +17,12 @@ export class TitulosComponent {
   onRegistrarClick(): void {
     this.editarClicked = false;
   }
+  titulos: any[] = [];
+
+  constructor(private tituloService: TituloService) { }
+
+  ngOnInit(): void {
+    // this.loadTitulos();
+  }
+
 }

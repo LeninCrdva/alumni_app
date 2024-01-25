@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Experiencia } from '../Models/experiencia';
+import { Experiencia } from '../data/model/experiencia';
 import { Observable } from 'rxjs';
 
 @Injectable({

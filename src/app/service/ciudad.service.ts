@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Ciudad } from '../Models/ciudad';
+import { Ciudad } from '../data/model/ciudad';
 
 @Injectable({
   providedIn: 'root'
