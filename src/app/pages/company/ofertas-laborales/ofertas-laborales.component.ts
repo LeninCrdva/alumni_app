@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-postulaciones-add-form',
   templateUrl: './ofertas-laborales.component.html',
-  styleUrl: './ofertas-laborales.component.css'
+  styleUrls: ['./ofertas-laborales.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class OfertasLaboralesComponent {
 
