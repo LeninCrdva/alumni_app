@@ -9,6 +9,12 @@ import { SectorEmpresarialCrudComponent } from '../admin/sector-empresarial-crud
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
+import { CapacitacionesComponent } from './capacitaciones/capacitaciones.component';
+import { ExperienciaComponent } from './experiencia/experiencia.component';
+import { TitulosComponent } from './titulos/titulos.component';
+import { ReferenciasPersonalesComponent } from './referencias-personales/referencias-personales.component';
+import { OfertasDeTrabajoComponent } from './ofertas-de-trabajo/ofertas-de-trabajo.component';
+import { ComunidadComponent } from './comunidad/comunidad.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +25,13 @@ import { PerfilFormComponent } from './perfil-form/perfil-form.component';
         SectorEmpresarialCrudComponent,
         OfertaDetalleComponent,
         PerfilUsuarioComponent,
-        PerfilFormComponent
+        PerfilFormComponent,
+        CapacitacionesComponent,
+        ExperienciaComponent,
+        TitulosComponent,
+        ReferenciasPersonalesComponent,
+        OfertasDeTrabajoComponent,
+        ComunidadComponent
     ],
     imports: [
         CommonModule,

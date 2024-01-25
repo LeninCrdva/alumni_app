@@ -12,8 +12,8 @@
         <!-- NOTE: ALUMNI -->
         <ul class="side-menu" [class.hidden]="!showAlumniOptions">
 
-            <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/alumni']" (click)="setActiveMenuItem('Dashboard')">
+            <li>
+                <a [class.active]="activeMenuItem === 'Dashboard'" [routerLink]="['/system/alumni']" (click)="setActiveMenuItem('Dashboard')">
                     <i class='bx bxs-dashboard icon'></i> Dashboard
                 </a>
             </li>
@@ -24,13 +24,24 @@
                 <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a (click)="setActiveMenuItem('Mi Perfil')" [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active">Mi
-                            Perfil</a>
+                    <li><a (click)="setActiveMenuItem('Mi Perfil')" [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active">
+                            Mi Perfil</a>
                     </li>
-                    <li><a (click)="setActiveMenuItem('Mi Experiencia')" href="#">Mi Experiencia</a></li>
-                    <li><a (click)="setActiveMenuItem('Mis Capacitaciones')" href="#">Mis Capacitaciones</a></li>
-                    <li><a (click)="setActiveMenuItem('Mis Logros')" href="#">Mis Logros</a></li>
-                    <li><a (click)="setActiveMenuItem('Referencias Laborales')" href="#">Referencias Laborales</a></li>
+                    <li><a (click)="setActiveMenuItem('Actualizar Perfil')" [routerLink]="['/system/alumni/update-perfil']" routerLinkActive="router-link-active">
+                            Actualizar Perfil</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Mi Experiencia')" [routerLink]="['/system/alumni/experiencia']" routerLinkActive="router-link-active">
+                            Mi Experiencia</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Mis Capacitaciones')" [routerLink]="['/system/alumni/capacitaciones']" routerLinkActive="router-link-active">
+                            Mis Capacitaciones</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Mis Titulos')" [routerLink]="['/system/alumni/titulos']" routerLinkActive="router-link-active">
+                            Mis Titulos</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Referencias Laborales')" [routerLink]="['/system/alumni/referencias-personales']" routerLinkActive="router-link-active">
+                            Referencias Laborales</a>
+                    </li>
                 </ul>
             </li>
             <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
@@ -130,9 +141,9 @@
                 <a>Bienvenido "Angel Cardenas"</a>
                 <img src="../../../assets/imgs/User_Icon.png" alt="Foto De Perfil">
                 <ul class="profile-link">
-                    <li><a href="#"><i class='bx bxs-user-circle icon'></i> Perfil</a></li>
-                    <li><a href="#"><i class='bx bx-user-pin icon'></i> Actualizar Perfil</a></li>
-                    <li><a href="#"><i class='bx bx-exit icon'></i> Cerrar Sesion</a></li>
+                    <li><a [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active"><i class='bx bxs-user-circle icon'></i> Perfil</a></li>
+                    <li><a [routerLink]="['/system/alumni/perfil-form']" routerLinkActive="router-link-active"><i class='bx bx-user-pin icon'></i> Actualizar Perfil</a></li>
+                    <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active"><i class='bx bx-exit icon'></i> Cerrar Sesion</a></li>
                 </ul>
             </div>
         </nav>
