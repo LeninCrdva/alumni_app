@@ -12,4 +12,8 @@ export class ExperienciaComponent {
   onEditarClick(): void {
     this.editarClicked = true;
   }
+
+  onRegistrarClick(): void {
+    this.editarClicked = false;
+  }
 }
