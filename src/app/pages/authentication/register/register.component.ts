@@ -4,7 +4,7 @@ import { PersonaService } from '../../../service/PersonService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../../service/AuthService';
 import { AssetService } from '../../../service/Asset.service';
-import { Persona } from '../../../Models/persona';
+import { Persona } from '../../../data/model/persona';
 import Swal from 'sweetalert2';  // Asegúrate de tener instalada la librería SweetAlert
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
