@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostulacionesAddFormComponent } from './ofertas-laborales/postulaciones-add-form.component';
 import { CompanyRoutingModule } from './company-routing.module';
+import { FormsModule } from '@angular/forms';
+import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
 
 @NgModule({
     declarations: [
         DashboardComponent,
-        PostulacionesAddFormComponent
+        OfertasLaboralesComponent
     ],
     imports: [
         CommonModule,
         CompanyRoutingModule,
+        [FormsModule],
     ]
 })
 

@@ -4,9 +4,9 @@ import { LayoutBaseComponent } from './layout/layout-client/layout-base.componen
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { GraduadosListComponent } from './pages/alumni/graduados-list/graduados-list.component';
-import { UsuariosListsComponent } from './usuarios-lists/usuarios-lists.component';
-import { PycListComponent } from './pyc-list/pyc-list.component';
 import { ParametrosPreguntasComponent } from './pages/alumni/parametros-preguntas/parametros-preguntas.component';
+import { UsuariosListsComponent } from './pages/admin/usuarios-lists/usuarios-lists.component';
+import { PycListComponent } from './pages/admin/pyc-list/pyc-list.component';
 
 const routes: Routes = [
   { path: 'graduados-list', component: GraduadosListComponent },
