@@ -6,14 +6,38 @@ import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
   styleUrls: ['./layout-system.component.css']
 })
 export class LayoutSystemComponent implements OnInit {
+  showAdminOptions = false;
+  showEmpresarioOptions = false;
+  showAlumniOptions = true;
+
+  activeMenuItem: string = 'Dashboard';
+  rolType: string = 'Alumni';
+  activeDropdown: string | null = null;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
+    // NOTE: START SLIDER BAR
     this.setupSidebarDropdown();
     this.setupSidebarCollapse();
     this.setupProfileDropdown();
+    // NOTE: END SLIDER BAR
+    this.checkUserRole();
   }
+
+  setActiveMenuItem(menuItem: string): void {
+    this.activeMenuItem = menuItem;
+  }
+
+  private checkUserRole() {
+    // private checkUserRole(authorities: string[]): void {
+    // !Terminar de implementar
+    // this.showAdminOptions = authorities.includes('ROL_ADMINISTRADOR');
+    // this.showEmpresarioOptions = authorities.includes('ROL_EMPRESARIO');
+    // this.showAlumniOptions = authorities.includes('ROL_GRADUADO');
+  }
+
+  // NOTE: SLIDER BAR
 
   private setupSidebarDropdown() {
     const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');

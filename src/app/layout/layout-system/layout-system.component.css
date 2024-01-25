@@ -1,3 +1,7 @@
+.hidden {
+    display: none !important;
+}
+
 .content-slide {
     box-sizing: border-box;
     background: #f0f3f6;
@@ -177,7 +181,7 @@ nav .toggle-sidebar {
 }
 
 nav form {
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     margin-right: auto;
 }

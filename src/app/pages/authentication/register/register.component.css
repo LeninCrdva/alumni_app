@@ -1,11 +1,5 @@
-body {
-    font-family: 'Spartan', sans-serif;
-    font-weight: 300;
-    color: var(--light);
-}
-
 .text-light {
-    color: var(--dark-x) !important;
+    color: rgb(0, 0, 0) !important;
     font-weight: bold;
 }
 
@@ -17,6 +11,8 @@ body {
 .form-control {
     min-height: 3.125rem;
     line-height: initial;
+    background-color: rgb(236, 234, 234);
+    border-radius: 20px;
 }
 
 .form-control:focus {
@@ -28,10 +24,10 @@ body {
     background-size: cover;
     background-position: center;
 }
+
 .image-container {
-    margin-top: 20px; 
-  }
-  
+    margin-top: 20px;
+}
 
 .scroll-register {
     height: 44rem;
