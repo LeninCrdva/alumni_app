@@ -3,8 +3,17 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-crud-empresas',
   templateUrl: './crud-empresas.component.html',
-  styleUrl: './crud-empresas.component.css'
+  styleUrls: ['./crud-empresas.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class CrudEmpresasComponent {
 
+  editarClicked = false;
+
+  onEditarClick(): void {
+    this.editarClicked = true;
+  }
+
+  onRegistrarClick(): void {
+    this.editarClicked = false;
+  }
 }
