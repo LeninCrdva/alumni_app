@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
 
-    //console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
+    console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
 
   }
   closeModal(): void {
