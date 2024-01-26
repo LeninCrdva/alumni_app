@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { timeInterval } from 'rxjs';
+import { Component } from '@angular/core';
 import { sectorempresarial } from '../../../data/model/sectorEmpresarial';
 import { SectorEmpresarialService } from '../../../data/service/sectorempresarial.service';
 
 @Component({
-  selector: 'app-sector-empresarial',
-  templateUrl: './sector-empresarial.component.html',
-  styleUrl: './sector-empresarial.component.css'
+  selector: 'app-sector-emp',
+  templateUrl: './sector-emp.component.html',
+  styleUrl: './sector-emp.component.css'
 })
-export class SectorEmpresarialComponent implements OnInit {
+export class SectorEmpComponent {
   sectoresEmpresariales: sectorempresarial[] = [];
   nuevoSector: sectorempresarial = { nombre: '', descripcion: '' }; // Asegúrate de tener las propiedades correctas según tu modelo
-  nuevoSectorCarga: sectorempresarial = { id:0 ,nombre: '', descripcion: '' }; // Asegúrate de tener las propiedades correctas según tu modelo
-  nuevoSectorEdit: sectorempresarial = { id:0 ,nombre: '', descripcion: '' }; // Asegúrate de tener las propiedades correctas según tu modelo
+  nuevoSectorCarga: sectorempresarial = { id: 0, nombre: '', descripcion: '' }; // Asegúrate de tener las propiedades correctas según tu modelo
+  nuevoSectorEdit: sectorempresarial = { id: 0, nombre: '', descripcion: '' }; // Asegúrate de tener las propiedades correctas según tu modelo
 
   modoedicion: boolean = false;
 
