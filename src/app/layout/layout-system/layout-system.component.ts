@@ -13,7 +13,7 @@ export class LayoutSystemComponent implements OnInit {
   activeMenuItem: string = 'Dashboard';
   rolType: string = '';
   activeDropdown: string | null = null;
-
+  name: string | null = localStorage.getItem('name');
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class LayoutSystemComponent implements OnInit {
          }
        }
     }
-    // private checkUserRole(authorities: string[]): void {
+    
     // !Terminar de implementar
     // this.showAdminOptions = authorities.includes('ROL_ADMINISTRADOR');
     // this.showEmpresarioOptions = authorities.includes('ROL_EMPRESARIO');

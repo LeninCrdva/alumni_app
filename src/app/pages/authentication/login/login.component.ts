@@ -44,6 +44,7 @@ export class LoginComponent {
           this.modalRef = this.modalService.show(template);
 
           // Redirigir según el rol del usuario
+          localStorage.setItem('name', username);
           this.redirectBasedOnAuthorities(authorities);
         },
         (error) => {
