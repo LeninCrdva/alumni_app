@@ -6,8 +6,8 @@
     styleUrls: ['./layout-system.component.css']
   })
   export class LayoutSystemComponent implements OnInit {
-    showAdminOptions = false;
-    showEmpresarioOptions = true;
+    showAdminOptions = true;
+    showEmpresarioOptions = false;
     showAlumniOptions = false;
 
     activeMenuItem: string = 'Dashboard';
