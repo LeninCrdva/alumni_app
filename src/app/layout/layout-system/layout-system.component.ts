@@ -8,10 +8,10 @@ import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
 export class LayoutSystemComponent implements OnInit {
   showAdminOptions = false;
   showEmpresarioOptions = false;
-  showAlumniOptions = false;
+  showAlumniOptions = true;
 
   activeMenuItem: string = 'Dashboard';
-  rolType: string = '';
+  rolType: string = 'Alumni';
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
