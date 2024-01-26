@@ -35,6 +35,11 @@ export class UserService {
     return this.http.get<any>(`${this.apiUrl}/usuarios/${id}`);
   }
 
+  getUsuarioByUsername(username: string): Observable<Usuario> {
+    const url = `${this.apiUrl}/usuarios/by-username/${username}`;
+    return this.http.get<Usuario>(url);
+  }
+
   createPerson(usuario: Usuario):  Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/users`, usuario, {headers: this.httpHeaders,});
   }
