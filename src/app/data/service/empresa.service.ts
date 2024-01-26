@@ -27,4 +27,8 @@ export class EmpresaService {
     return this.http.get<Empresa>(`${this.urlEndPoint}/${id}`)
   }
 
+  updateEmpresa(id: number, empresa: Empresa): Observable<Empresa> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Empresa>(url, empresa, { headers: this.httpHeaders });
+  }
 }

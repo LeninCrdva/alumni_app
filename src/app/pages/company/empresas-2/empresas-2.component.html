@@ -20,88 +20,104 @@
                         </h5>
                     </div>
 
+
                     <div class="modal-body">
                         <form>
                             <div class="form-layout form-layout-1">
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">EMPRESA: <span
-                                                    class="tx-danger">*</span></label>
-                                            <select class="form-control" name="empresa">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">WILLSOFTEC</option>
-                                                <option value="tiempo-completo">RENAFIT</option>
-                                                <option value="tiempo-completo">LIBELULA</option>
-                                                <option value="tiempo-completo">STEVE BRO</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">CARGO: <span
+                                            <label class="form-control-label active">RUC: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el cargo">
+                                                placeholder="Ingrese el RUC" [(ngModel)]="empresanueva.ruc" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Nombre: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="username"
+                                                placeholder="Ingrese el nombre" [(ngModel)]="empresanueva.nombre"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">JORNADA: <span
+                                            <label class="form-control-label active">Tipo de Empresa: <span
                                                     class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">MATUTINA</option>
-                                                <option value="medio-tiempo">Medio Tiempo</option>
-                                                <option value="temporal">Temporal</option>
-                                            </select>
+                                            <input class="form-control wd-250" type="text" name="tipoempresa"
+                                                placeholder="Ingrese el tipoempresa"
+                                                [(ngModel)]="empresanueva.tipoEmpresa" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">EXPERIENCIA: <span
+                                            <label class="form-control-label active">Razon Social: <span
                                                     class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">Sin Experiencia</option>
-                                                <option value="medio-tiempo">Con Experiencia</option>
-                                            </select>
+                                            <input class="form-control wd-250" type="text" name="razonsocial"
+                                                placeholder="Ingrese la Razon Social"
+                                                [(ngModel)]="empresanueva.razonsocial" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA INICIO: <span
+                                            <label class="form-control-label active">Area: <span
                                                     class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaInicio">
+                                            <input class="form-control wd-250" type="text" name="area"
+                                                placeholder="Ingrese el area" [(ngModel)]="empresanueva.area" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA FIN: <span
+                                            <label class="form-control-label active">ubicacion: <span
                                                     class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaFin">
+                                            <input class="form-control wd-250" type="text" name="ubicacion"
+                                                placeholder="Ingrese la ubicacion" [(ngModel)]="empresanueva.ubicacion"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">DESCRIPCIÓN: <span
+                                            <label class="form-control-label active">Sitio Web: <span
                                                     class="tx-danger">*</span></label>
-                                            <textarea class="form-control" name="descripcion" rows="4"
-                                                placeholder="Ingrese la descripción de la oferta de trabajo"></textarea>
+                                            <input class="form-control wd-250" type="text" name="username"
+                                                placeholder="Ingrese su sitio web" [(ngModel)]="empresanueva.sitioweb"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">UBICACIÓN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion"
-                                                placeholder="Ingrese la ubicación">
+                                        <div class="col-lg-6">
+
+                                            <div class="form-group">
+                                                <label class="form-control-label active">Ciudad: <span
+                                                        class="tx-danger">*</span></label>
+                                                <select class="form-control" name="ciudad" [(ngModel)]="ID_Ciudad"
+                                                    (click)="getCiudadIDName()" required>
+                                                    <option value="" disabled>-- Seleccione una ciudad --</option>
+                                                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{
+                                                        ciudad?.nombre }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label active">Sectorempresarial: <span
+                                                        class="tx-danger">*</span></label>
+                                                <select class="form-control" name="ciudad" [(ngModel)]="ID_Sector"
+                                                    (click)="getSectoresEmpresariales()" required>
+                                                    <option value="" disabled>-- Seleccione una sector empresarial --
+                                                    </option>
+                                                    <option *ngFor="let sector of sectoresEmpresariales"
+                                                        [value]="sector.id">{{ sector?.nombre }}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +125,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                        <button (click)="crearEmpresa()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong" [class.btn-success]="!editarClicked"
                             [class.btn-primary]="editarClicked">
                             {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
@@ -142,10 +158,9 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>CEDULA</th>
-                            <th>GRADUADO</th>
+                            <th>NOMBRE</th>
                             <th>TELEFONO</th>
-                            <th>EMAIL</th>
+                            <th>DIRECCIÓN</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>

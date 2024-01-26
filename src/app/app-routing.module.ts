@@ -3,15 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { ParametrosPreguntasComponent } from './pages/alumni/parametros-preguntas/parametros-preguntas.component';
-import { UsuariosListsComponent } from './pages/admin/usuarios-lists/usuarios-lists.component';
-import { PycListComponent } from './pages/admin/pyc-list/pyc-list.component';
 
 const routes: Routes = [
-  { path: 'usuarios-list', component: UsuariosListsComponent },
-  { path: 'pyc-list', component: PycListComponent },
-  { path: 'para', component: ParametrosPreguntasComponent },
-  
   {
     path: 'account',
     redirectTo: 'account/login',
