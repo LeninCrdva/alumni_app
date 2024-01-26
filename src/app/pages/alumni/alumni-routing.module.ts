@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PostulacionesComponent } from './postulaciones/postulaciones.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ParametrosPreguntasComponent } from './parametros-preguntas/parametros-preguntas.component';
+import { StateListComponent } from './state-list/state-list.component';
+import { CarrerasCrudComponent } from './carreras-crud/carreras-crud.component';
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
@@ -29,8 +31,10 @@ const routes: Routes = [
     // NOTE: OFERTAS
     { path: 'postulaciones', component: PostulacionesComponent },
     { path: 'parametros-preguntas', component: ParametrosPreguntasComponent },
-    { path: 'ofertas-trabajo', component: OfertasDeTrabajoComponent },
+    { path: 'estados', component: StateListComponent },
+    { path: 'carrera', component: CarrerasCrudComponent },
     { path: 'oferta-detalle', component: OfertaDetalleComponent },
+    { path: 'ofertas-trabajo', component: OfertasDeTrabajoComponent },
     // NOTE: COMUNIDAD
     { path: 'comunidad', component: ComunidadComponent },
 ];
