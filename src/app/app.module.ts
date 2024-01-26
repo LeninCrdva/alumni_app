@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,12 +11,13 @@ import { LayoutSystemComponent } from './layout/layout-system/layout-system.comp
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { CommonModule } from '@angular/common';
 
 export function playerFactory() {
   return player;
 }
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
   declarations: [
     AppComponent,
     LayoutBaseComponent,

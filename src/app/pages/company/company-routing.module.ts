@@ -6,6 +6,8 @@ import { CrudEmpresasComponent } from './crud-empresas/crud-empresas.component';
 import { Empresas2Component } from './empresas-2/empresas-2.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -17,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(routes), FormsModule, ReactiveFormsModule, CommonModule],
     exports: [RouterModule]
 })
 
