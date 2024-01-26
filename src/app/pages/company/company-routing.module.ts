@@ -4,15 +4,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
 import { CrudEmpresasComponent } from './crud-empresas/crud-empresas.component';
 import { EmpresasComponent } from './empresas/empresas.component';
-import { ReferenciasEmpresarialesComponent } from './referencias-empresariales/referencias-empresariales.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'postulaciones_form', component: OfertasLaboralesComponent },
     { path: 'empresas', component: CrudEmpresasComponent },
     { path: 'crud', component: EmpresasComponent },
-    {path: 'sector', component: ReferenciasEmpresarialesComponent},
-
 ];
 
 @NgModule({
