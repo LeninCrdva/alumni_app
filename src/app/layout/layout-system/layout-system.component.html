@@ -182,7 +182,7 @@
             </form>
             <div class="profile">
                 <a>Bienvenido "{{ name }}"</a>
-                <img src="../../../assets/imgs/User_Icon.png" alt="Foto De Perfil">
+                <img [src]="urlImage" alt="Imagen de usuario" alt="Foto De Perfil">
                 <ul class="profile-link">
                     <li><a [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active"><i
                                 class='bx bxs-user-circle icon'></i> Perfil</a></li>
