@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../service/AuthService';
+import { AuthService } from '../../../data/service/AuthService';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({

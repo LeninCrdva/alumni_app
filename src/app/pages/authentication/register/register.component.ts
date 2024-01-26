@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PersonaService } from '../../../service/PersonService';
+import { PersonaService } from '../../../data/service/PersonService';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AuthService } from '../../../service/AuthService';
-import { AssetService } from '../../../service/Asset.service';
-import { Persona } from '../../../Models/persona';
-import Swal from 'sweetalert2';  // Asegúrate de tener instalada la librería SweetAlert
+import { AuthService } from '../../../data/service/AuthService';
+import { AssetService } from '../../../data/service/Asset.service';
+import { Persona } from '../../../data/model/persona';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
 
-    //console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
+    console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
 
   }
   closeModal(): void {
