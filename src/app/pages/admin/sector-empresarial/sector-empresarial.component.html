@@ -17,19 +17,20 @@
             </button>
          </div>
          <div class="modal-body">
-            <form>
-               <div class="form-group">
-                  <label for="recipient-name-1" class="form-control-label">Nombre Sector:</label>
-                  <input type="text" class="form-control" id="recipient-name-1">
-
-                  <label for="recipient-name-1" class="form-control-label">Mas:</label>
-                  <input type="text" class="form-control" id="recipient-name-1">
-               </div>
+            <form (ngSubmit)="modoedicion ? editarSectorEmpresarial() : crearSectorEmpresarial()" novalidate>
+                <div class="form-group">
+                    <label for="nombreSector" class="form-control-label">Nombre Sector:</label>
+                    <input type="text" class="form-control" id="nombreSector" name="nombreSector" [ngModel]="modoedicion ? nuevoSectorCarga.nombre : nuevoSector.nombre" (ngModelChange)="modoedicion ? nuevoSectorCarga.nombre = $event : nuevoSector.nombre = $event" required>
+            
+                    <label for="descripcionSector" class="form-control-label">Descripción:</label>
+                    <input type="text" class="form-control" id="descripcionSector" name="descripcionSector" [ngModel]="modoedicion ? nuevoSectorCarga.descripcion : nuevoSector.descripcion" (ngModelChange)="modoedicion ? nuevoSectorCarga.descripcion = $event : nuevoSector.descripcion = $event" required>
+                </div>
+                <button type="submit" class="btn btn-primary">{{modoedicion ? 'Guardar Cambios' : 'Crear'}}</button>
             </form>
+            
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Crear</button>
          </div>
       </div>
    </div>
@@ -45,7 +46,7 @@
             <div class="card-header-btn d-flex justify-content-center align-items-center">
                 <select name="" data-provide="selectpicker" style="margin-right: 10px; border: none;">
                     <option value="">Nombre</option>
-                    <option value="">Codigo</option>
+                    <option value="">Descripcion</option>
                 </select>
                 <div class="input-group rounded" style="margin-right: 10px;">
                     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
@@ -53,7 +54,7 @@
                         <i class="fas fa-search"></i>
                     </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#m_modal_4" style="background-color: transparent; border: none;">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#m_modal_4" style="background-color: transparent; border: none;" (click)="abrirModalCrear()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                     </svg>
@@ -68,17 +69,17 @@
                 <tr>
                     <th>#</th>
                     <th>Nombre Sector</th>
-                    <th>Fecha</th>
+                    <th>Descripcion</th>
                     <th class="text-center w-100px">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>Mecanica</td>
-                    <td>21/1/2024</td>
+                <tr *ngFor="let sector of sectoresEmpresariales; let i = index">
+                    <th scope="row">{{sector.id}}</th>
+                    <td>{{sector.nombre}}</td>
+                    <td>{{sector.descripcion}}</td>
                     <td class="text-right table-actions">
-                        <a class="table-action  mg-r-10" data-bs-toggle="modal" data-bs-target="#m_modal_4"><i class="fa fa-pencil"></i></a>
+                        <a class="table-action  mg-r-10" data-bs-toggle="modal" data-bs-target="#m_modal_4" (click)="abrirModalEditar(sector)"><i class="fa fa-pencil"></i></a>
                         <a class="table-action  mg-r-10"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>

@@ -27,4 +27,9 @@ export class SectorEmpresarialService {
         return this.http.get<sectorempresarial>(`${this.urlEndPoint}/${id}`)
     }
 
+    updateSectorEmpresarial(id: number, sector: sectorempresarial): Observable<sectorempresarial> {
+        const url = `${this.urlEndPoint}/${id}`;
+        return this.http.put<sectorempresarial>(url, sector, { headers: this.httpHeaders });
+      }
+
 }
