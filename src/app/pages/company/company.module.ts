@@ -5,12 +5,14 @@ import { CompanyRoutingModule } from './company-routing.module';
 import { FormsModule } from '@angular/forms';
 import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
 import { CrudEmpresasComponent } from './crud-empresas/crud-empresas.component';
+import { Empresas2Component } from './empresas-2/empresas-2.component';
 
 @NgModule({
     declarations: [
         DashboardComponent,
         OfertasLaboralesComponent,
-        CrudEmpresasComponent
+        CrudEmpresasComponent,
+        Empresas2Component
     ],
     imports: [
         CommonModule,

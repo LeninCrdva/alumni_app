@@ -1,36 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Empresa } from '../../../data/model/empresa';
-import { Empresario } from '../../../data/model/empresario';
 import { Ciudad } from '../../../data/model/ciudad';
 import { sectorempresarial } from '../../../data/model/sectorEmpresarial';
 import { EmpresaService } from '../../../data/service/empresa.service';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { SectorEmpresarialService } from '../../../data/service/sectorempresarial.service';
+import { Empresario } from '../../../data/model/empresario';
 
 @Component({
-  selector: 'app-empresas',
-  templateUrl: './empresas.component.html',
-  styleUrl: './empresas.component.css'
+  selector: 'app-empresas-2',
+  templateUrl: './empresas-2.component.html',
+  styleUrl: './empresas-2.component.css'
 })
-export class EmpresasComponent implements OnInit {
+export class Empresas2Component {
 
   editarClicked = false;
 
   onEditarClick(): void {
     this.editarClicked = true;
   }
-  
+
   onRegistrarClick(): void {
     this.editarClicked = false;
   }
-    
+
   empresascreated: Empresa[] = [];
   empresanueva: any = {};
   empresaeditar: Empresa | undefined;
   ciudades: Ciudad[] = [];
   sectoresEmpresariales: sectorempresarial[] = [];
 
-  ciudadessearch: Ciudad| undefined;
+  ciudadessearch: Ciudad | undefined;
   sectoresEmpresarialessearch: sectorempresarial | undefined;
 
   ID_Ciudad: number = 0;
@@ -54,7 +54,7 @@ export class EmpresasComponent implements OnInit {
     };
     this.cargarEmpresas();
   }
-  
+
   cargarEmpresas() {
     this.empresaService.getEmpresas().subscribe(
       empresas => this.empresascreated = empresas,
@@ -101,15 +101,15 @@ export class EmpresasComponent implements OnInit {
     }
   }
 
-  getCiudadIDName(){
+  getCiudadIDName() {
     this.ciudadService.getCiudades().subscribe(
       ciudades => this.ciudades = ciudades,
       error => console.error(error)
     );
   }
-  
-  
-  getSectoresEmpresariales(){
+
+
+  getSectoresEmpresariales() {
     this.sectorempresarialService.getSectoresEmpresariales().subscribe(
       sectores => this.sectoresEmpresariales = sectores,
       error => console.error(error)
@@ -145,6 +145,6 @@ export class EmpresasComponent implements OnInit {
       sitioweb: ''
     };
   }
-  
+
 }
 
