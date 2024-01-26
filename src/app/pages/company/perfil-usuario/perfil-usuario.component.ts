@@ -12,11 +12,13 @@ import { UserService } from '../../../data/service/UserService';
 export class PerfilUsuarioComponent {
   name: string | null = localStorage.getItem('name');
   usuarios: Usuario|any = [];
+  estado: String = '';
   nuevoEmpresario: Empresario = {
     estado: false,
     puesto: '',
     anios: 0,
     usuario: this.usuarios,
+    email: '',
   };
   nuevoEmpresarioCarga: Empresario = {
     id: 0,
@@ -24,14 +26,21 @@ export class PerfilUsuarioComponent {
     puesto: '',
     anios: 0,
     usuario: this.usuarios,
+    email: '',
   };
   constructor(private empresarioService: EmpresarioService, private usuarioService: UserService) { }
   ngOnInit(): void {
   this.obtenerUsuario();
+  this.estadoColores();
+  this.nuevoEmpresario.usuario = this.usuarios;
+    console.log('Usuario obtenido:', this.name)
+    console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario)
   }
 
   crearEmpresario() {
     this.nuevoEmpresario.usuario = this.usuarios;
+    console.log('Usuario obtenido:', this.name)
+    console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario)
     this.empresarioService.createEmpresario(this.nuevoEmpresario).subscribe(
       empresario => {
         console.log('Empresario creado exitosamente:', empresario);
@@ -41,7 +50,8 @@ export class PerfilUsuarioComponent {
   }
 
   obtenerUsuario(){
-    this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
+    const username = this.name || ''; // Provide a default value for the parameter
+    this.usuarioService.getUsuarioByUsername(username).subscribe(
       usuario => {
         this.usuarios = usuario;
         console.log('Usuario obtenido exitosamente:', this.usuarios);
@@ -50,6 +60,14 @@ export class PerfilUsuarioComponent {
       },
       error => console.error('Error al obtener usuario:', error)
     );
+  }
+
+  estadoColores(){
+      if(this.nuevoEmpresario.estado == true){
+        this.estado = "Activo";
+      }else{
+        this.estado = "Inactivo";
+      }
   }
 
 }

@@ -11,17 +11,15 @@
                                 <img src="../../../../assets/imgs/User_Icon.png"
                                     class="avatar avatar-medium rounded-circle shadow mr-md-3" alt="">
                                 <div class="content mt-4 mt-sm-0">
-                                    <h4 class="mb-0">Angel Steven</h4>
-                                    <h6 class="text-muted">Desarrollo de software</h6>
-                                    <p class="mb-0"><i data-feather="map-pin" class="fas fa-map-marker-alt icon-sm mr-1"></i><span
-                                            class="text-muted h6">Cuenca</span></p>
+                                    <h4 class="mb-0">{{usuarios?.persona?.primer_nombre}} {{ usuarios?.persona?.segundo_nombre}}</h4>
+                                    <h6 class="text-muted">{{usuarios?.rol?.descripcion}}</h6>
                                 </div>
                             </div>
                         </div><!--end col-->
 
                         <div class="col-md-4 mt-4 mt-sm-0">
                             <div class="text-md-right">
-                                <a routerLinkActive="router-link-active" class="btn btn-outline-primary mt-2 ml-2" data-bs-toggle="modal" data-bs-target="#m_modal_4">Actualizar
+                                <a routerLinkActive="router-link-active" class="btn btn-outline-primary mt-2 ml-2" data-bs-toggle="modal" data-bs-target="#m_modal_4">Completar
                                     Perfil</a>
                             </div>
                         </div><!--end col-->
@@ -46,38 +44,17 @@
 
                     <div class="p-4">
                         <div class="d-flex align-items-center mt-3">
-                            <i data-feather="mail" class="float-left mr-3"></i>
-                            <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Email :</h6>
-                                <p class="text-muted mb-0">angel-gmail.copm</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mt-3">
                             <i data-feather="map-pin" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Ubicación :</h6>
-                                <p class="text-muted mb-0">Cuenca, Ecuador</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mt-3">
-                            <i data-feather="monitor" class="float-left mr-3"></i>
-                            <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Titulo :</h6>
-                                <p class="text-muted mb-0">Tecnologo superior en desarrollo de software</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mt-3">
-                            <i data-feather="award" class="float-left mr-3"></i>
-                            <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Ocupacion Actual :</h6>
-                                <p class="text-muted mb-0">------</p>
+                                <h6 class="mb-0">Estado :</h6>
+                                <p class="text-muted mb-0">{{estado}}</p>
                             </div>
                         </div>
                         <div class="d-flex align-items-center mt-3">
                             <i data-feather="dollar-sign" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Salary Expectation :</h6>
-                                <p class="text-muted mb-0">$4000+</p>
+                                <h6 class="mb-0">Fecha Nacimiento :</h6>
+                                <p class="text-muted mb-0">{{usuarios?.persona?.fechaNacimiento}}</p>
                             </div>
                         </div>
                         <!-- <div class="d-flex align-items-center mt-3">
@@ -90,15 +67,11 @@
                         <div class="d-flex align-items-center mt-3">
                             <i data-feather="briefcase" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Fecha de registro :</h6>
-                                <p class="text-muted mb-0">06/01/2025</p>
+                                <h6 class="mb-0">Numero de telefono :</h6>
+                                <p class="text-muted mb-0">{{usuarios?.persona?.telefono}}</p>
                             </div>
                         </div>
-
-                        <div class="mt-1">
-                            <a href="javascript:void(0)" class="btn btn-outline-primary mt-2">Contactar</a>
                         </div>
-                    </div>
                 </div>
             </div><!--end col-->
 
