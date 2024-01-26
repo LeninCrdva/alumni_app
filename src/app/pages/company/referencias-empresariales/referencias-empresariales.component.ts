@@ -10,7 +10,7 @@ import { Empresario } from '../../../data/model/empresario';
 @Component({
   selector: 'app-referencias-empresariales',
   templateUrl: './referencias-empresariales.component.html',
-  styleUrl: './referencias-empresariales.component.css'
+  styleUrls: ['./referencias-empresariales.component.css', '../../../../assets/temporal/style.css']
 })
 export class ReferenciasEmpresarialesComponent {
   
