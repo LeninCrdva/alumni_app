@@ -18,6 +18,7 @@ export class PerfilUsuarioComponent {
     puesto: '',
     anios: 0,
     usuario: this.usuarios,
+    email: '',
   };
   nuevoEmpresarioCarga: Empresario = {
     id: 0,
@@ -25,6 +26,7 @@ export class PerfilUsuarioComponent {
     puesto: '',
     anios: 0,
     usuario: this.usuarios,
+    email: '',
   };
   constructor(private empresarioService: EmpresarioService, private usuarioService: UserService) { }
   ngOnInit(): void {

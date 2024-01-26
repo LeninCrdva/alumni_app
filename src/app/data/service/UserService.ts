@@ -7,7 +7,7 @@ import { UserDTO } from '../model/UserDTO';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/';
+  private apiUrl = 'http://localhost:8080';
 
   urlCreateUsuario = this.apiUrl + '/usuarios';
 

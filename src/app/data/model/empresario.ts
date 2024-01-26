@@ -6,6 +6,6 @@ export class Empresario {
     'puesto': string;
     'anios': number;
     'usuario': Usuario;
-
+    'email': string;
    
 }
