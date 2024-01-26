@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
-
+import { UserService} from '../../data/service/UserService'
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -16,21 +16,38 @@ export class LayoutSystemComponent implements OnInit {
   activeDropdown: string | null = null;
   name: string | null = localStorage.getItem('name');
 
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
+  constructor(private el: ElementRef, private renderer: Renderer2, private usuarioService: UserService) { }
 
   ngOnInit() {
     // NOTE: START SLIDER BAR
     this.setupSidebarDropdown();
     this.setupSidebarCollapse();
     this.setupProfileDropdown();
+    this.loadUserDataByUsername();
     // NOTE: END SLIDER BAR
     //this.checkUserRole();
+  }
+  loadUserDataByUsername() {
+    const username = localStorage.getItem('name');  // Obtén el nombre de usuario de donde lo tengas guardado
+    if (username) {
+      this.usuarioService.getUserByUsername(username).subscribe(
+        (response) => {
+          console.log('Datos del usuario por nombre:', response);
+         
+          
+        },
+        (error) => {
+          console.error('Error al obtener datos del usuario por nombre:', error);
+          // Puedes manejar el error aquí, por ejemplo, mostrar un mensaje al usuario
+        }
+      );
+    }
   }
 
   setActiveMenuItem(menuItem: string): void {
     this.activeMenuItem = menuItem;
   }
-/*
+
   private checkUserRole() {
     const userRole = localStorage.getItem('userRole');
     console.log(userRole);
@@ -58,7 +75,7 @@ export class LayoutSystemComponent implements OnInit {
     // this.showAdminOptions = authorities.includes('ROL_ADMINISTRADOR');
     // this.showEmpresarioOptions = authorities.includes('ROL_EMPRESARIO');
     // this.showAlumniOptions = authorities.includes('ROL_GRADUADO');
-  }*/
+  }
 
   // NOTE: SLIDER BAR
 

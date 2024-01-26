@@ -42,5 +42,29 @@ export class UserService {
   updateUser(id: number, usuario: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/usuarios/${id}`, usuario);
   }
+  getUserByUsername(username: string): Observable<any> {
+    const url = `${this.apiUrl}/usuarios/by-username/${username}`;
+
+    return this.http.get(url).pipe(
+      map(response => {
+        // Puedes realizar manipulaciones en la respuesta aquí si es necesario
+        return response;
+      }),
+      catchError(error => {
+        // Puedes manejar diferentes tipos de errores de manera más específica
+        console.error('Error getting user by username:', error);
+
+        // Puedes lanzar un error personalizado con un mensaje más informativo
+        let errorMessage = 'Error desconocido al obtener el usuario.';
+        if (error.status === 404) {
+          errorMessage = 'Usuario no encontrado.';
+        } else if (error.status === 403) {
+          errorMessage = 'Acceso no autorizado.';
+        }
+        
+        return throwError(errorMessage);
+      })
+    );
+  }
 
 }
