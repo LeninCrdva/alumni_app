@@ -27,7 +27,7 @@ export class LayoutSystemComponent implements OnInit {
     this.setupProfileDropdown();
     this.loadUserDataByUsername();
     // NOTE: END SLIDER BAR
-    //this.checkUserRole();
+    this.checkUserRole();
   }
   loadUserDataByUsername() {
     const username = localStorage.getItem('name');  // Obtén el nombre de usuario de donde lo tengas guardado

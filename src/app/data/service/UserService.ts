@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Usuario } from '../model/usuario';
-
+import { UserDTO } from '../model/UserDTO';
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +33,11 @@ export class UserService {
   
   getUserById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/usuarios/${id}`);
+  }
+  getUsersDTO(): Observable<UserDTO[]> {
+    return this.http.get(this.urlCreateUsuario).pipe(
+      map(response => response as UserDTO[])
+    );
   }
 
   getUsuarioByUsername(username: string): Observable<Usuario> {

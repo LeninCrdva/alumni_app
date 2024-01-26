@@ -25,74 +25,61 @@
                 <div class="row mg-b-25">
                   <div class="col-lg-6 mb-3">
                     <div class="form-group">
-                      <label class="form-control-label active">EMPRESA: <span class="tx-danger">*</span></label>
-                      <select class="form-control" name="empresa">
-                        <option value="">-- Seleccione una opción --</option>
-                        <option value="tiempo-completo">WILLSOFTEC</option>
-                        <option value="tiempo-completo">RENAFIT</option>
-                        <option value="tiempo-completo">LIBELULA</option>
-                        <option value="tiempo-completo">STEVE BRO</option>
-                      </select>
+                      <label class="form-control-label active">Primer Nombre: <span class="tx-danger">*</span></label>
+                      <input type="text" placeholder="Marco">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Segundo Nombre: <span class="tx-danger">*</span></label>
+                      <input type="text" placeholder="Aurelio">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Primer Apellido: <span class="tx-danger">*</span></label>
+                      <input type="text" placeholder="Pérez">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Segundo Apellido: <span
+                          class="tx-danger">*</span></label>
+                      <input type="text" placeholder="Gonzales">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Cédula: <span class="tx-danger">*</span></label>
+                      <input type="text" placeholder="01054495932">
                     </div>
                   </div>
+
                   <div class="col-lg-6 mb-3">
                     <div class="form-group">
-                      <label class="form-control-label active">CARGO: <span class="tx-danger">*</span></label>
-                      <input class="form-control wd-250" type="text" name="username" placeholder="Ingrese el cargo">
+                      <label class="form-control-label active">Teléfono: <span class="tx-danger">*</span></label>
+                      <input type="text" placeholder="01234567289">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Fecha de Nacimiento: <span
+                          class="tx-danger">*</span></label>
+                      <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Nombre de usuario: <span class="tx-danger">*</span></label>
+                      <input type="text" placeholder="01234567289">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Contraseña: <span class="tx-danger">*</span></label>
+                      <input type="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Foto: <span class="tx-danger">*</span></label>
+                      <input type="file" class="form-control" accept=".png, .jpeg, .jpg">
                     </div>
                   </div>
+
                 </div>
-                <div class="row mg-b-25">
-                  <div class="col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="form-control-label active">JORNADA: <span class="tx-danger">*</span></label>
-                      <select class="form-control" name="jornada">
-                        <option value="">-- Seleccione una opción --</option>
-                        <option value="tiempo-completo">MATUTINA</option>
-                        <option value="medio-tiempo">Medio Tiempo</option>
-                        <option value="temporal">Temporal</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="form-control-label active">EXPERIENCIA: <span class="tx-danger">*</span></label>
-                      <select class="form-control" name="jornada">
-                        <option value="">-- Seleccione una opción --</option>
-                        <option value="tiempo-completo">Sin Experiencia</option>
-                        <option value="medio-tiempo">Con Experiencia</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mg-b-25">
-                  <div class="col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="form-control-label active">FECHA INICIO: <span class="tx-danger">*</span></label>
-                      <input class="form-control" type="date" name="fechaInicio">
-                    </div>
-                  </div>
-                  <div class="col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="form-control-label active">FECHA FIN: <span class="tx-danger">*</span></label>
-                      <input class="form-control" type="date" name="fechaFin">
-                    </div>
-                  </div>
-                </div>
-                <div class="row mg-b-25" data-parsley-validate>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label active">DESCRIPCIÓN: <span class="tx-danger">*</span></label>
-                      <textarea class="form-control" name="descripcion" rows="4"
-                        placeholder="Ingrese la descripción de la oferta de trabajo"></textarea>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label active">UBICACIÓN: <span class="tx-danger">*</span></label>
-                      <input class="form-control" type="text" name="ubicacion" placeholder="Ingrese la ubicación">
-                    </div>
-                  </div>
+
+              </div>
+              <div class="preview-img" *ngIf="previsualizacion">
+                <button class="clear-image" type="button" (click)="clearImage()"class="form-control bg-dark-x border-0">
+                  Cancelar
+                </button>
+                <div class="image-container">
+                  <img [src]="previsualizacion" alt="" width="100" height="100" />
                 </div>
               </div>
             </form>
@@ -129,20 +116,20 @@
           <thead class="table-light">
             <tr>
               <th>#</th>
-              <th>EMPRESA</th>
-              <th>CARGO</th>
-              <th>DESCRIPCION</th>
-              <th>AREA CONOCIMIENTOS</th>
+              <th>NOMBRE USUARIO</th>
+              <th>CÉDULA</th>
+              <th>ROL</th>
               <th class="text-center w-100px">Acciones</th>
+              <th class="text-center w-100px">Activo</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>experiencia.empresa</td>
-              <td>experiencia.cargo</td>
-              <td>experiencia.descripcion</td>
-              <td>experiencia.area_conocimiento</td>
+            <tr *ngFor="let usuarioDTO of usersList;">
+              <th scope="row">{{usuarioDTO?.id}}</th>
+              <td>{{usuarioDTO?.nombreUsuario}}</td>
+              <td>{{usuarioDTO?.cedula}}</td>
+              <td>{{usuarioDTO?.rol}}</td>
+
               <td class="text-center table-actions d-flex justify-content-center">
                 <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                   class="table-action mg-r-10" [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked"
@@ -155,6 +142,12 @@
                 </a>
               </td>
 
+              <td class="text-center justify-content-center">
+                <label class="switch">
+                  <input type="checkbox" [checked]="usuarioDTO.estado" (change)="toggleSwitch(usuarioDTO)">
+                  <span class="slider round"></span>
+                </label>
+              </td>
 
             </tr>
           </tbody>

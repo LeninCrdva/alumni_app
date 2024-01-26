@@ -103,6 +103,15 @@
                     <li><a href="#">Estudiantes</a></li>
                 </ul>
             </li>
+            
+            <li class="divider" data-text="Usuarios">Usuarios</li>
+            <li>
+                <a href="javascript:void(0)"><i class='bx bxs-user icon'></i> Administrar usuarios <i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['system/admin/usuarios-list']" routerLinkActive="router-link-active">Ver usuarios</a></li>
+                </ul>
+            </li>
             <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
             <li>
                 <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Postulaciones <i
