@@ -64,10 +64,10 @@ export class LoginComponent {
     if (authorities.includes('ROL_ADMINISTRADOR')) {
       this.router.navigate(['system/admin']);
     } else if (authorities.includes('ROL_EMPRESARIO')) {
-      this.router.navigate(['/user']);
+      this.router.navigate(['system/company']);
     } else {
       if (authorities.includes('ROL_GRADUADO')) {
-        this.router.navigate(['/user']);
+        this.router.navigate(['system/alumni']);
       }
     }
   }

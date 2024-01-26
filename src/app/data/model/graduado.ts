@@ -11,5 +11,4 @@ export class Graduado {
     'estadocivil': string;
     'ruta_pdf': string;
     'url_pdf': string;
-
 }

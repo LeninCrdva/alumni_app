@@ -2,10 +2,9 @@ import { Usuario } from "./usuario";
 
 export class Empresario {
     id?: number;
-    'clave': string;
     'estado': boolean;
     'puesto': string;
-    'anios': BigInteger;
+    'anios': number;
     'usuario': Usuario;
 
    

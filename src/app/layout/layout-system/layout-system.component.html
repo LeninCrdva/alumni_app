@@ -86,7 +86,7 @@
         <ul class="side-menu" [class.hidden]="!showAdminOptions">
 
             <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/alumni']" (click)="setActiveMenuItem('dashboard')">
+                <a [routerLink]="['/system/admin']" (click)="setActiveMenuItem('dashboard')">
                     <i class='bx bxs-dashboard icon'></i> Dashboard
                 </a>
             </li>
@@ -97,7 +97,7 @@
                 <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active">Mi
+                    <li><a [routerLink]="['/system/admin/perfil']" routerLinkActive="router-link-active">Mi
                             Perfil</a>
                     </li>
                     <li><a href="#">Estudiantes</a></li>
@@ -110,6 +110,20 @@
                 <ul class="side-dropdown">
                     <li><a href="#">Experiencia</a></li>
                 </ul>
+                
+            </li>
+            
+            <li class="divider" data-text="Analitica y Reportes">Analitica y Reportes</li>
+            
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Reportes<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['/system/admin/reportes']" routerLinkActive="router-link-active">Mis reportes visuales</a>
+                    </li>
+                    <li><a [routerLink]="['/system/admin/reportes']" routerLinkActive="router-link-active">Mis reportes vectoriales</a>
+                </li>
+                </ul>
             </li>
         </ul>
 
@@ -120,7 +134,7 @@
         <ul class="side-menu" [class.hidden]="!showEmpresarioOptions">
 
             <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/alumni']" (click)="setActiveMenuItem('dashboard')">
+                <a [routerLink]="['/system/company']" (click)="setActiveMenuItem('dashboard')">
                     <i class='bx bxs-dashboard icon'></i> Dashboard
                 </a>
             </li>
@@ -131,7 +145,7 @@
                 <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active">Mi
+                    <li><a [routerLink]="['/system/company/perfil']" routerLinkActive="router-link-active">Mi
                             Perfil</a>
                     </li>
                     <li><a href="#">Mas</a></li>

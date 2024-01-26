@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SectorEmpComponent } from './sector-emp.component';
+import { PerfilFormComponent } from './perfil-form.component';
 
-describe('SectorEmpComponent', () => {
-  let component: SectorEmpComponent;
-  let fixture: ComponentFixture<SectorEmpComponent>;
+describe('PerfilFormComponent', () => {
+  let component: PerfilFormComponent;
+  let fixture: ComponentFixture<PerfilFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SectorEmpComponent]
+      declarations: [PerfilFormComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SectorEmpComponent);
+    fixture = TestBed.createComponent(PerfilFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

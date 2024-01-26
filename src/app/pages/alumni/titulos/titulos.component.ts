@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TituloService } from '../../../data/service/titulo.service';
 import { Titulo } from '../../../data/model/titulo';
+import { Graduado } from '../../../data/model/graduado';
+import { Carrera } from '../../../data/model/carrera';
+import { Usuario } from '../../../data/model/usuario';
+import { UserService } from '../../../data/service/UserService';
 
 @Component({
   selector: 'app-titulos',
@@ -8,52 +12,82 @@ import { Titulo } from '../../../data/model/titulo';
   styleUrls: ['./titulos.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class TitulosComponent implements OnInit {
+  // Note: Obtener usuario
+  name: string | null = localStorage.getItem('name');
+  usuarios: Usuario | any = [];
+  
+  graduado: Graduado | any = [];
+  carrera: Carrera | any = [];
+
+  titulos: Titulo[] = [];
+  nuevoTitulo: Titulo = { graduado: this.graduado, tipo: '', nivel: '', institucion: false, nombre_titulo: '', fecha_registro: new Date(), fecha_emision: new Date(), num_registro: '', carrera: this.carrera };
+  nuevoTituloCarga: Titulo = { id: 0, graduado: this.graduado, tipo: '', nivel: '', institucion: false, nombre_titulo: '', fecha_registro: new Date(), fecha_emision: new Date(), num_registro: '', carrera: this.carrera };
+  nuevoTituloEdit: Titulo = { id: 0, graduado: this.graduado, tipo: '', nivel: '', institucion: false, nombre_titulo: '', fecha_registro: new Date(), fecha_emision: new Date(), num_registro: '', carrera: this.carrera };
 
   editarClicked = false;
 
-  'titulo': Titulo;
-
-  onEditarClick(): void {
-    this.editarClicked = true;
-  }
-
-  onRegistrarClick(): void {
-    this.editarClicked = false;
-  }
-  titulos: any[] = [];
-
-  constructor(private tituloService: TituloService) { }
+  constructor(private tituloService: TituloService, private usuarioService: UserService) { }
 
   ngOnInit(): void {
     this.loadTitulos();
   }
 
   loadTitulos() {
-    // this.tituloService.getAllTitulos().subscribe(
-    //   (      data: any[]) => {
-    //     this.titulos = data;
-    //   },
-    //   (      error: any) => {
-    //     console.error('Error al cargar los títulos:', error);
-    //   }
-    // );
+    this.tituloService.getTitulos().subscribe(
+      titulos => this.titulos = titulos,
+      error => console.error(error)
+    );
   }
 
-  onUpdateClick(id: number) {
-    // Lógica para actualizar un título
-    // Puedes abrir el modal o realizar otras acciones según tu implementación
+  createTitulo() {
+    this.editarClicked = false;
+    this.tituloService.createTitulo(this.nuevoTitulo).subscribe(
+      sector => {
+        console.log('Titulo creado exitosamente:', sector);
+        this.loadTitulos();
+      },
+      error => console.error('Error al crear el titulo:', error)
+    );
+  }
+
+  onEditarClick(titulo: Titulo): void {
+    this.editarClicked = true;
+    this.nuevoTituloCarga = { ...titulo };
+  }
+
+  onRegistrarClick(): void {
+    this.editarClicked = false;
+  }
+
+  onUpdateClick() {
+    const id = this.nuevoTituloCarga.id;
+    if (id !== undefined) {
+      this.tituloService.updateTitulo(id, this.nuevoTituloCarga).subscribe(
+        tituloActualizado => {
+          console.log('Sector actualizado exitosamente:', tituloActualizado);
+          
+          this.loadTitulos();
+        },
+        error => console.error('Error al actualizar el titulo:', error)
+      );
+    } else {
+      console.error('Error: El ID del titulo es undefined.');
+    }
   }
 
   onDeleteClick(id: number) {
-    // Lógica para eliminar un título
-    this.tituloService.deleteTitulo(id).subscribe(
-      () => {
-        // Actualizar la lista después de la eliminación
-        this.loadTitulos();
-      },
-      error => {
-        console.error('Error al eliminar el título:', error);
-      }
-    );
+
   }
+  
+  // obtenerUsuario() {
+  //   this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
+  //     usuario => {
+  //       this.usuarios = usuario;
+  //       console.log('Usuario obtenido exitosamente:', this.usuarios);
+  //       this.nuevoEmpresario.usuario = this.usuarios;
+  //       console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario);
+  //     },
+  //     error => console.error('Error al obtener usuario:', error)
+  //   );
+  // }
 }
