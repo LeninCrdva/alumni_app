@@ -7,8 +7,8 @@ import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
 })
 export class LayoutSystemComponent implements OnInit {
   showAdminOptions = false;
-  showEmpresarioOptions = false;
-  showAlumniOptions = true;
+  showEmpresarioOptions = true;
+  showAlumniOptions = false;
 
   activeMenuItem: string = 'Dashboard';
 

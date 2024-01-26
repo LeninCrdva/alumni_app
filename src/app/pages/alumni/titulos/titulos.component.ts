@@ -3,6 +3,8 @@ import { TituloService } from '../../../data/service/titulo.service';
 import { Titulo } from '../../../data/model/titulo';
 import { Graduado } from '../../../data/model/graduado';
 import { Carrera } from '../../../data/model/carrera';
+import { Usuario } from '../../../data/model/usuario';
+import { UserService } from '../../../data/service/UserService';
 
 @Component({
   selector: 'app-titulos',
@@ -10,6 +12,10 @@ import { Carrera } from '../../../data/model/carrera';
   styleUrls: ['./titulos.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class TitulosComponent implements OnInit {
+  // Note: Obtener usuario
+  name: string | null = localStorage.getItem('name');
+  usuarios: Usuario | any = [];
+  
   graduado: Graduado | any = [];
   carrera: Carrera | any = [];
 
@@ -20,7 +26,7 @@ export class TitulosComponent implements OnInit {
 
   editarClicked = false;
 
-  constructor(private tituloService: TituloService) { }
+  constructor(private tituloService: TituloService, private usuarioService: UserService) { }
 
   ngOnInit(): void {
     this.loadTitulos();
@@ -72,4 +78,16 @@ export class TitulosComponent implements OnInit {
   onDeleteClick(id: number) {
 
   }
+  
+  // obtenerUsuario() {
+  //   this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
+  //     usuario => {
+  //       this.usuarios = usuario;
+  //       console.log('Usuario obtenido exitosamente:', this.usuarios);
+  //       this.nuevoEmpresario.usuario = this.usuarios;
+  //       console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario);
+  //     },
+  //     error => console.error('Error al obtener usuario:', error)
+  //   );
+  // }
 }
