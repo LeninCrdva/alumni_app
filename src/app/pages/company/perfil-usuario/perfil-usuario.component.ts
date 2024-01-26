@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Usuario } from '../../../data/model/usuario';
 import { Empresario } from '../../../data/model/empresario';
 import { EmpresarioService } from '../../../data/service/empresario.service';
+import { UserService } from '../../../data/service/UserService';
 
 @Component({
   selector: 'app-perfil-usuario',
