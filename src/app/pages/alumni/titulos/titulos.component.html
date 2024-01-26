@@ -26,7 +26,7 @@
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">EMPRESA: <span
+                                            <label class="form-control-label active">Nombre: <span
                                                     class="tx-danger">*</span></label>
                                             <select class="form-control" name="empresa">
                                                 <option value="">-- Seleccione una opción --</option>
@@ -117,7 +117,7 @@
                         </button>
 
                         <!-- Botón para editar -->
-                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-primary" *ngIf="editarClicked">
                             Editar Título
                         </button>
@@ -150,7 +150,6 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>Graduado</th>
                             <th>Tipo</th>
                             <th>Institución</th>
                             <th>Nombre del Título</th>
@@ -162,9 +161,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr *ngFor="let titulo of titulos; let i = index">
                             <td>{{titulo.id}}</td>
-                            <td>{{titulo.graduado}}</td>
                             <td>{{titulo.tipo}}</td>
                             <td>{{titulo.institucion}}</td>
                             <td>{{titulo.nombre_titulo}}</td>
@@ -173,7 +171,7 @@
                             <td>{{titulo.num_registro}}</td>
                             <td>{{titulo.carrera}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                <a (click)="onEditarClick(titulo)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                                     class="table-action mg-r-10" [class.text-primary]="!editarClicked"
                                     [class.text-danger]="editarClicked" href="#">
                                     <i class="fa-regular fa-pen-to-square"></i>

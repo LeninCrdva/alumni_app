@@ -86,7 +86,7 @@
         <ul class="side-menu" [class.hidden]="!showAdminOptions">
 
             <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/alumni']" (click)="setActiveMenuItem('dashboard')">
+                <a [routerLink]="['/system/admin']" (click)="setActiveMenuItem('dashboard')">
                     <i class='bx bxs-dashboard icon'></i> Dashboard
                 </a>
             </li>
@@ -120,7 +120,7 @@
         <ul class="side-menu" [class.hidden]="!showEmpresarioOptions">
 
             <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/alumni']" (click)="setActiveMenuItem('dashboard')">
+                <a [routerLink]="['/system/company']" (click)="setActiveMenuItem('dashboard')">
                     <i class='bx bxs-dashboard icon'></i> Dashboard
                 </a>
             </li>
