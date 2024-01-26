@@ -11,7 +11,7 @@ const routes: Routes = [
     { path: 'postulaciones_form', component: OfertasLaboralesComponent },
     { path: 'empresas', component: CrudEmpresasComponent },
     { path: 'crud', component: EmpresasComponent },
-
+    {path: 'sector', component: ReferenciasEmpresarialesComponent},
 
 ];
 
