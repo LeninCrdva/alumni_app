@@ -128,11 +128,19 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong" [class.btn-success]="!editarClicked"
-                            [class.btn-primary]="editarClicked">
-                            {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
+                        
+                        <!-- Botón para registrar -->
+                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                            Registrar Título
                         </button>
+
+                        <!-- Botón para editar -->
+                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                            Editar Título
+                        </button>
+
                         <button data-bs-dismiss="modal"
                             class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>

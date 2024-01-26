@@ -16,8 +16,7 @@
                 <div class="modal-content">
                     <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
                         class="modal-header text-white">
-                        <h5
-                            [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear nuevo tipo de experiencia'">
+                        <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear nuevo tipo de experiencia'">
                         </h5>
                     </div>
 
@@ -99,8 +98,10 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">UBICACIÓN: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion" placeholder="Ingrese la ubicación">
+                                            <label class="form-control-label active">UBICACIÓN: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="ubicacion"
+                                                placeholder="Ingrese la ubicación">
                                         </div>
                                     </div>
                                 </div>
@@ -108,11 +109,18 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong" [class.btn-success]="!editarClicked"
-                            [class.btn-primary]="editarClicked">
-                            {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
+                        <!-- Botón para registrar -->
+                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                            Registrar Título
                         </button>
+
+                        <!-- Botón para editar -->
+                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                            Editar Título
+                        </button>
+
                         <button data-bs-dismiss="modal"
                             class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>
@@ -166,8 +174,6 @@
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
-
-
                         </tr>
                     </tbody>
                 </table>
