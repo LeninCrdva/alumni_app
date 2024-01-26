@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { sectorempresarial } from '../../../Models/sectorEmpresarial';
-import { SectorEmpresarialService } from '../../../service/sectorempresarial.service';
 import { timeInterval } from 'rxjs';
+import { sectorempresarial } from '../../../data/model/sectorEmpresarial';
+import { SectorEmpresarialService } from '../../../data/service/sectorempresarial.service';
 
 @Component({
   selector: 'app-sector-empresarial',

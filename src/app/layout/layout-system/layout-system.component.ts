@@ -22,13 +22,13 @@ export class LayoutSystemComponent implements OnInit {
     this.setupSidebarCollapse();
     this.setupProfileDropdown();
     // NOTE: END SLIDER BAR
-    this.checkUserRole();
+    //this.checkUserRole();
   }
 
   setActiveMenuItem(menuItem: string): void {
     this.activeMenuItem = menuItem;
   }
-
+/*
   private checkUserRole() {
     const userRole = localStorage.getItem('userRole');
     console.log(userRole);
@@ -56,7 +56,7 @@ export class LayoutSystemComponent implements OnInit {
     // this.showAdminOptions = authorities.includes('ROL_ADMINISTRADOR');
     // this.showEmpresarioOptions = authorities.includes('ROL_EMPRESARIO');
     // this.showAlumniOptions = authorities.includes('ROL_GRADUADO');
-  }
+  }*/
 
   // NOTE: SLIDER BAR
 
