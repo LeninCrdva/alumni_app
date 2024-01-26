@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   public username: string = '';
   public inforest: any = [];
   public getRuta: string = '';
-  public deleteimage: any = localStorage.getItem('rutaimagen');
+  //public deleteimage: any = localStorage.getItem('rutaimagen');
   public mensajevalidado: string = '';
 
   constructor(

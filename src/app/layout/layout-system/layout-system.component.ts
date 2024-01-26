@@ -1,6 +1,8 @@
 
 import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
 import { UserService} from '../../data/service/UserService'
+import { AssetService } from '../../data/service/Asset.service';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -16,9 +18,22 @@ export class LayoutSystemComponent implements OnInit {
     rolType: string = '';
     activeDropdown: string | null = null;
     name: string | null = localStorage.getItem('name');
+    //imagenes//
+  public previsualizacion?: string;
+   public archivos: any = []
+   public loading?: boolean
+   public rutaimagen: string = '';
+   public urlImage: string = '';
+   public username: string = '';
+   public inforest: any = [];
+   public getRuta: string = '';
+   public deleteimage: any = localStorage.getItem('rutaimagen'); 
+   public mensajevalidado: string = '';
 
-
-  constructor(private el: ElementRef, private renderer: Renderer2, private usuarioService: UserService) { }
+  constructor(private sanitizer: DomSanitizer,
+    private assetService: AssetService,
+    private el: ElementRef, 
+    private renderer: Renderer2, private usuarioService: UserService) { }
 
   ngOnInit() {
     // NOTE: START SLIDER BAR
@@ -34,9 +49,21 @@ export class LayoutSystemComponent implements OnInit {
     if (username) {
       this.usuarioService.getUserByUsername(username).subscribe(
         (response) => {
-          console.log('Datos del usuario por nombre:', response);
-         
-          
+          //console.log('Datos del usuario por nombre:', response);
+          localStorage.setItem('url_imagen', response.url_imagen);
+          localStorage.setItem('ruta_imagen', response.ruta_imagen);
+          const storedRutaImagen = localStorage.getItem('ruta_imagen');
+          const storedUrlImagen = localStorage.getItem('url_imagen');
+          if (storedRutaImagen && storedUrlImagen) {
+            this.rutaimagen = storedRutaImagen;
+            this.urlImage = storedUrlImagen;
+          } else {
+            // Manejar el caso en el que la información no esté disponible en localStorage
+            console.error('La información de imagen no está disponible en localStorage.');
+          }
+          console.log('Despues de consultar:',localStorage.getItem('url_imagen'));
+          console.log('Despues de consultar:',localStorage.getItem('ruta_imagen'));
+
         },
         (error) => {
           console.error('Error al obtener datos del usuario por nombre:', error);
@@ -49,6 +76,59 @@ export class LayoutSystemComponent implements OnInit {
   setActiveMenuItem(menuItem: string): void {
     this.activeMenuItem = menuItem;
   }
+  capturarFile(event: any): any {
+
+    const archivoCapturado = event.target.files[0]
+    this.extraerBase64(archivoCapturado).then((imagen: any) => {
+      this.previsualizacion = imagen.base;
+      console.log(imagen);
+
+    })
+    this.archivos.push(archivoCapturado)
+    // 
+    // console.log(event.target.files);
+  }
+  
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+    try {
+      const unsafeImg = window.URL.createObjectURL($event);
+      const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+      const reader = new FileReader();
+
+      reader.readAsDataURL($event);
+
+      reader.onload = () => {
+        resolve({
+          base: reader.result
+        });
+      };
+
+      reader.onerror = error => {
+        resolve({
+          base: null
+        });
+      };
+    } catch (e) {
+      console.error('Error al extraer base64:', e);
+      resolve({
+        base: null
+      });
+    }
+  });
+  
+  deleteFile(rutakey: string) {
+    this.assetService.delete(rutakey).subscribe(r => {
+      console.log("archivo eliminado")
+    })
+  }
+
+
+
+  clearImage(): any {
+    this.previsualizacion = '';
+    this.archivos = [];
+  }
+
 
   
     private checkUserRole() {
