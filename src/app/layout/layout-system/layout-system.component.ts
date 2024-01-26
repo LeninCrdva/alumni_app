@@ -12,7 +12,6 @@ export class LayoutSystemComponent implements OnInit {
 
   activeMenuItem: string = 'Dashboard';
   rolType: string = '';
-  activeDropdown: string | null = null;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 

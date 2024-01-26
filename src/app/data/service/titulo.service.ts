@@ -11,7 +11,7 @@ export class TituloService {
 
   urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/titulos';
 
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
 
@@ -20,10 +20,20 @@ export class TituloService {
   }
 
   createTitulo(titulo: Titulo): Observable<Titulo> {
-    return this.http.post<Titulo>(this.urlEndPoint, titulo, { headers: this.httpHeaders })
+    return this.http.post<Titulo>(this.urlEndPoint, titulo, { headers: this.httpHeaders });
   }
 
   getTituloById(id: any): Observable<Titulo> {
-    return this.http.get<Titulo>(`${this.urlEndPoint}/${id}`)
+    return this.http.get<Titulo>(`${this.urlEndPoint}/${id}`);
+  }
+
+  updateTitulo(id: any, titulo: Titulo): Observable<Titulo> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Titulo>(url, titulo, { headers: this.httpHeaders });
+  }
+
+  deleteTitulo(id: any): Observable<void> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.delete<void>(url, { headers: this.httpHeaders });
   }
 }
