@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit {
   public loading?: boolean
   public rutaimagen: string = '';
   public urlImage: string = '';
+  public username: string = '';
   public inforest: any = [];
   public getRuta: string = '';
   public deleteimage: any = localStorage.getItem('rutaimagen');
@@ -172,6 +173,8 @@ export class RegisterComponent implements OnInit {
                 this.authService.signup(usuarioDTO).subscribe(response => {
 
                   console.log('Usuario registrado:', response);
+                  this.username=usuarioDTO.nombreUsuario;
+                  localStorage.setItem('name', this.username);
                   this.router.navigate(['account/login']);
 
 
