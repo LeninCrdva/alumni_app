@@ -5,6 +5,7 @@ import { EmpresarioService } from '../../../data/service/empresario.service';
 import { UserService } from '../../../data/service/UserService';
 import { Rol } from '../../../data/model/rol';
 import { Persona } from '../../../data/model/persona';
+import { EmpresaService } from '../../../data/service/empresa.service';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { Persona } from '../../../data/model/persona';
 export class PerfilUsuarioComponent {
   name: string | null = localStorage.getItem('name');
   usuarios: any = {};
+  empresass: any = {};
   estado: String = '';
   nuevoEmpresario: Empresario = {
     estado: false,
@@ -31,7 +33,7 @@ export class PerfilUsuarioComponent {
     usuario: this.usuarios,
     email: '',
   };
-  constructor(private empresarioService: EmpresarioService, private usuarioService: UserService) { }
+  constructor(private empresarioService: EmpresarioService, private usuarioService: UserService, private empresaService:EmpresaService) { }
   
   ngOnInit(): void {
     this.usuarios = {
@@ -42,6 +44,19 @@ export class PerfilUsuarioComponent {
       persona: new Persona,
       ruta_imagen: '',
       rol: new Rol
+    }
+    this.empresass = {
+      id: 0,
+      empresario: this.nuevoEmpresario,
+      ciudad: '',
+      sectorempresarial: '',
+      ruc: '',
+      nombre: '',
+      tipoEmpresa: '',
+      razonsocial: '',
+      area: '',
+      ubicacion: '',
+      sitioweb: ''
     }
   this.obtenerUsuario();
   this.nuevoEmpresario.usuario = this.usuarios;
@@ -72,6 +87,16 @@ export class PerfilUsuarioComponent {
         console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario);
       },
       error => console.error('Error al obtener usuario:', error)
+    );
+  }
+
+  getEmpresas() {
+    this.empresaService.getEmpresas().subscribe(
+      empresas => {
+        this.empresass = empresas;
+        console.log('Empresas obtenidas exitosamente:', empresas);
+      },
+      error => console.error('Error al obtener empresas:', error)
     );
   }
 
