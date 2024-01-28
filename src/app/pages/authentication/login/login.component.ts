@@ -35,11 +35,13 @@ export class LoginComponent {
           const accessToken = response.accessToken;
           console.log("token here: " + accessToken);
 
+          const user_id = response.usuario_id;
+
           const authorities: string[] = response.authorities.map((authority: { authority: any; }) => authority.authority);
           console.log("authorities here: " + authorities);
           localStorage.setItem('token', accessToken);
           localStorage.setItem('authorities', JSON.stringify(authorities));
-
+          localStorage.setItem('user_id', user_id);
           this.mensaje = 'success';
           this.modalRef = this.modalService.show(template);
 
