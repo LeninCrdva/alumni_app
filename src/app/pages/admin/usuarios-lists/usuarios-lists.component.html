@@ -20,72 +20,106 @@
           </div>
 
           <div class="modal-body">
-            <form>
+            <form [formGroup]="registerNewUserForm" (ngSubmit)="register()">
               <div class="form-layout form-layout-1">
                 <div class="row mg-b-25">
                   <div class="col-lg-6 mb-3">
                     <div class="form-group">
                       <label class="form-control-label active">Primer Nombre: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Marco">
+                      <input type="text" placeholder="Marco" formControlName="primerNombre">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Segundo Nombre: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Aurelio">
+                      <input type="text" placeholder="Aurelio" formControlName="segundoNombre">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Primer Apellido: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Pérez">
+                      <input type="text" placeholder="Pérez" formControlName="primerApellido">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Segundo Apellido: <span
                           class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Gonzales">
+                      <input type="text" placeholder="Gonzales" formControlName="segundoApellido">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Cédula: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="01054495932">
+                      <input type="text" placeholder="01054495932" formControlName="cedula">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Fecha de Graduación: <span
+                          class="tx-danger">*</span></label>
+                      <input type="date" class="form-control" formControlName="fechaGraduacion">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Correo Personal: <span class="tx-danger">*</span></label>
+                      <input type="email" placeholder="personal@gmail.com" formControlName="emailPersonal">
                     </div>
                   </div>
 
                   <div class="col-lg-6 mb-3">
                     <div class="form-group">
                       <label class="form-control-label active">Teléfono: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="01234567289">
+                      <input type="text" placeholder="01234567289" formControlName="telefono">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Fecha de Nacimiento: <span
                           class="tx-danger">*</span></label>
-                      <input type="date" class="form-control">
+                      <input type="date" class="form-control" formControlName="fechaNacimiento">
                     </div>
                     <div class="form-group">
-                      <label class="form-control-label active">Nombre de usuario: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="01234567289">
+                      <label class="form-control-label active">Nombre de usuario: <span
+                          class="tx-danger">*</span></label>
+                      <input type="text" placeholder="User1" formControlName="nombreUsuario">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Contraseña: <span class="tx-danger">*</span></label>
-                      <input type="password" class="form-control">
+                      <input type="password" class="form-control" formControlName="clave">
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Foto: <span class="tx-danger">*</span></label>
-                      <input type="file" class="form-control" accept=".png, .jpeg, .jpg">
+                      <input type="file" class="form-control" (change)="capturarFile($event)"
+                        accept=".png, .jpeg, .jpg">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Rol: <span class="tx-danger">*</span></label>
+                      <select class="form-control" formControlName="nombreDelRol">
+                        <option *ngFor="let role of roleList" value="{{role.nombre}}">{{role.nombre}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label active">Estado civil: <span class="tx-danger">*</span></label>
+                      <select class="form-control" formControlName="estadoCivil">
+                        <option value="casado">Casado</option>
+                        <option value="soltero">Soltero</option>
+                        <option value="divorciado">Divorciado</option>
+                        <option value="otro">Otro</option>
+                      </select>
                     </div>
                   </div>
 
                 </div>
 
               </div>
+
               <div class="preview-img" *ngIf="previsualizacion">
-                <button class="clear-image" type="button" (click)="clearImage()"class="form-control bg-dark-x border-0">
+                <button class="clear-image" type="button" (click)="clearImage()"
+                  class="form-control bg-dark-x border-0">
                   Cancelar
                 </button>
                 <div class="image-container">
                   <img [src]="previsualizacion" alt="" width="100" height="100" />
                 </div>
               </div>
+
+              <div class="wrapper-button" *ngIf="previsualizacion">
+
+              </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong"
+            <button (click)="register()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+              class="btn btn-oblong">Enviar Formulario</button>
+            <button type="submit" data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong"
               [class.btn-success]="!editarClicked" [class.btn-primary]="editarClicked">
               {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
             </button>
