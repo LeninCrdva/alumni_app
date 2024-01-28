@@ -188,8 +188,8 @@
                                 class='bx bxs-user-circle icon'></i> Perfil</a></li>
                     <li><a [routerLink]="['/system/admin/perfil-form']" routerLinkActive="router-link-active"><i
                                 class='bx bx-user-pin icon'></i> Actualizar Perfil</a></li>
-                    <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active"><i
-                                class='bx bx-exit icon'></i> Cerrar Sesion</a></li>
+                    <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active" (click)="cerrarSesionconclick()"><i
+                                class='bx bx-exit icon' ></i> Cerrar Sesion</a></li>
                 </ul>
             </div>
         </nav>

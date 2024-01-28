@@ -6,6 +6,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NuevoAdministradorModalComponent } from '../../pages/admin/nuevo-administrador-modal/nuevo-administrador-modal.component';
 import { AdministradorService } from '../../data/service/administrador.service';
 import { Administrador } from '../../data/model/administrador';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -40,6 +42,7 @@ export class LayoutSystemComponent implements OnInit {
     private renderer: Renderer2, private usuarioService: UserService,
     private modalService: BsModalService,
     public bsModalRef: BsModalRef,
+    private router: Router,
     private administradorService: AdministradorService,) { }
 
   ngOnInit() {
@@ -49,6 +52,7 @@ export class LayoutSystemComponent implements OnInit {
     this.setupProfileDropdown();
     this.loadUserDataByUsername();
     // NOTE: END SLIDER BAR
+    this.cerrarSesion();
     this.checkUserRole();
   }
   loadUserDataByUsername() {
@@ -137,8 +141,32 @@ export class LayoutSystemComponent implements OnInit {
     this.previsualizacion = '';
     this.archivos = [];
   }
-
-
+  cerrarSesion() {
+    setTimeout(() => {
+      Swal.fire({
+        icon: 'info',
+        title: 'Sesión Expirada',
+        text: 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        localStorage.clear();
+        this.router.navigate(['/inicio-sesion']);
+      });
+    }, 3600000);
+  }
+  cerrarSesionconclick() {
+    Swal.fire({
+      icon: 'info',
+      title: 'Sesión Cerrada',
+      text: 'Has cerrado sesión correctamente.',
+      confirmButtonText: 'Aceptar'
+    }).then(() => {
+      localStorage.clear();
+      this.router.navigate(['/inicio-sesion']);
+    });
+  }
+  
+  
   
     private checkUserRole() {
       const userRole = localStorage.getItem('userRole');
