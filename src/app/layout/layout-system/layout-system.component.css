@@ -65,6 +65,7 @@ li {
     justify-content: center;
     align-items: center;
     margin-right: 6px;
+    color: var(--alumni-color);
 }
 
 #sidebar .icon-right {
