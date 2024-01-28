@@ -15,7 +15,7 @@ export class TitulosComponent implements OnInit {
   // Note: Obtener usuario
   name: string | null = localStorage.getItem('name');
   usuarios: Usuario | any = [];
-  
+
   graduado: Graduado | any = [];
   carrera: Carrera | any = [];
 
@@ -30,6 +30,7 @@ export class TitulosComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTitulos();
+    this.obtenerUsuario();
   }
 
   loadTitulos() {
@@ -42,8 +43,8 @@ export class TitulosComponent implements OnInit {
   createTitulo() {
     this.editarClicked = false;
     this.tituloService.createTitulo(this.nuevoTitulo).subscribe(
-      sector => {
-        console.log('Titulo creado exitosamente:', sector);
+      titulo => {
+        console.log('Titulo creado exitosamente:', titulo);
         this.loadTitulos();
       },
       error => console.error('Error al crear el titulo:', error)
@@ -65,7 +66,7 @@ export class TitulosComponent implements OnInit {
       this.tituloService.updateTitulo(id, this.nuevoTituloCarga).subscribe(
         tituloActualizado => {
           console.log('Sector actualizado exitosamente:', tituloActualizado);
-          
+
           this.loadTitulos();
         },
         error => console.error('Error al actualizar el titulo:', error)
@@ -78,16 +79,16 @@ export class TitulosComponent implements OnInit {
   onDeleteClick(id: number) {
 
   }
-  
-  // obtenerUsuario() {
-  //   this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
-  //     usuario => {
-  //       this.usuarios = usuario;
-  //       console.log('Usuario obtenido exitosamente:', this.usuarios);
-  //       this.nuevoEmpresario.usuario = this.usuarios;
-  //       console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario);
-  //     },
-  //     error => console.error('Error al obtener usuario:', error)
-  //   );
-  // }
+
+  obtenerUsuario() {
+    this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
+      usuario => {
+        this.usuarios = usuario;
+        console.log('Usuario obtenido exitosamente:', this.usuarios);
+        this.nuevoTitulo.graduado = this.usuarios;
+        console.log('Usuario obtenido exitosamente:', this.nuevoTitulo.graduado);
+      },
+      error => console.error('Error al obtener usuario:', error)
+    );
+  }
 }

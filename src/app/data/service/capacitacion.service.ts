@@ -26,4 +26,14 @@ export class CapacitacionService {
   getCapacitacionById(id: any): Observable<Capacitacion> {
     return this.http.get<Capacitacion>(`${this.urlEndPoint}/${id}`)
   }
+
+  updateCapacitacion(id: any, Capacitacion: Capacitacion): Observable<Capacitacion> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Capacitacion>(url, Capacitacion, { headers: this.httpHeaders });
+  }
+
+  deleteCapacitacion(id: any): Observable<void> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.delete<void>(url, { headers: this.httpHeaders });
+  }
 }

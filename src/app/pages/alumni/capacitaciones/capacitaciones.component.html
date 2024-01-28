@@ -9,9 +9,116 @@
 
 <div class="card">
     <div class="card-body collapse show" id="collapse1">
-        
+        <!-- Modal -->
+        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
+                        class="modal-header text-white">
+                        <h5 [innerText]="editarClicked ? 'Modificar Capacitacion' : 'Crear Capacitacion'">
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-layout form-layout-1">
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">HORAS: <span class="tx-danger">*</span></label>
+                                            <!-- Cambiado a input type="number" para representar la cantidad de horas -->
+                                            <input class="form-control wd-250" type="number" name="horas"
+                                                placeholder="Ingrese la cantidad de horas">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">TIPO DE CERTIFICADO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="tipo_certificado"
+                                                placeholder="Ingrese el tipo de certificado">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA DE INICIO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fecha_inicio">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA DE FIN: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fecha_fin">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">INSTITUCIÓN: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="institucion" placeholder="Ingrese la institución">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">LUGAR: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="lugar" placeholder="Ingrese el lugar">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">NOMBRE: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="nombre" placeholder="Ingrese el nombre">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">GRADUADO: <span class="tx-danger">*</span></label>
+                                            <select class="form-control" name="graduado">
+                                                <option value="">-- Seleccione una opción --</option>
+                                                <option value="graduado1">Graduado 1</option>
+                                                <option value="graduado2">Graduado 2</option>
+                                                <option value="graduado3">Graduado 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <!-- Botón para registrar -->
+                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                            Registrar Capacitacion
+                        </button>
+
+                        <!-- Botón para editar -->
+                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                            Editar Capacitacion
+                        </button>
+
+                        <button data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Modal -->
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    Registrar Referencia</button>
                 <div class="input-group">
                     <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
                     <button class="btn btn-outline-secondary" type="button" id="searchButton">
@@ -21,36 +128,34 @@
             </div>
         </div>
 
-
         <div class="card-body pd-0 collapse show" id="collapse1">
             <div class="table-responsive">
                 <table class="table">
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>EMPRESA</th>
-                            <th>CARGO</th>
-                            <th>DESCRIPCION</th>
-                            <th>AREA CONOCIMIENTOS</th>
-                            <th>SALARIO</th>
-                            <th>JORNADA</th>
-                            <th>REQUISITOS ACADEMICOS</th>
-                            <th>EXPERIENCIA</th>
-                            <th>UBICACIONES</th>
+                            <th>HORAS</th>
+                            <th>TIPO DE CERTIFICADO</th>
+                            <th>FECHA DE INICIO</th>
+                            <th>FECHA DE FIN</th>
+                            <th>INSTITUCIÓN</th>
+                            <th>LUGAR</th>
+                            <th>NOMBRE</th>
+                            <th>GRADUADO</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>capacitaciones.empresa</td>
-                            <td>capacitaciones.cargo</td>
-                            <td>capacitaciones.descripcion</td>
-                            <td>capacitaciones.area_conocimiento</td>
-                            <td>capacitaciones.salario</td>
-                            <td>capacitaciones.jornada</td>
-                            <td>capacitaciones.requisitos_academicos</td>
-                            <td>capacitaciones.experiencia</td>
-                            <td>capacitaciones.ubicacion</td>
+                        <!-- Utilizando *ngFor para iterar sobre cada elemento en tu arreglo de capacitaciones -->
+                        <tr *ngFor="let capacitacion of capacitacion; let i = index">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{ capacitacion.horas }}</td>
+                            <td>{{ capacitacion.tipo_certificado }}</td>
+                            <td>{{ capacitacion.fecha_inicio | date:'shortDate' }}</td>
+                            <td>{{ capacitacion.fecha_fin | date:'shortDate' }}</td>
+                            <td>{{ capacitacion.institucion }}</td>
+                            <td>{{ capacitacion.lugar }}</td>
+                            <td>{{ capacitacion.nombre }}</td>
+                            <td>{{ capacitacion.graduado }}</td>
                         </tr>
                     </tbody>
                 </table>

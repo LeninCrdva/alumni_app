@@ -1,5 +1,5 @@
 <section class="page-title bg-overlay-black parallax"
-    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    style="background-image: url(../../../../assets/imgs/headers/Postulaciones.jpg);">
     <div class="row">
         <div class="col-lg-12">
             <h1>Mis Titulos</h1>
@@ -26,90 +26,111 @@
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">Nombre: <span
+                                            <label class="form-control-label active">Nombre del Graduado: <span
                                                     class="tx-danger">*</span></label>
-                                            <select class="form-control" name="empresa">
+                                            <!-- Cambiado el nombre del campo y del modelo -->
+                                            <select class="form-control" name="graduado">
                                                 <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">WILLSOFTEC</option>
-                                                <option value="tiempo-completo">RENAFIT</option>
-                                                <option value="tiempo-completo">LIBELULA</option>
-                                                <option value="tiempo-completo">STEVE BRO</option>
+                                                <option value="graduado1">Graduado 1</option>
+                                                <option value="graduado2">Graduado 2</option>
+                                                <option value="graduado3">Graduado 3</option>
+                                                <option value="graduado4">Graduado 4</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">CARGO: <span
+                                            <label class="form-control-label active">Tipo de Título: <span
                                                     class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el cargo">
+                                            <!-- Cambiado el nombre del campo -->
+                                            <input class="form-control wd-250" type="text" name="tipo"
+                                                placeholder="Ingrese el tipo de título">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">JORNADA: <span
+                                            <label class="form-control-label active">Nivel de Título: <span
                                                     class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
+                                            <!-- Cambiado el nombre del campo -->
+                                            <select class="form-control" name="nivel">
                                                 <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">MATUTINA</option>
-                                                <option value="medio-tiempo">Medio Tiempo</option>
-                                                <option value="temporal">Temporal</option>
+                                                <option value="nivel1">Nivel 1</option>
+                                                <option value="nivel2">Nivel 2</option>
+                                                <option value="nivel3">Nivel 3</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">EXPERIENCIA: <span
+                                            <label class="form-control-label active">Institución: <span
                                                     class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">Sin Experiencia</option>
-                                                <option value="medio-tiempo">Con Experiencia</option>
-                                            </select>
+                                            <!-- Cambiado el nombre del campo -->
+                                            <input class="form-control wd-250" type="text" name="institucion"
+                                                placeholder="Ingrese la institución">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA INICIO: <span
+                                            <label class="form-control-label active">Nombre del Título: <span
                                                     class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaInicio">
+                                            <!-- Cambiado el nombre del campo -->
+                                            <input class="form-control wd-250" type="text" name="nombre_titulo"
+                                                placeholder="Ingrese el nombre del título">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA FIN: <span
+                                            <label class="form-control-label active">Fecha de Registro: <span
                                                     class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaFin">
+                                            <!-- Cambiado el nombre del campo -->
+                                            <input class="form-control" type="date" name="fecha_registro">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Fecha de Emisión: <span
+                                                    class="tx-danger">*</span></label>
+                                            <!-- Cambiado el nombre del campo -->
+                                            <input class="form-control" type="date" name="fecha_emision">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Número de Registro: <span
+                                                    class="tx-danger">*</span></label>
+                                            <!-- Cambiado el nombre del campo -->
+                                            <input class="form-control wd-250" type="text" name="num_registro"
+                                                placeholder="Ingrese el número de registro">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">DESCRIPCIÓN: <span
+                                            <label class="form-control-label active">Carrera: <span
                                                     class="tx-danger">*</span></label>
-                                            <textarea class="form-control" name="descripcion" rows="4"
-                                                placeholder="Ingrese la descripción de la oferta de trabajo"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">UBICACIÓN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion"
-                                                placeholder="Ingrese la ubicación">
+                                            <!-- Cambiado el nombre del campo -->
+                                            <select class="form-control" name="carrera">
+                                                <option value="">-- Seleccione una opción --</option>
+                                                <option value="carrera1">Carrera 1</option>
+                                                <option value="carrera2">Carrera 2</option>
+                                                <option value="carrera3">Carrera 3</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                     <div class="modal-footer">
-                        
+
                         <!-- Botón para registrar -->
                         <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-success" *ngIf="!editarClicked">
@@ -151,6 +172,7 @@
                         <tr>
                             <th>#</th>
                             <th>Tipo</th>
+                            <th>Nivel</th>
                             <th>Institución</th>
                             <th>Nombre del Título</th>
                             <th>Fecha de Registro</th>
@@ -178,6 +200,66 @@
                                 </a>
 
                                 <a class="table-action ms-2 text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Grado</td>
+                            <td>Universitario</td>
+                            <td>Universidad Nacional</td>
+                            <td>Ingeniería en Informática</td>
+                            <td>01/15/2022</td>
+                            <td>05/20/2022</td>
+                            <td>R123456789</td>
+                            <td>Ingeniería en Informática</td>
+                            <td class="text-center table-actions">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_5" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(1)" class="table-action text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Posgrado</td>
+                            <td>Maestría</td>
+                            <td>Universidad Central</td>
+                            <td>Master en Administración de Empresas</td>
+                            <td>03/10/2021</td>
+                            <td>07/15/2021</td>
+                            <td>P987654321</td>
+                            <td>Administración de Empresas</td>
+                            <td class="text-center table-actions">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_5" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(2)" class="table-action text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Posgrado</td>
+                            <td>Maestría</td>
+                            <td>Universidad Central</td>
+                            <td>Master en Administración de Empresas</td>
+                            <td>03/10/2021</td>
+                            <td>07/15/2021</td>
+                            <td>P987654321</td>
+                            <td>Administración de Empresas</td>
+                            <td class="text-center table-actions">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_5" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(2)" class="table-action text-danger" href="#">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

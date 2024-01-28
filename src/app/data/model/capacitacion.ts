@@ -2,7 +2,7 @@ import { Graduado } from "./graduado";
 
 export class Capacitacion {
     id?: number;
-    'horas': BigInteger;
+    'horas': Number;
     'tipo_certificado': string;
     'fecha_inicio': Date;
     'fecha_fin': Date;

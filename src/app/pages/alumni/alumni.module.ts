@@ -13,6 +13,7 @@ import { ReferenciasPersonalesComponent } from './referencias-personales/referen
 import { OfertasDeTrabajoComponent } from './ofertas-de-trabajo/ofertas-de-trabajo.component';
 import { ComunidadComponent } from './comunidad/comunidad.component';
 import { ReferenciasLaboralesComponent } from './referencias-laborales/referencias-laborales.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,8 @@ import { ReferenciasLaboralesComponent } from './referencias-laborales/referenci
     imports: [
         CommonModule,
         AlumniRoutingModule,
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 

@@ -2,7 +2,7 @@
     style="background-image: url(../../../../assets/imgs/headers/Experiencia.jpg);">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Mi Experiencia</h1>
+            <h1>Mis Referencias Laborales</h1>
         </div>
     </div>
 </section>
@@ -16,109 +16,133 @@
                 <div class="modal-content">
                     <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
                         class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear nuevo tipo de experiencia'">
+                        <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear Experiencia'">
                         </h5>
                     </div>
 
                     <div class="modal-body">
                         <form>
                             <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">EMPRESA: <span
-                                                    class="tx-danger">*</span></label>
-                                            <select class="form-control" name="empresa">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">WILLSOFTEC</option>
-                                                <option value="tiempo-completo">RENAFIT</option>
-                                                <option value="tiempo-completo">LIBELULA</option>
-                                                <option value="tiempo-completo">STEVE BRO</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">CARGO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el cargo">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">JORNADA: <span
-                                                    class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">MATUTINA</option>
-                                                <option value="medio-tiempo">Medio Tiempo</option>
-                                                <option value="temporal">Temporal</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">EXPERIENCIA: <span
-                                                    class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">Sin Experiencia</option>
-                                                <option value="medio-tiempo">Con Experiencia</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">FECHA INICIO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaInicio">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">FECHA FIN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaFin">
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row mg-b-25" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">DESCRIPCIÓN: <span
+                                            <label class="form-control-label active">SALARIO: <span
                                                     class="tx-danger">*</span></label>
-                                            <textarea class="form-control" name="descripcion" rows="4"
-                                                placeholder="Ingrese la descripción de la oferta de trabajo"></textarea>
+                                            <input class="form-control" type="number" name="salario"
+                                                placeholder="Ingrese el salario" id="salario"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.salario : nuevoExperiencia.salario"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">UBICACIÓN: <span
+                                            <label class="form-control-label active">TELEFONO: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="ubicacion"
-                                                placeholder="Ingrese la ubicación">
+                                                placeholder="Ingrese la telefono" id="telefono"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.telefono : nuevoExperiencia.telefono"
+                                                required>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row mg-b-25 my-3">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA CIERRE: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaCierre" id="fechaCierre"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.fecha_cierre : nuevoExperiencia.telefono"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA PUBLICACIÓN: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaPublicacion"
+                                                id="fechaPublicacion"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.fecha_publicacion : nuevoExperiencia.fecha_publicacion"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA APERTURA: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaApertura"
+                                                id="fechaApertura"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.fecha_apertura : nuevoExperiencia.fecha_apertura"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">CARGO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="cargo"
+                                                placeholder="Ingrese el cargo" id="cargo"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.cargo : nuevoExperiencia.cargo"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">EXPERIENCIA: <span
+                                                    class="tx-danger">*</span></label>
+                                            <textarea class="form-control" name="experiencia" rows="4"
+                                                placeholder="Ingrese la experiencia" id="experiencia"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.experiencia : nuevoExperiencia.experiencia"
+                                                required>
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Area Conocimiento: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="area_conocimiento"
+                                                placeholder="Ingrese el area conocimiento" id="area_conocimiento"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.area_conocimiento : nuevoExperiencia.area_conocimiento"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active" for="estado">ESTADO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <select class="form-control" name="estado" id="estado"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.estado : nuevoExperiencia.estado"
+                                                required>
+                                                <option value="" disabled>-- Seleccione una opción --</option>
+                                                <option value="activo">ACTIVO</option>
+                                                <option value="inactivo">INACTIVO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </form>
                     </div>
+
                     <div class="modal-footer">
+
                         <!-- Botón para registrar -->
-                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                        <button (click)="createExperiencia()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                            Registrar Título
+                            Registrar Experiencia
                         </button>
 
                         <!-- Botón para editar -->
-                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Editar Título
+                            Editar Experiencia
                         </button>
 
                         <button data-bs-dismiss="modal"
@@ -131,7 +155,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
                     Registrar Experiencia</button>
                 <div class="input-group">
                     <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
@@ -142,42 +166,136 @@
             </div>
         </div>
 
-
-        <div class="card-body pd-0 collapse show" id="collapse1">
+        <div class="card-body pd-0 collapse show">
             <div class="table-responsive">
                 <table class="table">
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>EMPRESA</th>
+                            <th>SALARIO</th>
+                            <th>TELEFONO</th>
                             <th>CARGO</th>
-                            <th>DESCRIPCION</th>
-                            <th>AREA CONOCIMIENTOS</th>
+                            <th>FECHA CIERRE</th>
+                            <th>FECHA PUBLICACION</th>
+                            <th>EXPERIENCIA</th>
+                            <th>FECHA APERTURA</th>
+                            <th>AREA CONOCIMIENTO</th>
+                            <th>ESTADO</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>experiencia.empresa</td>
-                            <td>experiencia.cargo</td>
-                            <td>experiencia.descripcion</td>
-                            <td>experiencia.area_conocimiento</td>
+                        <tr *ngFor="let experienciaItem of experiencia">
+                            <th scope="row">{{ experienciaItem.id }}</th>
+                            <td>{{ experienciaItem.salario }}</td>
+                            <td>{{ experienciaItem.telefono }}</td>
+                            <td>{{ experienciaItem.cargo }}</td>
+                            <td>{{ experienciaItem.fecha_cierre | date:'shortDate' }}</td>
+                            <td>{{ experienciaItem.fecha_publicacion | date:'shortDate' }}</td>
+                            <td>{{ experienciaItem.experiencia }}</td>
+                            <td>{{ experienciaItem.fecha_apertura | date:'shortDate' }}</td>
+                            <td>{{ experienciaItem.area_conocimiento }}</td>
+                            <td>{{ experienciaItem.estado ? 'Activo' : 'Inactivo' }}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                                    class="table-action mg-r-10" [class.text-primary]="!editarClicked"
-                                    [class.text-danger]="editarClicked" href="#">
+                                <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
-
-                                <a class="table-action ms-2 text-danger" href="#">
+                                <a (click)="onDeleteClick(1)" class="table-action ms-2 text-danger" href="#">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>$60,000</td>
+                            <td>(555) 123-4567</td>
+                            <td>Desarrollador Frontend</td>
+                            <td>01/01/2024</td>
+                            <td>12/15/2023</td>
+                            <td>3 años de experiencia en desarrollo web</td>
+                            <td>11/01/2023</td>
+                            <td>Tecnologías de la Información</td>
+                            <td>Activo</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(1)" class="table-action ms-2 text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>$75,000</td>
+                            <td>(555) 987-6543</td>
+                            <td>Ingeniero de Software</td>
+                            <td>02/15/2024</td>
+                            <td>01/10/2024</td>
+                            <td>5 años de experiencia en desarrollo de aplicaciones móviles</td>
+                            <td>12/01/2023</td>
+                            <td>Ingeniería de Software</td>
+                            <td>Activo</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(2)" class="table-action ms-2 text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>$55,000</td>
+                            <td>(555) 456-7890</td>
+                            <td>Diseñador UX/UI</td>
+                            <td>03/20/2024</td>
+                            <td>02/05/2024</td>
+                            <td>4 años de experiencia en diseño de interfaces de usuario</td>
+                            <td>01/15/2024</td>
+                            <td>Diseño Gráfico</td>
+                            <td>Inactivo</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(3)" class="table-action ms-2 text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>$80,000</td>
+                            <td>(555) 234-5678</td>
+                            <td>Analista de Datos</td>
+                            <td>04/25/2024</td>
+                            <td>03/10/2024</td>
+                            <td>6 años de experiencia en análisis de datos y business intelligence</td>
+                            <td>02/15/2024</td>
+                            <td>Ciencias de la Computación</td>
+                            <td>Activo</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="onDeleteClick(4)" class="table-action ms-2 text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>

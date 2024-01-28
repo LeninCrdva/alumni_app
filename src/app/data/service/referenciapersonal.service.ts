@@ -26,4 +26,14 @@ export class ReferenciaPersonalService {
   getReferenciasPersonalesById(id: any): Observable<Referencias_personales> {
     return this.http.get<Referencias_personales>(`${this.urlEndPoint}/${id}`)
   }
+
+  updateReferenciasPersonales(id: any, referencias_personales: Referencias_personales): Observable<Referencias_personales> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Referencias_personales>(url, referencias_personales, { headers: this.httpHeaders });
+  }
+
+  deleteReferenciasPersonales(id: any): Observable<void> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.delete<void>(url, { headers: this.httpHeaders });
+  }
 }

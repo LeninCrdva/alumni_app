@@ -26,4 +26,14 @@ export class ExperienciaService {
   getExperienciaById(id: any): Observable<Experiencia> {
     return this.http.get<Experiencia>(`${this.urlEndPoint}/${id}`)
   }
+
+  updateExperiencia(id: any, experiencia: Experiencia): Observable<Experiencia> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Experiencia>(url, experiencia, { headers: this.httpHeaders });
+  }
+
+  deleteExperiencia(id: any): Observable<void> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.delete<void>(url, { headers: this.httpHeaders });
+  }
 }
