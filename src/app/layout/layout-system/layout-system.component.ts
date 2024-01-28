@@ -1,8 +1,10 @@
-
+import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
 import { UserService} from '../../data/service/UserService'
 import { AssetService } from '../../data/service/Asset.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NuevoAdministradorModalComponent } from '../../pages/admin/nuevo-administrador-modal/nuevo-administrador-modal.component';
+
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -29,11 +31,14 @@ export class LayoutSystemComponent implements OnInit {
    public getRuta: string = '';
    public deleteimage: any = localStorage.getItem('rutaimagen'); 
    public mensajevalidado: string = '';
+ //modal 
 
   constructor(private sanitizer: DomSanitizer,
     private assetService: AssetService,
     private el: ElementRef, 
-    private renderer: Renderer2, private usuarioService: UserService) { }
+    private renderer: Renderer2, private usuarioService: UserService,
+    private modalService: BsModalService,
+    public bsModalRef: BsModalRef,) { }
 
   ngOnInit() {
     // NOTE: START SLIDER BAR
@@ -49,7 +54,9 @@ export class LayoutSystemComponent implements OnInit {
     if (username) {
       this.usuarioService.getUserByUsername(username).subscribe(
         (response) => {
+
           //console.log('Datos del usuario por nombre:', response);
+          localStorage.setItem('user_data', JSON.stringify(response));
           localStorage.setItem('url_imagen', response.url_imagen);
           localStorage.setItem('ruta_imagen', response.ruta_imagen);
           const storedRutaImagen = localStorage.getItem('ruta_imagen');
@@ -61,8 +68,8 @@ export class LayoutSystemComponent implements OnInit {
             // Manejar el caso en el que la información no esté disponible en localStorage
             console.error('La información de imagen no está disponible en localStorage.');
           }
-          console.log('Despues de consultar:',localStorage.getItem('url_imagen'));
-          console.log('Despues de consultar:',localStorage.getItem('ruta_imagen'));
+         
+          console.log('lo que se guardo en cache',localStorage.getItem('user_data'));
 
         },
         (error) => {
@@ -134,9 +141,22 @@ export class LayoutSystemComponent implements OnInit {
     private checkUserRole() {
       const userRole = localStorage.getItem('userRole');
       console.log(userRole);
-      if(userRole=='ROL_ADMINISTRADOR'){
+      if (userRole == 'ROL_ADMINISTRADOR') {
         this.showAdminOptions = true;
-        this.rolType='Admin';
+        this.rolType = 'Admin';
+        // Abre el modal
+        const initialState = {
+        };
+
+        this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, { initialState });
+
+        // Escucha el evento onClose del modal
+        this.bsModalRef.content.onClose.subscribe((result: string) => {
+          if (result === 'guardadoExitoso') {
+            console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+          }
+        });
+
       }
       else{
         if(userRole=='ROL_EMPRESARIO'){

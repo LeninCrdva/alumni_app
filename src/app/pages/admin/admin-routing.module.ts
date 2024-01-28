@@ -11,7 +11,7 @@ import { ParametrosPreguntasComponent } from '../alumni/parametros-preguntas/par
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'perfil-usuario', component: PerfilUsuarioComponent },
+    { path: 'perfil-admin', component: PerfilUsuarioComponent },
     { path: 'sector-empresarial', component: SectorEmpComponent},
     { path: 'reportes', component: GraficasComponent},
     { path: 'usuarios-list', component: UsuariosListsComponent },
