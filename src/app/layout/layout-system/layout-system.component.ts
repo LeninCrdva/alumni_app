@@ -1,10 +1,11 @@
 import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
-import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit,Input } from '@angular/core';
 import { UserService} from '../../data/service/UserService'
 import { AssetService } from '../../data/service/Asset.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NuevoAdministradorModalComponent } from '../../pages/admin/nuevo-administrador-modal/nuevo-administrador-modal.component';
-
+import { AdministradorService } from '../../data/service/administrador.service';
+import { Administrador } from '../../data/model/administrador';
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -14,7 +15,7 @@ export class LayoutSystemComponent implements OnInit {
   showAdminOptions = false;
   showEmpresarioOptions = false;
   showAlumniOptions = false;
-
+  nuevoAdministrador: Administrador = new Administrador();
     activeMenuItem: string = 'Dashboard';
 
     rolType: string = '';
@@ -38,7 +39,8 @@ export class LayoutSystemComponent implements OnInit {
     private el: ElementRef, 
     private renderer: Renderer2, private usuarioService: UserService,
     private modalService: BsModalService,
-    public bsModalRef: BsModalRef,) { }
+    public bsModalRef: BsModalRef,
+    private administradorService: AdministradorService,) { }
 
   ngOnInit() {
     // NOTE: START SLIDER BAR
@@ -69,7 +71,7 @@ export class LayoutSystemComponent implements OnInit {
             console.error('La información de imagen no está disponible en localStorage.');
           }
          
-          console.log('lo que se guardo en cache',localStorage.getItem('user_data'));
+         // console.log('lo que se guardo en cache',localStorage.getItem('user_data'));
 
         },
         (error) => {
@@ -144,18 +146,35 @@ export class LayoutSystemComponent implements OnInit {
       if (userRole == 'ROL_ADMINISTRADOR') {
         this.showAdminOptions = true;
         this.rolType = 'Admin';
-        // Abre el modal
-        const initialState = {
-        };
-
-        this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, { initialState });
-
-        // Escucha el evento onClose del modal
-        this.bsModalRef.content.onClose.subscribe((result: string) => {
-          if (result === 'guardadoExitoso') {
-            console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+        
+        this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
+          (exists) => {
+            if (!exists) {
+            
+              const config = {
+                initialState: {
+                  nuevoAdministrador: this.nuevoAdministrador,
+                },
+                ignoreBackdropClick: true,  
+                keyboard: false,  
+              };
+              this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
+  
+             
+              this.bsModalRef.content.onClose.subscribe((result: string) => {
+                if (result === 'guardadoExitoso') {
+                  console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                }
+              });
+            } else {
+              console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
+            }
+          },
+          (error) => {
+            console.error('Error al verificar la existencia del administrador:', error);
           }
-        });
+        );
+      
 
       }
       else{
