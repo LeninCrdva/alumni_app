@@ -13,6 +13,7 @@ import { ComunidadComponent } from './comunidad/comunidad.component';
 import { ExperienciaComponent } from './experiencia/experiencia.component';
 import { CapacitacionesComponent } from './capacitaciones/capacitaciones.component';
 import { ReferenciasLaboralesComponent } from './referencias-laborales/referencias-laborales.component';
+import { NuevoGraduadoModalComponent } from './nuevo-graduado-modal/nuevo-graduado-modal.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
     { path: 'ofertas-trabajo', component: OfertasDeTrabajoComponent },
     // NOTE: COMUNIDAD
     { path: 'comunidad', component: ComunidadComponent },
+    { path: 'nuevoxd', component: NuevoGraduadoModalComponent },
 ];
 
 @NgModule({

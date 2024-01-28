@@ -14,6 +14,7 @@ import { OfertasDeTrabajoComponent } from './ofertas-de-trabajo/ofertas-de-traba
 import { ComunidadComponent } from './comunidad/comunidad.component';
 import { ReferenciasLaboralesComponent } from './referencias-laborales/referencias-laborales.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NuevoGraduadoModalComponent } from './nuevo-graduado-modal/nuevo-graduado-modal.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ReferenciasPersonalesComponent,
         OfertasDeTrabajoComponent,
         ComunidadComponent,
-        ReferenciasLaboralesComponent
+        ReferenciasLaboralesComponent,
+        NuevoGraduadoModalComponent
     ],
     imports: [
         CommonModule,

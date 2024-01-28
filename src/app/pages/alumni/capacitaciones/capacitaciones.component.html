@@ -24,20 +24,18 @@
                         <form>
                             <div class="form-layout form-layout-1">
                                 <div class="row mg-b-25">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">NOMBRE: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="nombre" placeholder="Ingrese el nombre">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">HORAS: <span class="tx-danger">*</span></label>
                                             <!-- Cambiado a input type="number" para representar la cantidad de horas -->
                                             <input class="form-control wd-250" type="number" name="horas"
                                                 placeholder="Ingrese la cantidad de horas">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">TIPO DE CERTIFICADO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="tipo_certificado"
-                                                placeholder="Ingrese el tipo de certificado">
                                         </div>
                                     </div>
                                 </div>
@@ -71,21 +69,11 @@
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">NOMBRE: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="nombre" placeholder="Ingrese el nombre">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">GRADUADO: <span class="tx-danger">*</span></label>
-                                            <select class="form-control" name="graduado">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="graduado1">Graduado 1</option>
-                                                <option value="graduado2">Graduado 2</option>
-                                                <option value="graduado3">Graduado 3</option>
-                                            </select>
+                                            <label class="form-control-label active">TIPO DE CERTIFICADO: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="tipo_certificado"
+                                                placeholder="Ingrese el tipo de certificado">
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +129,6 @@
                             <th>INSTITUCIÓN</th>
                             <th>LUGAR</th>
                             <th>NOMBRE</th>
-                            <th>GRADUADO</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -155,7 +142,6 @@
                             <td>{{ capacitacion.institucion }}</td>
                             <td>{{ capacitacion.lugar }}</td>
                             <td>{{ capacitacion.nombre }}</td>
-                            <td>{{ capacitacion.graduado }}</td>
                         </tr>
                     </tbody>
                 </table>

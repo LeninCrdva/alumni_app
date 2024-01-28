@@ -12,7 +12,7 @@ import { UsuariosListsComponent } from './usuarios-lists/usuarios-lists.componen
     DashboardComponent,
     SectorEmpComponent,
     NuevoAdministradorModalComponent,
-    UsuariosListsComponent
+    UsuariosListsComponent,
   ],
     imports: [
         CommonModule,
