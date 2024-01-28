@@ -2,9 +2,17 @@ import { Usuario } from "./usuario";
 
 export class Administrador {
     id?: number;
-    'nombre': string;
+    'cargo': string;
+    'estado': boolean= true;
+    'email': string;
+    'usuario':string;
+
+}
+
+export class Administrador2 {
+    id?: number;
+    'cargo': string;
     'estado': boolean;
     'email': string;
     'usuario': Usuario;
-
 }
