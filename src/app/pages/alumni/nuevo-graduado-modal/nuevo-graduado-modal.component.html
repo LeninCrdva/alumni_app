@@ -1,38 +1,46 @@
 <div class="modal-header">
-    <h4 class="modal-title">Nuevo Administrador</h4>
+    <h4 class="modal-title">Nuevo Graduado</h4>
     <button type="button" class="close" (click)="cerrarModal()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
 <div class="modal-body">
-    <form (ngSubmit)="guardarAdministrador()">
+    <form [formGroup]="nuevoGraduadoForm" (ngSubmit)="guardarGraduado()">
         <!-- Campos del formulario -->
         <div class="form-group">
-            <label for="cargo">Cargo:</label>
-            <input type="text" class="form-control" id="cargo" [(ngModel)]="nuevoAdministrador.cargo" name="cargo"
-                required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" [(ngModel)]="nuevoAdministrador.email" name="email"
-                required>
-        </div>
-
-        <div class="form-group">
             <label for="usuario">Usuario:</label>
-            <input type="text" class="form-control" id="usuario" [(ngModel)]="nuevoAdministrador.usuario" name="usuario"
-                required readonly>
+            <input type="text" class="form-control" id="usuario" formControlName="usuario" required readonly>
         </div>
 
-        <div
-            *ngIf="!formularioValido && (nuevoAdministrador.cargo || nuevoAdministrador.email || nuevoAdministrador.usuario)">
-            <div class="alert alert-danger">
-                Por favor, completa todos los campos obligatorios antes de guardar.
-            </div>
+        <div class="form-group">
+            <label for="emailPersonal">Email Personal:</label>
+            <input type="text" class="form-control" id="emailPersonal" formControlName="emailPersonal">
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="formularioValido">Guardar</button>
+        <div class="form-group">
+            <label for="ciudad">Ciudad:</label>
+            <select class="form-control" id="ciudad" formControlName="ciudad">
+                <option value="" disabled selected>Seleccionar</option>
+                <option *ngFor="let ciudad of ciudades" [value]="ciudad.nombre">{{ ciudad.nombre }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="estadoCivil">Estado Civil:</label>
+            <select class="form-control" id="estadoCivil" formControlName="estadoCivil">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Soltero/a">Soltero/a</option>
+                <option value="Casado/a">Casado/a</option>
+                <option value="Viudo/a">Viudo/a</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="ruta_pdf">Ruta PDF:</label>
+            <input type="file" accept=".pdf" class="form-control" id="ruta_pdf" (change)="onArchivoSeleccionado($event)">
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!nuevoGraduadoForm.valid">Guardar</button>
     </form>
 </div>

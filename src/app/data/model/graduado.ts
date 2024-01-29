@@ -3,7 +3,6 @@ import { Usuario } from "./usuario";
 
 export class Graduado {
     id?: number;
-    
     'usuario': Usuario;
     'ciudad': Ciudad;
     'fecha_graduacion': Date;
@@ -18,6 +17,17 @@ export class Graduado2 {
     'nombre': string;
     'usuario': Usuario;
     'ciudad': Ciudad;
+    'fecha_graduacion': Date;
+    'emailPersonal': string;
+    'estadocivil': string;
+    'ruta_pdf': string;
+    'url_pdf': string;
+}
+
+export class Graduado3 {
+    id?: number;
+    'usuario': string;
+    'ciudad': string;
     'fecha_graduacion': Date;
     'emailPersonal': string;
     'estadocivil': string;

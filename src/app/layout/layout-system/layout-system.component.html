@@ -186,9 +186,9 @@
                 <a>Bienvenido "{{ name }}"</a>
                 <img [src]="urlImage" alt="Imagen de usuario" alt="Alumni">
                 <ul class="profile-link">
-                    <li><a (click)="redirectToProfile()">
+                    <li><a >
                             <i class='bx bxs-user-circle icon'></i> Perfil</a></li>
-                    <li><a (click)="redirectToUpdateProfile()">
+                    <li><a>
                             <i class='bx bx-user-pin icon'></i> Actualizar Perfil</a></li>
                     <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active"
                             (click)="cerrarSesionconclick()"><i class='bx bx-exit icon'></i> Cerrar Sesion</a></li>
