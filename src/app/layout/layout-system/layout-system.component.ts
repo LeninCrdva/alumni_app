@@ -1,6 +1,6 @@
 import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
-import { Component, ElementRef, Renderer2, OnInit, Input, HostListener } from '@angular/core';
-import { UserService } from '../../data/service/UserService'
+import { Component, ElementRef, Renderer2, OnInit,Input } from '@angular/core';
+import { UserService} from '../../data/service/UserService'
 import { AssetService } from '../../data/service/Asset.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NuevoAdministradorModalComponent } from '../../pages/admin/nuevo-administrador-modal/nuevo-administrador-modal.component';
@@ -8,6 +8,9 @@ import { AdministradorService } from '../../data/service/administrador.service';
 import { Administrador } from '../../data/model/administrador';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { GraduadoService } from '../../data/service/graduado.service';
+import {Graduado3} from '../../data/model/graduado';
+import {NuevoGraduadoModalComponent} from '../../pages/alumni/nuevo-graduado-modal/nuevo-graduado-modal.component';
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -17,33 +20,36 @@ export class LayoutSystemComponent implements OnInit {
   showAdminOptions = false;
   showEmpresarioOptions = false;
   showAlumniOptions = false;
+  nuevoGraduado: Graduado3 = new Graduado3();
   nuevoAdministrador: Administrador = new Administrador();
-  activeMenuItem: string = localStorage.getItem('activeMenuItem') || 'Dashboard';
-
-  rolType: string = '';
-  activeDropdown: string | null = null;
-  name: string | null = localStorage.getItem('name');
-  //imagenes//
+    activeMenuItem: string = 'Dashboard';
+     
+    rolType: string = '';
+    activeDropdown: string | null = null;
+   public  name: string | null = localStorage.getItem('name');
+    //imagenes//
   public previsualizacion?: string;
-  public archivos: any = []
-  public loading?: boolean
-  public rutaimagen: string = '';
-  public urlImage: string = '';
-  public username: string = '';
-  public inforest: any = [];
-  public getRuta: string = '';
-  public deleteimage: any = localStorage.getItem('rutaimagen');
-  public mensajevalidado: string = '';
-  //modal 
+   public archivos: any = []
+   public loading?: boolean
+   public rutaimagen: string = '';
+   public urlImage: string = '';
+   public username: string = '';
+   public inforest: any = [];
+   public getRuta: string = '';
+   public deleteimage: any = localStorage.getItem('rutaimagen'); 
+   public mensajevalidado: string = '';
+ //modal 
 
   constructor(private sanitizer: DomSanitizer,
     private assetService: AssetService,
-    private el: ElementRef,
+    private el: ElementRef, 
     private renderer: Renderer2, private usuarioService: UserService,
     private modalService: BsModalService,
     public bsModalRef: BsModalRef,
+
     private router: Router,
-    private administradorService: AdministradorService,) { }
+    private administradorService: AdministradorService,
+    private graduadoservice: GraduadoService) { }
 
   ngOnInit() {
     // NOTE: START SLIDER BAR
@@ -55,43 +61,8 @@ export class LayoutSystemComponent implements OnInit {
     this.cerrarSesion();
     this.checkUserRole();
   }
-
-  redirectToProfile(): void {
-    const userRole = localStorage.getItem('userRole');
-
-    console.log("Rol: " + userRole);
-    switch (userRole) {
-      case 'ROL_ADMINISTRADOR':
-        this.router.navigate(['/system/admin/perfil']);
-        break;
-      case 'ROL_EMPRESARIO':
-        this.router.navigate(['/system/company/perfil']);
-        break;
-      case 'ROL_GRADUADO':
-        this.router.navigate(['system/alumni/perfil']);
-        break;
-    }
-  }
-
-  redirectToUpdateProfile(): void {
-    const userRole = localStorage.getItem('userRole');
-
-    console.log("Rol: " + userRole);
-    switch (userRole) {
-      case 'ROL_ADMINISTRADOR':
-        this.router.navigate(['/system/admin/update-perfil']);
-        break;
-      case 'ROL_EMPRESARIO':
-        this.router.navigate(['/system/company/update-perfil']);
-        break;
-      case 'ROL_GRADUADO':
-        this.router.navigate(['system/alumni/update-perfil']);
-        break;
-    }
-  }
-
   loadUserDataByUsername() {
-    const username = localStorage.getItem('name');
+    const username = localStorage.getItem('name');  // Obtén el nombre de usuario de donde lo tengas guardado
     if (username) {
       this.usuarioService.getUserByUsername(username).subscribe(
         (response) => {
@@ -109,8 +80,8 @@ export class LayoutSystemComponent implements OnInit {
             // Manejar el caso en el que la información no esté disponible en localStorage
             console.error('La información de imagen no está disponible en localStorage.');
           }
-
-          // console.log('lo que se guardo en cache',localStorage.getItem('user_data'));
+         
+         // console.log('lo que se guardo en cache',localStorage.getItem('user_data'));
 
         },
         (error) => {
@@ -123,10 +94,9 @@ export class LayoutSystemComponent implements OnInit {
 
   setActiveMenuItem(menuItem: string): void {
     this.activeMenuItem = menuItem;
-    localStorage.setItem('activeMenuItem', menuItem);
   }
-
   capturarFile(event: any): any {
+
     const archivoCapturado = event.target.files[0]
     this.extraerBase64(archivoCapturado).then((imagen: any) => {
       this.previsualizacion = imagen.base;
@@ -137,7 +107,7 @@ export class LayoutSystemComponent implements OnInit {
     // 
     // console.log(event.target.files);
   }
-
+  
   extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
     try {
       const unsafeImg = window.URL.createObjectURL($event);
@@ -164,7 +134,7 @@ export class LayoutSystemComponent implements OnInit {
       });
     }
   });
-
+  
   deleteFile(rutakey: string) {
     this.assetService.delete(rutakey).subscribe(r => {
       console.log("archivo eliminado")
@@ -201,115 +171,129 @@ export class LayoutSystemComponent implements OnInit {
       this.router.navigate(['/inicio-sesion']);
     });
   }
-
-  private checkUserRole() {
-    const userRole = localStorage.getItem('userRole');
-    console.log(userRole);
-    if (userRole == 'ROL_ADMINISTRADOR') {
-      this.showAdminOptions = true;
-      this.rolType = 'Admin';
-
-      this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
-        (exists) => {
-          if (!exists) {
-
-            const config = {
-              initialState: {
-                nuevoAdministrador: this.nuevoAdministrador,
-              },
-              ignoreBackdropClick: true,
-              keyboard: false,
-            };
-            this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
-
-
-            this.bsModalRef.content.onClose.subscribe((result: string) => {
-              if (result === 'guardadoExitoso') {
-                console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
-              }
-            });
-          } else {
-            console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
+  
+  
+  
+    private checkUserRole() {
+      const userRole = localStorage.getItem('userRole');
+      console.log(userRole);
+      if (userRole == 'ROL_ADMINISTRADOR') {
+        this.showAdminOptions = true;
+        this.rolType = 'Admin';
+        this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
+          (exists) => {
+            if (!exists) {
+            
+              const config = {
+                initialState: {
+                  nuevoAdministrador: this.nuevoAdministrador,
+                },
+                ignoreBackdropClick: true,  
+                keyboard: false,  
+              };
+              this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
+  
+             
+              this.bsModalRef.content.onClose.subscribe((result: string) => {
+                if (result === 'guardadoExitoso') {
+                  console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                }
+              });
+            } else {
+              console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
+            }
+          },
+          (error) => {
+            console.error('Error al verificar la existencia del administrador:', error);
           }
-        },
-        (error) => {
-          console.error('Error al verificar la existencia del administrador:', error);
-        }
-      );
-
-
-    }
-    else {
-      if (userRole == 'ROL_EMPRESARIO') {
-
-        this.showEmpresarioOptions = true;
-        this.rolType = 'Empresario';
+        );
+      
 
       }
-      else {
-        if (userRole == 'ROL_GRADUADO') {
-          this.showAlumniOptions = true;
-          this.rolType = 'Alumni';
+      else{
+        if(userRole=='ROL_EMPRESARIO'){
+        
+          this.showEmpresarioOptions = true;
+          this.rolType='Empresario';
 
+        }
+        else{
+          if (userRole === 'ROL_GRADUADO') {
+            this.showAlumniOptions = true;
+            this.rolType = 'Alumni';
+            console.log('Esta guardado o no:',this.nuevoGraduado);
+            this.graduadoservice.checkGraduadoExists(this.nuevoGraduado.usuario).subscribe(
+              (exists) => {
+                if (!exists) {
+                
+                  const config = {
+                    initialState: {
+                      nuevoGraduado: this.nuevoGraduado,
+                    },
+                    ignoreBackdropClick: true,
+                    keyboard: false,
+                  };
+                  this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+      
+                 
+                  if (this.bsModalRef.content) {
+                    this.bsModalRef.content.onClose.subscribe((result: string) => {
+                      if (result === 'guardadoExitoso') {
+                        console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                      }
+                    });
+                  } else {
+                    console.error('bsModalRef.content es undefined. Verifica la configuración del modal.');
+                  }
+                  
+                } else {
+                  console.error('Ya existe un graduado con este nombre. Elige otro nombre.');
+                }
+              },
+              (error) => {
+                console.error('Error al verificar la existencia del administrador:', error);
+              }
+            );
+          
+
+
+          }
         }
       }
+      
+     
     }
 
-    // !Terminar de implementar
-    // this.showAdminOptions = authorities.includes('ROL_ADMINISTRADOR');
-    // this.showEmpresarioOptions = authorities.includes('ROL_EMPRESARIO');
-    // this.showAlumniOptions = authorities.includes('ROL_GRADUADO');
-  }
+    // NOTE: SLIDER BAR
 
-  // NOTE: SLIDER BAR
-
-  private setupSidebarDropdown() {
-    const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');
-    const sidebar = this.el.nativeElement.querySelector('#sidebar');
-
-    allDropdown.forEach((item: any) => {
-      const a = item.parentElement.querySelector('a:first-child');
-      this.renderer.listen(a, 'click', (event) => {
-        event.preventDefault();
-
-        if (!a.classList.contains('active')) {
-          allDropdown.forEach((i: any) => {
-            const aLink = i.parentElement.querySelector('a:first-child');
-            aLink.classList.remove('active');
-            i.classList.remove('show');
-          });
-        }
-
-        a.classList.toggle('active');
-        item.classList.toggle('show');
-      });
-    });
-  }
-
-  private setupSidebarCollapse() {
-    const toggleSidebar = this.el.nativeElement.querySelector('nav .toggle-sidebar');
-    const allSideDivider = this.el.nativeElement.querySelectorAll('#sidebar .divider');
-    const sidebar = this.el.nativeElement.querySelector('#sidebar');
-    const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');
-
-    if (sidebar.classList.contains('hide')) {
-      allSideDivider.forEach((item: any) => {
-        item.textContent = '-';
-      });
+    private setupSidebarDropdown() {
+      const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');
+      const sidebar = this.el.nativeElement.querySelector('#sidebar');
 
       allDropdown.forEach((item: any) => {
         const a = item.parentElement.querySelector('a:first-child');
-        a.classList.remove('active');
-        item.classList.remove('show');
-      });
-    } else {
-      allSideDivider.forEach((item: any) => {
-        item.textContent = item.dataset.text;
+        this.renderer.listen(a, 'click', (event) => {
+          event.preventDefault();
+
+          if (!a.classList.contains('active')) {
+            allDropdown.forEach((i: any) => {
+              const aLink = i.parentElement.querySelector('a:first-child');
+              aLink.classList.remove('active');
+              i.classList.remove('show');
+            });
+          }
+
+          a.classList.toggle('active');
+          item.classList.toggle('show');
+        });
       });
     }
 
-    this.renderer.listen(toggleSidebar, 'click', () => {
-      sidebar.classList.toggle('hide');
+    private setupSidebarCollapse() {
+      const toggleSidebar = this.el.nativeElement.querySelector('nav .toggle-sidebar');
+      const allSideDivider = this.el.nativeElement.querySelectorAll('#sidebar .divider');
+      const sidebar = this.el.nativeElement.querySelector('#sidebar');
+      const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');
 
       if (sidebar.classList.contains('hide')) {
         allSideDivider.forEach((item: any) => {
@@ -326,52 +310,71 @@ export class LayoutSystemComponent implements OnInit {
           item.textContent = item.dataset.text;
         });
       }
-    });
 
-    this.renderer.listen(sidebar, 'mouseleave', () => {
-      if (sidebar.classList.contains('hide')) {
-        allDropdown.forEach((item: any) => {
-          const a = item.parentElement.querySelector('a:first-child');
-          a.classList.remove('active');
-          item.classList.remove('show');
-        });
-        allSideDivider.forEach((item: any) => {
-          item.textContent = '-';
-        });
-      }
-    });
+      this.renderer.listen(toggleSidebar, 'click', () => {
+        sidebar.classList.toggle('hide');
 
-    this.renderer.listen(sidebar, 'mouseenter', () => {
-      if (sidebar.classList.contains('hide')) {
-        allDropdown.forEach((item: any) => {
-          const a = item.parentElement.querySelector('a:first-child');
-          a.classList.remove('active');
-          item.classList.remove('show');
-        });
-        allSideDivider.forEach((item: any) => {
-          item.textContent = item.dataset.text;
-        });
-      }
-    });
+        if (sidebar.classList.contains('hide')) {
+          allSideDivider.forEach((item: any) => {
+            item.textContent = '-';
+          });
+
+          allDropdown.forEach((item: any) => {
+            const a = item.parentElement.querySelector('a:first-child');
+            a.classList.remove('active');
+            item.classList.remove('show');
+          });
+        } else {
+          allSideDivider.forEach((item: any) => {
+            item.textContent = item.dataset.text;
+          });
+        }
+      });
+
+      this.renderer.listen(sidebar, 'mouseleave', () => {
+        if (sidebar.classList.contains('hide')) {
+          allDropdown.forEach((item: any) => {
+            const a = item.parentElement.querySelector('a:first-child');
+            a.classList.remove('active');
+            item.classList.remove('show');
+          });
+          allSideDivider.forEach((item: any) => {
+            item.textContent = '-';
+          });
+        }
+      });
+
+      this.renderer.listen(sidebar, 'mouseenter', () => {
+        if (sidebar.classList.contains('hide')) {
+          allDropdown.forEach((item: any) => {
+            const a = item.parentElement.querySelector('a:first-child');
+            a.classList.remove('active');
+            item.classList.remove('show');
+          });
+          allSideDivider.forEach((item: any) => {
+            item.textContent = item.dataset.text;
+          });
+        }
+      });
+    }
+
+    private setupProfileDropdown() {
+      const profile = this.el.nativeElement.querySelector('nav .profile');
+      const imgProfile = profile.querySelector('img');
+      const aProfile = profile.querySelector('a');
+
+      this.renderer.listen(imgProfile, 'click', () => {
+        this.toggleDropdown();
+      });
+
+      this.renderer.listen(aProfile, 'click', (event) => {
+        event.preventDefault();
+        this.toggleDropdown();
+      });
+    }
+
+    private toggleDropdown() {
+      const dropdownProfile = this.el.nativeElement.querySelector('nav .profile-link');
+      dropdownProfile.classList.toggle('show');
+    }
   }
-
-  private setupProfileDropdown() {
-    const profile = this.el.nativeElement.querySelector('nav .profile');
-    const imgProfile = profile.querySelector('img');
-    const aProfile = profile.querySelector('a');
-
-    this.renderer.listen(imgProfile, 'click', () => {
-      this.toggleDropdown();
-    });
-
-    this.renderer.listen(aProfile, 'click', (event) => {
-      event.preventDefault();
-      this.toggleDropdown();
-    });
-  }
-
-  private toggleDropdown() {
-    const dropdownProfile = this.el.nativeElement.querySelector('nav .profile-link');
-    dropdownProfile.classList.toggle('show');
-  }
-}
