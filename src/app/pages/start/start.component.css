@@ -45,7 +45,6 @@ li {
 * ----------------------------------------------------------------------------------------
 */
 
-
 header {
     position: fixed;
     color: white;
@@ -109,6 +108,10 @@ header.abajo {
 
 .nav__toggle {
     display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
 }
 
 .nav__burger {

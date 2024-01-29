@@ -267,4 +267,13 @@ main {
     nav .nav-link {
         display: none;
     }
+
+    #sidebar.hide {
+        max-width: 0px;
+    }
+
+    #sidebar.hide+#content {
+        width: 100%;
+        left: 0px;
+    }
 }
