@@ -7,7 +7,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Ciudad} from '../../../data/model/ciudad';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { DomSanitizer } from '@angular/platform-browser';
+import { AssetService } from '../../../data/service/Asset.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-nuevo-graduado-modal',
   templateUrl: './nuevo-graduado-modal.component.html',
@@ -21,13 +23,23 @@ export class NuevoGraduadoModalComponent implements OnInit {
   ciudades: Ciudad[] = [];
   nuevoGraduado: Graduado3 = new Graduado3();
   archivoSeleccionado: File | null = null;
-
+  public previsualizacion?: string;
+  public archivos: any = []
+  public loading?: boolean
+  public rutaimagen: string = '';
+  public urlImage: string = '';
+  public username: string = '';
+  public inforest: any = [];
+  public getRuta: string = '';
+  public mensajevalidado: string = '';
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,
     private graduadoService: GraduadoService,
     private modalService: BsModalService,
     private ciudadService: CiudadService,
+    private assetService: AssetService,
+    private sanitizer: DomSanitizer,
     
   ) { 
 
@@ -44,8 +56,9 @@ export class NuevoGraduadoModalComponent implements OnInit {
       usuario: ['', Validators.required],
       emailPersonal: ['', Validators.required],
       ciudad: ['', Validators.required],
+      fecha_graduacion: ['', Validators.required],
       estadoCivil: ['', Validators.required],
-      ruta_pdf: ['', Validators.required],
+    
     });
   }
 
@@ -59,42 +72,116 @@ export class NuevoGraduadoModalComponent implements OnInit {
       }
     );
   }
+  //-----------------------Imagen--------------------------------------------------//
 
-  guardarGraduado() {
-    if (this.nuevoGraduadoForm.valid) {
-      console.log('Datos a guardar:', this.nuevoGraduadoForm.value);
-      // Realizar la operación de guardado solo si el formulario es válido
-     /* this.graduadoService.createGraduado2(this.nuevoGraduadoForm.value).subscribe(
-        (result) => {
-          console.log('Graduado creado con éxito:', result);
-          this.bsModalRef.hide();
-        },
-        (error) => {
-          console.error('Error al crear graduado:', error);
-        }
-      );*/
+  capturarFile(event: any): void {
+    const archivoCapturado = event.target.files[0];
+    this.extraerBase64(archivoCapturado).then((imagen: any) => {
+      this.previsualizacion = imagen.base;
+    });
+    this.archivos.push(archivoCapturado);
+  }
+
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+    try {
+      const unsafeImg = window.URL.createObjectURL($event);
+      const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+      const reader = new FileReader();
+
+      reader.readAsDataURL($event);
+
+      reader.onload = () => {
+        resolve({
+          base: reader.result
+        });
+      };
+
+      reader.onerror = error => {
+        resolve({
+          base: null
+        });
+      };
+    } catch (e) {
+      console.error('Error al extraer base64:', e);
+      resolve({
+        base: null
+      });
+    }
+  });
+  showSuccessModal() {
+   
+    console.log('Modal de éxito mostrado');
+  }
+
+  clearImage(): void {
+    this.previsualizacion = '';
+    this.archivos = [];
+  }
+
+  deleteFile(rutakey: string): void {
+    this.assetService.delete(rutakey).subscribe(() => {
+      console.log('Archivo eliminado');
+    });
+  }
+
+  guardarGraduado(): void {
+    if (this.nuevoGraduadoForm.valid && this.archivos.length > 0) {
+      this.loading = true;
+      const formularioDeDatos = new FormData();
+
+      this.archivos.forEach((archivo: File) => {
+        formularioDeDatos.append('multipartFile', archivo, archivo.name);
+      });
+
+      this.assetService.post('http://localhost:8080/assets/upload', formularioDeDatos)
+        .subscribe(
+          (res: any) => {
+            this.loading = false;
+            this.inforest = res;
+           
+            this.nuevoGraduado.usuario = this.nuevoGraduadoForm.get('usuario')?.value;
+            this.nuevoGraduado.email_personal = this.nuevoGraduadoForm.get('emailPersonal')?.value;
+            this.nuevoGraduado.ciudad = this.nuevoGraduadoForm.get('ciudad')?.value;
+            this.nuevoGraduado.año_graduacion = this.nuevoGraduadoForm.get('fecha_graduacion')?.value;
+            this.nuevoGraduado.estadocivil = this.nuevoGraduadoForm.get('estadoCivil')?.value;
+            this.nuevoGraduado.url_pdf=res.url;
+            this.nuevoGraduado.ruta_pdf=res.key;
+            this.graduadoService.createGraduado2(this.nuevoGraduado).subscribe(
+              (res) => {
+              
+               Swal.fire({
+                icon: 'success',
+                text: 'Graduado creado exitosamente'
+            });
+        
+            this.bsModalRef.hide();
+              },
+              (error) => {
+                // Muestra un SweetAlert de error
+                Swal.fire({
+                  icon: 'error',
+                  text: 'Error al crear graduado. Por favor, intenta nuevamente.'
+                });
+              }
+            );
+
+           
+
+            this.bsModalRef.hide(); // Cierra el modal después de cargar los datos
+          },
+          (error) => {
+            this.loading = false;
+            console.error('Error al subir archivo:', error);
+            alert('Error al subir archivo');
+          }
+        );
     } else {
-      console.error('Formulario no válido. Verifica que todos los campos estén llenos.');
+      this.mensajevalidado = 'Error: no puede haber campos vacíos y asegúrate de seleccionar un archivo PDF.';
+      console.error(this.mensajevalidado);
     }
   }
 
-  onArchivoSeleccionado(event: any) {
-    const archivos: FileList = event.target.files;
-    if (archivos.length > 0) {
-      const archivo = archivos[0];
-      if (archivo.name.toLowerCase().endsWith('.pdf')) {
-        this.archivoSeleccionado = archivo;
-        this.nuevoGraduadoForm.get('ruta_pdf')?.setValue(archivo.name);
-      } else {
-        console.error('Por favor, seleccione un archivo PDF.');
-        this.archivoSeleccionado = null;
-        this.nuevoGraduadoForm.get('ruta_pdf')?.setValue(null);
-        event.target.value = '';
-      }
-    }
-  }
-
-  cerrarModal() {
+  cerrarModal(): void {
     if (this.nuevoGraduadoForm.valid) {
       this.bsModalRef.hide();
     } else {

@@ -28,8 +28,8 @@ export class Graduado3 {
     id?: number;
     'usuario': string;
     'ciudad': string;
-    'fecha_graduacion': Date;
-    'emailPersonal': string;
+    'año_graduacion': Date;
+    'email_personal': string;
     'estadocivil': string;
     'ruta_pdf': string;
     'url_pdf': string;

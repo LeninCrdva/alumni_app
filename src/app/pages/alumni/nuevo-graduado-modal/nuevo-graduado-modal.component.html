@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Nuevo Graduado</h4>
+    <h4 class="modal-title" style="color: var(--alumni-color)">Nuevo Graduado</h4>
     <button type="button" class="close" (click)="cerrarModal()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -7,19 +7,29 @@
 
 <div class="modal-body">
     <form [formGroup]="nuevoGraduadoForm" (ngSubmit)="guardarGraduado()">
-        <!-- Campos del formulario -->
+
         <div class="form-group">
-            <label for="usuario">Usuario:</label>
+            <label for="usuario" style="color: var(--alumni-color)">Usuario:</label>
             <input type="text" class="form-control" id="usuario" formControlName="usuario" required readonly>
         </div>
 
         <div class="form-group">
-            <label for="emailPersonal">Email Personal:</label>
+            <label for="emailPersonal" style="color: var(--alumni-color)">Email Personal:</label>
             <input type="text" class="form-control" id="emailPersonal" formControlName="emailPersonal">
         </div>
 
         <div class="form-group">
-            <label for="ciudad">Ciudad:</label>
+            <label for="Inputfecha_graduacion" style="color: var(--alumni-color)">Fecha de Graduacion:</label>
+            <input style="padding: 1rem 1rem;" type="date" formControlName="fecha_graduacion" class="form-control"
+                id="Inputfecha_graduacion" placeholder="Ingresa tu fecha de graduacion">
+            <div class="text-danger mt-2"
+                *ngIf="nuevoGraduadoForm.get('fecha_graduacion')?.hasError('required') && nuevoGraduadoForm.get('fecha_graduacion')?.touched">
+                La fecha de graduación es obligatoria.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ciudad" style="color: var(--alumni-color)">Ciudad:</label>
             <select class="form-control" id="ciudad" formControlName="ciudad">
                 <option value="" disabled selected>Seleccionar</option>
                 <option *ngFor="let ciudad of ciudades" [value]="ciudad.nombre">{{ ciudad.nombre }}</option>
@@ -27,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <label for="estadoCivil">Estado Civil:</label>
+            <label for="estadoCivil" style="color: var(--alumni-color)">Estado Civil:</label>
             <select class="form-control" id="estadoCivil" formControlName="estadoCivil">
                 <option value="" disabled selected>Seleccionar</option>
                 <option value="Soltero/a">Soltero/a</option>
@@ -36,10 +46,47 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="ruta_pdf">Ruta PDF:</label>
-            <input type="file" accept=".pdf" class="form-control" id="ruta_pdf" (change)="onArchivoSeleccionado($event)">
-        </div>
+        <div class="mb-4">
+            <label style="color: var(--alumni-color)">Subir pdf de graduacion</label>
+
+            <div class="card mg-b-20">
+              <div class="card-header">
+                <h4 class="card-header-title">
+                  <!-- Muestra la visa previa dentro del primer seleccionador de archivos -->
+                  <div class="preview-img" *ngIf="previsualizacion">
+                    <button class="clear-image form-control border-0 cancel-button" type="button"
+                      (click)="clearImage()">
+                      Cancelar
+                    </button>
+
+                    <div class="image-container text-center" style="margin-top: 3rem;">
+                      <!-- Ajusté el estilo del contenedor para centrar y hacer la imagen más grande -->
+                      <img [src]="previsualizacion" alt="" style="width: 220px; height: 220px; object-fit: cover;" />
+                    </div>
+                  </div>
+                </h4>
+                <div class="card-header-btn">
+                  <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
+                    aria-expanded="true">
+                    <i class="ion-ios-arrow-down"></i>
+                  </a>
+                  <!-- Eliminé botones innecesarios -->
+                </div>
+              </div>
+              <div class="card-body collapse show" id="collapse8">
+                <!-- Moví el input type="file" aquí -->
+                <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)" accept=".pdf"/>
+              </div>
+            </div>
+
+           >
+
+            <!-- Botón para subir la foto de perfil -->
+            <div class="wrapper-button" *ngIf="previsualizacion">
+            
+            </div>
+          </div>
+
 
         <button type="submit" class="btn btn-primary" [disabled]="!nuevoGraduadoForm.valid">Guardar</button>
     </form>
