@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../data/service/AuthService';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
+  options_login: AnimationOptions = {
+    path: '../../../assets/anims/login_anim.json',
+  };
+  
   loginForm: FormGroup;
   'mensaje': string;
   'modalRef': BsModalRef;
@@ -60,7 +66,7 @@ export class LoginComponent {
   }
   closeModal(): void {
     this.modalRef.hide();
-    }
+  }
   private redirectBasedOnAuthorities(authorities: string[]): void {
     // Redirigir según el rol del usuario
     if (authorities.includes('ROL_ADMINISTRADOR')) {

@@ -8,6 +8,7 @@ import { Persona } from '../../../data/model/persona';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
+  options_Register: AnimationOptions = {
+    path: '../../../assets/anims/register_anim.json',
+  };
+
   registerForm: FormGroup;
   'mensaje': string;
   'modalRef': BsModalRef;
@@ -173,7 +179,7 @@ export class RegisterComponent implements OnInit {
                 this.authService.signup(usuarioDTO).subscribe(response => {
 
                   console.log('Usuario registrado:', response);
-                  this.username=usuarioDTO.nombreUsuario;
+                  this.username = usuarioDTO.nombreUsuario;
                   localStorage.setItem('name', this.username);
                   this.router.navigate(['account/login']);
 
