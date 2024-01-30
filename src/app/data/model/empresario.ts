@@ -5,7 +5,7 @@ export class Empresario {
     'estado': boolean;
     'puesto': string;
     'anios': number;
-    'usuario': Usuario;
+    'usuario': string;
     'email': string;
    
 }

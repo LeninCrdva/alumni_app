@@ -225,7 +225,7 @@ export class LayoutSystemComponent implements OnInit {
             empresario => {
               if (empresario) {
                 console.log('Empresario encontrado:', empresario);
-                
+                this.empresaservice.setEmpresario(empresario);
                 //aqui puedes hacer mas si deseas
               } else {
                 // No se encontró el empresario
