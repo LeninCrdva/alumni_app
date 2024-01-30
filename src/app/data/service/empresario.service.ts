@@ -36,7 +36,7 @@ export class EmpresarioService {
 
   getEmpresarioByUsuario(usuario: string): Observable<Empresario2 | null> {
     return this.http.get<Empresario2[]>(this.urlEndPoint).pipe(
-      tap(response => console.log('Respuesta del servidor:', response)),
+      
       map((empresarios: Empresario2[]) => {
         //console.log('Empresarios en la respuesta:', empresarios);
         const empresarioEncontrado = empresarios.find(empresario => {
