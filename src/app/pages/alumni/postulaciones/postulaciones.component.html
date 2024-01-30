@@ -30,27 +30,28 @@
                             <th>#</th>
                             <th>EMPRESA</th>
                             <th>CARGO</th>
-                            <th>DESCRIPCION</th>
+                            <!-- <th>DESCRIPCION</th> -->
                             <th>AREA CONOCIMIENTOS</th>
                             <th>SALARIO</th>
-                            <th>JORNADA</th>
-                            <th>REQUISITOS ACADEMICOS</th>
+                            <th>APERTURA</th>
+                            <!-- <th>REQUISITOS ACADEMICOS</th> -->
                             <th>EXPERIENCIA</th>
                             <th>UBICACIONES</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>capacitaciones.empresa</td>
-                            <td>capacitaciones.cargo</td>
-                            <td>capacitaciones.descripcion</td>
-                            <td>capacitaciones.area_conocimiento</td>
-                            <td>capacitaciones.salario</td>
-                            <td>capacitaciones.jornada</td>
-                            <td>capacitaciones.requisitos_academicos</td>
-                            <td>capacitaciones.experiencia</td>
-                            <td>capacitaciones.ubicacion</td>
+                        <tr *ngFor="let postulacion of postulaciones; let id = index">
+                            <th scope="row">{{id + 1}}</th>
+                            <td>{{postulacion.empresa.nombre}}</td>
+                            <td>{{postulacion.cargo}}</td>
+                            <!-- <td>{{postulacion.area_conocimiento}}</td> -->
+                            <td>{{postulacion.area_conocimiento}}</td>
+                            <td>{{postulacion.salario}}</td>
+                            <td>{{postulacion.fecha_apertura}}</td>
+                            <!-- Sin información dentro de DB -->
+                            <!-- <td>{{postulacion.experiencia}}</td>  -->
+                            <td>{{postulacion.experiencia}}</td>
+                            <td>{{postulacion.empresa.ciudad.nombre}}</td>
                         </tr>
                     </tbody>
                 </table>

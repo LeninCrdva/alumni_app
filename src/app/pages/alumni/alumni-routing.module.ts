@@ -28,6 +28,7 @@ const routes: Routes = [
     { path: 'referencias-laborales', component: ReferenciasLaboralesComponent },
     
     // NOTE: OFERTAS
+    { path: 'oferta-detalle/:id', component: OfertaDetalleComponent },
     { path: 'postulaciones', component: PostulacionesComponent },
     { path: 'parametros-preguntas', component: ParametrosPreguntasComponent },
     { path: 'oferta-detalle', component: OfertaDetalleComponent },

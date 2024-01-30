@@ -5,17 +5,17 @@
       <div class="col-12">
         <div class="job-detail rounded shadow bg-white">
           <div class="detail-top p-4">
-            <h4>Back-end Developer</h4>
+            <h4>{{ofertaDetail.cargo}}</h4>
             <p class="text-muted mt-4">
-              Posted One Week Ago by
-              <a href="pages-job-company.html" class="text-primary h6">ThemeForest PTE LTD</a>
+              {{obtenerTiempoTranscurrido()}} por 
+              <a href="pages-job-company.html" class="text-primary h6">{{ofertaDetail.empresa?.nombre}}</a>
             </p>
             <div class="d-flex justify-content-between align-items-center">
               <ul class="list-unstyled mb-0">
                 <li class="list-inline-item mr-3">
                   <div class="d-flex h6 mb-0 align-items-center">
                     <i data-feather="map-pin" class="fea icon-sm mr-1"></i>
-                    <p class="text-muted mb-0">Cuenca</p>
+                    <p class="text-muted mb-0">{{ofertaDetail.empresa?.ciudad?.nombre}}</p>
                   </div>
                 </li>
                 <li class="list-inline-item">
@@ -43,35 +43,35 @@
               <i data-feather="cpu" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Empresa:</h6>
-                <p class="text-primary mb-0">ThemeForest PTE LTD</p>
+                <p class="text-primary mb-0"></p>
               </div>
             </div>
             <div class="d-flex align-items-center mt-3">
               <i data-feather="user" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Tipo de Empleo:</h6>
-                <p class="text-primary mb-0">Full Time</p>
+                <p class="text-primary mb-0">{{ofertaDetail?.empresa?.nombre}}</p>
               </div>
             </div>
             <div class="d-flex align-items-center mt-3">
               <i data-feather="map-pin" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Ubicacion:</h6>
-                <p class="text-primary mb-0">California, USA</p>
+                <p class="text-primary mb-0">{{ofertaDetail.empresa?.ciudad?.nombre}}, {{ofertaDetail.empresa?.ciudad?.provincia?.pais}}</p>
               </div>
             </div>
             <div class="d-flex align-items-center mt-3">
               <i data-feather="monitor" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Cargo:</h6>
-                <p class="text-primary mb-0">Back-end Developer</p>
+                <p class="text-primary mb-0">{{ofertaDetail.cargo}}</p>
               </div>
             </div>
             <div class="d-flex align-items-center mt-3">
               <i data-feather="briefcase" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Experiencia:</h6>
-                <p class="text-primary mb-0">+2 Year</p>
+                <p class="text-primary mb-0">{{ofertaDetail.experiencia}}</p>
               </div>
             </div>
             <div class="d-flex align-items-center mt-3">
@@ -87,14 +87,14 @@
               <i data-feather="dollar-sign" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Salario:</h6>
-                <p class="text-primary mb-0">+50k to 70k</p>
+                <p class="text-primary mb-0">{{ofertaDetail.salario}} $</p>
               </div>
             </div>
             <div class="d-flex align-items-center mt-3">
               <i data-feather="clock" class="float-left mr-3"></i>
               <div class="overflow-hidden d-block">
                 <h6 class="mb-0">Fecha publicacion:</h6>
-                <p class="text-primary mb-0">17th Jul, 2021</p>
+                <p class="text-primary mb-0">{{ofertaDetail.fechaPublicacion}}</p>
               </div>
             </div>
           </div>
@@ -102,114 +102,7 @@
       </div>
       <!--end col-->
 
-      <div class="col-lg-8 col-md-6 col-12 mt-4 pt-2">
-        <div class="job-detail rounded shadow bg-white">
-          <div class="detail-content p-4">
-            <h5>Descripcion del Trabajo :</h5>
-            <p class="text-muted mt-4">
-              Lorem Ipsum is simply dummy text of the printing and
-              typesetting industry. Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s.
-            </p>
-            <p class="text-muted">
-              Contrary to popular belief, Lorem Ipsum is not simply random
-              text. It has roots in a piece of classical Latin literature
-              from 45 BC, making it over 2000 years old. Richard McClintock,
-              a Latin professor at Hampden-Sydney College in Virginia
-            </p>
-            <p class="text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-
-            <h5 class="mt-4">Responsabilidades y deberes :</h5>
-            <p class="text-muted mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <ul class="list-unstyled">
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text of the
-                printing
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is not simply random text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum has been the industry's
-                standard
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text of the
-                printing
-              </li>
-            </ul>
-
-            <h5 class="mt-4">Experiencia, habilidades, conocimientos :</h5>
-            <p class="text-muted mt-4">
-              It sometimes makes sense to select texts containing the
-              various letters and symbols specific to the output language.
-            </p>
-            <ul class="list-unstyled">
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text of the
-                printing
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is not simply random text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum has been the industry's
-                standard
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text of the
-                printing
-              </li>
-            </ul>
-
-            <h5 class="mt-4">Beneficios :</h5>
-            <p class="text-muted mt-4">
-              It sometimes makes sense to select texts containing the
-              various letters and symbols specific to the output language.
-            </p>
-            <ul class="list-unstyled">
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text of the
-                printing
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text
-              </li>
-              <li class="text-muted">
-                <i class="mdi mdi-circle-medium text-primary mdi-18px mr-2"></i>Lorem Ipsum is simply dummy text of the
-                printing
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      
       <!--end col-->
       <h1>Lista de Candidatos</h1>
       <!-- Inicio de la tabla -->
@@ -226,14 +119,14 @@
         <tbody>
           <!-- Aquí empieza la iteración para cada trabajo -->
           <!-- Puedes copiar y pegar este bloque para cada trabajo que quieras mostrar en la tabla -->
-          <tr>
+          <tr *ngFor="let graduado of ofertaDetail.graduados">
             <td>1</td>
             <td>
               <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="" />
             </td>
             <td>
               <h4 class="title">
-                <a href="pages-job-detail.html" class="text-dark">Estudiante</a>
+                <a class="text-dark">{{graduado.usuario?.persona?.primer_nombre}} {{graduado.usuario?.persona?.apellido_paterno}}</a>
               </h4>
               <ul class="list-unstyled mb-0">
                 <li class="list-inline-item mr-3">

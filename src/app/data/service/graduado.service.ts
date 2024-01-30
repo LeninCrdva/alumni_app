@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Graduado } from '../model/graduado';
 import { Graduado3 } from '../model/graduado';
 import { map } from 'rxjs/operators';
+import { ofertaLaboral } from '../model/ofertaLaboral';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,4 +51,8 @@ export class GraduadoService {
   }
   
 
+
+  getOfertasLaboralesByUsername(username: string): Observable<ofertaLaboral[]> {
+    return this.http.get<ofertaLaboral[]>(`${this.urlEndPoint}/user/${username}`);
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ofertaLaboral } from '../model/ofertaLaboral';
+import { ofertaLaboralDTO } from '../model/ofertaLaboralDTO';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,15 +16,19 @@ export class OfertalaboralService {
 
   constructor(private http: HttpClient) { }
 
-  getOfertasLaborales(): Observable<ofertaLaboral[]> {
-    return this.http.get<ofertaLaboral[]>(this.urlEndPoint);
+  getOfertasLaborales(): Observable<ofertaLaboralDTO[]> {
+    return this.http.get<ofertaLaboralDTO[]>(this.urlEndPoint);
   }
 
   createOfertaLaboral(oferta: ofertaLaboral): Observable<ofertaLaboral> {
     return this.http.post<ofertaLaboral>(this.urlEndPoint, oferta, { headers: this.httpHeaders })
   }
 
-  getOfertaLaboralById(id: any): Observable<ofertaLaboral> {
+  getOfertaLaboralById(id: number): Observable<ofertaLaboral> {
     return this.http.get<ofertaLaboral>(`${this.urlEndPoint}/${id}`)
+  }
+
+  getOfertaLaboralByIdToDTO(id: number): Observable<ofertaLaboralDTO> {
+    return this.http.get<ofertaLaboralDTO>(`${this.urlEndPoint}/dto/${id}`)
   }
 }
