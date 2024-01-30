@@ -17,12 +17,12 @@ export class PerfilUsuarioComponent {
   name: string | null = localStorage.getItem('name');
   usuarios: any = {};
   empresass: any = {};
-  estado: String = '';
   nuevoEmpresario: Empresario = {
+    id: 0,
+    usuario: this.usuarios.nombre_usuario,
     estado: false,
     puesto: '',
     anios: 0,
-    usuario: this.usuarios,
     email: '',
   };
   nuevoEmpresarioCarga: Empresario = {
@@ -38,7 +38,7 @@ export class PerfilUsuarioComponent {
   ngOnInit(): void {
     this.usuarios = {
       clave: '',
-      nombre_usuario: '',
+      nombreUsuario: '',
       estado: false,
       url_imagen: '',
       persona: new Persona,
@@ -58,17 +58,11 @@ export class PerfilUsuarioComponent {
       ubicacion: '',
       sitioweb: ''
     }
-  this.obtenerUsuario();
-  this.nuevoEmpresario.usuario = this.usuarios;
-    console.log('Usuario:', this.usuarios)
-    
-    
+  this.obtenerUsuario();    
   }
 
   crearEmpresario() {
-    this.nuevoEmpresario.usuario = this.usuarios;
-    console.log('Usuario obtenido:', this.name)
-    console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario)
+    this.calcularEdad();
     this.empresarioService.createEmpresario(this.nuevoEmpresario).subscribe(
       empresario => {
         console.log('Empresario creado exitosamente:', empresario);
@@ -82,9 +76,11 @@ export class PerfilUsuarioComponent {
     this.usuarioService.getUsuarioByUsername(username).subscribe(
       usuario => {
         this.usuarios = usuario;
-        console.log('Usuario obtenido exitosamente:', this.usuarios);
-        this.nuevoEmpresario.usuario = this.usuarios;
-        console.log('Usuario obtenido exitosamente:', this.nuevoEmpresario.usuario);
+        console.log('Usuario obtenido exitosamente:', this.usuarios.nombreUsuario);
+        this.nuevoEmpresario.usuario = this.usuarios.nombreUsuario;
+        this.nuevoEmpresario.estado = this.usuarios.estado
+        localStorage.setItem('idUser', this.usuarios.id);
+        console.log('Usuario obtenido exitosamente:', localStorage.getItem('idUser'));
       },
       error => console.error('Error al obtener usuario:', error)
     );
@@ -102,7 +98,7 @@ export class PerfilUsuarioComponent {
 
   calcularEdad(): number {
     // Fecha de nacimiento ("YYYY-MM-DD")
-const fechaNacimientoString = "2000-01-01";
+const fechaNacimientoString =this.usuarios.persona.fechaNacimiento;
 const fechaNacimiento = new Date(fechaNacimientoString);
 
 // Fecha actual
@@ -116,6 +112,7 @@ const edadEnAnios = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25);
 
 // Redondea la edad a un número entero
 const edadRedondeada = Math.floor(edadEnAnios);
+this.nuevoEmpresario.anios = edadRedondeada;
 
       return edadRedondeada;
   }

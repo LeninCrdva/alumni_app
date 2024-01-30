@@ -3,6 +3,7 @@ import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Empresa } from '../model/empresa';
+import { Empresario } from '../model/empresario';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class EmpresaService {
   updateEmpresa(id: number, empresa: Empresa): Observable<Empresa> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Empresa>(url, empresa, { headers: this.httpHeaders });
+  }
+
+  getEmpresarioByUsuarioId(id: any): Observable<Empresario> {
+    return this.http.get<Empresario>(`${this.urlEndPoint}/usuario/${id}`)
   }
 }
