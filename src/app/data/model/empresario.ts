@@ -9,3 +9,13 @@ export class Empresario {
     'email': string;
    
 }
+
+export class Empresario2 {
+    id?: number;
+    'estado': boolean;
+    'puesto': string;
+    'anios': number;
+    'usuario': string;
+    'email': string;
+   
+}

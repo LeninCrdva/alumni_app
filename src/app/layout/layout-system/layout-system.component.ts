@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { GraduadoService } from '../../data/service/graduado.service';
 import {Graduado3} from '../../data/model/graduado';
+import {EmpresarioService} from '../../data/service/empresario.service';
+import {Empresario2} from '../../data/model/empresario';
 import {NuevoGraduadoModalComponent} from '../../pages/alumni/nuevo-graduado-modal/nuevo-graduado-modal.component';
 @Component({
   selector: 'app-layout-system',
@@ -38,15 +40,17 @@ export class LayoutSystemComponent implements OnInit {
    public getRuta: string = '';
    public deleteimage: any = localStorage.getItem('rutaimagen'); 
    public mensajevalidado: string = '';
- //modal 
-
+ //Prueba empresario 
+ usuarioEmpresario: string = localStorage.getItem('name') || '';
+ empresario2: Empresario2 = new Empresario2();
+ //modal
   constructor(private sanitizer: DomSanitizer,
     private assetService: AssetService,
     private el: ElementRef, 
     private renderer: Renderer2, private usuarioService: UserService,
     private modalService: BsModalService,
     public bsModalRef: BsModalRef,
-
+    private empresaservice:EmpresarioService,
     private router: Router,
     private administradorService: AdministradorService,
     private graduadoservice: GraduadoService) { }
@@ -215,7 +219,25 @@ export class LayoutSystemComponent implements OnInit {
         
           this.showEmpresarioOptions = true;
           this.rolType='Empresario';
-
+          this.empresario2.usuario=this.usuarioEmpresario;
+          console.log('El empresario es:', this.empresario2.usuario);
+          this.empresaservice.getEmpresarioByUsuario(this.usuarioEmpresario).subscribe(
+            empresario => {
+              if (empresario) {
+                console.log('Empresario encontrado:', empresario);
+                
+                //aqui puedes hacer mas si deseas
+              } else {
+                // No se encontró el empresario
+                console.log('No se encontró el empresario.');
+              }
+            },
+            error => {
+              // Maneja errores en la petición HTTP
+              console.error('Error al obtener el empresario:', error);
+            }
+          );
+          
         }
         else{
           if (userRole === 'ROL_GRADUADO') {
