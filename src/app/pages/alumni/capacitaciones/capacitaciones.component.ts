@@ -17,9 +17,9 @@ export class CapacitacionesComponent {
   graduado: Graduado | any = [];
 
   capacitacion: Capacitacion[] = [];
-  nuevoCapacitacion: Capacitacion = { horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', lugar: '', nombre: '', graduado: this.graduado };
-  nuevoCapacitacionCarga: Capacitacion = { id:0, horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', lugar: '', nombre: '', graduado: this.graduado };
-  nuevoCapacitacionEdit: Capacitacion = { id: 0, horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', lugar: '', nombre: '', graduado: this.graduado };
+  nuevoCapacitacion: Capacitacion = { horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', nombre: '', graduado: this.graduado };
+  nuevoCapacitacionCarga: Capacitacion = { id:0, horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', nombre: '', graduado: this.graduado };
+  nuevoCapacitacionEdit: Capacitacion = { id: 0, horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', nombre: '', graduado: this.graduado };
 
   editarClicked = false;
 

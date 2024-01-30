@@ -23,63 +23,10 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">SALARIO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="number" name="salario"
-                                                placeholder="Ingrese el salario" id="salario"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.salario : nuevoExperiencia.salario"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">TELEFONO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion"
-                                                placeholder="Ingrese la telefono" id="telefono"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.telefono : nuevoExperiencia.telefono"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25 my-3">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">FECHA CIERRE: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaCierre" id="fechaCierre"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.fecha_cierre : nuevoExperiencia.telefono"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">FECHA PUBLICACIÓN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaPublicacion"
-                                                id="fechaPublicacion"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.fecha_publicacion : nuevoExperiencia.fecha_publicacion"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row mg-b-25 my-3" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA APERTURA: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaApertura"
-                                                id="fechaApertura"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.fecha_apertura : nuevoExperiencia.fecha_apertura"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">CARGO: <span
+                                            <label class="form-control-label active" for="cargo">CARGO: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="cargo"
                                                 placeholder="Ingrese el cargo" id="cargo"
@@ -87,47 +34,42 @@
                                                 required>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">EXPERIENCIA: <span
+                                            <label class="form-control-label active" for="duracion">DURACIÓN: <span
                                                     class="tx-danger">*</span></label>
-                                            <textarea class="form-control" name="experiencia" rows="4"
-                                                placeholder="Ingrese la experiencia" id="experiencia"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.experiencia : nuevoExperiencia.experiencia"
+                                            <input class="form-control" type="text" name="duracion"
+                                                placeholder="Ingrese la duración" id="duracion"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.duracion : nuevoExperiencia.duracion"
                                                 required>
-                                            </textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Area Conocimiento: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="area_conocimiento"
-                                                placeholder="Ingrese el area conocimiento" id="area_conocimiento"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.area_conocimiento : nuevoExperiencia.area_conocimiento"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="estado">ESTADO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <select class="form-control" name="estado" id="estado"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.estado : nuevoExperiencia.estado"
-                                                required>
-                                                <option value="" disabled>-- Seleccione una opción --</option>
-                                                <option value="activo">ACTIVO</option>
-                                                <option value="inactivo">INACTIVO</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active" for="institucion">INSTITUCIÓN:
+                                                <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="institucion"
+                                                placeholder="Ingrese la institución" id="institucion"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.institucion : nuevoExperiencia.institucion"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active" for="actividad">ACTIVIDAD: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="actividad"
+                                                placeholder="Ingrese la actividad" id="actividad"
+                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.actividad : nuevoExperiencia.actividad"
+                                                required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
 
@@ -172,115 +114,40 @@
                     <thead class="table-light">
                         <tr>
                             <th>#</th>
-                            <th>SALARIO</th>
-                            <th>TELEFONO</th>
                             <th>CARGO</th>
-                            <th>FECHA CIERRE</th>
-                            <th>FECHA PUBLICACION</th>
-                            <th>EXPERIENCIA</th>
-                            <th>FECHA APERTURA</th>
-                            <th>AREA CONOCIMIENTO</th>
-                            <th>ESTADO</th>
+                            <th>DURACIÓN</th>
+                            <th>INSTITUCION</th>
+                            <th>ACTIVIDAD</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let experienciaItem of experiencia">
+                        <tr *ngFor="let experienciaItem of experiencia; let i = index">
                             <th scope="row">{{ experienciaItem.id }}</th>
-                            <td>{{ experienciaItem.salario }}</td>
-                            <td>{{ experienciaItem.telefono }}</td>
+                            <td>{{ experienciaItem.graduado }}</td>
                             <td>{{ experienciaItem.cargo }}</td>
-                            <td>{{ experienciaItem.fecha_cierre | date:'shortDate' }}</td>
-                            <td>{{ experienciaItem.fecha_publicacion | date:'shortDate' }}</td>
-                            <td>{{ experienciaItem.experiencia }}</td>
-                            <td>{{ experienciaItem.fecha_apertura | date:'shortDate' }}</td>
-                            <td>{{ experienciaItem.area_conocimiento }}</td>
-                            <td>{{ experienciaItem.estado ? 'Activo' : 'Inactivo' }}</td>
+                            <td>{{ experienciaItem.duracion }}</td>
+                            <td>{{ experienciaItem.institucion }}</td>
+                            <td>{{ experienciaItem.actividad }}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
                                 <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal"
                                     data-bs-target="#m_modal_4" class="table-action mg-r-10"
                                     [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
-                                <a (click)="onDeleteClick(1)" class="table-action ms-2 text-danger" href="#">
+                                <a (click)="onDeleteClick(i)" class="table-action ms-2 text-danger" href="#">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
+
+
                         <tr>
                             <th scope="row">1</th>
-                            <td>$60,000</td>
-                            <td>(555) 123-4567</td>
-                            <td>Desarrollador Frontend</td>
-                            <td>01/01/2024</td>
-                            <td>12/15/2023</td>
-                            <td>3 años de experiencia en desarrollo web</td>
-                            <td>11/01/2023</td>
-                            <td>Tecnologías de la Información</td>
-                            <td>Activo</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a (click)="onDeleteClick(1)" class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>$75,000</td>
-                            <td>(555) 987-6543</td>
-                            <td>Ingeniero de Software</td>
-                            <td>02/15/2024</td>
-                            <td>01/10/2024</td>
-                            <td>5 años de experiencia en desarrollo de aplicaciones móviles</td>
-                            <td>12/01/2023</td>
-                            <td>Ingeniería de Software</td>
-                            <td>Activo</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a (click)="onDeleteClick(2)" class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>$55,000</td>
-                            <td>(555) 456-7890</td>
-                            <td>Diseñador UX/UI</td>
-                            <td>03/20/2024</td>
-                            <td>02/05/2024</td>
-                            <td>4 años de experiencia en diseño de interfaces de usuario</td>
-                            <td>01/15/2024</td>
-                            <td>Diseño Gráfico</td>
-                            <td>Inactivo</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a (click)="onDeleteClick(3)" class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>$80,000</td>
-                            <td>(555) 234-5678</td>
                             <td>Analista de Datos</td>
-                            <td>04/25/2024</td>
-                            <td>03/10/2024</td>
+                            <td>2 años</td>
                             <td>6 años de experiencia en análisis de datos y business intelligence</td>
-                            <td>02/15/2024</td>
                             <td>Ciencias de la Computación</td>
-                            <td>Activo</td>
                             <td class="text-center table-actions d-flex justify-content-center">
                                 <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
                                     [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
