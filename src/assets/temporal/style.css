@@ -1807,12 +1807,6 @@ button:not(:disabled) {
   padding-right: 30px;
 }
 
-.alert.alert-dismissible .close {
-  top: -2px;
-  right: -10px;
-  font-size: 16px !important;
-}
-
 .alert.alert-pills {
   border-radius: 30px;
   display: inline-block;

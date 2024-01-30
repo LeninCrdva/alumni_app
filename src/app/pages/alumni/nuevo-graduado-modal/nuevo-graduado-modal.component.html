@@ -1,7 +1,8 @@
-<div class="modal-header">
-    <h4 class="modal-title" style="color: var(--alumni-color)">Nuevo Graduado</h4>
+<div class="modal-header bg-primary">
+    <h4 class="modal-title" style="color: var(--white-color)">Nuevo Graduado</h4>
     <button type="button" class="close" (click)="cerrarModal()">
-        <span aria-hidden="true">&times;</span>
+      <i class="fa-solid fa-xmark"></i>
+        <!-- <span aria-hidden="true">&times;</span> -->
     </button>
 </div>
 
@@ -13,12 +14,12 @@
             <input type="text" class="form-control" id="usuario" formControlName="usuario" required readonly>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-4">
             <label for="emailPersonal" style="color: var(--alumni-color)">Email Personal:</label>
             <input type="text" class="form-control" id="emailPersonal" formControlName="emailPersonal">
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-4">
             <label for="Inputfecha_graduacion" style="color: var(--alumni-color)">Fecha de Graduacion:</label>
             <input style="padding: 1rem 1rem;" type="date" formControlName="fecha_graduacion" class="form-control"
                 id="Inputfecha_graduacion" placeholder="Ingresa tu fecha de graduacion">
@@ -28,7 +29,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-4">
             <label for="ciudad" style="color: var(--alumni-color)">Ciudad:</label>
             <select class="form-control" id="ciudad" formControlName="ciudad">
                 <option value="" disabled selected>Seleccionar</option>
@@ -36,7 +37,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-4">
             <label for="estadoCivil" style="color: var(--alumni-color)">Estado Civil:</label>
             <select class="form-control" id="estadoCivil" formControlName="estadoCivil">
                 <option value="" disabled selected>Seleccionar</option>
@@ -46,7 +47,7 @@
             </select>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4 my-3">
             <label style="color: var(--alumni-color)">Subir pdf de graduacion</label>
 
             <div class="card mg-b-20">

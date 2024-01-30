@@ -255,18 +255,18 @@ export class LayoutSystemComponent implements OnInit {
                     ignoreBackdropClick: true,
                     keyboard: false,
                   };
-                  this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+                  // this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
       
                  
-                  if (this.bsModalRef.content) {
-                    this.bsModalRef.content.onClose.subscribe((result: string) => {
-                      if (result === 'guardadoExitoso') {
-                        console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
-                      }
-                    });
-                  } else {
-                    console.error('bsModalRef.content es undefined. Verifica la configuración del modal.');
-                  }
+                  // if (this.bsModalRef.content) {
+                  //   this.bsModalRef.content.onClose.subscribe((result: string) => {
+                  //     if (result === 'guardadoExitoso') {
+                  //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                  //     }
+                  //   });
+                  // } else {
+                  //   console.error('bsModalRef.content es undefined. Verifica la configuración del modal.');
+                  // }
                   
                 } else {
                   console.error('Ya existe un graduado con este nombre. Elige otro nombre.');
