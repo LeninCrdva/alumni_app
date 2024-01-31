@@ -6,6 +6,6 @@ export class Experiencia {
     'graduado': Graduado;
     'cargo': string;
     'duracion': string;
-    'institucion': string;
+    'institucionNombre': string;
     'actividad': string;
 }

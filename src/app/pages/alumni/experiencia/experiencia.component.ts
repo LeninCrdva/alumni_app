@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Experiencia } from '../../../data/model/experiencia';
 import { Empresa } from '../../../data/model/empresa';
 import { Graduado } from '../../../data/model/graduado';
@@ -6,6 +6,8 @@ import { Usuario } from '../../../data/model/usuario';
 import { ExperienciaService } from '../../../data/service/experiencia.service';
 import { UserService } from '../../../data/service/UserService';
 import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-experiencia',
@@ -20,15 +22,19 @@ export class ExperienciaComponent {
   empresa: Empresa | any = [];
 
   experiencia: Experiencia[] = [];
-  nuevoExperiencia: Experiencia = { graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
-  nuevoExperienciaCarga: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
-  nuevoExperienciaEdit: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
+  nuevoExperiencia: Experiencia = { graduado: this.graduado, cargo: '', duracion: '', institucionNombre: '', actividad: '' };
+  nuevoExperienciaCarga: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucionNombre: '', actividad: '' };
+  nuevoExperienciaEdit: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucionNombre: '', actividad: '' };
   editarClicked = false;
 
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private experienciaService: ExperienciaService, private usuarioService: UserService) { }
+  mensajeMostrado = false;
+
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
+
+  constructor(public bsModalRef: BsModalRef, private experienciaService: ExperienciaService, private usuarioService: UserService) { }
 
   ngOnInit(): void {
 
@@ -72,9 +78,31 @@ export class ExperienciaComponent {
       experiencia => {
         console.log('Experiencia creada exitosamente:', experiencia);
         this.loadExperiencias();
+        this.mostrarSweetAlert(true);
+        this.mensajeMostrado = true;
       },
-      error => console.error('Error al crear la experiencia:', error)
+      error => {
+        console.error('Error al crear la experiencia:', error);
+        this.mostrarSweetAlert(false);
+      }
     );
+  }
+
+  mostrarSweetAlert(esExitoso: boolean) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Error al guardar';
+    const mensaje = esExitoso ? 'La experiencia se ha guardado exitosamente.' : 'Hubo un error al intentar guardar la experiencia.';
+
+    Swal.fire({
+      icon: esExitoso ? 'success' : 'error',
+      title: titulo,
+      text: mensaje,
+      allowOutsideClick: !esExitoso,
+    }).then((result) => {
+      if (esExitoso || result.isConfirmed) {
+        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        this.bsModalRef.hide();
+      }
+    });
   }
 
   onEditarClick(experiencia: Experiencia): void {
@@ -116,5 +144,13 @@ export class ExperienciaComponent {
       },
       error => console.error('Error al obtener usuario:', error)
     );
+  }
+
+  cerrarModal() {
+    if (this.mensajeMostrado) {
+      this.bsModalRef.hide();
+    } else {
+      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
+    }
   }
 }

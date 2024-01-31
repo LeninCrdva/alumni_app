@@ -30,7 +30,7 @@
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="cargo"
                                                 placeholder="Ingrese el cargo" id="cargo"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.cargo : nuevoExperiencia.cargo"
+                                                [(ngModel)]="editarClicked ? nuevoExperiencia.cargo : nuevoExperienciaCarga.cargo"
                                                 required>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="duracion"
                                                 placeholder="Ingrese la duración" id="duracion"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.duracion : nuevoExperiencia.duracion"
+                                                [(ngModel)]="editarClicked ? nuevoExperiencia.duracion : nuevoExperienciaCarga.duracion"
                                                 required>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                                 <span class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="institucion"
                                                 placeholder="Ingrese la institución" id="institucion"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.institucion : nuevoExperiencia.institucion"
+                                                [(ngModel)]="editarClicked ? nuevoExperiencia.institucionNombre : nuevoExperienciaCarga.institucionNombre"
                                                 required>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="actividad"
                                                 placeholder="Ingrese la actividad" id="actividad"
-                                                [(ngModel)]="editarClicked ? nuevoExperienciaCarga.actividad : nuevoExperiencia.actividad"
+                                                [(ngModel)]="editarClicked ? nuevoExperiencia.actividad : nuevoExperienciaCarga.actividad"
                                                 required>
                                         </div>
                                     </div>
@@ -119,41 +119,20 @@
                     <tbody>
                         <tr *ngFor="let experienciaItem of experiencia; let i = index">
                             <th scope="row">{{ experienciaItem.id }}</th>
-                            <td>{{ experienciaItem.graduado }}</td>
                             <td>{{ experienciaItem.cargo }}</td>
                             <td>{{ experienciaItem.duracion }}</td>
-                            <td>{{ experienciaItem.institucion }}</td>
+                            <td>{{ experienciaItem.institucionNombre }}</td>
                             <td>{{ experienciaItem.actividad }}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
-                                <a (click)="onDeleteClick(i)" class="table-action ms-2 text-danger" href="#">
+                                <a (click)="onDeleteClick(i)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
-
-
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Analista de Datos</td>
-                            <td>2 años</td>
-                            <td>6 años de experiencia en análisis de datos y business intelligence</td>
-                            <td>Ciencias de la Computación</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a (click)="onDeleteClick(4)" class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>

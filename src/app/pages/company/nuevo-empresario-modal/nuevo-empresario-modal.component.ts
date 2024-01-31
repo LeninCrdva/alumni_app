@@ -64,7 +64,7 @@ export class NuevoEmpresarioModalComponent implements OnInit {
       icon: esExitoso ? 'success' : 'error',
       title: titulo,
       text: mensaje,
-      allowOutsideClick: !esExitoso, // No permite cerrar haciendo clic afuera del modal si hay un error
+      allowOutsideClick: !esExitoso,
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
@@ -75,12 +75,9 @@ export class NuevoEmpresarioModalComponent implements OnInit {
 
   cerrarModal() {
     if (this.mensajeMostrado) {
-      // Si el mensaje se ha mostrado, permite cerrar la modal
       this.bsModalRef.hide();
     } else {
-      // Si el mensaje aún no se ha mostrado, evita cerrar la modal
       console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
-      // Puedes agregar algún indicador visual para informar al usuario
     }
   }
 }
