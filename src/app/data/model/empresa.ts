@@ -10,7 +10,7 @@ export class Empresa {
     'ruc': string;
     'nombre': string;
     'tipoEmpresa': string;
-    'razonsocial': string;
+    'razonSocial': string;
     'area': string;
     'ubicacion': string;
     'sitioweb': string;

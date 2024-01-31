@@ -35,7 +35,7 @@ export class Empresas2Component {
   ciudadSeleccionada:any={};
   sectorSeleccionado: any= {};
   //Para obtener el empresario del usuario logueado
-  empresascreated: Empresa[] = [];
+  empresass: Empresa[] = [];
   empresanueva: any = {};
   empresaeditar: Empresa | undefined;
   ciudades: Ciudad[] = [];
@@ -47,22 +47,29 @@ export class Empresas2Component {
   constructor(private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService, private serviceempresario:EmpresarioService) { }
 
   ngOnInit(): void {
+    this.buscarEmpresass();
+
     this.ciudadSeleccionada = {
       id: 0,
       nombre: '',
       provincia: new Provincia(),
     }
+    this.sectorSeleccionado = {
+      id: 0,
+      nombre: '',
+      descripcion: '',
+    }
     this.empresanueva = {
       empresario: '', // O el valor por defecto que desees
       ciudad: new Ciudad(),
-      sectorempresarial: new sectorempresarial(),
+      sectorEmpresarial: new sectorempresarial(),
       ruc: '',
       nombre: '',
       tipoEmpresa: '',
-      razonsocial: '',
+      razonSocial: '',
       area: '',
       ubicacion: '',
-      sitioweb: '',
+      sitioWeb: '',
       // O el valor por defecto que desees
     };
 
@@ -79,8 +86,7 @@ export class Empresas2Component {
 
   souts(){
     console.log('CYTUUUUUUUUUUUUUU', this.empresanueva.ciudad);
-    console.log('SEICTTTTTTOe', this.empresanueva.sectorempresarial);
-    console.log('MARTAAAAAAAAA', this.empresanueva.sectorempresarial);
+    console.log('MARTAAAAAAAAA', this.empresanueva.sectorEmpresarial.nombre);
 
   }
 
@@ -138,7 +144,7 @@ export class Empresas2Component {
       ciudad => {
         if(ciudad){
           console.log('Ciudad:', ciudad);
-          this.ciudadSeleccionada = ciudad;
+          //this.ciudadSeleccionada = ciudad;
           this.empresanueva.ciudad = ciudad;
           console.log('Ciudad seleccionada:', this.empresanueva.ciudad);
         }else{
@@ -157,8 +163,8 @@ export class Empresas2Component {
       sector => {
         if(sector){
           console.log('Sector:', sector);
-          this.sectorSeleccionado = sector;
-          this.empresanueva.sectorempresarial = sector;
+          //this.sectorSeleccionado = sector;
+          this.empresanueva.sectorEmpresarial = sector;
           console.log('Sector seleccionado:', this.empresanueva.sectorempresarial);
         }else{
           console.log('No se puede obtener el sector');
@@ -171,6 +177,16 @@ export class Empresas2Component {
     );
   }
 
+  buscarEmpresass(){
+    this.empresaService.getEmpresas().subscribe(
+      empresas => {
+        this.empresass = empresas;
+        console.log('Empresas obtenidas exitosamente:', empresas);
+      },
+      error => console.error('Error al obtener empresas:', error)
+    );
+  }
+
   private createEmpresaVacia(): Empresa {
     return {
       id: 0,
@@ -180,7 +196,7 @@ export class Empresas2Component {
       ruc: '',
       nombre: '',
       tipoEmpresa: '',
-      razonsocial: '',
+      razonSocial: '',
       area: '',
       ubicacion: '',
       sitioweb: ''
