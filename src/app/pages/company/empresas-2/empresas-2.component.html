@@ -99,8 +99,8 @@
                                                 <label class="form-control-label active">Ciudad: <span
                                                         class="tx-danger">*</span></label>
                                                 <select class="form-control" name="ciudad" [(ngModel)]="ID_Ciudad"
-                                                    (click)="getCiudadIDName()" required>
-                                                    <option value="" disabled>-- Seleccione una ciudad --</option>
+                                                    (ngModelChange)="buscarCiudad(ID_Ciudad)" required>
+                                                    <option value=""  selected>-- Seleccione una ciudad --</option>
                                                     <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{
                                                         ciudad?.nombre }}</option>
                                                 </select>
@@ -111,8 +111,8 @@
                                                 <label class="form-control-label active">Sectorempresarial: <span
                                                         class="tx-danger">*</span></label>
                                                 <select class="form-control" name="ciudad" [(ngModel)]="ID_Sector"
-                                                    (click)="getSectoresEmpresariales()" required>
-                                                    <option value="" disabled>-- Seleccione una sector empresarial --
+                                                    (ngModelChange)="buscarSector(ID_Sector)" required>
+                                                    <option value=""  selected>-- Seleccione una sector empresarial --
                                                     </option>
                                                     <option *ngFor="let sector of sectoresEmpresariales"
                                                         [value]="sector.id">{{ sector?.nombre }}</option>
