@@ -33,6 +33,23 @@ export class EmpresarioService {
   getEmpresarios2(): Observable<Empresario2[]> {
     return this.http.get<Empresario2[]>(this.urlEndPoint);
   }
+  checkEmpresarioExists(nombre: string): Observable<boolean> {
+    return this.getEmpresarios2().pipe(
+      tap(empresarios => console.log('Empresarios obtenidos:', empresarios)),
+      map(empresarios => {
+        const exists = empresarios.some(empre => 
+          empre.usuario && empre.usuario && 
+          empre.usuario.toLowerCase() === nombre.toLowerCase()
+        );
+        console.log(`¿Existe empresario con nombre ${nombre}? ${exists}`);
+        return exists;
+      }),
+      catchError(error => {
+        console.error('Error al verificar la existencia del administrador:', error);
+        return of(false); // Devolver false en caso de error
+      })
+    );
+  }
 
   getEmpresarioByUsuario(usuario: string): Observable<Empresario2 | null> {
     return this.http.get<Empresario2[]>(this.urlEndPoint).pipe(

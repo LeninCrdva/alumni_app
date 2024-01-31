@@ -6,7 +6,8 @@ import { Graduado } from '../model/graduado';
 import { Graduado3 } from '../model/graduado';
 import { map } from 'rxjs/operators';
 import { ofertaLaboral } from '../model/ofertaLaboral';
-
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -41,7 +42,19 @@ export class GraduadoService {
 
   checkGraduadoExists(nombre: string): Observable<boolean> {
     return this.getGraduados().pipe(
-      map(graduados => graduados.some(gradu => gradu.usuario.nombre_usuario === nombre))
+      tap(graduados => console.log('Administradores obtenidos:', graduados)),
+      map(graduados => {
+        const exists = graduados.some(gradu => 
+          gradu.usuario && gradu.usuario.nombre_usuario && 
+          gradu.usuario.nombre_usuario.toLowerCase() === nombre.toLowerCase()
+        );
+        console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
+        return exists;
+      }),
+      catchError(error => {
+        console.error('Error al verificar la existencia del administrador:', error);
+        return of(false); // Devolver false en caso de error
+      })
     );
   }
   getGraduadoByUsuario(usuario: string): Observable<Graduado3 | null> {

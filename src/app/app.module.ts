@@ -13,7 +13,7 @@ import player from 'lottie-web';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CommonModule } from '@angular/common';
 import {PerfilUsuarioComponent} from '../app/pages/company/perfil-usuario/perfil-usuario.component';
-
+import {NuevoEmpresarioModalComponent} from '../app/pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
 export function playerFactory() {
   return player;
 }
@@ -25,6 +25,7 @@ export function playerFactory() {
     LayoutSystemComponent,
     ScrollToTopComponent,
     PerfilUsuarioComponent,
+    NuevoEmpresarioModalComponent,
     NotFoundComponent,
   ],
   providers: [],
