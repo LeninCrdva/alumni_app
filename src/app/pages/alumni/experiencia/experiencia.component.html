@@ -84,7 +84,7 @@
                         <!-- Botón para editar -->
                         <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Editar Experiencia
+                            Actualizar Experiencia
                         </button>
 
                         <button data-bs-dismiss="modal"
@@ -105,7 +105,8 @@
 
         <div class="card-body pd-0 collapse show">
             <div class="table-responsive">
-                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered custom-table">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table">
                     <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
@@ -117,19 +118,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let experienciaItem of experiencia; let i = index">
+                        <tr *ngFor="let experienciaItem of experiencia;">
                             <th scope="row">{{ experienciaItem.id }}</th>
                             <td>{{ experienciaItem.cargo }}</td>
                             <td>{{ experienciaItem.duracion }}</td>
                             <td>{{ experienciaItem.institucionNombre }}</td>
                             <td>{{ experienciaItem.actividad }}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                                    class="table-action mg-r-10">
-                                    <i class="fa-regular fa-pen-to-square"></i>
+                                <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
+                                    <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-                                <a (click)="onDeleteClick(i)" class="table-action ms-2 text-danger">
-                                    <i class="fa fa-trash"></i>
+                                <a (click)="onDeleteClick(experienciaItem.id!)" class="table-action ms-2 text-danger">
+                                    <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>
                         </tr>

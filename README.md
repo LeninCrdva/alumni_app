@@ -7,7 +7,7 @@
 - npm install @angular/router --save
 - npm i ngx-bootstrap
 - npm install --save sweetalert2
-
+- ng add angular-datatables
 
 # Alumnifrontapp
 

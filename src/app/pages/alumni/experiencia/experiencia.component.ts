@@ -73,24 +73,44 @@ export class ExperienciaComponent {
   }
 
   createExperiencia() {
+    this.nuevoExperienciaCarga.graduado = this.usuarios;
+    console.log('Valor de nuevoExperienciaCarga.cargo:', this.nuevoExperienciaCarga);
+    console.log('Valor de nuevoExperienciaCarga.duracion:', this.nuevoExperienciaCarga.duracion);
+    console.log('Valor de nuevoExperienciaCarga.institucionNombre:', this.nuevoExperienciaCarga.institucionNombre);
+    console.log('Valor de nuevoExperienciaCarga.actividad:', this.nuevoExperienciaCarga.actividad);
+    console.log('Valor de nuevoExperienciaCarga.cedular:', this.nuevoExperienciaCarga.graduado.ciudad);
+
     this.editarClicked = false;
-    this.experienciaService.createExperiencia(this.nuevoExperiencia).subscribe(
+
+    if (!this.validateExperienciaFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos obligatorios.');
+      return;
+    }
+
+    this.experienciaService.createExperiencia(this.nuevoExperienciaCarga).subscribe(
       experiencia => {
         console.log('Experiencia creada exitosamente:', experiencia);
         this.loadExperiencias();
-        this.mostrarSweetAlert(true);
+        this.mostrarSweetAlert(true, 'La experiencia se ha guardado exitosamente.');
         this.mensajeMostrado = true;
       },
       error => {
         console.error('Error al crear la experiencia:', error);
-        this.mostrarSweetAlert(false);
+        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la experiencia.');
       }
     );
   }
 
-  mostrarSweetAlert(esExitoso: boolean) {
-    const titulo = esExitoso ? 'Completado exitosamente' : 'Error al guardar';
-    const mensaje = esExitoso ? 'La experiencia se ha guardado exitosamente.' : 'Hubo un error al intentar guardar la experiencia.';
+  validateExperienciaFields(): boolean {
+    if (!this.nuevoExperienciaCarga.cargo || !this.nuevoExperienciaCarga.duracion || !this.nuevoExperienciaCarga.institucionNombre || !this.nuevoExperienciaCarga.actividad) {
+      return false;
+    }
+
+    return true;
+  }
+
+  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
 
     Swal.fire({
       icon: esExitoso ? 'success' : 'error',
@@ -120,10 +140,13 @@ export class ExperienciaComponent {
       this.experienciaService.updateExperiencia(id, this.nuevoExperienciaCarga).subscribe(
         refeActualizado => {
           console.log('Experiencia actualizada exitosamente:', refeActualizado);
-
+          this.mostrarSweetAlert(true, 'La experiencia se ha actualizado exitosamente.');
           this.loadExperiencias();
         },
-        error => console.error('Error al actualizar la experiencia:', error)
+        error => {
+          console.error('Error al actualizar la experiencia:', error);
+          this.mostrarSweetAlert(true, 'Error al actualizar la experiencia.');
+        }
       );
     } else {
       console.error('Error: El ID de la experiencia es undefined.');
@@ -131,7 +154,17 @@ export class ExperienciaComponent {
   }
 
   onDeleteClick(id: number) {
-
+    this.experienciaService.deleteExperiencia(id).subscribe(
+      () => {
+        console.log('Experiencia eliminada exitosamente');
+        this.mostrarSweetAlert(true, 'La experiencia se ha eliminado exitosamente.');
+        this.loadExperiencias();
+      },
+      error => {
+        console.error('Error al eliminar la experiencia:', error);
+        this.mostrarSweetAlert(true, 'Error al eliminar la experiencia.');
+      }
+    );
   }
 
   obtenerUsuario() {
