@@ -2,13 +2,11 @@ import { Graduado } from "./graduado";
 
 export class Capacitacion {
     id?: number;
-    'horas': Number;
+    'nombre': string;
+    'institucion': string;
     'tipo_certificado': string;
+    'horas': Number;
     'fecha_inicio': Date;
     'fecha_fin': Date;
-    'institucion': string;    
-    'lugar': string;
-    'nombre': string;
     'graduado': Graduado;
-
 }

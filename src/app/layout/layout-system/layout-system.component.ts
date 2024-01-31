@@ -223,6 +223,7 @@ export class LayoutSystemComponent implements OnInit {
         
           this.showEmpresarioOptions = true;
           this.rolType='Empresario';
+
           this.nuevoEmpresario.usuario=this.usuarioEmpresario;
           console.log('El usuario es',this.nuevoEmpresario);
           this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
@@ -243,6 +244,7 @@ export class LayoutSystemComponent implements OnInit {
                     console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
                   }
                 });
+
               } else {
                 console.error('Ya existe un empresario con este nombre. Elige otro nombre.');
               }
@@ -270,6 +272,7 @@ export class LayoutSystemComponent implements OnInit {
                     ignoreBackdropClick: true,  
                     keyboard: false,  
                   };
+
                   this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
             
                   this.bsModalRef.content.onClose.subscribe((result: string) => {
@@ -277,6 +280,7 @@ export class LayoutSystemComponent implements OnInit {
                       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
                     }
                   });
+
                 } else {
                   console.error('Ya existe un graduado con este nombre. Elige otro nombre.');
                 }

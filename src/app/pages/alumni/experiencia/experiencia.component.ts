@@ -19,9 +19,9 @@ export class ExperienciaComponent {
   empresa: Empresa | any = [];
 
   experiencia: Experiencia[] = [];
-  nuevoExperiencia: Experiencia = { salario: 0, telefono: '', fecha_cierre: new Date(), fecha_publicacion: new Date(), cargo: '', experiencia: '', fecha_apertura: new Date(), area_conocimiento: '', estado: false, empresa: this.empresa, graduado: this.graduado };
-  nuevoExperienciaCarga: Experiencia = { id: 0, salario: 0, telefono: '', fecha_cierre: new Date(), fecha_publicacion: new Date(), cargo: '', experiencia: '', fecha_apertura: new Date(), area_conocimiento: '', estado: false, empresa: this.empresa, graduado: this.graduado };
-  nuevoExperienciaEdit: Experiencia = { id: 0, salario: 0, telefono: '', fecha_cierre: new Date(), fecha_publicacion: new Date(), cargo: '', experiencia: '', fecha_apertura: new Date(), area_conocimiento: '', estado: false, empresa: this.empresa, graduado: this.graduado };
+  nuevoExperiencia: Experiencia = { graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
+  nuevoExperienciaCarga: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: ''};
+  nuevoExperienciaEdit: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
   editarClicked = false;
 
   constructor(private experienciaService: ExperienciaService, private usuarioService: UserService) { }
