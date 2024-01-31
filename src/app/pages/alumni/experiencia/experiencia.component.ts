@@ -5,6 +5,7 @@ import { Graduado } from '../../../data/model/graduado';
 import { Usuario } from '../../../data/model/usuario';
 import { ExperienciaService } from '../../../data/service/experiencia.service';
 import { UserService } from '../../../data/service/UserService';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-experiencia',
@@ -20,21 +21,48 @@ export class ExperienciaComponent {
 
   experiencia: Experiencia[] = [];
   nuevoExperiencia: Experiencia = { graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
-  nuevoExperienciaCarga: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: ''};
+  nuevoExperienciaCarga: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
   nuevoExperienciaEdit: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucion: '', actividad: '' };
   editarClicked = false;
+
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private experienciaService: ExperienciaService, private usuarioService: UserService) { }
 
   ngOnInit(): void {
+
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language: {
+        search: 'Buscar:',
+        searchPlaceholder: 'Buscar experiencia...',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        paginate: {
+          first: 'Primera',
+          last: 'Última',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        },
+        lengthMenu: 'Mostrar _MENU_ registros por página',
+        zeroRecords: 'No se encontraron registros coincidentes'
+      },
+      lengthMenu: [10, 25, 50]
+    };
+
     this.obtenerUsuario();
     this.loadExperiencias();
   }
 
   loadExperiencias() {
     this.experienciaService.getExperiencias().subscribe(
-      experiencia => this.experiencia = experiencia,
-      error => console.error(error)
+      experiencia => {
+        this.experiencia = experiencia;
+      },
+      (error: any) => console.error(error),
+      () => this.dtTrigger.next(null)
     );
   }
 

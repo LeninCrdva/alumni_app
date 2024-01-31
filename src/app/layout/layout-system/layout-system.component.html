@@ -25,8 +25,8 @@
                 <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a (click)="setActiveMenuItem('Mi Perfil')"
-                            [routerLink]="['/system/alumni/perfil']" routerLinkActive="router-link-active">
+                    <li><a (click)="setActiveMenuItem('Mi Perfil')" [routerLink]="['/system/alumni/perfil']"
+                            routerLinkActive="router-link-active">
                             Mi Perfil</a>
                     <li><a (click)="setActiveMenuItem('Actualizar Perfil')"
                             [routerLink]="['/system/alumni/update-perfil']" routerLinkActive="router-link-active">
@@ -185,9 +185,9 @@
                 <a>Bienvenido "{{ name }}"</a>
                 <img [src]="urlImage" alt="Imagen de usuario" alt="Alumni">
                 <ul class="profile-link">
-                    <li><a >
+                    <li><a (click)="redirectToProfile()">
                             <i class='bx bxs-user-circle icon'></i> Perfil</a></li>
-                    <li><a>
+                    <li><a (click)="redirectToUpdateProfile()">
                             <i class='bx bx-user-pin icon'></i> Actualizar Perfil</a></li>
                     <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active"
                             (click)="cerrarSesionconclick()"><i class='bx bx-exit icon'></i> Cerrar Sesion</a></li>

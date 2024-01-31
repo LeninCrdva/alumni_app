@@ -16,6 +16,7 @@ import { NuevoGraduadoModalComponent } from './nuevo-graduado-modal/nuevo-gradua
 import { OfertasDeTrabajoComponent } from './ofertas-de-trabajo/ofertas-de-trabajo.component';
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
 import { PostulacionesComponent } from './postulaciones/postulaciones.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { PostulacionesComponent } from './postulaciones/postulaciones.component'
         CommonModule,
         AlumniRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DataTablesModule
     ]
 })
 

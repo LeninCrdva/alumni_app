@@ -98,20 +98,15 @@
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
-                    Registrar Experiencia</button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                    Registrar Experiencia
+                </button>
             </div>
         </div>
 
         <div class="card-body pd-0 collapse show">
             <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-light">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered custom-table">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
                             <th>CARGO</th>
