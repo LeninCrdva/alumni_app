@@ -257,6 +257,19 @@ export class LayoutSystemComponent implements OnInit {
       this.rolType = 'Empresario';
       this.nuevoEmpresario.usuario = this.usuarioGuardado; // Cambiado de this.usuarioEmpresario
       console.log('El usuario es', this.nuevoEmpresario);
+      this.empresaservice.getEmpresarioByUsuario(this.usuarioEmpresario).subscribe(
+        empresario => {
+          if (empresario) {
+            this.empresaservice.setEmpresario(empresario);
+          } else {
+            console.log('No se encontró el empresario.');
+          }
+        },
+        error => {
+          // Maneja errores en la petición HTTP
+          console.error('Error al obtener el empresario:', error);
+        }
+      );
       this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
         (exists) => {
           console.log(`¿Existe empresario? ${exists}`);
