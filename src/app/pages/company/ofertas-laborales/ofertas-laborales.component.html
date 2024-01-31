@@ -25,12 +25,9 @@
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">EMPRESA: <span class="tx-danger">*</span></label>
-                                            <select class="form-control" name="empresa">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">WILLSOFTEC</option>
-                                                <option value="tiempo-completo">RENAFIT</option>
-                                                <option value="tiempo-completo">LIBELULA</option>
-                                                <option value="tiempo-completo">STEVE BRO</option>
+                                            <select class="form-control" name="empresa" [(ngModel)]="ofertaslaborales.nombreEmpresa">
+                                                <option value="" disabled>-- Seleccione una opción --</option>
+                                                <option [value]="empresa.nombre" *ngFor="let empresa of empresas">{{empresa.nombre}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -39,27 +36,23 @@
                                             <label class="form-control-label active">CARGO: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el cargo">
+                                                placeholder="Ingrese el cargo" [(ngModel)]="ofertaslaborales.cargo">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">JORNADA: <span class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">MATUTINA</option>
-                                                <option value="medio-tiempo">Medio Tiempo</option>
-                                                <option value="temporal">Temporal</option>
-                                            </select>
+                                            <label class="form-control-label active">SALARIO: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="salario" pattern="[0-9]+" title="Ingrese solo números"
+                                                placeholder="Ingrese el salario" [(ngModel)]="ofertaslaborales.salario">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">EXPERIENCIA: <span class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada">
-                                                <option value="">-- Seleccione una opción --</option>
+                                            <select class="form-control" name="jornada" [(ngModel)]="ofertaslaborales.experiencia">
+                                                <option value="" disabled>-- Seleccione una opción --</option>
                                                 <option value="tiempo-completo">Sin Experiencia</option>
                                                 <option value="medio-tiempo">Con Experiencia</option>
                                             </select>
@@ -69,44 +62,30 @@
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA INICIO: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaInicio">
+                                            <label class="form-control-label active">FECHA CIERRE: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaInicio" [(ngModel)]="ofertaslaborales.fechaCierre">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">FECHA FIN: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaFin">
+                                            <label class="form-control-label active">FECHA APERTURA: <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaFin" [(ngModel)]="ofertaslaborales.fechaApertura">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">DESCRIPCIÓN: <span class="tx-danger">*</span></label>
-                                            <textarea class="form-control" name="descripcion" rows="4" placeholder="Ingrese la descripción de la oferta de trabajo"></textarea>
+                                            <label class="form-control-label active">FECHA PUBLICACION: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="fechaPublicacion" value="{{ofertaslaborales.fechaPublicacion}}" readonly>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">REQUISITOS: <span class="tx-danger">*</span></label>
+                                            <label class="form-control-label active">AREA CONOCIMINETO: <span class="tx-danger">*</span></label>
                                             <textarea class="form-control" name="requisitos" rows="4"
-                                                placeholder="Ingrese los requisitos para su oferta de trabajo"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">UBICACIÓN: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion" placeholder="Ingrese la ubicación">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">SALARIO: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="salario" pattern="[0-9]+" title="Ingrese solo números"
-                                                placeholder="Ingrese el salario">
+                                                placeholder="Ingrese el area de conocimiento para su oferta de trabajo" [(ngModel)]="ofertaslaborales.areaConocimiento"></textarea>
                                         </div>
                                     </div>
                                 </div>
