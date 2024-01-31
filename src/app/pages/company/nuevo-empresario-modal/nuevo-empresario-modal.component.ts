@@ -36,7 +36,7 @@ export class NuevoEmpresarioModalComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]]
     });
   }
-
+  
   guardarEmpresario() {
     if (this.formularioEmpresario.valid) {
       // Realizar la operación de guardado
