@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { Empresario } from '../model/empresario';
 import { Empresario2 } from '../model/empresario';
 import { map } from 'rxjs/operators';
@@ -70,6 +71,7 @@ export class EmpresarioService {
       })
     );
   }
+  
 
   private empresarioSubject = new BehaviorSubject<Empresario | null>(null);
   setEmpresario(empresario: Empresario | null): void {
@@ -79,7 +81,5 @@ export class EmpresarioService {
     return this.empresarioSubject.asObservable();
   }
   
-
-
   
 }

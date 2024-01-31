@@ -219,6 +219,8 @@ export class LayoutSystemComponent implements OnInit {
     if (userRole == 'ROL_ADMINISTRADOR') {
       this.showAdminOptions = true;
       this.rolType = 'Admin';
+      this.nuevoAdministrador.usuario = this.usuarioGuardado;
+        console.log('El usuario es',this.nuevoAdministrador);
       this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
         (exists) => {
           if (!exists) {
@@ -290,6 +292,101 @@ export class LayoutSystemComponent implements OnInit {
                 this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
 
                 if (this.bsModalRef.content) {
+  
+  
+  
+    private checkUserRole() {
+      const userRole = localStorage.getItem('userRole');
+      console.log(userRole);
+      if (userRole == 'ROL_ADMINISTRADOR') {
+        this.showAdminOptions = true;
+        this.rolType = 'Admin';
+        this.nuevoAdministrador.usuario = this.usuarioGuardado;
+        console.log('El usuario es',this.nuevoAdministrador);
+        this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
+          (exists) => {
+            console.log(`¿Existe administrador? ${exists}`);
+            if (!exists) {
+              const config = {
+                initialState: {
+                  nuevoAdministrador: this.nuevoAdministrador,
+                },
+                ignoreBackdropClick: true,  
+                keyboard: false,  
+              };
+              this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
+        
+              this.bsModalRef.content.onClose.subscribe((result: string) => {
+                if (result === 'guardadoExitoso') {
+                  console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                }
+              });
+            } else {
+              console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
+            }
+          },
+          (error) => {
+            console.error('Error al verificar la existencia del administrador:', error);
+          }
+        );
+        
+      
+
+      }
+      else{
+        if(userRole=='ROL_EMPRESARIO'){
+        
+          this.showEmpresarioOptions = true;
+          this.rolType='Empresario';
+          this.nuevoEmpresario.usuario=this.usuarioEmpresario;
+          console.log('El usuario es',this.nuevoEmpresario);
+          this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
+            (exists) => {
+              console.log(`¿Existe empresario? ${exists}`);
+              if (!exists) {
+                const config = {
+                  initialState: {
+                    nuevoEmpresario: this.nuevoEmpresario,
+                  },
+                  ignoreBackdropClick: true,  
+                  keyboard: false,  
+                };
+                this.bsModalRef = this.modalService.show(NuevoEmpresarioModalComponent, config);
+          
+                this.bsModalRef.content.onClose.subscribe((result: string) => {
+                  if (result === 'guardadoExitoso') {
+                    console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                  }
+                });
+              } else {
+                console.error('Ya existe un empresario con este nombre. Elige otro nombre.');
+              }
+            },
+            (error) => {
+              console.error('Error al verificar la existencia del administrador:', error);
+            }
+          );
+          
+        }
+        else{
+          if (userRole === 'ROL_GRADUADO') {
+            this.showAlumniOptions = true;
+            this.rolType = 'Alumni';
+            this.nuevoGraduado.usuario = this.usuarioGuardado;
+            console.log('El usuario es',this.nuevoGraduado);
+            this.graduadoservice.checkGraduadoExists(this.nuevoGraduado.usuario).subscribe(
+              (exists) => {
+                console.log(`¿Existe graduado? ${exists}`);
+                if (!exists) {
+                  const config = {
+                    initialState: {
+                      nuevoGraduado: this.nuevoGraduado,
+                    },
+                    ignoreBackdropClick: true,  
+                    keyboard: false,  
+                  };
+                  this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+            
                   this.bsModalRef.content.onClose.subscribe((result: string) => {
                     if (result === 'guardadoExitoso') {
                       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
