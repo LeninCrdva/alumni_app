@@ -4,7 +4,7 @@ import { sectorempresarial } from "./sectorEmpresarial";
 
 export class Empresa {
     id?: number;
-    'empresario': Empresario;
+    'empresario': String;
     'ciudad': Ciudad;
     'sectorempresarial': sectorempresarial;
     'ruc': string;

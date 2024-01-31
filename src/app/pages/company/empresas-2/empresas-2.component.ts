@@ -7,6 +7,8 @@ import { CiudadService } from '../../../data/service/ciudad.service';
 import { SectorEmpresarialService } from '../../../data/service/sectorempresarial.service';
 import { Empresario } from '../../../data/model/empresario';
 import { Usuario } from '../../../data/model/usuario';
+import { EmpresarioService } from '../../../data/service/empresario.service';
+import { Provincia } from '../../../data/model/provincia';
 
 @Component({
   selector: 'app-empresas-2',
@@ -28,9 +30,11 @@ export class Empresas2Component {
   //ID del usuario logueado
   idUser: number = parseInt(localStorage.getItem('idUser') || '0', 10);
   //Para obtener el empresario del usuario logueado
-  empresarioOb: any = {};
+  empresariouser: String | undefined= '';
   //Para ciudad y sector empresarial
-  ciudadSeleccionada: any = {};
+  ciudadSeleccionada:any={};
+  sectorSeleccionado: any= {};
+  //Para obtener el empresario del usuario logueado
   empresascreated: Empresa[] = [];
   empresanueva: any = {};
   empresaeditar: Empresa | undefined;
@@ -40,21 +44,18 @@ export class Empresas2Component {
   ID_Ciudad: number = 0;
   ID_Sector: number = 0;
 
-  constructor(private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService) { }
+  constructor(private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService, private serviceempresario:EmpresarioService) { }
 
   ngOnInit(): void {
-    this.empresarioOb = {
+    this.ciudadSeleccionada = {
       id: 0,
-      usuario: new Usuario,
-      estado: false,
-      puesto: '',
-      anios: 0,
-      email: '',
+      nombre: '',
+      provincia: new Provincia(),
     }
     this.empresanueva = {
-      empresario: null, // O el valor por defecto que desees
-      ciudad: null,
-      sectorempresarial: null,
+      empresario: '', // O el valor por defecto que desees
+      ciudad: new Ciudad(),
+      sectorempresarial: new sectorempresarial(),
       ruc: '',
       nombre: '',
       tipoEmpresa: '',
@@ -65,33 +66,42 @@ export class Empresas2Component {
       // O el valor por defecto que desees
     };
 
-
-    this.cargarEmpresas();
-    this.getEmpresarioById(this.idUser);
+    this.serviceempresario.getEmpresario().subscribe(
+      empresario => {
+        this.empresariouser = empresario?.usuario;
+        console.log('Empresario objeto ultra maximo:', empresario?.usuario);
+      },
+      error => console.error('Error al obtener el empresario:', error)
+    );
+  this.getCiudadIDName();
+  this.getSectoresEmpresariales();
   }
 
-  cargarEmpresas() {
-    this.empresaService.getEmpresas().subscribe(
-      empresas => this.empresascreated = empresas,
-      error => console.error(error)
-    );
+  souts(){
+    console.log('CYTUUUUUUUUUUUUUU', this.empresanueva.ciudad);
+    console.log('SEICTTTTTTOe', this.empresanueva.sectorempresarial);
+    console.log('MARTAAAAAAAAA', this.empresanueva.sectorempresarial);
+
   }
 
   crearEmpresa() {
     if (this.empresanueva) { // Add null check for this.ciudadSeleccionada
-      this.buscarCiudad(this.ID_Ciudad);
-      this.buscarSector(this.ID_Sector);
+      this.empresanueva.empresario = this.empresariouser;
+      console.log('Empresario:', this.empresanueva.empresario);
+      console.log('Empresario1111:', this.empresanueva);
+
       this.empresaService.createEmpresa(this.empresanueva).subscribe(
         empresa => {
 
           console.log('Empresa creada exitosamente:', empresa);
           this.empresanueva = this.createEmpresaVacia(); // Limpiar el formulario
-          this.cargarEmpresas(); // Recargar la lista después de crear
         },
-        error => console.error('Error al crear empresa:', error)
+        error => console.error('Error al crear empresa:', error),
       );
+      this.souts();
     }
-  }
+ }
+
 
   editarEmpresa() {
     const id = this.empresaeditar?.id; // Add null check before accessing the property
@@ -101,7 +111,6 @@ export class Empresas2Component {
           empresaActualizada => {
             console.log('Empresa actualizada exitosamente:', empresaActualizada);
             this.empresaeditar = this.createEmpresaVacia(); // Limpiar el formulario
-            this.cargarEmpresas();
           },
           error => console.error('Error al actualizar empresa:', error)
         );
@@ -126,35 +135,46 @@ export class Empresas2Component {
 
   buscarCiudad(id: number) {
     this.ciudadService.getCiudadById(id).subscribe(
-      ciudad => 
-      this.empresanueva.ciudad = ciudad,
+      ciudad => {
+        if(ciudad){
+          console.log('Ciudad:', ciudad);
+          this.ciudadSeleccionada = ciudad;
+          this.empresanueva.ciudad = ciudad;
+          console.log('Ciudad seleccionada:', this.empresanueva.ciudad);
+        }else{
+          console.log('No se puede obtener la ciudad');
+        }
+          
+      },
       error => console.error(error)
+
+      
     );
   }
-
+  
   buscarSector(id: number) {
     this.sectorempresarialService.getSectorEmpresarialById(id).subscribe(
-      sector => this.empresanueva.sectorempresarial = sector,
-      error => console.error(error)
-    );
-  }
-
-  getEmpresarioById(id: number) {
-    this.empresaService.getEmpresarioByUsuarioId(id).subscribe(
-      empresario => {
-        this.empresarioOb = empresario;
-        this.empresanueva.empresario = this.empresarioOb;
-        console.log('Empresario obtenido exitosamente:', empresario);
+      sector => {
+        if(sector){
+          console.log('Sector:', sector);
+          this.sectorSeleccionado = sector;
+          this.empresanueva.sectorempresarial = sector;
+          console.log('Sector seleccionado:', this.empresanueva.sectorempresarial);
+        }else{
+          console.log('No se puede obtener el sector');
+        }
       },
-      error => console.error('Error al obtener empresario:', error)
+      
+      error => console.error(error)
+      
+      
     );
-    
   }
 
   private createEmpresaVacia(): Empresa {
     return {
       id: 0,
-      empresario: new Empresario(), // Deberías instanciar las otras clases también aquí si es necesario
+      empresario: '', // Deberías instanciar las otras clases también aquí si es necesario
       ciudad: new Ciudad(),
       sectorempresarial: new sectorempresarial(),
       ruc: '',

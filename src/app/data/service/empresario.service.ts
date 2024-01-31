@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Empresario } from '../model/empresario';
 import { Empresario2 } from '../model/empresario';
 import { map } from 'rxjs/operators';
@@ -33,6 +33,23 @@ export class EmpresarioService {
   getEmpresarios2(): Observable<Empresario2[]> {
     return this.http.get<Empresario2[]>(this.urlEndPoint);
   }
+  checkEmpresarioExists(nombre: string): Observable<boolean> {
+    return this.getEmpresarios2().pipe(
+      tap(empresarios => console.log('Empresarios obtenidos:', empresarios)),
+      map(empresarios => {
+        const exists = empresarios.some(empre => 
+          empre.usuario && empre.usuario && 
+          empre.usuario.toLowerCase() === nombre.toLowerCase()
+        );
+        console.log(`¿Existe empresario con nombre ${nombre}? ${exists}`);
+        return exists;
+      }),
+      catchError(error => {
+        console.error('Error al verificar la existencia del administrador:', error);
+        return of(false); // Devolver false en caso de error
+      })
+    );
+  }
 
   getEmpresarioByUsuario(usuario: string): Observable<Empresario2 | null> {
     return this.http.get<Empresario2[]>(this.urlEndPoint).pipe(
@@ -52,6 +69,14 @@ export class EmpresarioService {
         return of(null);
       })
     );
+  }
+
+  private empresarioSubject = new BehaviorSubject<Empresario | null>(null);
+  setEmpresario(empresario: Empresario | null): void {
+    this.empresarioSubject.next(empresario);
+  }
+  getEmpresario(): Observable<Empresario | null> {
+    return this.empresarioSubject.asObservable();
   }
   
 
