@@ -60,18 +60,19 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="modal-footer">
 
                         <!-- Botón para registrar -->
                         <button (click)="createReferenciaPer()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                            Registrar Registrar Personal
+                            Registrar Experiencia
                         </button>
 
                         <!-- Botón para editar -->
-                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Editar Registrar Personal
+                        <button (click)="onUpdateClick(nuevoReferenciaPersonalCarga.id!)" data-bs-toggle="modal"
+                            data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                            Actualizar Experiencia
                         </button>
 
                         <button data-bs-dismiss="modal"
@@ -84,21 +85,17 @@
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
-                    Registrar Referencia</button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                    Registrar Referencia Personal
+                </button>
             </div>
         </div>
 
         <div class="card-body pd-0 collapse show">
             <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-light">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
                             <th>NOMBRE</th>
@@ -108,20 +105,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let referencia_per of referencia_personal; let i = index">
-                            <th scope="row">{{i + 1}}</th>
+                        <tr *ngFor="let referencia_per of referencia_personal;">
+                            <th scope="row">{{referencia_per.id}}</th>
                             <td>{{referencia_per.nombre}}</td>
                             <td>{{referencia_per.telefono}}</td>
                             <td>{{referencia_per.email}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
                                 <a (click)="onEditarClick(referencia_per)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
+                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
+                                    <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-
-                                <a class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
+                                <a (click)="onDeleteClick(referencia_per.id!)" class="table-action ms-2 text-danger">
+                                    <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>
                         </tr>
@@ -129,5 +124,6 @@
                 </table>
             </div>
         </div>
+
     </div>
 </div>

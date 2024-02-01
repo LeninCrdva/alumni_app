@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Referencias_personales } from '../../../data/model/referencia_personal';
 import { Graduado } from '../../../data/model/graduado';
 import { ReferenciaPersonalService } from '../../../data/service/referenciapersonal.service';
 import { UserService } from '../../../data/service/UserService';
 import { Usuario } from '../../../data/model/usuario';
+import { Subject } from 'rxjs';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-referencias-personales',
@@ -11,29 +14,56 @@ import { Usuario } from '../../../data/model/usuario';
   styleUrls: ['./referencias-personales.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class ReferenciasPersonalesComponent {
-  name: string | null = localStorage.getItem('name');
-  usuarios: Usuario | any = [];
-
-  graduado: Graduado | any = [];
+  public cedula: string = '';
 
   referencia_personal: Referencias_personales[] = [];
-  nuevoReferenciaPersonal: Referencias_personales = { nombre: '', graduado: this.graduado, telefono: '', email: '' };
-  nuevoReferenciaPersonalCarga: Referencias_personales = { id: 0, nombre: '', graduado: this.graduado, telefono: '', email: '' };
-  nuevoReferenciaPersonalEdit: Referencias_personales = { id: 0, nombre: '', graduado: this.graduado, telefono: '', email: '' };
+  nuevoReferenciaPersonal: Referencias_personales = { nombre: '', cedulaGraduado: '', telefono: '', email: '' };
+  nuevoReferenciaPersonalCarga: Referencias_personales = { id: 0, nombre: '', cedulaGraduado: '', telefono: '', email: '' };
+  nuevoReferenciaPersonalEdit: Referencias_personales = { id: 0, nombre: '', cedulaGraduado: '', telefono: '', email: '' };
 
   editarClicked = false;
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private referenciaPService: ReferenciaPersonalService, private usuarioService: UserService) { }
+  mensajeMostrado = false;
+
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
+
+  constructor(public bsModalRef: BsModalRef, private referenciaPService: ReferenciaPersonalService, private usuarioService: UserService) { }
 
   ngOnInit(): void {
-    this.obtenerUsuario();
+
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language: {
+        search: 'Buscar:',
+        searchPlaceholder: 'Buscar referencia ...',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        paginate: {
+          first: 'Primera',
+          last: 'Última',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        },
+        lengthMenu: 'Mostrar _MENU_ registros por página',
+        zeroRecords: 'No se encontraron registros coincidentes'
+      },
+      lengthMenu: [10, 25, 50]
+    };
+
+    this.obtenerCedula();
     this.loadReferenciasPer();
   }
 
   loadReferenciasPer() {
     this.referenciaPService.getReferenciasPersonales().subscribe(
-      referenciasP => this.referencia_personal = referenciasP,
-      error => console.error(error)
+      referenciasP => {
+        this.referencia_personal = referenciasP;
+      },
+      (error: any) => console.error(error),
+      () => this.dtTrigger.next(null)
     );
   }
 
@@ -57,7 +87,7 @@ export class ReferenciasPersonalesComponent {
     this.editarClicked = false;
   }
 
-  onUpdateClick() {
+  onUpdateClick(ids: number) {
     const id = this.nuevoReferenciaPersonalCarga.id;
     if (id !== undefined) {
       this.referenciaPService.updateReferenciasPersonales(id, this.nuevoReferenciaPersonalCarga).subscribe(
@@ -77,15 +107,38 @@ export class ReferenciasPersonalesComponent {
 
   }
 
-  obtenerUsuario() {
-    this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
-      usuario => {
-        this.usuarios = usuario;
-        console.log('Usuario obtenido exitosamente:', this.usuarios);
-        this.nuevoReferenciaPersonal.graduado = this.usuarios;
-        console.log('Usuario obtenido exitosamente:', this.nuevoReferenciaPersonal.graduado);
-      },
-      error => console.error('Error al obtener usuario:', error)
-    );
+
+  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
+
+    Swal.fire({
+      icon: esExitoso ? 'success' : 'error',
+      title: titulo,
+      text: mensaje,
+      allowOutsideClick: !esExitoso,
+    }).then((result) => {
+      if (esExitoso || result.isConfirmed) {
+        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        this.bsModalRef.hide();
+      }
+    });
+  }
+
+
+  obtenerCedula() {
+    const userDataString = localStorage.getItem('user_data');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.cedula = userData.persona.cedula;
+    }
+    console.log('Cédula del usuario:', this.cedula);
+  }
+
+  cerrarModal() {
+    if (this.mensajeMostrado) {
+      this.bsModalRef.hide();
+    } else {
+      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
+    }
   }
 }

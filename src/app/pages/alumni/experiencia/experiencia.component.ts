@@ -15,16 +15,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./experiencia.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class ExperienciaComponent {
-  name: string | null = localStorage.getItem('name');
-  usuarios: Usuario | any = [];
-
-  graduado: Graduado | any = [];
-  empresa: Empresa | any = [];
+  public cedula: string = '';
 
   experiencia: Experiencia[] = [];
-  nuevoExperiencia: Experiencia = { graduado: this.graduado, cargo: '', duracion: '', institucionNombre: '', actividad: '' };
-  nuevoExperienciaCarga: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucionNombre: '', actividad: '' };
-  nuevoExperienciaEdit: Experiencia = { id: 0, graduado: this.graduado, cargo: '', duracion: '', institucionNombre: '', actividad: '' };
+  nuevoExperiencia: Experiencia = { cedulaGraduado: '', cargo: '', duracion: '', institucionNombre: '', actividad: '', area_trabajo: '' };
+  nuevoExperienciaCarga: Experiencia = { id: 0, cedulaGraduado: '', cargo: '', duracion: '', institucionNombre: '', actividad: '', area_trabajo: '' }
+  nuevoExperienciaEdit: Experiencia = { id: 0, cedulaGraduado: '', cargo: '', duracion: '', institucionNombre: '', actividad: '', area_trabajo: '' }
   editarClicked = false;
 
   dtoptions: DataTables.Settings = {};
@@ -58,7 +54,7 @@ export class ExperienciaComponent {
       lengthMenu: [10, 25, 50]
     };
 
-    this.obtenerUsuario();
+    this.obtenerCedula();
     this.loadExperiencias();
   }
 
@@ -69,35 +65,6 @@ export class ExperienciaComponent {
       },
       (error: any) => console.error(error),
       () => this.dtTrigger.next(null)
-    );
-  }
-
-  createExperiencia() {
-    this.nuevoExperienciaCarga.graduado = this.usuarios;
-    console.log('Valor de nuevoExperienciaCarga.cargo:', this.nuevoExperienciaCarga);
-    console.log('Valor de nuevoExperienciaCarga.duracion:', this.nuevoExperienciaCarga.duracion);
-    console.log('Valor de nuevoExperienciaCarga.institucionNombre:', this.nuevoExperienciaCarga.institucionNombre);
-    console.log('Valor de nuevoExperienciaCarga.actividad:', this.nuevoExperienciaCarga.actividad);
-    console.log('Valor de nuevoExperienciaCarga.cedular:', this.nuevoExperienciaCarga.graduado.ciudad);
-
-    this.editarClicked = false;
-
-    if (!this.validateExperienciaFields()) {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos obligatorios.');
-      return;
-    }
-
-    this.experienciaService.createExperiencia(this.nuevoExperienciaCarga).subscribe(
-      experiencia => {
-        console.log('Experiencia creada exitosamente:', experiencia);
-        this.loadExperiencias();
-        this.mostrarSweetAlert(true, 'La experiencia se ha guardado exitosamente.');
-        this.mensajeMostrado = true;
-      },
-      error => {
-        console.error('Error al crear la experiencia:', error);
-        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la experiencia.');
-      }
     );
   }
 
@@ -134,23 +101,47 @@ export class ExperienciaComponent {
     this.editarClicked = false;
   }
 
-  onUpdateClick() {
-    const id = this.nuevoExperienciaCarga.id;
-    if (id !== undefined) {
-      this.experienciaService.updateExperiencia(id, this.nuevoExperienciaCarga).subscribe(
-        refeActualizado => {
-          console.log('Experiencia actualizada exitosamente:', refeActualizado);
-          this.mostrarSweetAlert(true, 'La experiencia se ha actualizado exitosamente.');
-          this.loadExperiencias();
-        },
-        error => {
-          console.error('Error al actualizar la experiencia:', error);
-          this.mostrarSweetAlert(true, 'Error al actualizar la experiencia.');
-        }
-      );
-    } else {
-      console.error('Error: El ID de la experiencia es undefined.');
+
+  createExperiencia() {
+    this.nuevoExperienciaCarga.cedulaGraduado = this.cedula;
+
+    this.editarClicked = false;
+
+    if (!this.validateExperienciaFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos obligatorios.');
+      return;
     }
+
+    this.experienciaService.createExperiencia(this.nuevoExperienciaCarga).subscribe(
+      experiencia => {
+        console.log('Experiencia creada exitosamente:', experiencia);
+        this.loadExperiencias();
+        this.mostrarSweetAlert(true, 'La experiencia se ha guardado exitosamente.');
+        this.mensajeMostrado = true;
+      },
+      error => {
+        console.error('Error al crear la experiencia:', error);
+        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la experiencia.');
+      }
+    );
+  }
+
+  onUpdateClick(id: number) {
+    id = 2;
+    console.log('ID de la experiencia:', id);
+
+    this.nuevoExperienciaCarga.cedulaGraduado = this.cedula;
+    this.experienciaService.updateExperiencia(id, this.nuevoExperienciaCarga).subscribe(
+      refeActualizado => {
+        console.log('Experiencia actualizada exitosamente:', refeActualizado);
+        this.mostrarSweetAlert(true, 'La experiencia se ha actualizado exitosamente.');
+        this.loadExperiencias();
+      },
+      error => {
+        console.error('Error al actualizar la experiencia:', error);
+        this.mostrarSweetAlert(false, 'Error al actualizar la experiencia.');
+      }
+    );
   }
 
   onDeleteClick(id: number) {
@@ -162,21 +153,18 @@ export class ExperienciaComponent {
       },
       error => {
         console.error('Error al eliminar la experiencia:', error);
-        this.mostrarSweetAlert(true, 'Error al eliminar la experiencia.');
+        this.mostrarSweetAlert(false, 'Error al eliminar la experiencia.');
       }
     );
   }
 
-  obtenerUsuario() {
-    this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
-      usuario => {
-        this.usuarios = usuario;
-        console.log('Usuario obtenido exitosamente:', this.usuarios);
-        this.nuevoExperiencia.graduado = this.usuarios;
-        console.log('Usuario obtenido exitosamente:', this.nuevoExperiencia.graduado);
-      },
-      error => console.error('Error al obtener usuario:', error)
-    );
+  obtenerCedula() {
+    const userDataString = localStorage.getItem('user_data');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.cedula = userData.persona.cedula;
+    }
+    console.log('Cédula del usuario:', this.cedula);
   }
 
   cerrarModal() {

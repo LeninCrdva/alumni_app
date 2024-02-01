@@ -11,26 +11,26 @@ export class UserService {
 
   urlCreateUsuario = this.apiUrl + '/usuarios';
 
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json'});
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   datosUsuario: any = {};
-  
+
   setDatosUsuario(datos: any): void {
     this.datosUsuario = datos;
     console.log('Datos de usuario guardados:', this.datosUsuario);
   }
 
   getDatosUsuario(): any {
-    return this.datosUsuario; 
+    return this.datosUsuario;
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUsers(): Observable<Usuario[]> {
     return this.http.get(this.urlCreateUsuario).pipe(
       map(response => response as Usuario[])
     );
   }
-  
+
   getUserById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/usuarios/${id}`);
   }
@@ -45,8 +45,8 @@ export class UserService {
     return this.http.get<Usuario>(url);
   }
 
-  createPerson(usuario: Usuario):  Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/users`, usuario, {headers: this.httpHeaders,});
+  createPerson(usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/users`, usuario, { headers: this.httpHeaders, });
   }
 
   updateUser(id: number, usuario: any): Observable<any> {
@@ -71,7 +71,7 @@ export class UserService {
         } else if (error.status === 403) {
           errorMessage = 'Acceso no autorizado.';
         }
-        
+
         return throwError(errorMessage);
       })
     );

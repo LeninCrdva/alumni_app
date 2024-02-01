@@ -10,6 +10,4 @@ export class Usuario {
     'persona': Persona;
     'ruta_imagen': string;
     'rol': Rol;
-
-    
 }

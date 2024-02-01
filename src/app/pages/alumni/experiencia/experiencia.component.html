@@ -68,6 +68,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO:
+                                                <span class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="area_trabajo"
+                                                placeholder="Ingrese la area de trabajo" id="area_trabajo"
+                                                [(ngModel)]="editarClicked ? nuevoExperiencia.area_trabajo : nuevoExperienciaCarga.area_trabajo"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </form>
@@ -82,7 +94,7 @@
                         </button>
 
                         <!-- Botón para editar -->
-                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                        <button (click)="onUpdateClick(nuevoExperienciaCarga.id!)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-primary" *ngIf="editarClicked">
                             Actualizar Experiencia
                         </button>
@@ -114,6 +126,7 @@
                             <th>DURACIÓN</th>
                             <th>INSTITUCION</th>
                             <th>ACTIVIDAD</th>
+                            <th>AREA DE TRABAJO</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>
@@ -124,6 +137,7 @@
                             <td>{{ experienciaItem.duracion }}</td>
                             <td>{{ experienciaItem.institucionNombre }}</td>
                             <td>{{ experienciaItem.actividad }}</td>
+                            <td>{{ experienciaItem.area_trabajo }}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
                                 <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal"
                                     data-bs-target="#m_modal_4" class="table-action mg-r-10">
