@@ -18,6 +18,8 @@
     /*========== Font weight ==========*/
     --font-regular: 400;
     --font-semi-bold: 600;
+    
+    --animate-duration: 2s;
 }
 
 * {

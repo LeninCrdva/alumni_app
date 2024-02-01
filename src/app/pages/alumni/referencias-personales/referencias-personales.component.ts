@@ -16,16 +16,16 @@ import Swal from 'sweetalert2';
 export class ReferenciasPersonalesComponent {
   public cedula: string = '';
 
-  referencia_personal: Referencias_personales[] = [];
-  nuevoReferenciaPersonal: Referencias_personales = { nombre: '', cedulaGraduado: '', telefono: '', email: '' };
-  nuevoReferenciaPersonalCarga: Referencias_personales = { id: 0, nombre: '', cedulaGraduado: '', telefono: '', email: '' };
-  nuevoReferenciaPersonalEdit: Referencias_personales = { id: 0, nombre: '', cedulaGraduado: '', telefono: '', email: '' };
+  referencia_personal: Referencias_personales = { nombre: '', cedulaGraduado: '', telefono: '', email: '' };
+  referenciaPersonalCarga: Referencias_personales = { id: 0, nombre: '', cedulaGraduado: '', telefono: '', email: '' };
+  referenciaPersonalList: Referencias_personales[] = [];
 
   editarClicked = false;
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
   mensajeMostrado = false;
+  idEdit: number = 0;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
@@ -61,7 +61,7 @@ export class ReferenciasPersonalesComponent {
   loadReferenciasPer() {
     this.referenciaPService.getReferenciasPersonales().subscribe(
       referenciasP => {
-        this.referencia_personal = referenciasP;
+        this.referenciaPersonalList = referenciasP;
       },
       (error: any) => console.error(error),
       () => this.dtTrigger.next(null)
@@ -69,45 +69,79 @@ export class ReferenciasPersonalesComponent {
   }
 
   createReferenciaPer() {
+    this.referencia_personal.cedulaGraduado = this.cedula;
+
     this.editarClicked = false;
-    this.referenciaPService.createReferenciasPersonales(this.nuevoReferenciaPersonal).subscribe(
+
+
+    if (!this.validateReferenciasPerFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+      return;
+    }
+
+    this.referenciaPService.createReferenciasPersonales(this.referencia_personal).subscribe(
       referenciasP => {
         console.log('Refencia personal creada exitosamente:', referenciasP);
         this.loadReferenciasPer();
+        this.mostrarSweetAlert(true, 'La referencia laboral se ha guardado exitosamente.');
+        this.mensajeMostrado = true;
       },
-      error => console.error('Error al crear la refencia personal:', error)
+      error => {
+        console.error('Error al crear la refencia personal:', error)
+        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
+      }
     );
   }
 
-  onEditarClick(referenciasP: Referencias_personales): void {
+  onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
-    this.nuevoReferenciaPersonal = { ...referenciasP };
+    this.referenciaPService.getReferenciasPersonalesById(id).subscribe(
+      refe => this.referenciaPersonalCarga = refe,
+      error => console.error(error)
+    )
+    this.idEdit = id;
   }
 
   onRegistrarClick(): void {
     this.editarClicked = false;
   }
 
-  onUpdateClick(ids: number) {
-    const id = this.nuevoReferenciaPersonalCarga.id;
-    if (id !== undefined) {
-      this.referenciaPService.updateReferenciasPersonales(id, this.nuevoReferenciaPersonalCarga).subscribe(
-        refeActualizado => {
-          console.log('Sector actualizado exitosamente:', refeActualizado);
-
-          this.loadReferenciasPer();
-        },
-        error => console.error('Error al actualizar el titulo:', error)
-      );
-    } else {
-      console.error('Error: El ID del titulo es undefined.');
-    }
+  onUpdateClick() {
+    this.referenciaPersonalCarga.cedulaGraduado = this.cedula;
+    
+    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.cedulaGraduado);
+    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.id);
+    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.nombre);
+    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.telefono);
+    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.email);
+    this.referenciaPService.updateReferenciasPersonales(this.idEdit, this.referenciaPersonalCarga).subscribe(
+      refeActualizado => {
+        console.log('Sector actualizado exitosamente:', refeActualizado);
+        this.referencia_personal = refeActualizado;
+        this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
+        this.loadReferenciasPer();
+      },
+      error => {
+        console.error('Error al actualizar la referencia personal:', error);
+        this.mostrarSweetAlert(false, 'Error al actualizar la referencia personal.');
+      }
+    );
   }
 
-  onDeleteClick(id: number) {
-
+  onDeleteClick(id: number | undefined = 0) {
+    ;
+    this.referenciaPService.deleteReferenciasPersonales(id).subscribe(
+      () => {
+        console.log('Experiencia eliminada exitosamente');
+        this.mostrarSweetAlert(true, 'La experiencia se ha eliminado exitosamente.');
+        this.loadReferenciasPer();
+      },
+      error => {
+        console.error('Error al eliminar la referencia personal:', error);
+        this.mostrarSweetAlert(false, 'Error al eliminar la referencia personal.');
+      }
+    );
   }
-
 
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
@@ -125,6 +159,13 @@ export class ReferenciasPersonalesComponent {
     });
   }
 
+  validateReferenciasPerFields(): boolean {
+    if (!this.referencia_personal.nombre || !this.referencia_personal.telefono || !this.referencia_personal.email) {
+      return false;
+    }
+
+    return true;
+  }
 
   obtenerCedula() {
     const userDataString = localStorage.getItem('user_data');

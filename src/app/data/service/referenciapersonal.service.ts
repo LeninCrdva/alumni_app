@@ -26,10 +26,10 @@ export class ReferenciaPersonalService {
   getReferenciasPersonalesById(id: any): Observable<Referencias_personales> {
     return this.http.get<Referencias_personales>(`${this.urlEndPoint}/${id}`)
   }
-
-  updateReferenciasPersonales(id: any, referencias_personales: Referencias_personales): Observable<Referencias_personales> {
+  
+  updateReferenciasPersonales(id: number, referencias_personales: Referencias_personales): Observable<any> {
     const url = `${this.urlEndPoint}/${id}`;
-    return this.http.put<Referencias_personales>(url, referencias_personales, { headers: this.httpHeaders });
+    return this.http.put<Referencias_personales>(url, referencias_personales);
   }
 
   deleteReferenciasPersonales(id: any): Observable<void> {

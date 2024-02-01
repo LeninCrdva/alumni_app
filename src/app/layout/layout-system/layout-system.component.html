@@ -1,13 +1,13 @@
 <!-- SIDEBAR -->
 <div class="content-slide">
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a href="#" class="brand animate__animated animate__bounceInDown animate__faster">
             <img class="icon" src="../../../assets/imgs/Alumni_logo_mini.png" alt="">
             {{rolType}}
         </a>
 
         <!-- NOTE: ALUMNI -->
-        <ul class="side-menu" [class.hidden]="!showAlumniOptions">
+        <ul class="side-menu animate__animated animate__bounceInLeft animate__faster" [class.hidden]="!showAlumniOptions">
 
             <li>
                 <a [class.active]="activeMenuItem === 'Dashboard'" [routerLink]="['/system/alumni']"
@@ -69,9 +69,12 @@
                 </ul>
             </li>
             <li class="divider" data-text="Comunidad Tecazuay">Comunidad Tecazuay</li>
-            <li><a [routerLink]="['/system/alumni/comunidad']" routerLinkActive="router-link-active"
+            <li>
+                <a [routerLink]="['/system/alumni/comunidad']" routerLinkActive="router-link-active"
                     (click)="setActiveMenuItem('Comunidad De Graduados - Tecazuay')" href="javascript:void(0)"><i
-                        class='fa-solid fa-graduation-cap icon'></i>Comunidad</a></li>
+                        class='fa-solid fa-graduation-cap icon'></i>Comunidad
+                </a>
+            </li>
         </ul>
 
 
