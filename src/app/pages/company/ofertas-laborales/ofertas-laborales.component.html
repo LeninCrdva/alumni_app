@@ -1,8 +1,8 @@
 <section class="page-title bg-overlay-black parallax"
-    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    style="background-image: url(../../../../assets/imgs/headers/Experiencia.jpg);">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Crear Ofertas De Trabajo</h1>
+            <h1>Mis Trabajos</h1>
         </div>
     </div>
 </section>
@@ -14,164 +14,175 @@
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar oferta de trabajo' : 'Crear nueva oferta de trabajo'"></h5>
+                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
+                        class="modal-header text-white">
+                        <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear Experiencia'">
+                        </h5>
                     </div>
 
                     <div class="modal-body">
                         <form>
                             <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">EMPRESA: <span class="tx-danger">*</span></label>
-                                            <select class="form-control" name="empresa" [(ngModel)]="ofertaslaborales.nombreEmpresa">
-                                                <option value="" disabled>-- Seleccione una opción --</option>
-                                                <option [value]="empresa.nombre" *ngFor="let empresa of empresas">{{empresa.nombre}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">CARGO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el cargo" [(ngModel)]="ofertaslaborales.cargo">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">SALARIO: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="salario" pattern="[0-9]+" title="Ingrese solo números"
-                                                placeholder="Ingrese el salario" [(ngModel)]="ofertaslaborales.salario">
+                                            <label class="form-control-label active" for="cargo">CARGO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="cargo"
+                                                placeholder="Ingrese el cargo" id="cargo"
+                                                [(ngModel)]="editarClicked ? ofertaslaboralesCarga.cargo : ofertaslaborales.cargo"
+                                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.cargo = $event : ofertaslaborales.cargo = $event"
+
+                                                required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 mb-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">EXPERIENCIA: <span class="tx-danger">*</span></label>
-                                            <select class="form-control" name="jornada" [(ngModel)]="ofertaslaborales.experiencia">
-                                                <option value="" disabled>-- Seleccione una opción --</option>
-                                                <option value="tiempo-completo">Sin Experiencia</option>
-                                                <option value="medio-tiempo">Con Experiencia</option>
-                                            </select>
+                                            <label class="form-control-label active" for="duracion">EMPRESA: <span
+                                                    class="tx-danger">*</span></label>
+                                                    <select class="form-control" name="nombreEmpresa" [(ngModel)]="editarClicked ? ofertaslaboralesCarga.nombreEmpresa : ofertaslaborales.nombreEmpresa"
+                                                    (ngModelChange)="editarClicked ? ofertaslaboralesCarga.nombreEmpresa = $event : ofertaslaborales.nombreEmpresa = $event">
+                                                        <option value="" >-- Seleccione una opción --</option>
+                                                        <option [value]="empresa.nombre" *ngFor="let empresa of empresas">{{empresa.nombre}}</option>
+                                                    </select>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">FECHA CIERRE: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaInicio" [(ngModel)]="ofertaslaborales.fechaCierre">
+                                            <input class="form-control" type="date" name="fechaCierre" [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaCierre : ofertaslaborales.fechaCierre"
+                                            (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">FECHA APERTURA: <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fechaFin" [(ngModel)]="ofertaslaborales.fechaApertura">
+                                            <input class="form-control" type="date" name="fechaApertura" [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaApertura : ofertaslaborales.fechaApertura" 
+                                            (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaApertura = $event : ofertaslaborales.fechaApertura = $event">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mg-b-25" data-parsley-validate>
+
+                                <div class="row mg-b-25">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label active">FECHA PUBLICACION: <span class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="fechaPublicacion" value="{{ofertaslaborales.fechaPublicacion}}" readonly>
+                                            <input class="form-control wd-250" type="text" name="fechaPublicacion" value="{{fechaPublicacion}}" 
+                                            readonly>
 
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label active">AREA CONOCIMINETO: <span class="tx-danger">*</span></label>
-                                            <textarea class="form-control" name="requisitos" rows="4"
-                                                placeholder="Ingrese el area de conocimiento para su oferta de trabajo" [(ngModel)]="ofertaslaborales.areaConocimiento"></textarea>
+                                            <textarea class="form-control" name="areaConocimiento" rows="4"
+                                                placeholder="Ingrese el area de conocimiento para su oferta de trabajo" [(ngModel)]="editarClicked ? ofertaslaboralesCarga.areaConocimiento : ofertaslaborales.areaConocimiento"
+                                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.areaConocimiento = $event : ofertaslaborales.areaConocimiento = $event"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mg-b-25" data-parsley-validate>
+
+                                <div class="row mg-b-25 my-3">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">    
+                                            <label class="form-control-label active">ESTADO: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="estado" [(ngModel)]="editarClicked ? ofertaslaboralesCarga.estado : ofertaslaborales.estado" 
+                                            readonly>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">ESTADO: <span class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="estado" value="{{ofertaslaborales.estado}}" readonly>
+                                            <label class="form-control-label active" for="salario">SALARIO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="salario"
+                                                placeholder="Ingrese la Salario" id="salario"
+                                                [(ngModel)]="editarClicked ? ofertaslaboralesCarga.salario : ofertaslaborales.salario"
+                                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.salario = $event : ofertaslaborales.salario = $event"
+                                                required>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label active">EXPERIENCIA: <span class="tx-danger">*</span></label>
+                                        <select class="form-control" name="experiencia" [(ngModel)]="editarClicked ? ofertaslaboralesCarga.experiencia : ofertaslaborales.experiencia "
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.experiencia = $event : ofertaslaborales.experiencia = $event">
+                                            <option value="" disabled>-- Seleccione una opción --</option>
+                                            <option value="Sin Experiencia">Sin Experiencia</option>
+                                            <option value="Con Experiencia">Con Experiencia</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
+
                     <div class="modal-footer">
-                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong"
-                            [class.btn-success]="!editarClicked" [class.btn-primary]="editarClicked">
-                            {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
+
+                        <!-- Botón para registrar -->
+                        <button (click)="createOfertaLaboral()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                            Registrar Trabajo
                         </button>
-                        <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+
+                        <!-- Botón para editar -->
+                        <button (click)="updateOfertaLaboral()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                            Editar Trabajo
+                        </button>
+
+                        <button data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
         <!--/ Modal -->
-        
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;"> Crear Oferta de Trabajo</button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                    Registrar Trabajo
+                </button>
             </div>
         </div>
 
-
-        <div class="card-body pd-0 collapse show" id="collapse1">
+        <div class="card-body pd-0 collapse show">
             <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-light">
+                <table datatable class="table table-bordered custom-table">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
-                            <th>EMPRESA</th>
-                            <th>CARGO</th>
-                            <th>DESCRIPCION</th>
-                            <th>AREA CONOCIMINETO</th>
-                            <th>SALARIO</th>
-                            <th>JORNADA</th>
-                            <th>REQUISITOS ACADEMICOS</th>
-                            <th>EXPERIENCIA</th>
-                            <th>UBICACIONES</th>
+                            <th>FECHA CIERRE</th>
+                            <th>INSTITUCION</th>
+                            <th>ESTADO</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>ofertalaborales.empresa</td>
-                            <td>ofertalaborales.cargo</td>
-                            <td>ofertalaborales.descripcion</td>
-                            <td>ofertalaborales.area_conocimiento</td>
-                            <td>ofertalaborales.salario</td>
-                            <td>ofertalaborales.jornada</td>
-                            <td>ofertalaborales.requisitos_academicos</td>
-                            <td>ofertalaborales.experiencia</td>
-                            <td>ofertalaborales.ubicacion</td>
+                        <tr *ngFor="let oferta of ofertaslaboraleslist">
+                            <th scope="row">{{oferta.id}}</th>
+                            <td>{{oferta.fechaCierre}} </td>
+                            <td>{{ oferta.nombreEmpresa}}</td>
+                            <td>{{oferta.estado}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
+                                <a (click)="onEditarClick(oferta.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
-                            
-                                <a class="table-action ms-2 text-danger" href="#">
+                                <a (click)="deleteOfertaLaboral(oferta.id)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
-
-
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>

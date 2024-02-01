@@ -31,4 +31,13 @@ export class OfertalaboralService {
   getOfertaLaboralByIdToDTO(id: number): Observable<ofertaLaboralDTO> {
     return this.http.get<ofertaLaboralDTO>(`${this.urlEndPoint}/dto/${id}`)
   }
+
+  updateOfertaLaboral(id: number, ofertaLaboralDTO: ofertaLaboralDTO): Observable<any> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put(url, ofertaLaboralDTO);
+  }
+
+  deleteOfertabyID  (id: number): Observable<any> {
+    return this.http.delete(`${this.urlEndPoint}/${id}`);
+  }
 }
