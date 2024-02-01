@@ -13,7 +13,7 @@ import { Graduado3 } from '../../data/model/graduado';
 import { EmpresarioService } from '../../data/service/empresario.service';
 import { Empresario2 } from '../../data/model/empresario';
 import { NuevoGraduadoModalComponent } from '../../pages/alumni/nuevo-graduado-modal/nuevo-graduado-modal.component';
-import {NuevoEmpresarioModalComponent} from '../../pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
+import { NuevoEmpresarioModalComponent } from '../../pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
 @Component({
   selector: 'app-layout-system',
   templateUrl: './layout-system.component.html',
@@ -25,6 +25,7 @@ export class LayoutSystemComponent implements OnInit {
   showAlumniOptions = false;
   nuevoGraduado: Graduado3 = new Graduado3();
   nuevoAdministrador: Administrador = new Administrador();
+  sidebarVisible = false;
 
   activeMenuItem: string = localStorage.getItem('activeMenuItem') || 'Dashboard';
 
@@ -188,7 +189,7 @@ export class LayoutSystemComponent implements OnInit {
     this.previsualizacion = '';
     this.archivos = [];
   }
-  
+
   cerrarSesion() {
     setTimeout(() => {
       Swal.fire({
@@ -202,7 +203,7 @@ export class LayoutSystemComponent implements OnInit {
       });
     }, 3600000);
   }
-  
+
   cerrarSesionconclick() {
     Swal.fire({
       icon: 'info',
@@ -215,11 +216,11 @@ export class LayoutSystemComponent implements OnInit {
     });
   }
 
-  
+
   private checkUserRole() {
     const userRole = localStorage.getItem('userRole');
     console.log(userRole);
-  
+
     if (userRole === 'ROL_ADMINISTRADOR') {
       this.showAdminOptions = true;
       this.rolType = 'Admin';
@@ -237,7 +238,7 @@ export class LayoutSystemComponent implements OnInit {
               keyboard: false,
             };
             this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
-  
+
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
                 console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
@@ -251,7 +252,7 @@ export class LayoutSystemComponent implements OnInit {
           console.error('Error al verificar la existencia del administrador:', error);
         }
       );
-  
+
     } else if (userRole === 'ROL_EMPRESARIO') {
       this.showEmpresarioOptions = true;
       this.rolType = 'Empresario';
@@ -282,7 +283,7 @@ export class LayoutSystemComponent implements OnInit {
               keyboard: false,
             };
             this.bsModalRef = this.modalService.show(NuevoEmpresarioModalComponent, config);
-  
+
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
                 console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
@@ -296,7 +297,7 @@ export class LayoutSystemComponent implements OnInit {
           console.error('Error al verificar la existencia del empresario:', error);
         }
       );
-  
+
     } else if (userRole === 'ROL_GRADUADO') {
       this.showAlumniOptions = true;
       this.rolType = 'Alumni';
@@ -314,7 +315,7 @@ export class LayoutSystemComponent implements OnInit {
               keyboard: false,
             };
             // this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
-  
+
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
                 console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
@@ -333,7 +334,7 @@ export class LayoutSystemComponent implements OnInit {
       // Puedes manejar el escenario cuando el rol no es reconocido
     }
   }
-  
+
   // NOTE: SLIDER BAR
   private setupSidebarDropdown() {
     const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');
@@ -364,6 +365,13 @@ export class LayoutSystemComponent implements OnInit {
     const sidebar = this.el.nativeElement.querySelector('#sidebar');
     const allDropdown = this.el.nativeElement.querySelectorAll('#sidebar .side-dropdown');
 
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      this.sidebarVisible = false;
+      sidebar.classList.add('hide');
+    }
+
     if (sidebar.classList.contains('hide')) {
       allSideDivider.forEach((item: any) => {
         item.textContent = '-';
@@ -381,7 +389,8 @@ export class LayoutSystemComponent implements OnInit {
     }
 
     this.renderer.listen(toggleSidebar, 'click', () => {
-      sidebar.classList.toggle('hide');
+      this.sidebarVisible = !this.sidebarVisible;
+      sidebar.classList.toggle('hide', !this.sidebarVisible);
 
       if (sidebar.classList.contains('hide')) {
         allSideDivider.forEach((item: any) => {
