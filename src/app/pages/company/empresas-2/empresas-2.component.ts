@@ -18,13 +18,16 @@ import { Provincia } from '../../../data/model/provincia';
 export class Empresas2Component {
 
   editarClicked = false;
-
-  onEditarClick(): void {
+  idEdit: number = 0;
+  onEditarClick(id:number|undefined = 0): void {
     this.editarClicked = true;
+    this.getEmpresaById(id);
+    this.idEdit = id;
   }
 
   onRegistrarClick(): void {
     this.editarClicked = false;
+
   }
 
   //ID del usuario logueado
@@ -37,7 +40,7 @@ export class Empresas2Component {
   //Para obtener el empresario del usuario logueado
   empresass: Empresa[] = [];
   empresanueva: any = {};
-  empresaeditar: Empresa | undefined;
+  empresacargar: any = {};
   ciudades: Ciudad[] = [];
   sectoresEmpresariales: sectorempresarial[] = [];
 
@@ -71,6 +74,19 @@ export class Empresas2Component {
       ubicacion: '',
       sitioWeb: '',
       // O el valor por defecto que desees
+    };
+    this.empresacargar = {
+      empresario: '', // O el valor por defecto que desees
+      ciudad: new Ciudad(),
+      sectorEmpresarial: new sectorempresarial(),
+      ruc: '',
+      nombre: '',
+      tipoEmpresa: '',
+      razonSocial: '',
+      area: '',
+      ubicacion: '',
+      sitioWeb: '',
+      // O el valor por defecto que desees  
     };
 
     this.serviceempresario.getEmpresario().subscribe(
@@ -109,19 +125,24 @@ export class Empresas2Component {
  }
 
 
-  editarEmpresa() {
-    const id = this.empresaeditar?.id; // Add null check before accessing the property
-    if (id !== undefined) {
-      if (this.empresaeditar) { // Add null check before calling the method
-        this.empresaService.updateEmpresa(id, this.empresaeditar).subscribe(
+  editarEmpresa() {// Add null check before accessing the property
+    this.empresacargar.empresario = this.empresariouser
+    console.log('Empresa a editar:', this.empresacargar);
+      if (this.empresacargar) { // Add null check before calling the method
+        this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
           empresaActualizada => {
             console.log('Empresa actualizada exitosamente:', empresaActualizada);
-            this.empresaeditar = this.createEmpresaVacia(); // Limpiar el formulario
+            this.empresacargar = this.createEmpresaVacia(); // Limpiar el formulario
           },
           error => console.error('Error al actualizar empresa:', error)
         );
       }
-    }
+  }
+
+  deleteEmpresa(id: number | undefined = 0) {
+    console.log('Eliminando', id);
+    this.empresaService.deleteEmpresa(id).subscribe();
+    console.log('Eliminado', id);
   }
 
   getCiudadIDName() {
@@ -184,6 +205,16 @@ export class Empresas2Component {
         console.log('Empresas obtenidas exitosamente:', empresas);
       },
       error => console.error('Error al obtener empresas:', error)
+    );
+  }
+
+  getEmpresaById(id: number) {
+    this.empresaService.getEmpresaById(id).subscribe(
+      empresa => {
+        this.empresacargar = empresa;
+        console.log('Empresa obtenida exitosamente:', empresa);
+      },
+      error => console.error('Error al obtener empresa:', error)
     );
   }
 

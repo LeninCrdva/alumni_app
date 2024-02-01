@@ -30,7 +30,8 @@
                                             <label class="form-control-label active">RUC: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el RUC" [(ngModel)]="empresanueva.ruc" required>
+                                                placeholder="Ingrese el RUC" [(ngModel)]="editarClicked ? empresacargar.ruc : empresanueva.ruc" 
+                                                (ngModelChange)="editarClicked ? empresacargar.ruc = $event : empresanueva.ruc = $event" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
@@ -38,8 +39,8 @@
                                             <label class="form-control-label active">Nombre: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el nombre" [(ngModel)]="empresanueva.nombre"
-                                                required>
+                                                placeholder="Ingrese el nombre" [(ngModel)]="editarClicked ? empresacargar.nombre : empresanueva.nombre"
+                                                (ngModelChange)="editarClicked ? empresacargar.nombre = $event : empresanueva.nombre = $event" required>
                                         </div>
                                     </div>
                                 </div>
@@ -50,7 +51,8 @@
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="tipoempresa"
                                                 placeholder="Ingrese el tipoempresa"
-                                                [(ngModel)]="empresanueva.tipoEmpresa" required>
+                                                [(ngModel)]="editarClicked ? empresacargar.tipoEmpresa : empresanueva.tipoEmpresa" 
+                                                (ngModelChange)="editarClicked ? empresacargar.tipoEmpresa = $event : empresanueva.tipoEmpresa = $event" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
@@ -59,7 +61,8 @@
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="razonsocial"
                                                 placeholder="Ingrese la Razon Social"
-                                                [(ngModel)]="empresanueva.razonsocial" required>
+                                                [(ngModel)]="editarClicked ? empresacargar.razonSocial : empresanueva.razonSocial" 
+                                                (ngModelChange)="editarClicked ? empresacargar.razonSocial = $event : empresanueva.razonSocial = $event" required>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +72,8 @@
                                             <label class="form-control-label active">Area: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="area"
-                                                placeholder="Ingrese el area" [(ngModel)]="empresanueva.area" required>
+                                                placeholder="Ingrese el area" [(ngModel)]="editarClicked ? empresacargar.area : empresanueva.area" 
+                                                (ngModelChange)="editarClicked ? empresacargar.area = $event : empresanueva.area = $event" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
@@ -77,8 +81,8 @@
                                             <label class="form-control-label active">ubicacion: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="ubicacion"
-                                                placeholder="Ingrese la ubicacion" [(ngModel)]="empresanueva.ubicacion"
-                                                required>
+                                                placeholder="Ingrese la ubicacion" [(ngModel)]="editarClicked ? empresacargar.ubicacion : empresanueva.ubicacion"
+                                                (ngModelChange)="editarClicked ? empresacargar.ubicacion = $event : empresanueva.ubicacion = $event" required>
                                         </div>
                                     </div>
                                 </div>
@@ -88,8 +92,8 @@
                                             <label class="form-control-label active">Sitio Web: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese su sitio web" [(ngModel)]="empresanueva.sitioWeb"
-                                                required>
+                                                placeholder="Ingrese su sitio web" [(ngModel)]="editarClicked ? empresacargar.sitioWeb : empresanueva.sitioWeb"
+                                                (ngModelChange)="editarClicked ? empresacargar.sitioWeb = $event : empresanueva.sitioWeb = $event" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -125,11 +129,18 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button (click)="crearEmpresa()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong" [class.btn-success]="!editarClicked"
-                            [class.btn-primary]="editarClicked">
-                            {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
-                        </button>
+                         <!-- Botón para registrar -->
+                         <button (click)="crearEmpresa()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                         class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                         Registrar Empresa
+                     </button>
+
+                     <!-- Botón para editar -->
+                     <button (click)="editarEmpresa()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                         class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                         Editar Empresa
+                     </button>
+
                         <button data-bs-dismiss="modal"
                             class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>
@@ -171,13 +182,11 @@
                             <td>{{empresa.nombre}}</td>
                             <td>{{empresa.razonSocial}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                                    class="table-action mg-r-10" [class.text-primary]="!editarClicked"
-                                    [class.text-danger]="editarClicked" href="#">
+                                <a (click)="onEditarClick(empresa.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
-
-                                <a class="table-action ms-2 text-danger" href="#">
+                                <a (click)="deleteEmpresa(empresa.id)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
