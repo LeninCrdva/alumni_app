@@ -6,7 +6,7 @@ import { OfertalaboralService } from '../../../data/service/ofertalaboral.servic
 @Component({
   selector: 'app-oferta-detalle',
   templateUrl: './oferta-detalle.component.html',
-  styleUrls: ['./oferta-detalle.component.css', '../../../../assets/temporal/style.css']
+  styleUrls: ['./oferta-detalle.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class OfertaDetalleComponent implements OnInit {
 

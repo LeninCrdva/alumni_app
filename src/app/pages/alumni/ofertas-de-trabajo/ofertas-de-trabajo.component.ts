@@ -5,7 +5,7 @@ import { OfertalaboralService } from '../../../data/service/ofertalaboral.servic
 @Component({
   selector: 'app-ofertas-de-trabajo',
   templateUrl: './ofertas-de-trabajo.component.html',
-  styleUrls: ['./ofertas-de-trabajo.component.css', '../../../../assets/temporal/style.css']
+  styleUrls: ['./ofertas-de-trabajo.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class OfertasDeTrabajoComponent implements OnInit {
   listOfertas: ofertaLaboralDTO[] = [];

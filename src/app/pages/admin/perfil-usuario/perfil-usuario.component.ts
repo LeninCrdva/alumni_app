@@ -3,7 +3,7 @@ import { Component, OnInit  } from '@angular/core';
 @Component({
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
-  styleUrls: ['./perfil-usuario.component.css', '../../../../assets/temporal/style.css']
+  styleUrls: ['./perfil-usuario.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class PerfilUsuarioComponent implements OnInit {
 
