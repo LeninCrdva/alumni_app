@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Experiencia } from '../../../data/model/experiencia';
-import { Empresa } from '../../../data/model/empresa';
-import { Graduado } from '../../../data/model/graduado';
-import { Usuario } from '../../../data/model/usuario';
 import { ExperienciaService } from '../../../data/service/experiencia.service';
-import { UserService } from '../../../data/service/UserService';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -30,7 +26,7 @@ export class ExperienciaComponent {
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private experienciaService: ExperienciaService, private usuarioService: UserService) { }
+  constructor(public bsModalRef: BsModalRef, private experienciaService: ExperienciaService) { }
 
   ngOnInit(): void {
 
@@ -42,6 +38,7 @@ export class ExperienciaComponent {
         search: 'Buscar:',
         searchPlaceholder: 'Buscar experiencia...',
         info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         paginate: {
           first: 'Primera',
           last: 'Última',
@@ -103,7 +100,7 @@ export class ExperienciaComponent {
 
 
   createExperiencia() {
-    this.nuevoExperienciaCarga.cedulaGraduado = this.cedula;
+    this.nuevoExperiencia.cedulaGraduado = this.cedula;
 
     this.editarClicked = false;
 
@@ -112,7 +109,7 @@ export class ExperienciaComponent {
       return;
     }
 
-    this.experienciaService.createExperiencia(this.nuevoExperienciaCarga).subscribe(
+    this.experienciaService.createExperiencia(this.nuevoExperiencia).subscribe(
       experiencia => {
         console.log('Experiencia creada exitosamente:', experiencia);
         this.loadExperiencias();
@@ -132,8 +129,8 @@ export class ExperienciaComponent {
 
     this.nuevoExperienciaCarga.cedulaGraduado = this.cedula;
     this.experienciaService.updateExperiencia(id, this.nuevoExperienciaCarga).subscribe(
-      refeActualizado => {
-        console.log('Experiencia actualizada exitosamente:', refeActualizado);
+      expActualizado => {
+        console.log('Experiencia actualizada exitosamente:', expActualizado);
         this.mostrarSweetAlert(true, 'La experiencia se ha actualizado exitosamente.');
         this.loadExperiencias();
       },

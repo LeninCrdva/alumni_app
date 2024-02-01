@@ -25,16 +25,15 @@ export class OfertasLaboralesComponent {
     //this.ofertaslaboralesCarga = { ...ofertalaboral};
     this.getOfertaLaboralById(id);
     this.idEdit = id;
-
   }
 
   ofertaslaborales: any = {};
   ofertaslaboralesCarga: any = {};
-  ofertaslaboraleslist:ofertaLaboralDTO[] = [];
+  ofertaslaboraleslist: ofertaLaboralDTO[] = [];
   empresas: Empresa[] = [];
   fechaPublicacion: String = '';
 
-  constructor(private ofertalaburoService: OfertalaboralService, private empresaService:EmpresaService) { }
+  constructor(private ofertalaburoService: OfertalaboralService, private empresaService: EmpresaService) { }
 
   ngOnInit(): void {
     this.getAllEmpresas();
@@ -71,11 +70,9 @@ export class OfertasLaboralesComponent {
     };
     this.getFechaPublicacion();
     this.ofertaslaborales.estado = false;
-
-
   }
 
- getFechaPublicacion(){
+  getFechaPublicacion() {
     const currentDate = new Date();
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Agrega un cero si el mes es de un solo dígito
     const day = currentDate.getDate().toString().padStart(2, '0'); // Agrega un cero si el día es de un solo dígito
@@ -84,10 +81,10 @@ export class OfertasLaboralesComponent {
     const formattedDate = `${month}/${day}/${year}`;
 
     this.fechaPublicacion = formattedDate;
-    if(this.editarClicked == true){
+    if (this.editarClicked == true) {
       this.ofertaslaborales.fechaPublicacion = new Date(formattedDate);
 
-    }else{
+    } else {
       this.ofertaslaboralesCarga.fechaPublicacion = new Date(formattedDate);
     }
     console.log(formattedDate);
@@ -99,14 +96,15 @@ export class OfertasLaboralesComponent {
     this.ofertaslaborales.fechaPublicacion = formattedDate || ''; // Asegúrate de manejar el caso en el que formattedDate sea nulo
     console.log(formattedDate);
   }*/
- 
+
 
   getAllEmpresas() {
-    this.empresaService.getEmpresas().subscribe( 
+    this.empresaService.getEmpresas().subscribe(
       empresass => this.empresas = empresass,
       error => console.error(error)
     )
   }
+
   getAllOfertasLaborales() {
     this.ofertalaburoService.getOfertasLaborales().subscribe(
       ofertas => this.ofertaslaboraleslist = ofertas,
@@ -115,10 +113,11 @@ export class OfertasLaboralesComponent {
   }
 
   deleteOfertaLaboral(id: number | undefined = 0) {
-    this.ofertalaburoService.deleteOfertabyID(id).subscribe();   
+    this.ofertalaburoService.deleteOfertabyID(id).subscribe();
     console.log('Eliminado', id);
   }
-  createOfertaLaboral() { 
+
+  createOfertaLaboral() {
     this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
       (response) => {
         console.log(response);
@@ -129,10 +128,11 @@ export class OfertasLaboralesComponent {
       }
     );
   }
+
   updateOfertaLaboral() {
     console.log('Almeja', this.idEdit, this.ofertaslaboralesCarga);
 
-    this.ofertalaburoService.updateOfertaLaboral(this.idEdit ,this.ofertaslaboralesCarga).subscribe(
+    this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.ofertaslaboralesCarga).subscribe(
       (response) => {
         console.log(response);
         this.ofertaslaborales = response;
@@ -149,5 +149,4 @@ export class OfertasLaboralesComponent {
       error => console.error(error)
     )
   }
-
 }

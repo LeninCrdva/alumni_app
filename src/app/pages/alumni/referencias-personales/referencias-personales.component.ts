@@ -41,6 +41,7 @@ export class ReferenciasPersonalesComponent {
         search: 'Buscar:',
         searchPlaceholder: 'Buscar referencia ...',
         info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         paginate: {
           first: 'Primera',
           last: 'Última',

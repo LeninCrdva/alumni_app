@@ -2,8 +2,8 @@ import { Graduado } from "./graduado";
 
 export class Referencias_profesionales {
     id?: number;
-    'nombre': string;
-    'graduado': Graduado;
-    'institucion': string;
+    'cedulaGraduado': string;
+    'nombreReferencia': string;
+    'nombreInstitucion': string;
     'email': string;
 }
