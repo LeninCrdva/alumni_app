@@ -76,11 +76,9 @@
                     (click)="setActiveMenuItem('Comunidad De Graduados - Tecazuay')" href="javascript:void(0)"><i
                         class='fa-solid fa-graduation-cap icon'></i>Comunidad</a></li>
         </ul>
-
-
-
-
-
+        
+        
+        
         <!-- NOTE: ADMINISTRADOR -->
         <ul class="side-menu" [class.hidden]="!showAdminOptions">
 
@@ -159,10 +157,11 @@
                             Perfil</a>
                     </li>
                     <li><a [routerLink]="['/system/company/crud']" routerLinkActive="router-link-active">Mis
-                        Empresas</a>
+                            Empresas</a>
                     </li>
-                    <li><a [routerLink]="['/system/company/postulaciones_form']" routerLinkActive="router-link-active">Mis
-                        Trabajos</a>
+                    <li><a [routerLink]="['/system/company/postulaciones_form']"
+                            routerLinkActive="router-link-active">Mis
+                            Trabajos</a>
                     </li>
                     <li><a href="#">Mas</a></li>
                 </ul>
