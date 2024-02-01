@@ -6,7 +6,7 @@ export class ofertaLaboralDTO {
     'cargo': string;
     'experiencia': string;
     'fechaApertura': Date;
-    'areaConocimiento': string;    
+    'areaConocimiento': string;
     'estado': boolean;
     'nombreEmpresa': string;
     'correoGraduado': string[];
