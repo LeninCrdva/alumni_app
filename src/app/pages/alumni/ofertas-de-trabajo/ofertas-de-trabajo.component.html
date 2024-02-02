@@ -38,12 +38,12 @@
                             <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="">
                         </div>
                     </div><!--end col-->
+
                     <div class="col-lg-8 col-md-12 mt-4 mt-lg-0">
                         <div class="content text-center text-lg-left ml-lg-4">
-                            <h4 class="title"><a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]"
-                                    class="text-dark">
-                                    {{oferta.cargo}}
-                                </a></h4>
+                            <h4 class="title">
+                                <a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]" class="text-dark">{{oferta.cargo}}</a>
+                            </h4>
                             <ul class="list-unstyled mb-0">
                                 <li class="list-inline-item mr-3"><i data-feather="briefcase"
                                         class="fea icon-sm mr-1"></i><span class="text-muted">
@@ -51,19 +51,19 @@
                                     </span></li>
                             </ul>
                             <div class="tagcloud text-center mt-2 text-lg-left">
-                                <a href="#" class="rounded">{{oferta.nombreEmpresa}}</a>
-                                <a href="#" class="rounded">{{oferta.areaConocimiento}}</a>
-                                <a href="#" class="rounded"> $ {{oferta.salario}}</a>
+                                <a class="rounded">{{oferta.nombreEmpresa}}</a>
+                                <a class="rounded">{{oferta.areaConocimiento}}</a>
+                                <a class="rounded"> $ {{oferta.salario}}</a>
                             </div>
-                        </div><!--end col-->
+                        </div>
+                    </div><!--end col-->
 
-                        <div class="col-lg-3 col-md-12 mt-3 mt-lg-0">
-                            <a class="btn btn-block btn-primary">Aplicar</a>
-                        </div><!--end col-->
-                    </div><!--end row-->
-                    <a href="javascript:void(0)" class="text-danger like"> <i data-feather="heart"
-                            class="fea icon-sm like-icon"></i> </a>
-                </div><!--end feature Job-->
-            </div><!--end col-->
-    </div><!--end row-->
-</div><!--end col-->
+                    <div class="col-lg-3 col-md-12 mt-3 mt-lg-0">
+                        <button class="btn btn-block btn-primary" (click)="requestOffer(createGraduadoDTO(oferta))">Aplicar</button>
+                    </div><!--end col-->
+                </div><!--end row-->
+                <a href="javascript:void(0)" class="text-danger like"> <i data-feather="heart"
+                        class="fea icon-sm like-icon"></i> </a>
+            </div><!--end feature Job-->
+        </div><!--end col-->
+    </div><!--end col-->
