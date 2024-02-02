@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ofertaLaboralDTO } from '../../../data/model/ofertaLaboralDTO';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
+import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
+import { GraduadoService } from '../../../data/service/graduado.service';
+import Swal from 'sweetalert2';
+import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 
 @Component({
   selector: 'app-ofertas-de-trabajo',
@@ -9,8 +13,9 @@ import { OfertalaboralService } from '../../../data/service/ofertalaboral.servic
 })
 export class OfertasDeTrabajoComponent implements OnInit {
   listOfertas: ofertaLaboralDTO[] = [];
+  graduadoDTO: GraduadoDTO = new GraduadoDTO()
 
-  constructor(private ofertasService: OfertalaboralService){}
+  constructor(private ofertasService: OfertalaboralService, private postulacionesService: GraduadoService) { }
 
   ngOnInit(): void {
     this.cargarOfertas()
@@ -23,4 +28,61 @@ export class OfertasDeTrabajoComponent implements OnInit {
     )
   }
 
+  createGraduadoDTO(oferta: ofertaLaboralDTO): GraduadoDTO {
+    const nuevoGraduadoDTO: GraduadoDTO = new GraduadoDTO();
+    nuevoGraduadoDTO.idOferta = [];
+
+    if (oferta.id !== undefined) {
+      nuevoGraduadoDTO.idOferta.push(oferta.id);
+    } else {
+      console.error("La oferta no tiene un ID definido.");
+    }
+    return nuevoGraduadoDTO;
+  }
+
+
+
+  requestOffer(Offer: GraduadoDTO) {
+    let isPres: boolean = true;
+
+    const idUser = localStorage.getItem('user_id');
+
+    if (idUser) {
+      this.postulacionesService.getGraduadoByUsuarioId(parseInt(idUser)).subscribe(
+        grad => {
+          this.graduadoDTO = grad;
+
+          outerLoop: for (const id of this.graduadoDTO?.idOferta || []) {
+            for (const newOffer of Offer.idOferta) {
+              if (id === newOffer) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Ya has postulado a esta oferta',
+                });
+                isPres = false;
+                break outerLoop;
+              }
+            }
+          }
+
+          if (isPres && this.graduadoDTO?.id !== undefined) {
+            this.postulacionesService.updateOfferInGraduado(Offer, this.graduadoDTO.id).subscribe(
+              grad => {
+                this.graduadoDTO = grad;
+              }
+            );
+            
+            if (this.graduadoDTO) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Genial',
+                text: 'Has realizado la postulación correctamente',
+              });
+            }
+          }
+        }
+      );
+    }
+  }
 }

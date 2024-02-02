@@ -9,7 +9,7 @@ import { OfertalaboralService } from '../../../data/service/ofertalaboral.servic
   styleUrls: ['./oferta-detalle.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class OfertaDetalleComponent implements OnInit {
-
+  authoritiesStorage: any;
   ofertaDetail: ofertaLaboral = new ofertaLaboral();
   diferenceDate: Date = new Date();
 
@@ -43,5 +43,9 @@ export class OfertaDetalleComponent implements OnInit {
       const diferenciaSemanas: number = Math.floor(diferenciaDias / 7);
       return `Publicado hace ${diferenciaSemanas} semanas`;
     }
+  }
+
+  postular(idOffert:number):void {
+    
   }
 }

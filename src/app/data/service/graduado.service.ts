@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { ofertaLaboral } from '../model/ofertaLaboral';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { GraduadoDTO } from '../model/DTO/GraduadoDTO';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -63,9 +65,19 @@ export class GraduadoService {
     );
   }
   
+  updateOfferInGraduado(graduado: GraduadoDTO, idGraduado:number): Observable<GraduadoDTO> {
+    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/postulaciones/${idGraduado}`, graduado, {headers: this.httpHeaders})
+  }
 
+  cancelOfferInGraduado(graduado: GraduadoDTO, idGraduado: number): Observable<GraduadoDTO> {
+    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/cancel-postulaciones/${idGraduado}`, graduado, {headers: this.httpHeaders})
+  } 
 
   getOfertasLaboralesByUsername(username: string): Observable<ofertaLaboral[]> {
     return this.http.get<ofertaLaboral[]>(`${this.urlEndPoint}/user/${username}`);
+  }
+
+  getGraduadoByUsuarioId(id: any): Observable<GraduadoDTO>{
+    return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${id}`)
   }
 }

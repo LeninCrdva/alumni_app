@@ -5,9 +5,9 @@
       <div class="col-12">
         <div class="job-detail rounded shadow bg-white">
           <div class="detail-top p-4">
-            <h4>{{ofertaDetail.cargo}}</h4>
+            <h4>El cargo ofertado es para: {{ofertaDetail.cargo}}</h4>
             <p class="text-muted mt-4">
-              {{obtenerTiempoTranscurrido()}} por 
+              {{obtenerTiempoTranscurrido()}} por
               <a href="pages-job-company.html" class="text-primary h6">{{ofertaDetail.empresa?.nombre}}</a>
             </p>
             <div class="d-flex justify-content-between align-items-center">
@@ -25,137 +25,142 @@
                   </div>
                 </li>
               </ul>
-              <a href="page-job-apply.html.html" class="btn btn-primary">Editar</a>
+              <button href="page-job-apply.html.html" class="btn btn-primary">Editar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end col-->
+      <div class="d-flex align-items-center justify-content-center">
+
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+          <div class="sticky-bar rounded bg-white shadow">
+            <div class="border-bottom p-4">
+              <h5 class="mb-0">Informacion del Trabajo</h5>
+            </div>
+
+            <div class="p-4">
+              <div class="d-flex align-items-center">
+                <i data-feather="cpu" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Empresa:</h6>
+                  <p class="text-primary mb-0"></p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="user" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Tipo de Empleo:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail?.empresa?.nombre}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="map-pin" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Ubicacion:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.empresa?.ciudad?.nombre}},
+                    {{ofertaDetail.empresa?.ciudad?.provincia?.pais}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="monitor" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Cargo:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.cargo}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="briefcase" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Experiencia:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.experiencia}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="edit-2" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Requisitos:</h6>
+                  <p class="text-primary mb-0">
+                    Diploma in Software Engineering
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="dollar-sign" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Salario:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.salario}} $</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="clock" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Fecha publicacion:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.fechaPublicacion}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!--end col-->
 
-      <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-        <div class="sticky-bar rounded bg-white shadow">
-          <div class="border-bottom p-4">
-            <h5 class="mb-0">Informacion del Trabajo</h5>
-          </div>
+      <div class="postulantes" *ngIf="authoritiesStorage === 'ROL_GRADUADO'">
+        <!--end col-->
+        <h1>Lista de Candidatos</h1>
+        <!-- Inicio de la tabla -->
+        <table border="0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Foto</th>
+              <th>Informacion General</th>
+              <th>Detalle</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí empieza la iteración para cada trabajo -->
+            <!-- Puedes copiar y pegar este bloque para cada trabajo que quieras mostrar en la tabla -->
+            <tr *ngFor="let graduado of ofertaDetail.graduados">
+              <td>1</td>
+              <td>
+                <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="" />
+              </td>
+              <td>
+                <h4 class="title">
+                  <a class="text-dark">{{graduado.usuario?.persona?.primer_nombre}}
+                    {{graduado.usuario?.persona?.apellido_paterno}}</a>
+                </h4>
+                <ul class="list-unstyled mb-0">
+                  <li class="list-inline-item mr-3">
+                    <i data-feather="briefcase" class="fea icon-sm mr-1"></i><span class="text-muted">Tiempo
+                      Completo</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <i data-feather="map-pin" class="fea icon-sm mr-1"></i><a href="javascript:void(0)"
+                      class="text-muted">Cuenca</a>
+                  </li>
+                </ul>
+                <div class="tagcloud text-center mt-2 text-lg-left">
+                  <a class="rounded">Software</a>
+                  <a class="rounded">Example1</a>
+                  <a class="rounded">Example2</a>
+                </div>
+              </td>
+              <td>
+                <a href="pages-job-detail.html" class="btn btn-info">Detalles</a>
+              </td>
+              <td>
+                <a href="pages-job-apply.html" class="btn btn-primary">Contratar</a>
+              </td>
+            </tr>
+            <!-- Fin del bloque iterativo -->
 
-          <div class="p-4">
-            <div class="d-flex align-items-center">
-              <i data-feather="cpu" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Empresa:</h6>
-                <p class="text-primary mb-0"></p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="user" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Tipo de Empleo:</h6>
-                <p class="text-primary mb-0">{{ofertaDetail?.empresa?.nombre}}</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="map-pin" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Ubicacion:</h6>
-                <p class="text-primary mb-0">{{ofertaDetail.empresa?.ciudad?.nombre}}, {{ofertaDetail.empresa?.ciudad?.provincia?.pais}}</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="monitor" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Cargo:</h6>
-                <p class="text-primary mb-0">{{ofertaDetail.cargo}}</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="briefcase" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Experiencia:</h6>
-                <p class="text-primary mb-0">{{ofertaDetail.experiencia}}</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="edit-2" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Requisitos:</h6>
-                <p class="text-primary mb-0">
-                  Diploma in Software Engineering
-                </p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="dollar-sign" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Salario:</h6>
-                <p class="text-primary mb-0">{{ofertaDetail.salario}} $</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center mt-3">
-              <i data-feather="clock" class="float-left mr-3"></i>
-              <div class="overflow-hidden d-block">
-                <h6 class="mb-0">Fecha publicacion:</h6>
-                <p class="text-primary mb-0">{{ofertaDetail.fechaPublicacion}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+            <!-- Puedes repetir el bloque anterior para cada trabajo que desees mostrar en la tabla -->
+          </tbody>
+        </table>
       </div>
-      <!--end col-->
-
-      
-      <!--end col-->
-      <h1>Lista de Candidatos</h1>
-      <!-- Inicio de la tabla -->
-      <table border="0">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Foto</th>
-            <th>Informacion General</th>
-            <th>Detalle</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Aquí empieza la iteración para cada trabajo -->
-          <!-- Puedes copiar y pegar este bloque para cada trabajo que quieras mostrar en la tabla -->
-          <tr *ngFor="let graduado of ofertaDetail.graduados">
-            <td>1</td>
-            <td>
-              <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="" />
-            </td>
-            <td>
-              <h4 class="title">
-                <a class="text-dark">{{graduado.usuario?.persona?.primer_nombre}} {{graduado.usuario?.persona?.apellido_paterno}}</a>
-              </h4>
-              <ul class="list-unstyled mb-0">
-                <li class="list-inline-item mr-3">
-                  <i data-feather="briefcase" class="fea icon-sm mr-1"></i><span class="text-muted">Tiempo
-                    Completo</span>
-                </li>
-                <li class="list-inline-item">
-                  <i data-feather="map-pin" class="fea icon-sm mr-1"></i><a href="javascript:void(0)"
-                    class="text-muted">Cuenca</a>
-                </li>
-              </ul>
-              <div class="tagcloud text-center mt-2 text-lg-left">
-                <a class="rounded">Software</a>
-                <a class="rounded">Example1</a>
-                <a class="rounded">Example2</a>
-              </div>
-            </td>
-            <td>
-              <a href="pages-job-detail.html" class="btn btn-info">Detalles</a>
-            </td>
-            <td>
-              <a href="pages-job-apply.html" class="btn btn-primary">Contratar</a>
-            </td>
-          </tr>
-          <!-- Fin del bloque iterativo -->
-
-          <!-- Puedes repetir el bloque anterior para cada trabajo que desees mostrar en la tabla -->
-        </tbody>
-      </table>
       <!-- Fin de la tabla -->
     </div>
     <!--end row-->
