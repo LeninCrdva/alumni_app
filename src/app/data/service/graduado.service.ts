@@ -80,4 +80,8 @@ export class GraduadoService {
   getGraduadoByUsuarioId(id: any): Observable<GraduadoDTO>{
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${id}`)
   }
+
+  getGraduadosWithOutOferta(): Observable<Graduado[]> {
+    return this.http.get<Graduado[]>(`${this.urlEndPoint}/without-oferta`);
+  }
 }

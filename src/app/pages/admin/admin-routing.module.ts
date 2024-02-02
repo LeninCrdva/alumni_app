@@ -8,6 +8,8 @@ import { UsuariosListsComponent } from '../admin/usuarios-lists/usuarios-lists.c
 //import { PycListComponent } from '../admin/pyc-list/pyc-list.component';
 import { UsuariosFormComponent } from './usuarios-form/usuarios-form.component';
 import { ParametrosPreguntasComponent } from '../alumni/parametros-preguntas/parametros-preguntas.component';
+import { DocumentosComponent } from './reports/docs_reports/documentos/documentos.component';
+import { EmpresaReportComponent } from './reports/empresa-report/empresa-report.component';
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
@@ -15,7 +17,9 @@ const routes: Routes = [
     { path: 'sector-empresarial', component: SectorEmpComponent},
     { path: 'reportes', component: GraficasComponent},
     { path: 'usuarios-list', component: UsuariosListsComponent },
-    { path: 'usuarios-form', component: UsuariosFormComponent }
+    { path: 'usuarios-form', component: UsuariosFormComponent },
+    { path: 'documentos', component: DocumentosComponent}, 
+    { path: 'empresa-document', component: EmpresaReportComponent }
 ];
 
 @NgModule({
