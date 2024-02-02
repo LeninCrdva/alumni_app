@@ -72,6 +72,14 @@ export class EmpresarioService {
     );
   }
   
+  updateEmpresario(id: number, empresario: Empresario): Observable<Empresario> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Empresario>(url, empresario, { headers: this.httpHeaders });
+  }
+
+  deleteEmpresario(id: number): Observable<Empresario> {
+    return this.http.delete<Empresario>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders });
+  }  
 
   private empresarioSubject = new BehaviorSubject<Empresario | null>(null);
   setEmpresario(empresario: Empresario | null): void {

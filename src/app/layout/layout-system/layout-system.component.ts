@@ -273,6 +273,7 @@ export class LayoutSystemComponent implements OnInit {
       );
       this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
         (exists) => {
+          localStorage.setItem('exempresario', exists.toString());
           console.log(`¿Existe empresario? ${exists}`);
           if (!exists) {
             const config = {

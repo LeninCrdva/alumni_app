@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, EventEmitter, NgModule, Output } from '@angular/core';
 import { Usuario } from '../../../data/model/usuario';
 import { Empresario } from '../../../data/model/empresario';
 import { EmpresarioService } from '../../../data/service/empresario.service';
@@ -6,6 +6,8 @@ import { UserService } from '../../../data/service/UserService';
 import { Rol } from '../../../data/model/rol';
 import { Persona } from '../../../data/model/persona';
 import { EmpresaService } from '../../../data/service/empresa.service';
+import Swal from 'sweetalert2';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -15,8 +17,13 @@ import { EmpresaService } from '../../../data/service/empresa.service';
 })
 export class PerfilUsuarioComponent {
   name: string | null = localStorage.getItem('name');
+  existeempresario: Boolean | null = Boolean(localStorage.getItem('exempresario')); 
+  
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
+
   usuarios: any = {};
   empresass: any = {};
+  empresariouser: number = 0;
   nuevoEmpresario: Empresario = {
     id: 0,
     usuario: this.usuarios.nombre_usuario,
@@ -33,9 +40,12 @@ export class PerfilUsuarioComponent {
     usuario: this.usuarios,
     email: '',
   };
-  constructor(private empresarioService: EmpresarioService, private usuarioService: UserService, private empresaService:EmpresaService) { }
+  constructor(public bsModalRef: BsModalRef, private empresarioService: EmpresarioService, private usuarioService: UserService, private empresaService:EmpresaService) { }
   
   ngOnInit(): void {
+    if(this.existeempresario){
+      this.getEmpresario();
+    }
     this.usuarios = {
       clave: '',
       nombreUsuario: '',
@@ -58,16 +68,88 @@ export class PerfilUsuarioComponent {
       ubicacion: '',
       sitioweb: ''
     }
-  this.obtenerUsuario();    
+  this.obtenerUsuario();
+  this.empresarioService.getEmpresario().subscribe(
+    empresario => {
+      this.empresariouser = empresario?.id || 0;
+      console.log('Empresario objeto ultra maximo:', empresario?.usuario);
+    },
+    error => console.error('Error al obtener el empresario:', error)
+  );
+
+  } //ngOnInit END
+
+  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
+
+    Swal.fire({
+      icon: esExitoso ? 'success' : 'error',
+      title: titulo,
+      text: mensaje,
+      allowOutsideClick: !esExitoso,
+    }).then((result) => {
+      if (esExitoso || result.isConfirmed) {
+        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        this.bsModalRef.hide();
+      }
+    });
+  }
+
+  validatePerfilPerFields(): boolean {
+    if (!this.nuevoEmpresario.estado || !this.nuevoEmpresario.puesto || !this.nuevoEmpresario.anios || !this.nuevoEmpresario.email) {
+      return false;
+    }
+
+    return true;
+  }
+  validatePerfilCargaPerFields(): boolean {
+    if (!this.nuevoEmpresarioCarga.estado || !this.nuevoEmpresarioCarga.puesto || !this.nuevoEmpresarioCarga.anios || !this.nuevoEmpresarioCarga.email) {
+
+    return false;
+    }
+
+    return true;
   }
 
   crearEmpresario() {
+    if (!this.validatePerfilPerFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+      return;
+    }
     this.calcularEdad();
     this.empresarioService.createEmpresario(this.nuevoEmpresario).subscribe(
       empresario => {
         console.log('Empresario creado exitosamente:', empresario);
+        this.mostrarSweetAlert(true, 'El Empresario creado exitosamente.');
+
       },
-      error => console.error('Error al crear empresario:', error)
+      error => {
+        console.error('Error al crear empresario:', error)
+        this.mostrarSweetAlert(false, 'El Empresario no ha podido ser creado.');
+      }
+
+    );
+  }
+
+  updateEmpresario() {
+    console.log('Empresario a actualizar:', this.nuevoEmpresarioCarga);
+
+    if (!this.validatePerfilCargaPerFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+      return;
+    }
+    this.calcularEdad();
+    this.empresarioService.updateEmpresario(this.empresariouser, this.nuevoEmpresarioCarga).subscribe(
+      empresario => {
+        console.log('Empresario actualizado exitosamente:', empresario);
+        this.mostrarSweetAlert(true, 'El Empresario ha sido actualizado exitosamente.');
+
+      },
+      error => {
+        console.error('Error al actualizar empresario:', error)
+        this.mostrarSweetAlert(true, 'El Empresario no ha podido ser actualizado.');
+
+      }
     );
   }
 
@@ -84,6 +166,9 @@ export class PerfilUsuarioComponent {
       },
       error => console.error('Error al obtener usuario:', error)
     );
+  }
+  getEmpresario(){
+    this.empresarioService.getEmpresarioById
   }
 
   getEmpresas() {

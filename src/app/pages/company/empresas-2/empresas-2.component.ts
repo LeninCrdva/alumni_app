@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Empresa } from '../../../data/model/empresa';
 import { Ciudad } from '../../../data/model/ciudad';
 import { sectorempresarial } from '../../../data/model/sectorEmpresarial';
@@ -9,6 +9,8 @@ import { Empresario } from '../../../data/model/empresario';
 import { Usuario } from '../../../data/model/usuario';
 import { EmpresarioService } from '../../../data/service/empresario.service';
 import { Provincia } from '../../../data/model/provincia';
+import Swal from 'sweetalert2';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-empresas-2',
@@ -47,7 +49,10 @@ export class Empresas2Component {
   ID_Ciudad: number = 0;
   ID_Sector: number = 0;
 
-  constructor(private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService, private serviceempresario:EmpresarioService) { }
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
+  
+
+  constructor(public bsModalRef: BsModalRef, private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService, private serviceempresario:EmpresarioService) { }
 
   ngOnInit(): void {
     this.buscarEmpresass();
@@ -100,13 +105,43 @@ export class Empresas2Component {
   this.getSectoresEmpresariales();
   }
 
-  souts(){
-    console.log('CYTUUUUUUUUUUUUUU', this.empresanueva.ciudad);
-    console.log('MARTAAAAAAAAA', this.empresanueva.sectorEmpresarial.nombre);
 
+  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
+
+    Swal.fire({
+      icon: esExitoso ? 'success' : 'error',
+      title: titulo,
+      text: mensaje,
+      allowOutsideClick: !esExitoso,
+    }).then((result) => {
+      if (esExitoso || result.isConfirmed) {
+        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        this.bsModalRef.hide();
+      }
+    });
+  }
+  validateEmpresasPerFields(): boolean {
+    if (!this.empresanueva.ruc || !this.empresanueva.nombre || !this.empresanueva.tipoEmpresa|| !this.empresanueva.razonSocial|| !this.empresanueva.area|| !this.empresanueva.ubicacion|| !this.empresanueva.sitioWeb||!this.empresanueva.ciudad||!this.empresanueva.sectorEmpresarial) {
+      return false;
+    }
+
+    return true;
+  }
+  validateEmpresasPerFieldsEdicion(): boolean {
+    if (!this.empresacargar.ruc || !this.empresacargar.nombre || !this.empresacargar.tipoEmpresa|| !this.empresacargar.razonSocial|| !this.empresacargar.area|| !this.empresacargar.ubicacion|| !this.empresacargar.sitioWeb||!this.empresacargar.ciudad||!this.empresacargar.sectorEmpresarial) {
+      return false;
+    }
+
+    return true;
   }
 
+
   crearEmpresa() {
+    if (!this.validateEmpresasPerFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+      return;
+    }
     if (this.empresanueva) { // Add null check for this.ciudadSeleccionada
       this.empresanueva.empresario = this.empresariouser;
       console.log('Empresario:', this.empresanueva.empresario);
@@ -116,34 +151,79 @@ export class Empresas2Component {
         empresa => {
 
           console.log('Empresa creada exitosamente:', empresa);
+          this.mostrarSweetAlert(true, 'La empresa se ha guardado exitosamente.');
           this.empresanueva = this.createEmpresaVacia(); // Limpiar el formulario
         },
-        error => console.error('Error al crear empresa:', error),
+        error => {
+            console.error('Error al crear la empresa:', error);
+           this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
+        }
       );
-      this.souts();
     }
  }
 
 
   editarEmpresa() {// Add null check before accessing the property
+    if (!this.validateEmpresasPerFieldsEdicion()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+      return;
+    }
     this.empresacargar.empresario = this.empresariouser
     console.log('Empresa a editar:', this.empresacargar);
       if (this.empresacargar) { // Add null check before calling the method
         this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
           empresaActualizada => {
             console.log('Empresa actualizada exitosamente:', empresaActualizada);
+            this.mostrarSweetAlert(true, 'La empresa se ha actualizado exitosamente.');
             this.empresacargar = this.createEmpresaVacia(); // Limpiar el formulario
           },
-          error => console.error('Error al actualizar empresa:', error)
+          error => {
+            console.error('Error al actualizar empresa:', error)
+            this.mostrarSweetAlert(false, 'La empresa no se ha actualizado');
+          }
+
         );
       }
   }
 
   deleteEmpresa(id: number | undefined = 0) {
-    console.log('Eliminando', id);
-    this.empresaService.deleteEmpresa(id).subscribe();
-    console.log('Eliminado', id);
+    // Mostrar SweetAlert de confirmación
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, eliminar la empresa
+        this.empresaService.deleteEmpresa(id).subscribe(
+          () => {
+            // Mostrar SweetAlert de éxito
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminado exitosamente',
+              text: 'La empresa ha sido eliminada correctamente.',
+            });
+            // Puedes agregar más acciones después de eliminar, si es necesario
+          },
+          error => {
+            // Mostrar SweetAlert de error
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar',
+              text: 'Hubo un error al intentar eliminar la empresa.',
+            });
+            console.error('Error al eliminar empresa:', error);
+          }
+        );
+      }
+    });
   }
+  
 
   getCiudadIDName() {
     this.ciudadService.getCiudades().subscribe(
