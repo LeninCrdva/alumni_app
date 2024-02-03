@@ -16,8 +16,8 @@ import Swal from 'sweetalert2';
 export class ReferenciasPersonalesComponent {
   public cedula: string = '';
 
-  referencia_personal: Referencias_personales = { nombre: '', cedulaGraduado: '', telefono: '', email: '' };
-  referenciaPersonalCarga: Referencias_personales = { id: 0, nombre: '', cedulaGraduado: '', telefono: '', email: '' };
+  referencia_personal: Referencias_personales = { nombreReferencia: '', cedulaGraduado: '', telefono: '', email: '' };
+  referenciaPersonalCarga: Referencias_personales = { id: 0, nombreReferencia: '', cedulaGraduado: '', telefono: '', email: '' };
   referenciaPersonalList: Referencias_personales[] = [];
 
   editarClicked = false;
@@ -78,7 +78,7 @@ export class ReferenciasPersonalesComponent {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
-
+    console.log('Referencia personalaaaaaaaaaa:', this.referencia_personal)
     this.referenciaPService.createReferenciasPersonales(this.referencia_personal).subscribe(
       referenciasP => {
         console.log('Refencia personal creada exitosamente:', referenciasP);
@@ -111,7 +111,7 @@ export class ReferenciasPersonalesComponent {
     
     console.log('ID de la referencia personal:', this.referenciaPersonalCarga.cedulaGraduado);
     console.log('ID de la referencia personal:', this.referenciaPersonalCarga.id);
-    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.nombre);
+    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.nombreReferencia);
     console.log('ID de la referencia personal:', this.referenciaPersonalCarga.telefono);
     console.log('ID de la referencia personal:', this.referenciaPersonalCarga.email);
     this.referenciaPService.updateReferenciasPersonales(this.idEdit, this.referenciaPersonalCarga).subscribe(
@@ -159,7 +159,7 @@ export class ReferenciasPersonalesComponent {
   }
 
   validateReferenciasPerFields(): boolean {
-    if (!this.referencia_personal.nombre || !this.referencia_personal.telefono || !this.referencia_personal.email) {
+    if (!this.referencia_personal.nombreReferencia || !this.referencia_personal.telefono || !this.referencia_personal.email) {
       return false;
     }
 

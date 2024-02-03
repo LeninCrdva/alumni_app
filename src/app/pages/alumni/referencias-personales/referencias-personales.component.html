@@ -30,8 +30,8 @@
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="text" name="nombre"
                                                 placeholder="Ingrese el nombre" id="nombre"
-                                                [(ngModel)]="editarClicked ? referenciaPersonalCarga.nombre : referencia_personal.nombre"
-                                                (ngModelChange)="editarClicked ? referenciaPersonalCarga.nombre = $event : referencia_personal.nombre = $event"
+                                                [(ngModel)]="editarClicked ? referenciaPersonalCarga.nombreReferencia : referencia_personal.nombreReferencia"
+                                                (ngModelChange)="editarClicked ? referenciaPersonalCarga.nombreReferencia = $event : referencia_personal.nombreReferencia = $event"
                                                 required>
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
                     <tbody>
                         <tr *ngFor="let referencia_per of referenciaPersonalList;">
                             <th scope="row">{{referencia_per.id}}</th>
-                            <td>{{referencia_per.nombre}}</td>
+                            <td>{{referencia_per.nombreReferencia}}</td>
                             <td>{{referencia_per.telefono}}</td>
                             <td>{{referencia_per.email}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">

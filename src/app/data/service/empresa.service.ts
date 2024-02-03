@@ -20,6 +20,11 @@ export class EmpresaService {
     return this.http.get<Empresa[]>(this.urlEndPoint);
   }
 
+  getEmpresasbyUser(nombre:String): Observable<Empresa[]> {
+    const url = `${this.urlEndPoint}/by-usuario/${nombre}`;
+    return this.http.get<Empresa[]>(url);
+  }
+
   createEmpresa(empresa: Empresa): Observable<Empresa> {
     return this.http.post<Empresa>(this.urlEndPoint, empresa, { headers: this.httpHeaders })
   }
@@ -35,5 +40,9 @@ export class EmpresaService {
 
   getEmpresarioByUsuarioId(id: any): Observable<Empresario> {
     return this.http.get<Empresario>(`${this.urlEndPoint}/usuario/${id}`)
+  }
+
+  deleteEmpresa(id: number): Observable<Empresa> {
+    return this.http.delete<Empresa>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders });
   }
 }

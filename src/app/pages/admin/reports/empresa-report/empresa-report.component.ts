@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Graduado } from '../../../../../data/model/graduado';
-import { GraduadoService } from '../../../../../data/service/graduado.service';
-
+import { Graduado } from '../../../../data/model/graduado';
+import { GraduadoService } from '../../../../data/service/graduado.service';
 @Component({
-  selector: 'app-documentos',
-  templateUrl: './documentos.component.html',
-  styleUrl: './documentos.component.css'
+  selector: 'app-empresa-report',
+  templateUrl: './empresa-report.component.html',
+  styleUrl: './empresa-report.component.css'
 })
-export class DocumentosComponent implements OnInit{
+export class EmpresaReportComponent implements OnInit{
+
   graduadoList: Graduado[] = []
 
   constructor(private graduadoService: GraduadoService) {}
@@ -21,5 +21,4 @@ export class DocumentosComponent implements OnInit{
       graduado => this.graduadoList = graduado
     )
   }
-
 }

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Administrador } from '../model/administrador';
 import { Administrador2 } from '../model/administrador';
+import { Administrador3 } from '../model/administrador';
 import { map } from 'rxjs/operators';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -25,6 +26,9 @@ export class AdministradorService {
   getAdministradores2(): Observable<Administrador2[]> {
     return this.http.get<Administrador2[]>(this.urlEndPoint);
   }
+  getAdministradores3(): Observable<Administrador3[]> {
+    return this.http.get<Administrador3[]>(this.urlEndPoint);
+  }
 
   createAdministrador(administrador: Administrador): Observable<Administrador> {
     return this.http.post<Administrador>(this.urlEndPoint, administrador, { headers: this.httpHeaders })
@@ -34,12 +38,12 @@ export class AdministradorService {
     return this.http.get<Administrador>(`${this.urlEndPoint}/${id}`)
   }
   checkAdministradorExists(nombre: string): Observable<boolean> {
-    return this.getAdministradores2().pipe(
+    return this.getAdministradores3().pipe(
       tap(administradores => console.log('Administradores obtenidos:', administradores)),
       map(administradores => {
         const exists = administradores.some(admin => 
-          admin.usuario && admin.usuario.nombre_usuario && 
-          admin.usuario.nombre_usuario.toLowerCase() === nombre.toLowerCase()
+          admin.usuario && admin.usuario && 
+          admin.usuario.toLowerCase() === nombre.toLowerCase()
         );
         console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
         return exists;

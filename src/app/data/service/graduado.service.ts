@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { ofertaLaboral } from '../model/ofertaLaboral';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { GraduadoDTO } from '../model/DTO/GraduadoDTO';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,12 +43,12 @@ export class GraduadoService {
 
 
   checkGraduadoExists(nombre: string): Observable<boolean> {
-    return this.getGraduados().pipe(
+    return this.getGraduados2().pipe(
       tap(graduados => console.log('Administradores obtenidos:', graduados)),
       map(graduados => {
         const exists = graduados.some(gradu => 
-          gradu.usuario && gradu.usuario.nombre_usuario && 
-          gradu.usuario.nombre_usuario.toLowerCase() === nombre.toLowerCase()
+          gradu.usuario && gradu.usuario && 
+          gradu.usuario.toLowerCase() === nombre.toLowerCase()
         );
         console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
         return exists;
@@ -63,9 +65,23 @@ export class GraduadoService {
     );
   }
   
+  updateOfferInGraduado(graduado: GraduadoDTO, idGraduado:number): Observable<GraduadoDTO> {
+    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/postulaciones/${idGraduado}`, graduado, {headers: this.httpHeaders})
+  }
 
+  cancelOfferInGraduado(graduado: GraduadoDTO, idGraduado: number): Observable<GraduadoDTO> {
+    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/cancel-postulaciones/${idGraduado}`, graduado, {headers: this.httpHeaders})
+  } 
 
   getOfertasLaboralesByUsername(username: string): Observable<ofertaLaboral[]> {
     return this.http.get<ofertaLaboral[]>(`${this.urlEndPoint}/user/${username}`);
+  }
+
+  getGraduadoByUsuarioId(id: any): Observable<GraduadoDTO>{
+    return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${id}`)
+  }
+
+  getGraduadosWithOutOferta(): Observable<Graduado[]> {
+    return this.http.get<Graduado[]>(`${this.urlEndPoint}/without-oferta`);
   }
 }

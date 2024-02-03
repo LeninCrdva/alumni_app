@@ -37,6 +37,7 @@
                             <!-- <th>REQUISITOS ACADEMICOS</th> -->
                             <th>EXPERIENCIA</th>
                             <th>UBICACIONES</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,6 +53,7 @@
                             <!-- <td>{{postulacion.experiencia}}</td>  -->
                             <td>{{postulacion.experiencia}}</td>
                             <td>{{postulacion.empresa.ciudad.nombre}}</td>
+                            <td> <button class="fa fa-trash border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="cancelOffer(createGraduadoDTO(postulacion))"></button></td>
                         </tr>
                     </tbody>
                 </table>

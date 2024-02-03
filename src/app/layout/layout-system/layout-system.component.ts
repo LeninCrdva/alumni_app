@@ -273,6 +273,7 @@ export class LayoutSystemComponent implements OnInit {
       );
       this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
         (exists) => {
+          localStorage.setItem('exempresario', exists.toString());
           console.log(`¿Existe empresario? ${exists}`);
           if (!exists) {
             const config = {
@@ -314,7 +315,7 @@ export class LayoutSystemComponent implements OnInit {
               ignoreBackdropClick: true,
               keyboard: false,
             };
-            // this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+             this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {

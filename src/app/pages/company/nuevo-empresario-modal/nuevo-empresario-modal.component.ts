@@ -4,6 +4,9 @@ import { EmpresarioService } from '../../../data/service/empresario.service';
 import { Empresario2 } from '../../../data/model/empresario';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Persona } from '../../../data/model/persona';
+import { Rol } from '../../../data/model/rol';
+import { UserService } from '../../../data/service/UserService';
 @Component({
   selector: 'app-nuevo-empresario-modal',
   templateUrl: './nuevo-empresario-modal.component.html',
@@ -15,16 +18,32 @@ export class NuevoEmpresarioModalComponent implements OnInit {
   usuarioGuardado: string = localStorage.getItem('name') || '';
   formularioEmpresario: FormGroup = new FormGroup({});
   mensajeMostrado = false;
+  usuarios: any = {};
+  name: string | null = localStorage.getItem('name');
+
 
   constructor(
     public bsModalRef: BsModalRef,
     private empresarioService: EmpresarioService, // Ajusta según la ubicación de tu servicio
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private usuarioService: UserService, // Ajusta según la ubicación de tu servicio
+    
   ) {}
 
   ngOnInit() {
+    this.obtenerUsuario();
     this.buildForm();
     this.nuevoEmpresario.usuario = this.usuarioGuardado;
+
+    this.usuarios = {
+      clave: '',
+      nombreUsuario: '',
+      estado: false,
+      url_imagen: '',
+      persona: new Persona,
+      ruta_imagen: '',
+      rol: new Rol
+    }
   }
 
   buildForm() {
@@ -38,7 +57,6 @@ export class NuevoEmpresarioModalComponent implements OnInit {
   }
   
   guardarEmpresario() {
-    if (this.formularioEmpresario.valid) {
       // Realizar la operación de guardado
       this.empresarioService.createEmpresario(this.formularioEmpresario.value).subscribe(
         (result) => {
@@ -51,9 +69,7 @@ export class NuevoEmpresarioModalComponent implements OnInit {
           this.mostrarSweetAlert(false);
         }
       );
-    } else {
-      console.error('Formulario no válido. Verifica que todos los campos estén llenos y sean válidos.');
-    }
+
   }
 
   mostrarSweetAlert(esExitoso: boolean) {
@@ -79,5 +95,42 @@ export class NuevoEmpresarioModalComponent implements OnInit {
     } else {
       console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
     }
+  }
+
+  obtenerUsuario(){
+    const username = this.name || ''; // Provide a default value for the parameter
+    this.usuarioService.getUsuarioByUsername(username).subscribe(
+      usuario => {
+        this.usuarios = usuario;
+        console.log('Usuario obtenido exitosamente:', this.usuarios.nombreUsuario);
+        this.nuevoEmpresario.usuario = this.usuarios.nombreUsuario;
+        this.nuevoEmpresario.estado = this.usuarios.estado
+        localStorage.setItem('idUser', this.usuarios.id);
+        console.log('Usuario obtenido exitosamente:', localStorage.getItem('idUser'));
+      },
+      error => console.error('Error al obtener usuario:', error)
+    );
+  }
+
+  calcularEdad(): number {
+    // Fecha de nacimiento ("YYYY-MM-DD")
+    const fechaNacimientoString =this.usuarios.persona.fechaNacimiento;
+    console.log('Fecha de nacimiento:', fechaNacimientoString);
+    const fechaNacimiento = new Date(fechaNacimientoString);
+
+    // Fecha actual
+    const fechaActual = new Date();
+
+    // Calcula la diferencia de tiempo en milisegundos
+    const diferenciaEnMilisegundos = fechaActual.getTime() - fechaNacimiento.getTime();
+
+    // Convierte la diferencia de milisegundos a años
+    const edadEnAnios = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24 * 365.25);
+
+    // Redondea la edad a un número entero
+    const edadRedondeada = Math.floor(edadEnAnios);
+    this.nuevoEmpresario.anios = edadRedondeada;
+
+          return edadRedondeada;
   }
 }

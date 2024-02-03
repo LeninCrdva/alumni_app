@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, EventEmitter, NgModule, Output } from '@angular/core';
 import { Usuario } from '../../../data/model/usuario';
 import { Empresario } from '../../../data/model/empresario';
 import { EmpresarioService } from '../../../data/service/empresario.service';
@@ -6,6 +6,8 @@ import { UserService } from '../../../data/service/UserService';
 import { Rol } from '../../../data/model/rol';
 import { Persona } from '../../../data/model/persona';
 import { EmpresaService } from '../../../data/service/empresa.service';
+import Swal from 'sweetalert2';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -15,8 +17,13 @@ import { EmpresaService } from '../../../data/service/empresa.service';
 })
 export class PerfilUsuarioComponent {
   name: string | null = localStorage.getItem('name');
+  existeempresario: Boolean | null = Boolean(localStorage.getItem('exempresario')); 
+  
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
+
   usuarios: any = {};
   empresass: any = {};
+  empresariouser: number = 0;
   nuevoEmpresario: Empresario = {
     id: 0,
     usuario: this.usuarios.nombre_usuario,
@@ -30,10 +37,11 @@ export class PerfilUsuarioComponent {
     estado: false,
     puesto: '',
     anios: 0,
-    usuario: this.usuarios,
+    usuario: this.usuarios.nombre_usuario,
     email: '',
   };
-  constructor(private empresarioService: EmpresarioService, private usuarioService: UserService, private empresaService:EmpresaService) { }
+
+  constructor(public bsModalRef: BsModalRef, private empresarioService: EmpresarioService, private usuarioService: UserService, private empresaService:EmpresaService) { }
   
   ngOnInit(): void {
     this.usuarios = {
@@ -58,16 +66,69 @@ export class PerfilUsuarioComponent {
       ubicacion: '',
       sitioweb: ''
     }
-  this.obtenerUsuario();    
+  this.obtenerUsuario();
+
+  this.empresarioService.getEmpresario().subscribe(
+    empresario => {
+      this.empresariouser = empresario?.id || 0;
+      this.nuevoEmpresarioCarga.email = empresario?.email || '';
+      this.nuevoEmpresarioCarga.puesto = empresario?.puesto || '';
+
+      if (empresario){
+      }
+      console.log('Empresario objeto ultra maximo:', empresario?.usuario);
+    },
+    error => console.error('Error al obtener el empresario:', error)
+  );
+
+  } //ngOnInit END
+
+  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
+
+    Swal.fire({
+      icon: esExitoso ? 'success' : 'error',
+      title: titulo,
+      text: mensaje,
+      allowOutsideClick: !esExitoso,
+    }).then((result) => {
+      if (esExitoso || result.isConfirmed) {
+        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        this.bsModalRef.hide();
+      }
+    });
   }
 
-  crearEmpresario() {
+  validatePerfilCargaPerFields(): boolean {
+    if (!this.nuevoEmpresarioCarga.puesto || !this.nuevoEmpresarioCarga.email) {
+
+    return false;
+    }
+
+    return true;
+  }
+
+  updateEmpresario() {
+    console.log('Empresario a actualizar:', this.nuevoEmpresarioCarga);
+    console.log('Empresario a actualizar:', this.nuevoEmpresario);
+    
+
+    if (!this.validatePerfilCargaPerFields()) {
+      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+      return;
+    }
     this.calcularEdad();
-    this.empresarioService.createEmpresario(this.nuevoEmpresario).subscribe(
+    this.empresarioService.updateEmpresario(this.empresariouser, this.nuevoEmpresarioCarga).subscribe(
       empresario => {
-        console.log('Empresario creado exitosamente:', empresario);
+        console.log('Empresario actualizado exitosamente:', empresario);
+        this.mostrarSweetAlert(true, 'El Empresario ha sido actualizado exitosamente.');
+
       },
-      error => console.error('Error al crear empresario:', error)
+      error => {
+        console.error('Error al actualizar empresario:', error)
+        this.mostrarSweetAlert(true, 'El Empresario no ha podido ser actualizado.');
+
+      }
     );
   }
 
