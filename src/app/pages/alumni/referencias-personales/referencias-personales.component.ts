@@ -129,7 +129,6 @@ export class ReferenciasPersonalesComponent {
   }
 
   onDeleteClick(id: number | undefined = 0) {
-    ;
     this.referenciaPService.deleteReferenciasPersonales(id).subscribe(
       () => {
         console.log('Experiencia eliminada exitosamente');

@@ -10,8 +10,8 @@
 <div class="card">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
-        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
+        <div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1"
+            role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
@@ -94,8 +94,8 @@
                         </button>
 
                         <!-- Botón para editar -->
-                        <button (click)="onUpdateClick(nuevoExperienciaCarga.id!)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                        <button (click)="onUpdateClick(nuevoExperienciaCarga.id!)" data-bs-toggle="modal"
+                            data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary" *ngIf="editarClicked">
                             Actualizar Experiencia
                         </button>
 
@@ -106,7 +106,7 @@
             </div>
         </div>
         <!--/ Modal -->
-        <div class="col-md-12 col-lg-12">
+        <div class="col-md-12 col-lg-12 animate__animated animate__bounce animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounce animate__fast">
             <div class="table-responsive">
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered custom-table">

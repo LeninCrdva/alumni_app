@@ -10,8 +10,8 @@
 <div class="card">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
-        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
+        <div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1"
+            role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
@@ -26,64 +26,65 @@
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
+                                            <label class="form-control-label active">Nombre del Título: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="nombre_titulo"
+                                                placeholder="Ingrese el nombre del título"
+                                                [(ngModel)]="editarClicked ? tituloCarga.nombre_titulo : titulo.nombre_titulo"
+                                                (ngModelChange)="editarClicked ? tituloCarga.nombre_titulo = $event : titulo.nombre_titulo = $event"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
                                             <label class="form-control-label active">Tipo de Título: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="tipo"
                                                 placeholder="Ingrese el tipo de título"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.tipo : nuevoTitulo.tipo"
+                                                [(ngModel)]="editarClicked ? tituloCarga.tipo : titulo.tipo"
+                                                (ngModelChange)="editarClicked ? tituloCarga.tipo = $event : titulo.tipo = $event"
                                                 required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Carrera: <span
-                                                    class="tx-danger">*</span></label>
-                                            <select class="form-control" name="carrera"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.carrera : nuevoTitulo.carrera"
-                                                required>
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="carrera1">Carrera 1</option>
-                                                <option value="carrera2">Carrera 2</option>
-                                                <option value="carrera3">Carrera 3</option>
-                                            </select>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row mg-b-25">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Carrera: <span
+                                                    class="tx-danger">*</span></label>
+                                            <select class="form-control" name="carrera"
+                                                [(ngModel)]="editarClicked ? tituloCarga.nombrecarrera : titulo.nombrecarrera"
+                                                (ngModelChange)="editarClicked ? tituloCarga.nombrecarrera = $event : titulo.nombrecarrera = $event"
+                                                required>
+                                                <option value="" disabled selected>-- Seleccione una opción --</option>
+                                                <option *ngFor="let carreras of carrerasList" [value]="carreras.nombre">
+                                                    {{carreras.nombre }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">Nivel de Título: <span
                                                     class="tx-danger">*</span></label>
-                                            <select class="form-control" name="nivel"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.nivel : nuevoTitulo.nivel"
+                                            <input class="form-control wd-250" type="text" name="nivel"
+                                                placeholder="Ingrese el nivel de título"
+                                                [(ngModel)]="editarClicked ? tituloCarga.nivel : titulo.nivel"
+                                                (ngModelChange)="editarClicked ? tituloCarga.nivel = $event : titulo.nivel = $event"
                                                 required>
-                                                <option value="">-- Seleccione una opción --</option>
-                                                <option value="nivel1">Nivel 1</option>
-                                                <option value="nivel2">Nivel 2</option>
-                                                <option value="nivel3">Nivel 3</option>
-                                            </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-control-label active">Institución: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="institucion"
                                                 placeholder="Ingrese la institución"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.institucion : nuevoTitulo.institucion"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Nombre del Título: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="nombre_titulo"
-                                                placeholder="Ingrese el nombre del título"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.nombre_titulo : nuevoTitulo.nombre_titulo"
+                                                [(ngModel)]="editarClicked ? tituloCarga.institucion : titulo.institucion"
+                                                (ngModelChange)="editarClicked ? tituloCarga.institucion = $event : titulo.institucion = $event"
                                                 required>
                                         </div>
                                     </div>
@@ -92,7 +93,8 @@
                                             <label class="form-control-label active">Fecha de Registro: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="date" name="fecha_registro"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.fecha_registro : nuevoTitulo.fecha_registro"
+                                                [(ngModel)]="editarClicked ? tituloCarga.fecha_registro : titulo.fecha_registro"
+                                                (ngModelChange)="editarClicked ? tituloCarga.fecha_registro = $event : titulo.fecha_registro = $event"
                                                 required>
                                         </div>
                                     </div>
@@ -103,7 +105,8 @@
                                             <label class="form-control-label active">Fecha de Emisión: <span
                                                     class="tx-danger">*</span></label>
                                             <input class="form-control" type="date" name="fecha_emision"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.fecha_emision : nuevoTitulo.fecha_emision"
+                                                [(ngModel)]="editarClicked ? tituloCarga.fecha_emision : titulo.fecha_emision"
+                                                (ngModelChange)="editarClicked ? tituloCarga.fecha_emision = $event : titulo.fecha_emision = $event"
                                                 required>
                                         </div>
                                     </div>
@@ -113,20 +116,20 @@
                                                 <span class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="num_registro"
                                                 placeholder="Ingrese el número de registro"
-                                                [(ngModel)]="editarClicked ? nuevoTituloCarga.num_registro : nuevoTitulo.num_registro"
+                                                [(ngModel)]="editarClicked ? tituloCarga.num_registro : titulo.num_registro"
+                                                (ngModelChange)="editarClicked ? tituloCarga.num_registro = $event : titulo.num_registro = $event"
                                                 required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
+
                     <div class="modal-footer">
 
                         <!-- Botón para registrar -->
-                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                        <button (click)="createTitulo()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-success" *ngIf="!editarClicked">
                             Registrar Título
                         </button>
@@ -134,7 +137,7 @@
                         <!-- Botón para editar -->
                         <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
                             class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Editar Título
+                            Actualizar Título
                         </button>
 
                         <button data-bs-dismiss="modal"
@@ -144,31 +147,26 @@
             </div>
         </div>
         <!--/ Modal -->
-        <div class="col-md-12 col-lg-12">
+        <div class="col-md-12 col-lg-12 animate__animated animate__bounce animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
-                    Registrar Titulo</button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                    Registrar Título
+                </button>
             </div>
         </div>
 
-
-        <div class="card-body pd-0 collapse show" id="collapse1">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounce animate__fast">
             <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-light">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
+                            <th>Nombre del Título</th>
                             <th>Tipo</th>
                             <th>Nivel</th>
                             <th>Institución</th>
-                            <th>Nombre del Título</th>
                             <th>Fecha de Registro</th>
                             <th>Fecha de Emisión</th>
                             <th>Número de Registro</th>
@@ -177,22 +175,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let titulo of titulos; let i = index">
+                        <tr *ngFor="let titulo of tituloList;">
                             <td>{{titulo.id}}</td>
-                            <td>{{titulo.tipo}}</td>
-                            <td>{{titulo.institucion}}</td>
                             <td>{{titulo.nombre_titulo}}</td>
+                            <td>{{titulo.tipo}}</td>
+                            <td>{{titulo.nivel}}</td>
+                            <td>{{titulo.institucion}}</td>
                             <td>{{titulo.fecha_registro}}</td>
                             <td>{{titulo.fecha_emision}}</td>
                             <td>{{titulo.num_registro}}</td>
-                            <td>{{titulo.carrera}}</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick(titulo)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                                    class="table-action mg-r-10" [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
+                            <td>{{titulo.nombrecarrera}}</td>
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <a (click)="onEditarClick(titulo.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10">
+                                    <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-                                <a (click)="onDeleteClick(i)" class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
+                                <a (click)="onDeleteClick(titulo.id!)" class="table-action ms-2 text-danger">
+                                    <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>
                         </tr>
@@ -200,5 +199,6 @@
                 </table>
             </div>
         </div>
+
     </div>
 </div>
