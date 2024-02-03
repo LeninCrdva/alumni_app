@@ -7,106 +7,108 @@
     </div>
 </section>
 
-<div class="card">
-    <div class="card-body collapse show" id="collapse1">
-        <!-- Modal -->
-        <div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1"
-            role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
-                        class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear Experiencia'">
-                        </h5>
-                    </div>
 
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="cargo">CARGO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="cargo"
-                                                placeholder="Ingrese el cargo" id="cargo"
-                                                [(ngModel)]="editarClicked ? nuevoExperiencia.cargo : nuevoExperienciaCarga.cargo"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="duracion">DURACIÓN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="duracion"
-                                                placeholder="Ingrese la duración" id="duracion"
-                                                [(ngModel)]="editarClicked ? nuevoExperiencia.duracion : nuevoExperienciaCarga.duracion"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
+<!-- Modal -->
+<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+                <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear Experiencia'">
+                </h5>
+            </div>
 
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="institucion">INSTITUCIÓN:
-                                                <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="institucion"
-                                                placeholder="Ingrese la institución" id="institucion"
-                                                [(ngModel)]="editarClicked ? nuevoExperiencia.institucionNombre : nuevoExperienciaCarga.institucionNombre"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="actividad">ACTIVIDAD: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="actividad"
-                                                placeholder="Ingrese la actividad" id="actividad"
-                                                [(ngModel)]="editarClicked ? nuevoExperiencia.actividad : nuevoExperienciaCarga.actividad"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO:
-                                                <span class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="area_trabajo"
-                                                placeholder="Ingrese la area de trabajo" id="area_trabajo"
-                                                [(ngModel)]="editarClicked ? nuevoExperiencia.area_trabajo : nuevoExperienciaCarga.area_trabajo"
-                                                required>
-                                        </div>
-                                    </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25" data-parsley-validate>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="cargo">CARGO: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
+                                        id="cargo"
+                                        [(ngModel)]="editarClicked ? experienciaCarga.cargo : experiencia.cargo"
+                                        required>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="duracion">DURACIÓN: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="duracion"
+                                        placeholder="Ingrese la duración" id="duracion"
+                                        [(ngModel)]="editarClicked ? experienciaCarga.duracion : experiencia.duracion"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
 
-                        </form>
+                        <div class="row mg-b-25 my-3" data-parsley-validate>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="institucion">INSTITUCIÓN:
+                                        <span class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="institucion"
+                                        placeholder="Ingrese la institución" id="institucion"
+                                        [(ngModel)]="editarClicked ? experienciaCarga.institucionNombre : experiencia.institucionNombre"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="actividad">ACTIVIDAD: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="actividad"
+                                        placeholder="Ingrese la actividad" id="actividad"
+                                        [(ngModel)]="editarClicked ? experienciaCarga.actividad : experiencia.actividad"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mg-b-25 my-3" data-parsley-validate>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO:
+                                        <span class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="area_trabajo"
+                                        placeholder="Ingrese la area de trabajo" id="area_trabajo"
+                                        [(ngModel)]="editarClicked ? experiencia.area_trabajo : experiencia.area_trabajo"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="modal-footer">
+                </form>
+            </div>
 
-                        <!-- Botón para registrar -->
-                        <button (click)="createExperiencia()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                            Registrar Experiencia
-                        </button>
+            <div class="modal-footer">
 
-                        <!-- Botón para editar -->
-                        <button (click)="onUpdateClick(nuevoExperienciaCarga.id!)" data-bs-toggle="modal"
-                            data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Actualizar Experiencia
-                        </button>
+                <!-- Botón para registrar -->
+                <button (click)="createExperiencia()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                    class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                    Registrar Experiencia
+                </button>
 
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
-                    </div>
-                </div>
+                <!-- Botón para editar -->
+                <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                    class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                    Actualizar Experiencia
+                </button>
+
+                <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
             </div>
         </div>
-        <!--/ Modal -->
-        <div class="col-md-12 col-lg-12 animate__animated animate__bounce animate__fast">
+    </div>
+</div>
+<!--/ Modal -->
+
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div class="col-md-12 col-lg-12 animate__animated animate__fadeIn animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
@@ -115,7 +117,7 @@
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show animate__animated animate__bounce animate__fast">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered custom-table">
@@ -131,16 +133,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let experienciaItem of experiencia;">
+                        <tr *ngFor="let experienciaItem of experienciaList;">
                             <th scope="row">{{ experienciaItem.id }}</th>
                             <td>{{ experienciaItem.cargo }}</td>
                             <td>{{ experienciaItem.duracion }}</td>
                             <td>{{ experienciaItem.institucionNombre }}</td>
                             <td>{{ experienciaItem.actividad }}</td>
                             <td>{{ experienciaItem.area_trabajo }}</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick(experienciaItem)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <a (click)="onEditarClick(experienciaItem.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
                                 <a (click)="onDeleteClick(experienciaItem.id!)" class="table-action ms-2 text-danger">

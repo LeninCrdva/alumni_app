@@ -8,6 +8,13 @@ import { NuevoAdministradorModalComponent } from './nuevo-administrador-modal/nu
 import { UsuariosListsComponent } from './usuarios-lists/usuarios-lists.component';
 import { DocumentosComponent } from './reports/docs_reports/documentos/documentos.component';
 import { EmpresaReportComponent } from './reports/empresa-report/empresa-report.component';
+import { AreaChartComponent } from './reports/visual_reports/graficas/area-chart/area-chart.component';
+import { PieChartComponent } from './reports/visual_reports/graficas/pie-chart/pie-chart.component';
+import { GraficasComponent } from './reports/visual_reports/graficas/graficas.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import ApexCharts from 'apexcharts';
+
+
 @NgModule({
     declarations: [
     DashboardComponent,
@@ -15,12 +22,16 @@ import { EmpresaReportComponent } from './reports/empresa-report/empresa-report.
     NuevoAdministradorModalComponent,
     UsuariosListsComponent,
     EmpresaReportComponent,
+    AreaChartComponent,
+    PieChartComponent,
+    GraficasComponent
   ],
     imports: [
         CommonModule,
         AdminRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgApexchartsModule
     ]
 })
 

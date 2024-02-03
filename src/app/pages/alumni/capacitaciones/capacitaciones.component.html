@@ -7,158 +7,154 @@
     </div>
 </section>
 
-<div class="card">
-    <div class="card-body collapse show" id="collapse1">
-        <!-- Modal -->
-        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
-                        class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Capacitacion' : 'Crear Capacitacion'">
-                        </h5>
-                    </div>
 
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active" for="nombre">NOMBRE: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="nombre"
-                                                placeholder="Ingrese el nombre"
-                                                [(ngModel)]="editarClicked ? nuevoCapacitacionCarga.nombre : nuevoCapacitacion.nombre"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">HORAS: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="number" name="horas"
-                                                placeholder="Ingrese la cantidad de horas"
-                                                [(ngModel)]="editarClicked ? nuevoCapacitacionCarga.horas : nuevoCapacitacion.horas"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">FECHA DE INICIO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fecha_inicio"
-                                                [(ngModel)]="editarClicked ? nuevoCapacitacionCarga.fecha_inicio : nuevoCapacitacion.fecha_inicio"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">FECHA DE FIN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="date" name="fecha_fin"
-                                                [(ngModel)]="editarClicked ? nuevoCapacitacionCarga.fecha_fin : nuevoCapacitacion.fecha_fin"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">INSTITUCIÓN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="institucion"
-                                                placeholder="Ingrese la institución"
-                                                [(ngModel)]="editarClicked ? nuevoCapacitacionCarga.institucion : nuevoCapacitacion.institucion"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">TIPO DE CERTIFICADO: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="tipo_certificado"
-                                                placeholder="Ingrese el tipo de certificado"
-                                                [(ngModel)]="editarClicked ? nuevoCapacitacionCarga.tipo_certificado : nuevoCapacitacion.tipo_certificado"
-                                                required>
-                                        </div>
-                                    </div>
+<!-- Modal -->
+<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+                <h5 [innerText]="editarClicked ? 'Modificar Capacitacion' : 'Crear Capacitacion'">
+                </h5>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="nombre">NOMBRE: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="nombre"
+                                        placeholder="Ingrese el nombre"
+                                        [(ngModel)]="editarClicked ? capacitacionCarga.nombre : capacitacion.nombre"
+                                        required>
                                 </div>
                             </div>
-
-                        </form>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">HORAS: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="number" name="numHoras"
+                                        placeholder="Ingrese la cantidad de horas"
+                                        [(ngModel)]="editarClicked ? capacitacionCarga.numHoras : capacitacion.numHoras"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">FECHA DE INICIO: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="date" name="fechaInicio"
+                                        [(ngModel)]="editarClicked ? capacitacionCarga.fechaInicio : capacitacion.fechaInicio"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">FECHA DE FIN: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="date" name="fechaFin"
+                                        [(ngModel)]="editarClicked ? capacitacionCarga.fechaFin : capacitacion.fechaFin"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">INSTITUCIÓN: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="institucion"
+                                        placeholder="Ingrese la institución"
+                                        [(ngModel)]="editarClicked ? capacitacionCarga.institucion : capacitacion.institucion"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">TIPO DE CERTIFICADO: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="tipoCertificado"
+                                        placeholder="Ingrese el tipo de certificado"
+                                        [(ngModel)]="editarClicked ? capacitacionCarga.tipoCertificado : capacitacion.tipoCertificado"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="modal-footer">
+                </form>
+            </div>
 
-                        <!-- Botón para registrar -->
-                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                            Registrar Capacitacion
-                        </button>
+            <div class="modal-footer">
 
-                        <!-- Botón para editar -->
-                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Editar Capacitacion
-                        </button>
+                <!-- Botón para registrar -->
+                <button (click)="createReferenciaPer()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                    class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                    Registrar Capacitacion
+                </button>
 
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
-                    </div>
-                </div>
+                <!-- Botón para editar -->
+                <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                    class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                    Actualizar Capacitacion
+                </button>
+
+                <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
             </div>
         </div>
-        <!--/ Modal -->
-        <div class="col-md-12 col-lg-12">
+    </div>
+</div>
+<!--/ Modal -->
+
+
+<div class="card">
+    <div class="card-body collapse show">
+        <div class="col-md-12 col-lg-12 animate__animated animate__fadeIn animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
-                    Registrar Referencia</button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                    Registrar Capacitación
+                </button>
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show" id="collapse1">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-light">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
                             <th>NOMBRE</th>
-                            <th>TIPO DE CERTIFICADO</th>
-                            <th>FECHA DE INICIO</th>
-                            <th>FECHA DE FIN</th>
                             <th>INSTITUCIÓN</th>
-                            <th>HORAS</th>
+                            <th>TIPO DE CERTIFICADO</th>
+                            <th># DE HORAS</th>
+                            <th>FECHA INICIO</th>
+                            <th>FECHA FIN</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let capacitacion of capacitacion; let i = index">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>{{ capacitacion.horas }}</td>
-                            <td>{{ capacitacion.tipo_certificado }}</td>
-                            <td>{{ capacitacion.fecha_inicio | date:'shortDate' }}</td>
-                            <td>{{ capacitacion.fecha_fin | date:'shortDate' }}</td>
-                            <td>{{ capacitacion.institucion }}</td>
-                            <td>{{ capacitacion.nombre }}</td>
+                        <tr *ngFor="let capacitaciones of capacitacionList;">
+                            <th scope="row">{{capacitaciones.id}}</th>
+                            <td>{{capacitaciones.nombre}}</td>
+                            <td>{{capacitaciones.institucion}}</td>
+                            <td>{{capacitaciones.tipoCertificado}}</td>
+                            <td>{{capacitaciones.numHoras}}</td>
+                            <td>{{capacitaciones.fechaInicio}}</td>
+                            <td>{{capacitaciones.fechaFin}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
-                                <a (click)="onEditarClick(capacitacion)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" class="table-action mg-r-10"
-                                    [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked" href="#">
-                                    <i class="fa-regular fa-pen-to-square"></i>
+                                <a (click)="onEditarClick(capacitaciones.id)" data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
+                                    <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-                                <a (click)="onDeleteClick(i)" class="table-action ms-2 text-danger" href="#">
-                                    <i class="fa fa-trash"></i>
+                                <a (click)="onDeleteClick(capacitaciones.id!)" class="table-action ms-2 text-danger">
+                                    <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>
                         </tr>
@@ -166,5 +162,6 @@
                 </table>
             </div>
         </div>
+
     </div>
 </div>

@@ -14,11 +14,12 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CommonModule } from '@angular/common';
 import {PerfilUsuarioComponent} from '../app/pages/company/perfil-usuario/perfil-usuario.component';
 import {NuevoEmpresarioModalComponent} from '../app/pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 export function playerFactory() {
   return player;
 }
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgApexchartsModule,FormsModule,ReactiveFormsModule, CommonModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
   declarations: [
     AppComponent,
     LayoutBaseComponent,
