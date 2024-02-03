@@ -55,7 +55,6 @@ export class Empresas2Component {
   constructor(public bsModalRef: BsModalRef, private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService, private serviceempresario:EmpresarioService) { }
 
   ngOnInit(): void {
-    this.buscarEmpresass();
 
     this.ciudadSeleccionada = {
       id: 0,
@@ -97,12 +96,15 @@ export class Empresas2Component {
     this.serviceempresario.getEmpresario().subscribe(
       empresario => {
         this.empresariouser = empresario?.usuario;
+        this.buscarEmpresass();
+
         console.log('Empresario objeto ultra maximo:', empresario?.usuario);
       },
       error => console.error('Error al obtener el empresario:', error)
     );
   this.getCiudadIDName();
   this.getSectoresEmpresariales();
+
   }
 
 
@@ -279,7 +281,7 @@ export class Empresas2Component {
   }
 
   buscarEmpresass(){
-    this.empresaService.getEmpresas().subscribe(
+    this.empresaService.getEmpresasbyUser(this.empresariouser||'').subscribe(
       empresas => {
         this.empresass = empresas;
         console.log('Empresas obtenidas exitosamente:', empresas);

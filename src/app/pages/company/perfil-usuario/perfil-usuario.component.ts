@@ -37,15 +37,13 @@ export class PerfilUsuarioComponent {
     estado: false,
     puesto: '',
     anios: 0,
-    usuario: this.usuarios,
+    usuario: this.usuarios.nombre_usuario,
     email: '',
   };
+
   constructor(public bsModalRef: BsModalRef, private empresarioService: EmpresarioService, private usuarioService: UserService, private empresaService:EmpresaService) { }
   
   ngOnInit(): void {
-    if(this.existeempresario){
-      this.getEmpresario();
-    }
     this.usuarios = {
       clave: '',
       nombreUsuario: '',
@@ -69,9 +67,15 @@ export class PerfilUsuarioComponent {
       sitioweb: ''
     }
   this.obtenerUsuario();
+
   this.empresarioService.getEmpresario().subscribe(
     empresario => {
       this.empresariouser = empresario?.id || 0;
+      this.nuevoEmpresarioCarga.email = empresario?.email || '';
+      this.nuevoEmpresarioCarga.puesto = empresario?.puesto || '';
+
+      if (empresario){
+      }
       console.log('Empresario objeto ultra maximo:', empresario?.usuario);
     },
     error => console.error('Error al obtener el empresario:', error)
@@ -95,15 +99,8 @@ export class PerfilUsuarioComponent {
     });
   }
 
-  validatePerfilPerFields(): boolean {
-    if (!this.nuevoEmpresario.estado || !this.nuevoEmpresario.puesto || !this.nuevoEmpresario.anios || !this.nuevoEmpresario.email) {
-      return false;
-    }
-
-    return true;
-  }
   validatePerfilCargaPerFields(): boolean {
-    if (!this.nuevoEmpresarioCarga.estado || !this.nuevoEmpresarioCarga.puesto || !this.nuevoEmpresarioCarga.anios || !this.nuevoEmpresarioCarga.email) {
+    if (!this.nuevoEmpresarioCarga.puesto || !this.nuevoEmpresarioCarga.email) {
 
     return false;
     }
@@ -111,28 +108,10 @@ export class PerfilUsuarioComponent {
     return true;
   }
 
-  crearEmpresario() {
-    if (!this.validatePerfilPerFields()) {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
-      return;
-    }
-    this.calcularEdad();
-    this.empresarioService.createEmpresario(this.nuevoEmpresario).subscribe(
-      empresario => {
-        console.log('Empresario creado exitosamente:', empresario);
-        this.mostrarSweetAlert(true, 'El Empresario creado exitosamente.');
-
-      },
-      error => {
-        console.error('Error al crear empresario:', error)
-        this.mostrarSweetAlert(false, 'El Empresario no ha podido ser creado.');
-      }
-
-    );
-  }
-
   updateEmpresario() {
     console.log('Empresario a actualizar:', this.nuevoEmpresarioCarga);
+    console.log('Empresario a actualizar:', this.nuevoEmpresario);
+    
 
     if (!this.validatePerfilCargaPerFields()) {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
@@ -166,9 +145,6 @@ export class PerfilUsuarioComponent {
       },
       error => console.error('Error al obtener usuario:', error)
     );
-  }
-  getEmpresario(){
-    this.empresarioService.getEmpresarioById
   }
 
   getEmpresas() {

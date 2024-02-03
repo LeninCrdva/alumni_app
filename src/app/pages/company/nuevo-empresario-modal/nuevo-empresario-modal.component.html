@@ -1,15 +1,12 @@
 <div class="modal-header bg-primary">
-    <h4 class="modal-title" style="color: var(--white-color)">Complete informacion Empresario</h4>
-    <button type="button" class="close" (click)="cerrarModal()">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
+    <h4 class="modal-title" style="color: var(--white-color)">Complete informacion De Empresario</h4>
 </div>
 
 <div class="modal-body">
     <form [formGroup]="formularioEmpresario" (ngSubmit)="guardarEmpresario()" >
         <div class="form-group">
             <label for="estado" style="color: var(--alumni-color)">Estado:</label>
-            <input type="checkbox" id="estado" formControlName="estado" checked >
+            <input type="text" class="form-control" id="estado" formControlName="estado" value="{{usuarios.estado}}" [readOnly]="true">
         </div>
 
         <div class="form-group">
@@ -19,7 +16,7 @@
 
         <div class="form-group">
             <label for="anios" style="color: var(--alumni-color)">Años:</label>
-            <input type="number" class="form-control" id="anios" formControlName="anios" required>
+            <input type="number" class="form-control" id="anios" formControlName="anios" value="{{calcularEdad()}}" [readOnly]="true">
           
         </div>
 
@@ -34,7 +31,7 @@
             
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="!formularioEmpresario.valid">Guardar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 </div>
 
