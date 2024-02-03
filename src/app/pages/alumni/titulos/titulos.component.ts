@@ -105,9 +105,9 @@ export class TitulosComponent implements OnInit {
     this.tituloCarga.idgraduado = this.idGraduado;
 
     this.tituloService.updateTitulo(this.idEdit, this.tituloCarga).subscribe(
-      refeActualizado => {
-        console.log('Sector actualizado exitosamente:', refeActualizado);
-        this.titulo = refeActualizado;
+      titulosActualizado => {
+        console.log('Sector actualizado exitosamente:', titulosActualizado);
+        this.titulo = titulosActualizado;
         this.mostrarSweetAlert(true, 'El titulo se ha actualizado exitosamente.');
         this.loadTitulos();
       },

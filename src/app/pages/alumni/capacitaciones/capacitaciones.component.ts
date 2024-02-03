@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Capacitacion } from '../../../data/model/capacitacion';
-import { Graduado } from '../../../data/model/graduado';
-import { UserService } from '../../../data/service/UserService';
+import { Subject } from 'rxjs';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { CapacitacionService } from '../../../data/service/capacitacion.service';
-import { Usuario } from '../../../data/model/usuario';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-capacitaciones',
@@ -11,46 +11,87 @@ import { Usuario } from '../../../data/model/usuario';
   styleUrls: ['./capacitaciones.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class CapacitacionesComponent {
-  name: string | null = localStorage.getItem('name');
-  usuarios: Usuario | any = [];
-  
-  graduado: Graduado | any = [];
+  public cedula: string = '';
 
-  capacitacion: Capacitacion[] = [];
-  nuevoCapacitacion: Capacitacion = { horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', nombre: '', graduado: this.graduado };
-  nuevoCapacitacionCarga: Capacitacion = { id:0, horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', nombre: '', graduado: this.graduado };
-  nuevoCapacitacionEdit: Capacitacion = { id: 0, horas: 0, tipo_certificado: '', fecha_inicio: new Date(), fecha_fin: new Date(), institucion: '', nombre: '', graduado: this.graduado };
+  capacitacion: Capacitacion = { nombre: '', cedula: this.cedula, institucion: '', tipoCertificado: '', numHoras: 0, fechaInicio: new Date(), fechaFin: new Date() };
+  capacitacionCarga: Capacitacion = { id: 0, nombre: '', cedula: this.cedula, institucion: '', tipoCertificado: '', numHoras: 0, fechaInicio: new Date(), fechaFin: new Date() };
+  capacitacionList: Capacitacion[] = [];
 
   editarClicked = false;
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private capacitacionService: CapacitacionService, private usuarioService: UserService) { }
+  mensajeMostrado = false;
+  idEdit: number = 0;
+
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
+
+  constructor(public bsModalRef: BsModalRef, private capacitacionesService: CapacitacionService) { }
 
   ngOnInit(): void {
-    this.obtenerUsuario();
-    this.loadCapacitacion();
-  }
 
-  loadCapacitacion() {
-    this.capacitacionService.getCapacitaciones().subscribe(
-      capacitaciones => this.capacitacion = capacitaciones,
-      error => console.error(error)
-    );
-  }
-
-  createCapacitacion() {
-    this.editarClicked = false;
-    this.capacitacionService.createCapacitacion(this.nuevoCapacitacion).subscribe(
-      capacitaciones => {
-        console.log('Capacitación creada exitosamente:', capacitaciones);
-        this.loadCapacitacion();
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language: {
+        search: 'Buscar:',
+        searchPlaceholder: 'Buscar capacitación ...',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        paginate: {
+          first: 'Primera',
+          last: 'Última',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        },
+        lengthMenu: 'Mostrar _MENU_ registros por página',
+        zeroRecords: 'No se encontraron registros coincidentes'
       },
-      error => console.error('Error al crear la capacitación:', error)
+      lengthMenu: [10, 25, 50]
+    };
+
+    this.obtenerCedula();
+    this.loadData();
+  }
+
+  loadData() {
+    this.capacitacionesService.getCapacitaciones().subscribe(
+      capacitacion => {
+        this.capacitacionList = capacitacion;
+        console.log('Capacitaciones:', capacitacion);
+      },
+      (error: any) => console.error(error),
+      () => this.dtTrigger.next(null)
     );
   }
 
-  onEditarClick(capaciones: Capacitacion): void {
+  createReferenciaPer() {
+    this.capacitacion.cedula = this.cedula;
+
+    this.editarClicked = false;
+
+    this.capacitacionesService.createCapacitacion(this.capacitacion).subscribe(
+      referenciasP => {
+        console.log('Capacitación creada exitosamente:', referenciasP);
+        this.loadData();
+        this.mostrarSweetAlert(true, 'La capacitación se ha guardado exitosamente.');
+        this.mensajeMostrado = true;
+      },
+      error => {
+        console.error('Error al crear la Capacitación:', error)
+        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la capacitación.');
+      }
+    );
+  }
+
+  onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
-    this.nuevoCapacitacion = { ...capaciones };
+    this.capacitacionesService.getCapacitacionById(id).subscribe(
+      refe => this.capacitacionCarga = refe,
+      error => console.error(error)
+    )
+    this.idEdit = id;
   }
 
   onRegistrarClick(): void {
@@ -58,34 +99,61 @@ export class CapacitacionesComponent {
   }
 
   onUpdateClick() {
-    const id = this.nuevoCapacitacionCarga.id;
-    if (id !== undefined) {
-      this.capacitacionService.updateCapacitacion(id, this.nuevoCapacitacionCarga).subscribe(
-        refeActualizado => {
-          console.log('Capacitación actualizado exitosamente:', refeActualizado);
+    this.capacitacionCarga.cedula = this.cedula;
 
-          this.loadCapacitacion();
-        },
-        error => console.error('Error al actualizar el titulo:', error)
-      );
-    } else {
-      console.error('Error: El ID de la capacitación es undefined.');
+    this.capacitacionesService.updateCapacitacion(this.idEdit, this.capacitacionCarga).subscribe(
+      refeActualizado => {
+        this.capacitacion = refeActualizado;
+        this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
+        this.loadData();
+      },
+      error => {
+        this.mostrarSweetAlert(false, 'Error al actualizar la capacitación.');
+      }
+    );
+  }
+
+  onDeleteClick(id: number | undefined = 0) {
+    this.capacitacionesService.deleteCapacitacion(id).subscribe(
+      () => {
+        this.mostrarSweetAlert(true, 'La capacitacion se ha eliminado exitosamente.');
+        this.loadData();
+      },
+      error => {
+        this.mostrarSweetAlert(false, 'Error al eliminar la capacitación.');
+      }
+    );
+  }
+
+  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
+    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
+
+    Swal.fire({
+      icon: esExitoso ? 'success' : 'error',
+      title: titulo,
+      text: mensaje,
+      allowOutsideClick: !esExitoso,
+    }).then((result) => {
+      if (esExitoso || result.isConfirmed) {
+        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        this.bsModalRef.hide();
+      }
+    });
+  }
+
+  obtenerCedula() {
+    const userDataString = localStorage.getItem('user_data');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.cedula = userData.persona.cedula;
     }
   }
 
-  onDeleteClick(id: number) {
-
-  }
-
-  obtenerUsuario() {
-    this.usuarioService.getUsuarioByUsername(this.name ?? '').subscribe(
-      usuario => {
-        this.usuarios = usuario;
-        console.log('Usuario obtenido exitosamente:', this.usuarios);
-        this.nuevoCapacitacion.graduado = this.usuarios;
-        console.log('Usuario obtenido exitosamente:', this.nuevoCapacitacion.graduado);
-      },
-      error => console.error('Error al obtener usuario:', error)
-    );
+  cerrarModal() {
+    if (this.mensajeMostrado) {
+      this.bsModalRef.hide();
+    } else {
+      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
+    }
   }
 }
