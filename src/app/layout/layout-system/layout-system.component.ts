@@ -315,7 +315,7 @@ export class LayoutSystemComponent implements OnInit {
               ignoreBackdropClick: true,
               keyboard: false,
             };
-            // this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+             this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {

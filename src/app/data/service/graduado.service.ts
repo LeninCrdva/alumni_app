@@ -43,12 +43,12 @@ export class GraduadoService {
 
 
   checkGraduadoExists(nombre: string): Observable<boolean> {
-    return this.getGraduados().pipe(
+    return this.getGraduados2().pipe(
       tap(graduados => console.log('Administradores obtenidos:', graduados)),
       map(graduados => {
         const exists = graduados.some(gradu => 
-          gradu.usuario && gradu.usuario.nombre_usuario && 
-          gradu.usuario.nombre_usuario.toLowerCase() === nombre.toLowerCase()
+          gradu.usuario && gradu.usuario && 
+          gradu.usuario.toLowerCase() === nombre.toLowerCase()
         );
         console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
         return exists;

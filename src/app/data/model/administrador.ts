@@ -16,3 +16,11 @@ export class Administrador2 {
     'email': string;
     'usuario': Usuario;
 }
+
+export class Administrador3 {
+    id?: number;
+    'cargo': string;
+    'estado': boolean;
+    'email': string;
+    'usuario': string;
+}
