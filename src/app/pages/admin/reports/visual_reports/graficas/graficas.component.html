@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diagrama de Barras con CSS</title>
-  <link rel="stylesheet" href="graficas.component.css">
-</head>
-<body>
-
-  <div class="chart">
-    <div class="bar" style="height: 80px;"></div>
-    <div class="bar" style="height: 120px;"></div>
-    <div class="bar" style="height: 50px;"></div>
-    <div class="bar" style="height: 90px;"></div>
-    <div class="bar" style="height: 110px;"></div>
-    <div class="bar" style="height: 70px;"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <app-area-chart></app-area-chart>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <app-pie-chart></app-pie-chart>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="label">Datos de Alumni</div>
-
-</body>
-</html>
+</div>
