@@ -34,6 +34,9 @@ export class OfertasLaboralesComponent {
   ofertaslaboraleslist: ofertaLaboralDTO[] = [];
   empresas: Empresa[] = [];
   fechaPublicacion: String = '';
+  name: string | null = localStorage.getItem('name');
+
+
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
@@ -93,14 +96,14 @@ export class OfertasLaboralesComponent {
   }
 
   validateOfertasPerFields(): boolean {
-    if (!this.ofertaslaborales.salario || !this.ofertaslaborales.fechaCierre || !this.ofertaslaborales.fechaPublicacion|| !this.ofertaslaborales.cargo || !this.ofertaslaborales.experiencia || !this.ofertaslaborales.fechaApertura || !this.ofertaslaborales.areaConocimiento || !this.ofertaslaborales.estado || !this.ofertaslaborales.nombreEmpresa) {
+    if (!this.ofertaslaborales.salario || !this.ofertaslaborales.fechaCierre || !this.ofertaslaborales.cargo || !this.ofertaslaborales.experiencia || !this.ofertaslaborales.fechaApertura || !this.ofertaslaborales.areaConocimiento || !this.ofertaslaborales.nombreEmpresa) {
       return false;
     }
 
     return true;
   }
   validateOfertasCargaPerFields(): boolean {
-    if (!this.ofertaslaboralesCarga.salario || !this.ofertaslaboralesCarga.fechaCierre || !this.ofertaslaboralesCarga.fechaPublicacion|| !this.ofertaslaboralesCarga.cargo || !this.ofertaslaboralesCarga.experiencia || !this.ofertaslaboralesCarga.fechaApertura || !this.ofertaslaboralesCarga.areaConocimiento || !this.ofertaslaboralesCarga.estado || !this.ofertaslaboralesCarga.nombreEmpresa) {
+    if (!this.ofertaslaboralesCarga.salario || !this.ofertaslaboralesCarga.fechaCierre || !this.ofertaslaboralesCarga.cargo || !this.ofertaslaboralesCarga.experiencia || !this.ofertaslaboralesCarga.fechaApertura || !this.ofertaslaboralesCarga.areaConocimiento || !this.ofertaslaboralesCarga.nombreEmpresa) {
       return false;
     }
 
@@ -117,10 +120,10 @@ export class OfertasLaboralesComponent {
 
     this.fechaPublicacion = formattedDate;
     if (this.editarClicked == true) {
-      this.ofertaslaborales.fechaPublicacion = new Date(formattedDate);
-
-    } else {
       this.ofertaslaboralesCarga.fechaPublicacion = new Date(formattedDate);
+      console.log('Fecha de publicacion', this.ofertaslaborales.fechaPublicacion);
+    } else {
+      this.ofertaslaborales.fechaPublicacion = new Date(formattedDate);
     }
     console.log(formattedDate);
   }
@@ -141,7 +144,7 @@ export class OfertasLaboralesComponent {
   }
 
   getAllOfertasLaborales() {
-    this.ofertalaburoService.getOfertasLaborales().subscribe(
+    this.ofertalaburoService.getOfertasLaboralesByEmpresario(this.name || "").subscribe(
       ofertas => this.ofertaslaboraleslist = ofertas,
       error => console.error(error)
     )
