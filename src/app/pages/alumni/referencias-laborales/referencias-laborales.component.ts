@@ -116,7 +116,7 @@ export class ReferenciasLaboralesComponent {
 
     this.referenciaProService.updateReferenciasProfesionales(this.idEdit, this.referenciaProfesionalCarga).subscribe(
       refeActualizado => {
-        console.log('Sector actualizado exitosamente:', refeActualizado);
+        console.log('Referencia personal actualizado exitosamente:', refeActualizado);
         this.referencia_profesional = refeActualizado;
         this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
         this.loadData();
