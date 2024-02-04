@@ -19,7 +19,7 @@ export class ExperienciaComponent {
 
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  
+
   idEdit: number = 0;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
@@ -32,7 +32,7 @@ export class ExperienciaComponent {
 
   ngOnInit(): void {
     this.obtenerCedula();
-    this.loadExperiencias();
+    this.loadData();
     this.setupDtOptions();
   }
 
@@ -61,10 +61,10 @@ export class ExperienciaComponent {
 
   // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
 
-  loadExperiencias() {
+  loadData() {
     this.experienciaService.getExperiencias().subscribe(
-      experiencia => {
-        this.experienciaList = experiencia;
+      result => {
+        this.experienciaList = result;
       },
       (error: any) => console.error(error),
       () => this.dtTrigger.next(null)
@@ -80,22 +80,20 @@ export class ExperienciaComponent {
   onSubmit() {
     if (this.editarClicked) {
       this.onUpdateClick(); // Lógica de actualización
-      console.log('Actualizando experiencia...');
     } else {
-      this.createExperiencia(); // Lógica de creación
-      console.log('Creando experiencia...');
+      this.createNewData(); // Lógica de creación
     }
   }
 
-  createExperiencia() {
+  createNewData() {
     this.experiencia.cedulaGraduado = this.cedula;
     console.log('Cedula:', this.cedula);
     this.editarClicked = false;
 
     this.experienciaService.createExperiencia(this.experiencia).subscribe(
-      experiencia => {
-        console.log('Experiencia creada exitosamente:', experiencia);
-        this.loadExperiencias();
+      result => {
+        console.log('Experiencia creada exitosamente:', result);
+        this.loadData();
         this.mostrarSweetAlert(true, 'La experiencia se ha guardado exitosamente.');
       },
       error => {
@@ -109,8 +107,8 @@ export class ExperienciaComponent {
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
     this.experienciaService.getExperienciaById(id).subscribe(
-      exp => {
-        this.experienciaCarga = exp;
+      result => {
+        this.experienciaCarga = result;
         console.log('ID de la experiencia:', this.experienciaCarga.institucionNombre);
       },
       error => console.error(error)
@@ -123,10 +121,10 @@ export class ExperienciaComponent {
     this.experienciaCarga.cedulaGraduado = this.cedula;
 
     this.experienciaService.updateExperiencia(this.idEdit, this.experienciaCarga).subscribe(
-      expActualizado => {
-        console.log('Experiencia actualizada exitosamente:', expActualizado);
+      result => {
+        console.log('Experiencia actualizada exitosamente:', result);
         this.mostrarSweetAlert(true, 'La experiencia se ha actualizado exitosamente.');
-        this.loadExperiencias();
+        this.loadData();
       },
       error => {
         console.error('Error al actualizar la experiencia:', error);
@@ -140,7 +138,7 @@ export class ExperienciaComponent {
       () => {
         console.log('Experiencia eliminada exitosamente');
         this.mostrarSweetAlert(true, 'La experiencia se ha eliminado exitosamente.');
-        this.loadExperiencias();
+        this.loadData();
       },
       error => {
         console.error('Error al eliminar la experiencia:', error);

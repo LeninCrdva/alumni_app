@@ -19,7 +19,7 @@
             </div>
 
             <div class="modal-body">
-                <form #experienciaForm="ngForm" (ngSubmit)="onSubmit()">
+                <form #validateForm="ngForm" (ngSubmit)="onSubmit()">
                     <div class="form-layout form-layout-1">
                         <div class="row mg-b-25" data-parsley-validate>
                             <div class="col-lg-6">
@@ -29,8 +29,9 @@
                                     <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
                                         id="cargo"
                                         [(ngModel)]="editarClicked ? experienciaCarga.cargo : experiencia.cargo"
+                                        (ngModelChange)="editarClicked ? experienciaCarga.cargo = $event : experiencia.cargo = $event"
                                         required (keypress)="allowOnlyLetters($event)">
-                                    <div *ngIf="experienciaForm.controls['cargo'].invalid && experienciaForm.controls['cargo'].dirty"
+                                    <div *ngIf="validateForm.controls['cargo'].invalid && validateForm.controls['cargo'].dirty"
                                         class="text-danger">
                                         El cargo es obligatorio y debe contener solo letras.
                                     </div>
@@ -41,8 +42,9 @@
                                     <label class="form-control-label active" for="duracion">DURACIÓN: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="duracion"
-                                        placeholder="Ingrese la duración" id="duracion"
+                                        placeholder="Ingrese la duración"
                                         [(ngModel)]="editarClicked ? experienciaCarga.duracion : experiencia.duracion"
+                                        (ngModelChange)="editarClicked ? experienciaCarga.duracion = $event : experiencia.duracion = $event"
                                         required>
                                 </div>
                             </div>
@@ -54,8 +56,9 @@
                                     <label class="form-control-label active" for="institucion">INSTITUCIÓN: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="institucion"
-                                        placeholder="Ingrese la institución" id="institucion"
+                                        placeholder="Ingrese la institución"
                                         [(ngModel)]="editarClicked ? experienciaCarga.institucionNombre : experiencia.institucionNombre"
+                                        (ngModelChange)="editarClicked ? experienciaCarga.institucionNombre = $event : experiencia.institucionNombre = $event"
                                         required>
                                 </div>
                             </div>
@@ -64,8 +67,9 @@
                                     <label class="form-control-label active" for="actividad">ACTIVIDAD: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="actividad"
-                                        placeholder="Ingrese la actividad" id="actividad"
+                                        placeholder="Ingrese la actividad"
                                         [(ngModel)]="editarClicked ? experienciaCarga.actividad : experiencia.actividad"
+                                        (ngModelChange)="editarClicked ? experienciaCarga.actividad = $event : experiencia.actividad = $event"
                                         required>
                                 </div>
                             </div>
@@ -77,17 +81,19 @@
                                     <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="area_trabajo"
-                                        placeholder="Ingrese la area de trabajo" id="area_trabajo"
+                                        placeholder="Ingrese la area de trabajo"
                                         [(ngModel)]="editarClicked ? experienciaCarga.area_trabajo : experiencia.area_trabajo"
+                                        (ngModelChange)="editarClicked ? experienciaCarga.area_trabajo = $event : experiencia.area_trabajo = $event"
                                         required>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
-                            [class.btn-primary]="editarClicked" [disabled]="experienciaForm.invalid" data-bs-dismiss="modal">
+                            [class.btn-primary]="editarClicked" [disabled]="validateForm.invalid"
+                            data-bs-dismiss="modal">
                             {{ editarClicked ? 'Actualizar Experiencia' : 'Registrar Experiencia' }}
                         </button>
 

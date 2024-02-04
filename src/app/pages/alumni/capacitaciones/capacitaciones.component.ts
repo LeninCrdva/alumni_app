@@ -16,27 +16,35 @@ export class CapacitacionesComponent {
   capacitacion: Capacitacion = { nombre: '', cedula: this.cedula, institucion: '', tipoCertificado: '', numHoras: 0, fechaInicio: new Date(), fechaFin: new Date() };
   capacitacionCarga: Capacitacion = { id: 0, nombre: '', cedula: this.cedula, institucion: '', tipoCertificado: '', numHoras: 0, fechaInicio: new Date(), fechaFin: new Date() };
   capacitacionList: Capacitacion[] = [];
-
   editarClicked = false;
+
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  mensajeMostrado = false;
   idEdit: number = 0;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private capacitacionesService: CapacitacionService) { }
+  constructor(private capacitacionesService: CapacitacionService) { }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
   ngOnInit(): void {
+    this.obtenerCedula();
+    this.loadData();
+    this.setupDtOptions();
+  }
 
+  setupDtOptions() {
     this.dtoptions = {
       pagingType: 'full_numbers',
       searching: true,
       lengthChange: true,
       language: {
         search: 'Buscar:',
-        searchPlaceholder: 'Buscar capacitación ...',
+        searchPlaceholder: 'Buscar capacitación...',
         info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         paginate: {
@@ -50,33 +58,43 @@ export class CapacitacionesComponent {
       },
       lengthMenu: [10, 25, 50]
     };
-
-    this.obtenerCedula();
-    this.loadData();
   }
+
+  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
 
   loadData() {
     this.capacitacionesService.getCapacitaciones().subscribe(
       capacitacion => {
         this.capacitacionList = capacitacion;
-        console.log('Capacitaciones:', capacitacion);
       },
       (error: any) => console.error(error),
       () => this.dtTrigger.next(null)
     );
   }
 
-  createReferenciaPer() {
+  // NOTE: CRUD EVENTS
+  onRegistrarClick(): void {
+    this.editarClicked = false;
+  }
+
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick(); // Lógica de actualización
+    } else {
+      this.createExperiencia(); // Lógica de creación
+    }
+  }
+
+  createExperiencia() {
     this.capacitacion.cedula = this.cedula;
 
     this.editarClicked = false;
 
     this.capacitacionesService.createCapacitacion(this.capacitacion).subscribe(
-      referenciasP => {
-        console.log('Capacitación creada exitosamente:', referenciasP);
+      newData => {
+        console.log('Capacitación creada exitosamente:', newData);
         this.loadData();
         this.mostrarSweetAlert(true, 'La capacitación se ha guardado exitosamente.');
-        this.mensajeMostrado = true;
       },
       error => {
         console.error('Error al crear la Capacitación:', error)
@@ -87,6 +105,7 @@ export class CapacitacionesComponent {
 
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
+
     this.capacitacionesService.getCapacitacionById(id).subscribe(
       refe => this.capacitacionCarga = refe,
       error => console.error(error)
@@ -94,16 +113,12 @@ export class CapacitacionesComponent {
     this.idEdit = id;
   }
 
-  onRegistrarClick(): void {
-    this.editarClicked = false;
-  }
-
   onUpdateClick() {
     this.capacitacionCarga.cedula = this.cedula;
 
     this.capacitacionesService.updateCapacitacion(this.idEdit, this.capacitacionCarga).subscribe(
-      refeActualizado => {
-        this.capacitacion = refeActualizado;
+      updateData => {
+        this.capacitacion = updateData;
         this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
         this.loadData();
       },
@@ -125,6 +140,35 @@ export class CapacitacionesComponent {
     );
   }
 
+  // NOTE: VALIDACIONES
+
+  validarNumero(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyLetters(event: KeyboardEvent): void {
+    const inputChar = String.fromCharCode(event.charCode);
+    const lettersRegex = /^[a-zA-Z]+$/;
+
+    if (!lettersRegex.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyNumbers(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
 
@@ -136,7 +180,6 @@ export class CapacitacionesComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        this.bsModalRef.hide();
       }
     });
   }
@@ -146,14 +189,6 @@ export class CapacitacionesComponent {
     if (userDataString) {
       const userData = JSON.parse(userDataString);
       this.cedula = userData.persona.cedula;
-    }
-  }
-
-  cerrarModal() {
-    if (this.mensajeMostrado) {
-      this.bsModalRef.hide();
-    } else {
-      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
     }
   }
 }

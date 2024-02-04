@@ -28,7 +28,7 @@ export class ExperienciaService {
   }
 
   updateExperiencia(id: any, experiencia: Experiencia): Observable<Experiencia> {
-    return this.http.put<Experiencia>(`${this.urlEndPoint}/${id}`, experiencia, { headers: this.httpHeaders });
+    return this.http.put<Experiencia>(`${this.urlEndPoint}/update/${id}`, experiencia, { headers: this.httpHeaders });
   }
 
   deleteExperiencia(id: any): Observable<void> {

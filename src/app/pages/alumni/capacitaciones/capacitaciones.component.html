@@ -19,7 +19,7 @@
             </div>
 
             <div class="modal-body">
-                <form>
+                <form #validateForm="ngForm" (ngSubmit)="onSubmit()">
                     <div class="form-layout form-layout-1">
                         <div class="row mg-b-25">
                             <div class="col-lg-6">
@@ -29,6 +29,7 @@
                                     <input class="form-control" type="text" name="nombre"
                                         placeholder="Ingrese el nombre"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.nombre : capacitacion.nombre"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.nombre : capacitacion.nombre"
                                         required>
                                 </div>
                             </div>
@@ -87,24 +88,19 @@
                         </div>
                     </div>
 
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                            [class.btn-primary]="editarClicked" [disabled]="validateForm.invalid"
+                            data-bs-dismiss="modal">
+                            {{ editarClicked ? 'Actualizar Capacitación' : 'Registrar Capacitación' }}
+                        </button>
+
+                        <button type="button" data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">
+                            Cancelar
+                        </button>
+                    </div>
                 </form>
-            </div>
-
-            <div class="modal-footer">
-
-                <!-- Botón para registrar -->
-                <button (click)="createReferenciaPer()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                    class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                    Registrar Capacitacion
-                </button>
-
-                <!-- Botón para editar -->
-                <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                    class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                    Actualizar Capacitacion
-                </button>
-
-                <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
             </div>
         </div>
     </div>
@@ -114,6 +110,7 @@
 
 <div class="card">
     <div class="card-body collapse show">
+
         <div class="col-md-12 col-lg-12 animate__animated animate__fadeIn animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
