@@ -29,7 +29,7 @@
                                     <input class="form-control" type="text" name="nombre"
                                         placeholder="Ingrese el nombre"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.nombre : capacitacion.nombre"
-                                        (ngModelChange)="editarClicked ? capacitacionCarga.nombre : capacitacion.nombre"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.nombre = $event : capacitacion.nombre = $event"
                                         required>
                                 </div>
                             </div>
@@ -40,6 +40,7 @@
                                     <input class="form-control wd-250" type="number" name="numHoras"
                                         placeholder="Ingrese la cantidad de horas"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.numHoras : capacitacion.numHoras"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.numHoras = $event : capacitacion.numHoras = $event"
                                         required>
                                 </div>
                             </div>
@@ -51,6 +52,7 @@
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="date" name="fechaInicio"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.fechaInicio : capacitacion.fechaInicio"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.fechaInicio = $event : capacitacion.fechaInicio = $event"
                                         required>
                                 </div>
                             </div>
@@ -60,6 +62,7 @@
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="date" name="fechaFin"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.fechaFin : capacitacion.fechaFin"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.fechaFin = $event : capacitacion.fechaFin = $event"
                                         required>
                                 </div>
                             </div>
@@ -72,6 +75,7 @@
                                     <input class="form-control" type="text" name="institucion"
                                         placeholder="Ingrese la institución"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.institucion : capacitacion.institucion"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.institucion = $event : capacitacion.institucion = $event"
                                         required>
                                 </div>
                             </div>
@@ -82,6 +86,7 @@
                                     <input class="form-control wd-250" type="text" name="tipoCertificado"
                                         placeholder="Ingrese el tipo de certificado"
                                         [(ngModel)]="editarClicked ? capacitacionCarga.tipoCertificado : capacitacion.tipoCertificado"
+                                        (ngModelChange)="editarClicked ? capacitacionCarga.tipoCertificado = $event : capacitacion.tipoCertificado = $event"
                                         required>
                                 </div>
                             </div>
