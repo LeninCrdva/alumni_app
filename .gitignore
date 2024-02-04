@@ -43,3 +43,6 @@ Thumbs.db
 src/app/app-routing.module.ts
 src/app/app.module.ts
 src/app/app-routing.module.ts
+angular.json
+package-lock.json
+package.json
