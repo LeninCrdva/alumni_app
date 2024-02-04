@@ -7,85 +7,82 @@
     </div>
 </section>
 
-<div class="card">
-    <div class="card-body collapse show" id="collapse1">
-        <!-- Modal -->
-        <div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1"
-            role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
-                        class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Referencia Personal' : 'Crear Referencia Personal'">
-                        </h5>
-                    </div>
+<!-- Modal -->
+<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+                <h5 [innerText]="editarClicked ? 'Modificar Referencia Personal' : 'Crear Referencia Personal'">
+                </h5>
+            </div>
 
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Nombre: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="nombre"
-                                                placeholder="Ingrese el nombre" id="nombre"
-                                                [(ngModel)]="editarClicked ? referenciaPersonalCarga.nombreReferencia : referencia_personal.nombreReferencia"
-                                                (ngModelChange)="editarClicked ? referenciaPersonalCarga.nombreReferencia = $event : referencia_personal.nombreReferencia = $event"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">EMAIL: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion"
-                                                placeholder="Ingrese la email" id="email"
-                                                [(ngModel)]="editarClicked ? referenciaPersonalCarga.email : referencia_personal.email"
-                                                (ngModelChange)="editarClicked ? referenciaPersonalCarga.email = $event : referencia_personal.email = $event"
-                                                required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Telefono: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="telefono"
-                                                placeholder="Ingrese el telefono" id="telefono"
-                                                [(ngModel)]="editarClicked ? referenciaPersonalCarga.telefono : referencia_personal.telefono"
-                                                (ngModelChange)="editarClicked ? referenciaPersonalCarga.telefono = $event : referencia_personal.telefono = $event"
-                                                required>
-                                        </div>
-                                    </div>
+            <div class="modal-body">
+                <form #validateForm="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25" data-parsley-validate>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Nombre: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="nombre"
+                                        placeholder="Ingrese el nombre"
+                                        [(ngModel)]="editarClicked ? referenciaPersonalCarga.nombreReferencia : referencia_personal.nombreReferencia"
+                                        (ngModelChange)="editarClicked ? referenciaPersonalCarga.nombreReferencia = $event : referencia_personal.nombreReferencia = $event"
+                                        required>
                                 </div>
                             </div>
-                        </form>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active">EMAIL: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="ubicacion"
+                                        placeholder="Ingrese la email"
+                                        [(ngModel)]="editarClicked ? referenciaPersonalCarga.email : referencia_personal.email"
+                                        (ngModelChange)="editarClicked ? referenciaPersonalCarga.email = $event : referencia_personal.email = $event"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mg-b-25 my-3" data-parsley-validate>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Telefono: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="telefono"
+                                        placeholder="Ingrese el telefono"
+                                        [(ngModel)]="editarClicked ? referenciaPersonalCarga.telefono : referencia_personal.telefono"
+                                        (ngModelChange)="editarClicked ? referenciaPersonalCarga.telefono = $event : referencia_personal.telefono = $event"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
-
-                        <!-- Botón para registrar -->
-                        <button (click)="createReferenciaPer()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                            Registrar Experiencia
+                        <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                            [class.btn-primary]="editarClicked" [disabled]="validateForm.invalid"
+                            data-bs-dismiss="modal">
+                            {{ editarClicked ? 'Actualizar Referencia Personal' : 'Registrar Referencia Personal' }}
                         </button>
 
-                        <!-- Botón para editar -->
-                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Actualizar Experiencia
+                        <button type="button" data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">
+                            Cancelar
                         </button>
-
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-        <!--/ Modal -->
-        <div class="col-md-12 col-lg-12 animate__animated animate__bounce animate__fast">
+    </div>
+</div>
+<!--/ Modal -->
+
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div class="col-md-12 col-lg-12 animate__animated animate__fadeIn animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
@@ -94,14 +91,13 @@
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show animate__animated animate__bounce animate__fast">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
-                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                <table #tablaReset datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered custom-table">
                     <thead class="bg-dark text-white">
                         <tr>
-                            <th>#</th>
-                            <th>NOMBRE</th>
+                            <th>#</th><th>NOMBRE</th>
                             <th>TELEFONO</th>
                             <th>EMAIL</th>
                             <th class="text-center w-100px">Acciones</th>
@@ -113,12 +109,12 @@
                             <td>{{referencia_per.nombreReferencia}}</td>
                             <td>{{referencia_per.telefono}}</td>
                             <td>{{referencia_per.email}}</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
+                            <td class="text-center table-actions align-middle justify-content-center">
                                 <a (click)="onEditarClick(referencia_per.id)" data-bs-toggle="modal"
                                     data-bs-target="#m_modal_4" class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-                                <a (click)="onDeleteClick(referencia_per.id!)" class="table-action ms-2 text-danger">
+                                <a (click)="onDeleteClick(referencia_per.id)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>

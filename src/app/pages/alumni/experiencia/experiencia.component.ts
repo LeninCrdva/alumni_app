@@ -86,7 +86,6 @@ export class ExperienciaComponent {
 
   createNewData() {
     this.experiencia.cedulaGraduado = this.cedula;
-    console.log('Cedula:', this.cedula);
     this.editarClicked = false;
 
     this.experienciaService.createExperiencia(this.experiencia).subscribe(
@@ -97,7 +96,6 @@ export class ExperienciaComponent {
       },
       error => {
         console.error('Error al crear la experiencia:', error);
-        // Muestra un mensaje de error en la interfaz de usuario
         this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la experiencia. Por favor, verifica los detalles e intenta nuevamente.');
       }
     );

@@ -27,12 +27,12 @@ export class ReferenciaProfesionalService {
     return this.http.get<Referencias_profesionales>(`${this.urlEndPoint}/${id}`)
   }
 
-  updateReferenciasPersonales(id: any, referencias_profesionales: Referencias_profesionales): Observable<Referencias_profesionales> {
+  updateReferenciasProfesionales(id: number, referencias_profesionales: Referencias_profesionales): Observable<Referencias_profesionales> {
     const url = `${this.urlEndPoint}/${id}`;
-    return this.http.put<Referencias_profesionales>(url, referencias_profesionales, { headers: this.httpHeaders });
+    return this.http.put<Referencias_profesionales>(url, referencias_profesionales);
   }
 
-  deleteReferenciasPersonales(id: any): Observable<void> {
+  deleteReferenciasProfesionales(id: any): Observable<void> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.delete<void>(url, { headers: this.httpHeaders });
   }

@@ -7,85 +7,84 @@
     </div>
 </section>
 
-<div class="card animate__animated animate__bounce animate__fast">
-    <div class="card-body collapse show" id="collapse1">
-        <!-- Modal -->
-        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
-                        class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Referencia Laboral' : 'Crear Referencia Laboral'">
-                        </h5>
-                    </div>
+<!-- Modal -->
+<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+                <h5 [innerText]="editarClicked ? 'Modificar Referencia Laboral' : 'Crear Referencia Laboral'">
+                </h5>
+            </div>
 
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Nombre: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="nombre"
-                                                placeholder="Ingrese el nombre" id="nombre"
-                                                [(ngModel)]="editarClicked ? nuevoReferenciaProfesionalCarga.nombreReferencia : nuevoReferenciaProfesional.nombreReferencia"
-                                                (ngModelChange)="editarClicked ? nuevoReferenciaProfesionalCarga.nombreReferencia = $event : nuevoReferenciaProfesional.nombreReferencia = $event"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">INSTITUCIÓN: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="ubicacion"
-                                                placeholder="Ingrese el nombre de la institucion" id="institucion"
-                                                [(ngModel)]="editarClicked ? nuevoReferenciaProfesionalCarga.nombreInstitucion : nuevoReferenciaProfesional.nombreInstitucion"
-                                                (ngModelChange)="editarClicked ? nuevoReferenciaProfesionalCarga.nombreInstitucion = $event : nuevoReferenciaProfesional.nombreInstitucion = $event"
-                                                required>
-                                        </div>
+            <div class="modal-body">
+                <form #validateForm="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="form-layout form-layout-1">
+                        <div class="form-layout form-layout-1">
+                            <div class="row mg-b-25" data-parsley-validate>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label active" for="nombre">Nombre: <span
+                                                class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="nombre"
+                                            placeholder="Ingrese el nombre"
+                                            [(ngModel)]="editarClicked ? referenciaProfesionalCarga.nombre : referencia_profesional.nombre"
+                                            (ngModelChange)="editarClicked ? referenciaProfesionalCarga.nombre = $event : referencia_profesional.nombre = $event"
+                                            required>
                                     </div>
                                 </div>
-                                <div class="row mg-b-25 my-3" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">EMAIL: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="email"
-                                                placeholder="Ingrese el correo" id="email"
-                                                [(ngModel)]="editarClicked ? nuevoReferenciaProfesionalCarga.email : nuevoReferenciaProfesional.email"
-                                                (ngModelChange)="editarClicked ? nuevoReferenciaProfesionalCarga.email = $event : nuevoReferenciaProfesional.email = $event"
-                                                required>
-                                        </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label active" for="institucion">INSTITUCIÓN: <span
+                                                class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="institucion"
+                                            placeholder="Ingrese el nombre de la institucion"
+                                            [(ngModel)]="editarClicked ? referenciaProfesionalCarga.institucion : referencia_profesional.institucion"
+                                            (ngModelChange)="editarClicked ? referenciaProfesionalCarga.institucion = $event : referencia_profesional.institucion = $event"
+                                            required>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                            <div class="row mg-b-25 my-3" data-parsley-validate>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label active" for="email">EMAIL: <span
+                                                class="tx-danger">*</span></label>
+                                        <input class="form-control" type="text" name="email"
+                                            placeholder="Ingrese el correo"
+                                            [(ngModel)]="editarClicked ? referenciaProfesionalCarga.email : referencia_profesional.email"
+                                            (ngModelChange)="editarClicked ? referenciaProfesionalCarga.email = $event : referencia_profesional.email = $event"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
-
-                        <!-- Botón para registrar -->
-                        <button (click)="createReferenciaPro()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                            Registrar Experiencia
+                        <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                            [class.btn-primary]="editarClicked" [disabled]="validateForm.invalid"
+                            data-bs-dismiss="modal">
+                            {{ editarClicked ? 'Actualizar Referencia Laboral' : 'Registrar Referencia Laboral' }}
                         </button>
 
-                        <!-- Botón para editar -->
-                        <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Actualizar Experiencia
+                        <button type="button" data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">
+                            Cancelar
                         </button>
-
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-        <!--/ Modal -->
-        <div class="col-md-12 col-lg-12">
+    </div>
+</div>
+<!--/ Modal -->
+
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div class="col-md-12 col-lg-12 animate__animated animate__fadeIn animate__fast">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
@@ -94,9 +93,9 @@
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
-                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                <table #tablaReset datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered custom-table">
                     <thead class="bg-dark text-white">
                         <tr>
@@ -108,17 +107,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let referencia_pro of referencia_profesional;">
+                        <tr *ngFor="let referencia_pro of referenciaProfesionalList;">
                             <th scope="row">{{referencia_pro.id}}</th>
-                            <td>{{referencia_pro.nombreInstitucion}}</td>
-                            <td>{{referencia_pro.nombreInstitucion}}</td>
+                            <td>{{referencia_pro.nombre}}</td>
+                            <td>{{referencia_pro.institucion}}</td>
                             <td>{{referencia_pro.email}}</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
+                            <td class="text-center table-actions align-middle justify-content-center">
                                 <a (click)="onEditarClick(referencia_pro.id)" data-bs-toggle="modal"
                                     data-bs-target="#m_modal_4" class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-                                <a (click)="onDeleteClick(referencia_pro.id!)" class="table-action ms-2 text-danger">
+                                <a (click)="onDeleteClick(referencia_pro.id)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>
