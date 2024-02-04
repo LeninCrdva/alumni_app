@@ -1,9 +1,16 @@
 <a name="readme-top"></a>
 <!-- PROJECT SHIELDS -->
 
+![ANGULAR](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![SPRING](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![JAVA](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![PLSQL](https://img.shields.io/badge/PLSQL-F80000?style=for-the-badge&logo=oracle&logoColor=black)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![BOOTSTRAP](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![MYSQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+![TS](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![SWAGGER](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
+![AMAZON](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
+![ADOBEXD](https://img.shields.io/badge/Adobe%20XD-470137?style=for-the-badge&logo=Adobe%20XD&logoColor=#FF61F6)
+
 <br />
 <div align="center">
   <a href="https://www.tecazuay.edu.ec/">
@@ -21,7 +28,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 📖 **Acerca del Proyecto**
-Alumni es una aplicación web desarrollada como proyecto final para la materia de Tendencias de Programación. La plataforma está diseñada para el registro de graduados de un instituto llamado TecAzuay, ubicado en Cuenca, Ecuador. La aplicación incluye tres tipos de perfiles: Alumni, Empresario y Admin.
+Alumni es una aplicación web desarrollada como proyecto final para la materia de Tendencias de Programación. La plataforma fue creada para simplificar y dar vida al proceso de registro de graduados del prestigioso instituto TecAzuay, ubicado en Cuenca, Ecuador. La aplicación incluye tres tipos de perfiles: Alumni, Empresario y Admin.
 
 - **Alumni:** Puede registrar información personal, ubicación, títulos académicos, experiencias laborales, referencias personales y postulaciones.
   
