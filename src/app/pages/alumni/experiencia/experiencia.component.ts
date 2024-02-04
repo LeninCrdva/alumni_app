@@ -31,9 +31,9 @@ export class ExperienciaComponent {
   }
 
   ngOnInit(): void {
+    this.setupDtOptions();
     this.obtenerCedula();
     this.loadData();
-    this.setupDtOptions();
   }
 
   setupDtOptions() {
