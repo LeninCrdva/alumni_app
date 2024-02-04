@@ -37,6 +37,10 @@
                 aria-describedby="passwordError">
               <label for="" class="form-label">Ingresa tu contraseña</label>
               <i class="ri-lock-line form-icon"></i>
+              <span (click)="togglePasswordVisibility()" class="toggle-password">
+                <i class="ri-eye-fill" *ngIf="passwordVisible"></i>
+                <i class="ri-eye-off-fill" *ngIf="!passwordVisible"></i>
+              </span>
             </div>
             
             <div id="passwordError" class="text-danger"

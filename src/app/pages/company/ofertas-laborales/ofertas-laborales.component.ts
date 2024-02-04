@@ -7,6 +7,8 @@ import { ofertaLaboralDTO } from '../../../Models/ofertaLaboralDTO';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
+import { Graduado } from '../../../data/model/graduado';
+
 
 
 @Component({
@@ -34,7 +36,7 @@ export class OfertasLaboralesComponent {
   empresas: Empresa[] = [];
   fechaPublicacion: String = '';
   name: string | null = localStorage.getItem('name');
-
+  graduados: Graduado[] = [];
 
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
@@ -80,7 +82,16 @@ export class OfertasLaboralesComponent {
 
     };
   }
-
+  listpostulantes(idoferta: number | undefined) {
+    this.ofertalaburoService.getGraduadosByOfertaLaboral(idoferta||0).subscribe(
+      graduadoss => {
+        this.graduados = graduadoss;
+        console.log('agraduados', this.graduados);
+        
+      }
+     
+    )
+  }
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
 
@@ -145,12 +156,26 @@ export class OfertasLaboralesComponent {
     )
   }
 
-  getAllOfertasLaborales() {
-    this.ofertalaburoService.getOfertasLaboralesByNameEmpresario(this.name || "").subscribe(
-      ofertas => this.ofertaslaboraleslist = ofertas,
-      error => console.error(error)
-    )
+  setIDGraduado(id: number | undefined = 0){
+    localStorage.setItem('idGraduado', id.toString());
   }
+  selectedRows: boolean[] = [];
+  sendSelectedIDs() {
+       const selectedIDs = this.graduados
+          .filter((graduado, index) => this.selectedRows[index])
+          .map(graduado => graduado.id);
+  
+      // Now you have an array of 'number' IDs
+      console.log(selectedIDs);
+  }
+  contratarGraduado(){}
+  getAllOfertasLaborales() {
+
+    this.ofertalaburoService.OfertasLaborales(this.name||"").subscribe(
+  ofertas => this.ofertaslaboraleslist = ofertas,
+  error => console.error(error)
+)
+}
 
   deleteOfertaLaboral(id: number | undefined = 0) {
     // Mostrar SweetAlert de confirmación
