@@ -147,7 +147,7 @@ export class PerfilUsuarioComponent {
     );
   }
 
-  getEmpresas() {
+getEmpresas() {
     this.empresaService.getEmpresas().subscribe(
       empresas => {
         this.empresass = empresas;
@@ -155,7 +155,7 @@ export class PerfilUsuarioComponent {
       },
       error => console.error('Error al obtener empresas:', error)
     );
-  }
+}
 
   calcularEdad(): number {
     // Fecha de nacimiento ("YYYY-MM-DD")

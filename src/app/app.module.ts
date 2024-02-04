@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import {PerfilUsuarioComponent} from '../app/pages/company/perfil-usuario/perfil-usuario.component';
 import {NuevoEmpresarioModalComponent} from '../app/pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { PerfilGraduadoComponent } from './pages/company/perfil-graduado/perfil-graduado.component';
 export function playerFactory() {
   return player;
 }
@@ -28,6 +29,7 @@ export function playerFactory() {
     PerfilUsuarioComponent,
     NuevoEmpresarioModalComponent,
     NotFoundComponent,
+    PerfilGraduadoComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

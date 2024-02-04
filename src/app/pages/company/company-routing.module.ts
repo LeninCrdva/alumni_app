@@ -8,6 +8,7 @@ import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PerfilGraduadoComponent } from './perfil-graduado/perfil-graduado.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -16,6 +17,8 @@ const routes: Routes = [
     { path: 'crud', component: Empresas2Component },
     { path: 'perfil', component: PerfilUsuarioComponent },
     { path: 'update-perfil', component: PerfilFormComponent },
+    { path: 'graduado-perfil', component: PerfilGraduadoComponent },
+
 ];
 
 @NgModule({
