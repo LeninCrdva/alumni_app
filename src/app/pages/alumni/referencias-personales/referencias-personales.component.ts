@@ -69,6 +69,7 @@ export class ReferenciasPersonalesComponent {
     this.referenciaPService.getReferenciasPersonales().subscribe(
       referenciasP => {
         this.referenciaPersonalList = referenciasP;
+        this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );

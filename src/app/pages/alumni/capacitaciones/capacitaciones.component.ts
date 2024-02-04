@@ -66,6 +66,7 @@ export class CapacitacionesComponent {
     this.capacitacionesService.getCapacitaciones().subscribe(
       capacitacion => {
         this.capacitacionList = capacitacion;
+        this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );

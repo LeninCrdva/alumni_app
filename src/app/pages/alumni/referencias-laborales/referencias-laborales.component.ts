@@ -66,6 +66,7 @@ export class ReferenciasLaboralesComponent {
     this.referenciaProService.getReferenciasProfesionales().subscribe(
       result => {
         this.referenciaProfesionalList = result;
+        this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );

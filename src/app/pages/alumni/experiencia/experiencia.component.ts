@@ -65,6 +65,7 @@ export class ExperienciaComponent {
     this.experienciaService.getExperiencias().subscribe(
       result => {
         this.experienciaList = result;
+        this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );
