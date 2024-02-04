@@ -19,7 +19,7 @@
             </div>
 
             <div class="modal-body">
-                <form #experienciaForm="ngForm">
+                <form #experienciaForm="ngForm" (ngSubmit)="onSubmit()">
                     <div class="form-layout form-layout-1">
                         <div class="row mg-b-25" data-parsley-validate>
                             <div class="col-lg-6">
@@ -84,17 +84,19 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                            [class.btn-primary]="editarClicked" [disabled]="experienciaForm.invalid" data-bs-dismiss="modal">
+                            {{ editarClicked ? 'Actualizar Experiencia' : 'Registrar Experiencia' }}
+                        </button>
+
+                        <button type="button" data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">
+                            Cancelar
+                        </button>
+                    </div>
                 </form>
-            </div>
-
-            <div class="modal-footer">
-
-                <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
-                    [class.btn-primary]="editarClicked" [disabled]="experienciaForm.invalid">
-                    {{ editarClicked ? 'Actualizar Experiencia' : 'Registrar Experiencia' }}
-                </button>
-
-                <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
             </div>
         </div>
     </div>

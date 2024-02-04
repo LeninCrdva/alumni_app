@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import Swal from 'sweetalert2';
 import { ofertaLaboralDTO } from '../../../Models/ofertaLaboralDTO';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-postulaciones',
@@ -14,13 +15,41 @@ import { ofertaLaboralDTO } from '../../../Models/ofertaLaboralDTO';
 export class PostulacionesComponent implements OnInit {
   postulaciones: ofertaLaboral[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
+  @Output() onClose: EventEmitter<string> = new EventEmitter();
 
   constructor(private postulacionesService: GraduadoService, private router: Router, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.setupDtOptions();
     this.detallarOferta();
   }
 
+  setupDtOptions() {
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language: {
+        search: 'Buscar:',
+        searchPlaceholder: 'Buscar experiencia...',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        paginate: {
+          first: 'Primera',
+          last: 'Última',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        },
+        lengthMenu: 'Mostrar _MENU_ registros por página',
+        zeroRecords: 'No se encontraron registros coincidentes'
+      },
+      lengthMenu: [10, 25, 50]
+    };
+  }
+  
   async detallarOferta(): Promise<void> {
 
     const authoritieStorage = localStorage.getItem('authorities')
@@ -86,7 +115,7 @@ export class PostulacionesComponent implements OnInit {
                   });
                 }
               );
-              
+
             }
           });
         }

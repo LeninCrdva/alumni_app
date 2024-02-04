@@ -3,9 +3,6 @@ import { Experiencia } from '../../../data/model/experiencia';
 import { ExperienciaService } from '../../../data/service/experiencia.service';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { NgForm } from '@angular/forms';
-import { InputsValidations } from '../../../components/Validations/InputsValidations';
 
 @Component({
   selector: 'app-experiencia',
@@ -22,13 +19,12 @@ export class ExperienciaComponent {
 
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-
-  mensajeMostrado = false;
+  
   idEdit: number = 0;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private experienciaService: ExperienciaService) { }
+  constructor(private experienciaService: ExperienciaService) { }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -37,6 +33,7 @@ export class ExperienciaComponent {
   ngOnInit(): void {
     this.obtenerCedula();
     this.loadExperiencias();
+    this.setupDtOptions();
   }
 
   setupDtOptions() {
@@ -83,8 +80,10 @@ export class ExperienciaComponent {
   onSubmit() {
     if (this.editarClicked) {
       this.onUpdateClick(); // Lógica de actualización
+      console.log('Actualizando experiencia...');
     } else {
       this.createExperiencia(); // Lógica de creación
+      console.log('Creando experiencia...');
     }
   }
 
@@ -98,7 +97,6 @@ export class ExperienciaComponent {
         console.log('Experiencia creada exitosamente:', experiencia);
         this.loadExperiencias();
         this.mostrarSweetAlert(true, 'La experiencia se ha guardado exitosamente.');
-        this.mensajeMostrado = true;
       },
       error => {
         console.error('Error al crear la experiencia:', error);
@@ -191,7 +189,6 @@ export class ExperienciaComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        this.bsModalRef.hide();
       }
     });
   }
@@ -201,14 +198,6 @@ export class ExperienciaComponent {
     if (userDataString) {
       const userData = JSON.parse(userDataString);
       this.cedula = userData.persona.cedula;
-    }
-  }
-
-  cerrarModal() {
-    if (this.mensajeMostrado) {
-      this.bsModalRef.hide();
-    } else {
-      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
     }
   }
 }
