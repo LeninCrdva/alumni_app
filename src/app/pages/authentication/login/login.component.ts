@@ -31,6 +31,13 @@ export class LoginComponent {
       password: ['', Validators.required],
     });
   }
+  passwordVisible = false;
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+    const passwordInput = document.getElementById('InputPassword1') as HTMLInputElement;
+    passwordInput.type = this.passwordVisible ? 'text' : 'password';
+  }
 
   login(template: any): void {
     if (this.loginForm.valid) {

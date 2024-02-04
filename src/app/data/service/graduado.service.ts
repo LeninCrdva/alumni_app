@@ -84,4 +84,12 @@ export class GraduadoService {
   getGraduadosWithOutOferta(): Observable<Graduado[]> {
     return this.http.get<Graduado[]>(`${this.urlEndPoint}/without-oferta`);
   }
+  searchGraduadosByUsuario(usuario: string): Observable<Graduado3[]> {
+    return this.http.get<Graduado3[]>(this.urlEndPoint).pipe(
+      map(graduados => {
+        console.log('Nombres de usuario en la lista:', graduados.map(graduado => graduado.usuario));
+        return graduados.filter(graduado => graduado.usuario.toLowerCase().includes(usuario.toLowerCase()));
+      })
+    );
+  }
 }
