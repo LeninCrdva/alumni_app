@@ -23,16 +23,16 @@ export class TituloService {
     return this.http.post<Titulo>(this.urlEndPoint, titulo, { headers: this.httpHeaders });
   }
 
-  getTituloById(id: any): Observable<Titulo> {
+  getTituloById(id: number): Observable<Titulo> {
     return this.http.get<Titulo>(`${this.urlEndPoint}/${id}`);
   }
 
-  updateTitulo(id: any, titulo: Titulo): Observable<Titulo> {
+  updateTitulo(id: number, titulo: Titulo): Observable<Titulo> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Titulo>(url, titulo, { headers: this.httpHeaders });
   }
 
-  deleteTitulo(id: any): Observable<void> {
+  deleteTitulo(id: number): Observable<void> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.delete<void>(url, { headers: this.httpHeaders });
   }

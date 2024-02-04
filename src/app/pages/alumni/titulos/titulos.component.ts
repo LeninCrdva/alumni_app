@@ -21,9 +21,9 @@ export class TitulosComponent implements OnInit {
   tituloList: Titulo[] = [];
 
   editarClicked = false;
+  
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  dtElement: DataTableDirective | undefined;
 
   mensajeMostrado = false;
   idEdit: number = 0;
@@ -38,7 +38,7 @@ export class TitulosComponent implements OnInit {
     this.obtenerCarreras();
     this.loadData();
   }
-
+  
   setupDtOptions() {
     this.dtoptions = {
       pagingType: 'full_numbers',
