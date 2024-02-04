@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Experiencia } from '../../../data/model/experiencia';
 import { ExperienciaService } from '../../../data/service/experiencia.service';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { NgForm } from '@angular/forms';
+import { InputsValidations } from '../../../components/Validations/InputsValidations';
 
 @Component({
   selector: 'app-experiencia',
@@ -28,8 +30,16 @@ export class ExperienciaComponent {
 
   constructor(public bsModalRef: BsModalRef, private experienciaService: ExperienciaService) { }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
+  ngOnInit(): void {
+    this.obtenerCedula();
+    this.loadExperiencias();
+  }
+
+  setupDtOptions() {
     this.dtoptions = {
       pagingType: 'full_numbers',
       searching: true,
@@ -50,10 +60,9 @@ export class ExperienciaComponent {
       },
       lengthMenu: [10, 25, 50]
     };
-
-    this.obtenerCedula();
-    this.loadExperiencias();
   }
+
+  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
 
   loadExperiencias() {
     this.experienciaService.getExperiencias().subscribe(
@@ -65,13 +74,23 @@ export class ExperienciaComponent {
     );
   }
 
+
+  // NOTE: CRUD EVENTS
   onRegistrarClick(): void {
     this.editarClicked = false;
   }
 
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick(); // Lógica de actualización
+    } else {
+      this.createExperiencia(); // Lógica de creación
+    }
+  }
+
   createExperiencia() {
     this.experiencia.cedulaGraduado = this.cedula;
-
+    console.log('Cedula:', this.cedula);
     this.editarClicked = false;
 
     this.experienciaService.createExperiencia(this.experiencia).subscribe(
@@ -83,7 +102,8 @@ export class ExperienciaComponent {
       },
       error => {
         console.error('Error al crear la experiencia:', error);
-        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la experiencia.');
+        // Muestra un mensaje de error en la interfaz de usuario
+        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la experiencia. Por favor, verifica los detalles e intenta nuevamente.');
       }
     );
   }
@@ -131,6 +151,35 @@ export class ExperienciaComponent {
     );
   }
 
+  // NOTE: VALIDACIONES
+
+  validarNumero(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyLetters(event: KeyboardEvent): void {
+    const inputChar = String.fromCharCode(event.charCode);
+    const lettersRegex = /^[a-zA-Z]+$/;
+
+    if (!lettersRegex.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyNumbers(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
 
@@ -153,7 +202,6 @@ export class ExperienciaComponent {
       const userData = JSON.parse(userDataString);
       this.cedula = userData.persona.cedula;
     }
-    console.log('Cédula del usuario:', this.cedula);
   }
 
   cerrarModal() {

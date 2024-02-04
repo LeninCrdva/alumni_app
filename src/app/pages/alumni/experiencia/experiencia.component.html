@@ -2,7 +2,7 @@
     style="background-image: url(../../../../assets/imgs/headers/Experiencia.jpg);">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Mi Experiencia</h1>
+            <h1>Mis Experiencias</h1>
         </div>
     </div>
 </section>
@@ -19,7 +19,7 @@
             </div>
 
             <div class="modal-body">
-                <form>
+                <form #experienciaForm="ngForm">
                     <div class="form-layout form-layout-1">
                         <div class="row mg-b-25" data-parsley-validate>
                             <div class="col-lg-6">
@@ -29,7 +29,11 @@
                                     <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
                                         id="cargo"
                                         [(ngModel)]="editarClicked ? experienciaCarga.cargo : experiencia.cargo"
-                                        required>
+                                        required (keypress)="allowOnlyLetters($event)">
+                                    <div *ngIf="experienciaForm.controls['cargo'].invalid && experienciaForm.controls['cargo'].dirty"
+                                        class="text-danger">
+                                        El cargo es obligatorio y debe contener solo letras.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -47,8 +51,8 @@
                         <div class="row mg-b-25 my-3" data-parsley-validate>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active" for="institucion">INSTITUCIÓN:
-                                        <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label active" for="institucion">INSTITUCIÓN: <span
+                                            class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="institucion"
                                         placeholder="Ingrese la institución" id="institucion"
                                         [(ngModel)]="editarClicked ? experienciaCarga.institucionNombre : experiencia.institucionNombre"
@@ -66,35 +70,28 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row mg-b-25 my-3" data-parsley-validate>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO:
-                                        <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO: <span
+                                            class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="area_trabajo"
                                         placeholder="Ingrese la area de trabajo" id="area_trabajo"
-                                        [(ngModel)]="editarClicked ? experiencia.area_trabajo : experiencia.area_trabajo"
+                                        [(ngModel)]="editarClicked ? experienciaCarga.area_trabajo : experiencia.area_trabajo"
                                         required>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
 
             <div class="modal-footer">
 
-                <!-- Botón para registrar -->
-                <button (click)="createExperiencia()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                    class="btn btn-oblong btn-success" *ngIf="!editarClicked">
-                    Registrar Experiencia
-                </button>
-
-                <!-- Botón para editar -->
-                <button (click)="onUpdateClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                    class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                    Actualizar Experiencia
+                <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                    [class.btn-primary]="editarClicked" [disabled]="experienciaForm.invalid">
+                    {{ editarClicked ? 'Actualizar Experiencia' : 'Registrar Experiencia' }}
                 </button>
 
                 <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
@@ -141,11 +138,11 @@
                             <td>{{ experienciaItem.actividad }}</td>
                             <td>{{ experienciaItem.area_trabajo }}</td>
                             <td class="text-center table-actions align-middle justify-content-center">
-                                <a (click)="onEditarClick(experienciaItem.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                                    class="table-action mg-r-10">
+                                <a (click)="onEditarClick(experienciaItem.id)" data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
-                                <a (click)="onDeleteClick(experienciaItem.id!)" class="table-action ms-2 text-danger">
+                                <a (click)="onDeleteClick(experienciaItem.id)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash" style="cursor: pointer;"></i>
                                 </a>
                             </td>
