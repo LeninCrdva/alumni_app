@@ -64,8 +64,7 @@ export class TitulosComponent implements OnInit {
       titulos => {
         this.tituloList = titulos;
       },
-      (error: any) => console.error(error),
-      () => this.dtTrigger.next(null)
+      (error: any) => console.error(error)
     );
   }
 

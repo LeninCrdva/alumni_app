@@ -148,52 +148,53 @@
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
-                    Registrar Experiencia
+                    Registrar Titulo
                 </button>
             </div>
         </div>
-<div class="card-body pd-0 collapse show animate__animated animate__bounce animate__fast">
-    <div class="table-responsive">
-        <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered custom-table">
-            <thead class="bg-dark text-white">
-                <tr>
-                    <th>#</th>
-                    <th>Nombre del Título</th>
-                    <th>Tipo</th>
-                    <th>Nivel</th>
-                    <th>Institución</th>
-                    <th>Fecha de Registro</th>
-                    <th>Fecha de Emisión</th>
-                    <th>Número de Registro</th>
-                    <th>Carrera</th>
-                    <th class="text-center w-100px">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let titulo of tituloList;">
-                    <td>{{titulo.id}}</td>
-                    <td>{{titulo.nombre_titulo}}</td>
-                    <td>{{titulo.tipo}}</td>
-                    <td>{{titulo.nivel}}</td>
-                    <td>{{titulo.institucion}}</td>
-                    <td>{{titulo.fecha_registro}}</td>
-                    <td>{{titulo.fecha_emision}}</td>
-                    <td>{{titulo.num_registro}}</td>
-                    <td>{{titulo.nombrecarrera}}</td>
-                    <td class="text-center table-actions align-middle justify-content-center">
-                        <a (click)="onEditarClick(titulo.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="table-action mg-r-10">
-                            <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
-                        </a>
-                        <a (click)="onDeleteClick(titulo.id!)" class="table-action ms-2 text-danger">
-                            <i class="fa fa-trash" style="cursor: pointer;"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre del Título</th>
+                            <th>Tipo</th>
+                            <th>Nivel</th>
+                            <th>Institución</th>
+                            <th>Fecha de Registro</th>
+                            <th>Fecha de Emisión</th>
+                            <th>Número de Registro</th>
+                            <th>Carrera</th>
+                            <th class="text-center w-100px">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let titulo of tituloList;">
+                            <th scope="row">{{ titulo.id }}</th>
+                            <td>{{titulo.nombre_titulo}}</td>
+                            <td>{{titulo.tipo}}</td>
+                            <td>{{titulo.nivel}}</td>
+                            <td>{{titulo.institucion}}</td>
+                            <td>{{titulo.fecha_registro}}</td>
+                            <td>{{titulo.fecha_emision}}</td>
+                            <td>{{titulo.num_registro}}</td>
+                            <td>{{titulo.nombrecarrera}}</td>
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <a (click)="onEditarClick(titulo.id)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10">
+                                    <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
+                                </a>
+                                <a (click)="onDeleteClick(titulo.id!)" class="table-action ms-2 text-danger">
+                                    <i class="fa fa-trash" style="cursor: pointer;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-</div>
+    </div>
 </div>

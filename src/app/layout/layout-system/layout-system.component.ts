@@ -77,10 +77,10 @@ export class LayoutSystemComponent implements OnInit {
     console.log("Rol: " + userRole);
     switch (userRole) {
       case 'ROL_ADMINISTRADOR':
-        this.router.navigate(['/system/admin/perfil']);
+        this.router.navigate(['/system/admin/perfil-admin']);
         break;
       case 'ROL_EMPRESARIO':
-        this.router.navigate(['/system/company/perfil']);
+        this.router.navigate(['/system/company/update-perfil']);
         break;
       case 'ROL_GRADUADO':
         this.router.navigate(['system/alumni/perfil']);
@@ -315,7 +315,7 @@ export class LayoutSystemComponent implements OnInit {
               ignoreBackdropClick: true,
               keyboard: false,
             };
-             this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+            this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
