@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
 import { Empresa } from '../../../data/model/empresa';
 import { EmpresaService } from '../../../data/service/empresa.service';
@@ -6,7 +6,7 @@ import { error } from 'jquery';
 import { ofertaLaboralDTO } from '../../../Models/ofertaLaboralDTO';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -15,7 +15,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./ofertas-laborales.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class OfertasLaboralesComponent {
-
   editarClicked = false;
   idEdit: number = 0;
   onRegistrarClick(): void {
@@ -45,7 +44,12 @@ export class OfertasLaboralesComponent {
   ngOnInit(): void {
     this.getAllEmpresas();
     this.getAllOfertasLaborales();
+    this.loadCleanObject();
+    this.getFechaPublicacion();
+    this.ofertaslaborales.estado = false;
+  }
 
+  loadCleanObject(): void {
     this.ofertaslaborales = {
       id: 0,
       salario: 0,
@@ -55,9 +59,9 @@ export class OfertasLaboralesComponent {
       experiencia: '',
       fechaApertura: '',
       areaConocimiento: '',
-      estado: '',
+      estado: false,
       nombreEmpresa: '',
-      correoGraduado: [],
+      correoGraduado: [] as string[],
 
     };
 
@@ -70,13 +74,11 @@ export class OfertasLaboralesComponent {
       experiencia: '',
       fechaApertura: '',
       areaConocimiento: '',
-      estado: '',
+      estado: false,
       nombreEmpresa: '',
-      correoGraduado: [],
+      correoGraduado: [] as string[],
 
     };
-    this.getFechaPublicacion();
-    this.ofertaslaborales.estado = false;
   }
 
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
@@ -144,7 +146,7 @@ export class OfertasLaboralesComponent {
   }
 
   getAllOfertasLaborales() {
-    this.ofertalaburoService.getOfertasLaboralesByEmpresario(this.name || "").subscribe(
+    this.ofertalaburoService.getOfertasLaboralesByNameEmpresario(this.name || "").subscribe(
       ofertas => this.ofertaslaboraleslist = ofertas,
       error => console.error(error)
     )
@@ -166,6 +168,7 @@ export class OfertasLaboralesComponent {
         // Si el usuario confirma, eliminar la empresa
         this.ofertalaburoService.deleteOfertabyID(id).subscribe(
           () => {
+            this.closeModal();
             // Mostrar SweetAlert de éxito
             Swal.fire({
               icon: 'success',
@@ -188,22 +191,35 @@ export class OfertasLaboralesComponent {
     });
   }
 
+  closeModal() {
+    const cancelButton = document.getElementById('close-button') as HTMLElement;
+    if (cancelButton) {
+      cancelButton.click();
+      this.loadCleanObject();
+      this.getAllOfertasLaborales();
+      this.getAllEmpresas();
+    }
+  }
+
   createOfertaLaboral() {
     if (!this.validateOfertasPerFields()) {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
+
+    // console.log('Oferta enviada:' + this.ofertaslaborales)
     this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
       (response) => {
         console.log(response);
         this.ofertaslaborales = response;
         this.mostrarSweetAlert(true, 'La oferta laboral se ha creado exitosamente.');
+        this.closeModal()
 
       },
       (error) => {
         console.error(error);
-        this.mostrarSweetAlert(true, 'La oferta laboral no se ha creado.');
-
+        this.mostrarSweetAlert(false, 'La oferta laboral no se ha creado.');
+        this.bsModalRef.hide();
       }
     );
   }
@@ -219,19 +235,21 @@ export class OfertasLaboralesComponent {
         console.log(response);
         this.ofertaslaborales = response;
         this.mostrarSweetAlert(true, 'La oferta laboral se ha actualizado exitosamente.');
-
+        this.closeModal();
       },
       (error) => {
         console.error(error);
         this.mostrarSweetAlert(false, 'La Oferta Laboral no se ha podido actualizar.');
-
+        this.closeModal();
       }
     );
   }
 
   getOfertaLaboralById(id: number) {
     this.ofertalaburoService.getOfertaLaboralByIdToDTO(id).subscribe(
-      ofertas => this.ofertaslaboralesCarga = ofertas,
+      ofertas => {
+        this.ofertaslaboralesCarga = ofertas;
+      },
       error => console.error(error)
     )
   }

@@ -19,6 +19,7 @@ export class PostulacionesComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
+  searchTerm: string = '';
 
   constructor(private postulacionesService: GraduadoService, private router: Router, private activeRoute: ActivatedRoute) { }
 
@@ -121,5 +122,15 @@ export class PostulacionesComponent implements OnInit {
         }
       );
     }
+  }
+
+  filterOfertasLaborales(): ofertaLaboral[] {
+    const lowerCaseSearchTerm = this.searchTerm.toLowerCase().trim();
+
+    return this.postulaciones.filter(oferta => 
+      Object.values(oferta).some(value =>
+        value !== null && typeof value === 'string' && value.toLowerCase().includes(lowerCaseSearchTerm)
+      )
+    );
   }
 }
