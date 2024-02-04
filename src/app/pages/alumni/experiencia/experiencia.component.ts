@@ -66,8 +66,7 @@ export class ExperienciaComponent {
       result => {
         this.experienciaList = result;
       },
-      (error: any) => console.error(error),
-      () => this.dtTrigger.next(null)
+      (error: any) => console.error(error)
     );
   }
 

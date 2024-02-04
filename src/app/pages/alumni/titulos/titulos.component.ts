@@ -3,7 +3,6 @@ import { TituloService } from '../../../data/service/titulo.service';
 import { Titulo } from '../../../data/model/titulo';
 import { Carrera } from '../../../data/model/carrera';
 import { Subject } from 'rxjs';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { CarreraService } from '../../../data/service/carrera.service';
 
@@ -29,7 +28,7 @@ export class TitulosComponent implements OnInit {
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private tituloService: TituloService, private carrerasService: CarreraService) { }
+  constructor(private tituloService: TituloService, private carrerasService: CarreraService) { }
 
   ngOnInit(): void {
     this.dtoptions = {
@@ -55,10 +54,12 @@ export class TitulosComponent implements OnInit {
 
     this.obtenerIDUsuario();
     this.obtenerCarreras();
-    this.loadTitulos();
+    this.loadData();
   }
 
-  loadTitulos() {
+  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
+
+  loadData() {
     this.tituloService.getTitulos().subscribe(
       titulos => {
         this.tituloList = titulos;
@@ -68,7 +69,20 @@ export class TitulosComponent implements OnInit {
     );
   }
 
-  createTitulo() {
+  // NOTE: CRUD EVENTS
+  onRegistrarClick(): void {
+    this.editarClicked = false;
+  }
+
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick(); // Lógica de actualización
+    } else {
+      this.createExperiencia(); // Lógica de creación
+    }
+  }
+
+  createExperiencia() {
     this.titulo.idgraduado = this.idGraduado;
 
     this.editarClicked = false;
@@ -77,7 +91,7 @@ export class TitulosComponent implements OnInit {
     this.tituloService.createTitulo(this.titulo).subscribe(
       titulo => {
         console.log('Titulo creado exitosamente:', titulo);
-        this.loadTitulos();
+        this.loadData();
         this.mostrarSweetAlert(true, 'El titulo se ha guardado exitosamente.');
         this.mensajeMostrado = true;
       },
@@ -96,10 +110,6 @@ export class TitulosComponent implements OnInit {
     this.idEdit = id;
   }
 
-  onRegistrarClick(): void {
-    this.editarClicked = false;
-  }
-
   onUpdateClick() {
     console.log('ID del titulo:', this.idEdit);
     this.tituloCarga.idgraduado = this.idGraduado;
@@ -109,7 +119,7 @@ export class TitulosComponent implements OnInit {
         console.log('Sector actualizado exitosamente:', titulosActualizado);
         this.titulo = titulosActualizado;
         this.mostrarSweetAlert(true, 'El titulo se ha actualizado exitosamente.');
-        this.loadTitulos();
+        this.loadData();
       },
       error => {
         console.error('Error al actualizar el titulo:', error);
@@ -123,13 +133,42 @@ export class TitulosComponent implements OnInit {
       () => {
         console.log('Titulo eliminado exitosamente');
         this.mostrarSweetAlert(true, 'El titulo se ha eliminado exitosamente.');
-        this.loadTitulos();
+        this.loadData();
       },
       error => {
         console.error('Error al eliminar el titulo:', error);
         this.mostrarSweetAlert(false, 'Error al eliminar el titulo.');
       }
     );
+  }
+
+  // NOTE: VALIDACIONES
+
+  validarNumero(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyLetters(event: KeyboardEvent): void {
+    const inputChar = String.fromCharCode(event.charCode);
+    const lettersRegex = /^[a-zA-Z]+$/;
+
+    if (!lettersRegex.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyNumbers(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
@@ -143,7 +182,6 @@ export class TitulosComponent implements OnInit {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        this.bsModalRef.hide();
       }
     });
   }
@@ -164,13 +202,5 @@ export class TitulosComponent implements OnInit {
       },
       (error: any) => console.error(error)
     );
-  }
-
-  cerrarModal() {
-    if (this.mensajeMostrado) {
-      this.bsModalRef.hide();
-    } else {
-      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
-    }
   }
 }

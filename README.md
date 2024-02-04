@@ -9,6 +9,7 @@
 - npm install --save sweetalert2
 - ng add angular-datatables (Escoger bootstrap 5)
 - npm i apexcharts
+- ng-apexcharts --save
 
 # Alumnifrontapp
 

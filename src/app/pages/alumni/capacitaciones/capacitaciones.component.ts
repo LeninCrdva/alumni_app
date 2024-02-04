@@ -67,8 +67,7 @@ export class CapacitacionesComponent {
       capacitacion => {
         this.capacitacionList = capacitacion;
       },
-      (error: any) => console.error(error),
-      () => this.dtTrigger.next(null)
+      (error: any) => console.error(error)
     );
   }
 
