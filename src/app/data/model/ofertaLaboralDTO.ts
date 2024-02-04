@@ -10,4 +10,5 @@ export class ofertaLaboralDTO {
     'estado': boolean;
     'nombreEmpresa': string;
     'correoGraduado': string[];
+    [key: string]: any;
 }

@@ -12,6 +12,19 @@
     <div class="card-body collapse show">
 
         <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" [(ngModel)]="searchTerm" placeholder="Buscar...">
+                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body pd-0 collapse show" id="collapse1">
             <div class="table-responsive">
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered custom-table">
@@ -27,6 +40,22 @@
                         </tr>
                     </thead>
                     
+                    <tbody>
+                        <tr *ngFor="let postulacion of filterOfertasLaborales(); let id = index">
+                            <th scope="row">{{id + 1}}</th>
+                            <td>{{postulacion.empresa.nombre}}</td>
+                            <td>{{postulacion.cargo}}</td>
+                            <!-- <td>{{postulacion.area_conocimiento}}</td> -->
+                            <td>{{postulacion.area_conocimiento}}</td>
+                            <td>{{postulacion.salario}}</td>
+                            <td>{{postulacion.fecha_apertura}}</td>
+                            <!-- Sin información dentro de DB -->
+                            <!-- <td>{{postulacion.experiencia}}</td>  -->
+                            <td>{{postulacion.experiencia}}</td>
+                            <td>{{postulacion.empresa.ciudad.nombre}}</td>
+                            <td> <button class="fa fa-trash border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="cancelOffer(createGraduadoDTO(postulacion))"></button></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

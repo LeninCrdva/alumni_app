@@ -14,6 +14,7 @@ import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 export class OfertasDeTrabajoComponent implements OnInit {
   listOfertas: ofertaLaboralDTO[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO()
+  value: string = 'seleccionar'
 
   constructor(private ofertasService: OfertalaboralService, private postulacionesService: GraduadoService) { }
 
@@ -39,8 +40,6 @@ export class OfertasDeTrabajoComponent implements OnInit {
     }
     return nuevoGraduadoDTO;
   }
-
-
 
   requestOffer(Offer: GraduadoDTO) {
     let isPres: boolean = true;
@@ -72,7 +71,7 @@ export class OfertasDeTrabajoComponent implements OnInit {
                 this.graduadoDTO = grad;
               }
             );
-            
+
             if (this.graduadoDTO) {
               Swal.fire({
                 icon: 'success',
@@ -83,6 +82,25 @@ export class OfertasDeTrabajoComponent implements OnInit {
           }
         }
       );
+    }
+  }
+
+  sortBy(event: any): void {
+    const value = event.target.value;
+  
+    if (value) {
+      this.listOfertas.sort((a, b) => {
+        const propA = a[value];
+        const propB = b[value];
+  
+        if (typeof propA === 'number' && typeof propB === 'number') {
+          return propB - propA;
+        } else if (typeof propA === 'string' && typeof propB === 'string') {
+          return propA.localeCompare(propB);
+        } else {
+          return 0;
+        }
+      });
     }
   }
 }
