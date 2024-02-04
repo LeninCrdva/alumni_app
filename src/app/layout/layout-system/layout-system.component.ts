@@ -80,7 +80,7 @@ export class LayoutSystemComponent implements OnInit {
         this.router.navigate(['/system/admin/perfil-admin']);
         break;
       case 'ROL_EMPRESARIO':
-        this.router.navigate(['/system/company/update-perfil']);
+        this.router.navigate(['/system/company/perfil']);
         break;
       case 'ROL_GRADUADO':
         this.router.navigate(['system/alumni/perfil']);

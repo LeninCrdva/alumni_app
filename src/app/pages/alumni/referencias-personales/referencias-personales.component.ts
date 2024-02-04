@@ -19,27 +19,35 @@ export class ReferenciasPersonalesComponent {
   referencia_personal: Referencias_personales = { nombreReferencia: '', cedulaGraduado: '', telefono: '', email: '' };
   referenciaPersonalCarga: Referencias_personales = { id: 0, nombreReferencia: '', cedulaGraduado: '', telefono: '', email: '' };
   referenciaPersonalList: Referencias_personales[] = [];
-
   editarClicked = false;
+
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  mensajeMostrado = false;
   idEdit: number = 0;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private referenciaPService: ReferenciaPersonalService, private usuarioService: UserService) { }
+  constructor(private referenciaPService: ReferenciaPersonalService) { }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
   ngOnInit(): void {
+    this.obtenerCedula();
+    this.loadData();
+    this.setupDtOptions();
+  }
 
+  setupDtOptions() {
     this.dtoptions = {
       pagingType: 'full_numbers',
       searching: true,
       lengthChange: true,
       language: {
         search: 'Buscar:',
-        searchPlaceholder: 'Buscar referencia ...',
+        searchPlaceholder: 'Buscar referencia...',
         info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         paginate: {
@@ -53,38 +61,42 @@ export class ReferenciasPersonalesComponent {
       },
       lengthMenu: [10, 25, 50]
     };
-
-    this.obtenerCedula();
-    this.loadReferenciasPer();
   }
 
-  loadReferenciasPer() {
+  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
+
+  loadData() {
     this.referenciaPService.getReferenciasPersonales().subscribe(
       referenciasP => {
         this.referenciaPersonalList = referenciasP;
       },
-      (error: any) => console.error(error),
-      () => this.dtTrigger.next(null)
+      (error: any) => console.error(error)
     );
   }
 
-  createReferenciaPer() {
-    this.referencia_personal.cedulaGraduado = this.cedula;
 
+  // NOTE: CRUD EVENTS
+  onRegistrarClick(): void {
+    this.editarClicked = false;
+  }
+
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick(); // Lógica de actualización
+    } else {
+      this.createNewData(); // Lógica de creación
+    }
+  }
+
+  createNewData() {
+    this.referencia_personal.cedulaGraduado = this.cedula;
     this.editarClicked = false;
 
-
-    if (!this.validateReferenciasPerFields()) {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
-      return;
-    }
-    console.log('Referencia personalaaaaaaaaaa:', this.referencia_personal)
     this.referenciaPService.createReferenciasPersonales(this.referencia_personal).subscribe(
       referenciasP => {
         console.log('Refencia personal creada exitosamente:', referenciasP);
-        this.loadReferenciasPer();
-        this.mostrarSweetAlert(true, 'La referencia laboral se ha guardado exitosamente.');
-        this.mensajeMostrado = true;
+        this.loadData();
+        this.mostrarSweetAlert(true, 'La referencia personal se ha guardado exitosamente.');
       },
       error => {
         console.error('Error al crear la refencia personal:', error)
@@ -102,24 +114,15 @@ export class ReferenciasPersonalesComponent {
     this.idEdit = id;
   }
 
-  onRegistrarClick(): void {
-    this.editarClicked = false;
-  }
-
   onUpdateClick() {
     this.referenciaPersonalCarga.cedulaGraduado = this.cedula;
-    
-    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.cedulaGraduado);
-    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.id);
-    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.nombreReferencia);
-    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.telefono);
-    console.log('ID de la referencia personal:', this.referenciaPersonalCarga.email);
+
     this.referenciaPService.updateReferenciasPersonales(this.idEdit, this.referenciaPersonalCarga).subscribe(
       refeActualizado => {
-        console.log('Sector actualizado exitosamente:', refeActualizado);
+        console.log('Referencia personal actualizado exitosamente:', refeActualizado);
         this.referencia_personal = refeActualizado;
         this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
-        this.loadReferenciasPer();
+        this.loadData();
       },
       error => {
         console.error('Error al actualizar la referencia personal:', error);
@@ -131,15 +134,44 @@ export class ReferenciasPersonalesComponent {
   onDeleteClick(id: number | undefined = 0) {
     this.referenciaPService.deleteReferenciasPersonales(id).subscribe(
       () => {
-        console.log('Experiencia eliminada exitosamente');
-        this.mostrarSweetAlert(true, 'La experiencia se ha eliminado exitosamente.');
-        this.loadReferenciasPer();
+        console.log('Referencia personal eliminada exitosamente');
+        this.mostrarSweetAlert(true, 'La referencia personal se ha eliminado exitosamente.');
+        this.loadData();
       },
       error => {
         console.error('Error al eliminar la referencia personal:', error);
         this.mostrarSweetAlert(false, 'Error al eliminar la referencia personal.');
       }
     );
+  }
+
+  // NOTE: VALIDACIONES
+
+  validarNumero(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyLetters(event: KeyboardEvent): void {
+    const inputChar = String.fromCharCode(event.charCode);
+    const lettersRegex = /^[a-zA-Z]+$/;
+
+    if (!lettersRegex.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyNumbers(event: any) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
@@ -153,17 +185,8 @@ export class ReferenciasPersonalesComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        this.bsModalRef.hide();
       }
     });
-  }
-
-  validateReferenciasPerFields(): boolean {
-    if (!this.referencia_personal.nombreReferencia || !this.referencia_personal.telefono || !this.referencia_personal.email) {
-      return false;
-    }
-
-    return true;
   }
 
   obtenerCedula() {
@@ -171,15 +194,6 @@ export class ReferenciasPersonalesComponent {
     if (userDataString) {
       const userData = JSON.parse(userDataString);
       this.cedula = userData.persona.cedula;
-    }
-    console.log('Cédula del usuario:', this.cedula);
-  }
-
-  cerrarModal() {
-    if (this.mensajeMostrado) {
-      this.bsModalRef.hide();
-    } else {
-      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
     }
   }
 }

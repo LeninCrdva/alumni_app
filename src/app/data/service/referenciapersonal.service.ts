@@ -20,7 +20,7 @@ export class ReferenciaPersonalService {
   }
 
   createReferenciasPersonales(referencias_personales: Referencias_personales): Observable<Referencias_personales> {
-    return this.http.post<Referencias_personales>(this.urlEndPoint, referencias_personales, { headers: this.httpHeaders })
+    return this.http.post<Referencias_personales>(`${this.urlEndPoint}/create`, referencias_personales, { headers: this.httpHeaders })
   }
 
   getReferenciasPersonalesById(id: any): Observable<Referencias_personales> {

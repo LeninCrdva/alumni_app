@@ -13,12 +13,12 @@
                     <div class="form custom-form">
                         <div class="form-group">
                             <label>Tipos de postulaciones:</label>
-                            <select class="form-control custom-select" id="Sortbylist-job">
-                                <option>Todos</option>
-                                <option>Tiempo Completo</option>
-                                <option>Mitad de tiempo</option>
-                                <option>Remoto</option>
-                                <option>Trabajar desde casa</option>
+                            <select class="form-control custom-select" id="Sortbylist-job" (change)="sortBy($event)">
+                                <option value="fechaPublicacion">Seleccionar</option>
+                                <option value="cargo">Cargo</option>
+                                <option value="nombreEmpresa">Empresa</option>
+                                <option value="salario">Salario</option>
+                                <!-- Resto de las opciones -->
                             </select>
                         </div>
                     </div>
@@ -51,9 +51,9 @@
                                     </span></li>
                             </ul>
                             <div class="tagcloud text-center mt-2 text-lg-left">
-                                <a class="rounded">{{oferta.nombreEmpresa}}</a>
-                                <a class="rounded">{{oferta.areaConocimiento}}</a>
-                                <a class="rounded"> $ {{oferta.salario}}</a>
+                                <a class="rounded">| {{oferta.nombreEmpresa}} |</a>
+                                <a class="rounded"> {{oferta.areaConocimiento}} |</a>
+                                <a class="rounded"> $ {{oferta.salario}} |</a>
                             </div>
                         </div>
                     </div><!--end col-->

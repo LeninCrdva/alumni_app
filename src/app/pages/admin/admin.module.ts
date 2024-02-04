@@ -24,6 +24,7 @@ import ApexCharts from 'apexcharts';
     EmpresaReportComponent,
     AreaChartComponent,
     PieChartComponent,
+    DocumentosComponent,
     GraficasComponent
   ],
     imports: [

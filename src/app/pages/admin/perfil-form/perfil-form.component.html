@@ -1,0 +1,274 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Actualizar Informacion</h1>
+        </div>
+    </div>
+</section>
+
+<div class="perfil-content">
+    <div class="wrapper">
+        <ul class="indicator">
+            <li class="active" data-target="#home"><i class="ph-house"></i> Perfil</li>
+            <li data-target="#ubicación"><i class="ph-user-circle"></i> Ubicación</li>
+            <li data-target="#titulo"><i class="ph-phone"></i> Titulo</li>
+            <li data-target="#otros"><i class="ph-gear-six"></i> Otros</li>
+        </ul>
+        <ul class="content">
+            <li class="active" id="home">
+                <h1>Perfil</h1>
+                <p>Por favor, complete todos los campos del formulario con información personal precisa y actualizada.
+                    Los datos
+                    proporcionados serán utilizados únicamente con fines académicos y de contacto. Asegúrese de revisar
+                    cuidadosamente la
+                    información antes de enviar el formulario. Gracias por su colaboración.</p>
+                <br>
+                <form class="mb-5">
+
+                    <div class="mb-4">
+                        <div class="form-group mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
+                                id="InputNombreM1">
+                            <label for="InputNombreM1" class="form-label">Ingresa tu primer Nombre</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                        </div>
+
+                        <div class="text-danger mb-4">
+                            El primer nombre es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre"
+                                    id="InputNombreP">
+                                <label for="InputNombreP" class="form-label">Ingresa tu segundo Nombre</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4">
+                                El segundo nombre es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group mr-3">
+                                <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
+                                    id="InputApellidoM">
+                                <label for="" class="form-label">Ingresa tu primer Apellido</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+                            <div class="text-danger mb-4">
+                                <!-- *ngIf="registerForm.get('primerApellido')?.hasError('required') && registerForm.get('primerApellido')?.touched"> -->
+                                El primer apellido es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoApellido"
+                                    id="InputApellidoP">
+                                <label for="" class="form-label">Ingresa tu segundo Apellido</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4">
+                                <!-- *ngIf="registerForm.get('segundoApellido')?.hasError('required') && registerForm.get('segundoApellido')?.touched"> -->
+                                El segundo apellido es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="cedula"
+                                id="InputCedula">
+                            <label for="" class="form-label">Ingresa tu Cedula</label>
+                            <i class="fa-solid fa-id-card form-icon"></i>
+                        </div>
+
+                        <div class="text-danger">
+                            <!-- *ngIf="registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched"> -->
+                            La cedula es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                                id="InputTelefono">
+                            <label for="" class="form-label">Ingresa tu Telefono</label>
+                            <i class="fa-solid fa-phone-volume form-icon"></i>
+                        </div>
+
+                        <div class="text-danger">
+                            <!-- *ngIf="registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched"> -->
+                            El número de telefono es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+
+                        <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
+                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                        <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
+                        <div class="text-danger">
+                            <!-- *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched"> -->
+                            La fecha de nacimiento es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label style="color: var(--alumni-color)">Subir Foto de perfil</label>
+
+                        <div class="card mg-b-20">
+                            <div class="card-header">
+                                <h4 class="card-header-title">
+                                    <!-- <div class="preview-img" *ngIf="previsualizacion">
+                                        <button class="clear-image form-control border-0 cancel-button" type="button"
+                                            (click)="clearImage()">
+                                            Cancelar
+                                        </button>
+                
+                                        <div class="image-container text-center" style="margin-top: 3rem;">
+                                            <img [src]="previsualizacion" alt=""
+                                                style="width: 220px; height: 220px; object-fit: cover;" />
+                                        </div>
+                                    </div> -->
+                                </h4>
+                                <div class="card-header-btn">
+                                    <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
+                                        aria-expanded="true">
+                                        <i class="ion-ios-arrow-down"></i>
+                                    </a>
+                                    <!-- Eliminé botones innecesarios -->
+                                </div>
+                            </div>
+                            <div class="card-body collapse show" id="collapse8">
+                                <!-- Moví el input type="file" aquí -->
+                                <!-- <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)" -->
+                                <input type="file" class="dropify" data-show-remove="false"
+                                    accept=".jpg, .jpeg, .png" />
+                            </div>
+                        </div>
+
+                        <!-- <div class="wrapper-button" *ngIf="previsualizacion"> -->
+                        <div class="wrapper-button">
+                            <!-- Agrega el botón necesario aquí -->
+                        </div>
+                    </div>
+                </form>
+
+                <button class="btn btn-oblong btn-primary btn-block mg-b-10">Siguiente Paso</button>
+                <br>
+                <br>
+                <button class="btn btn-oblong btn-success btn-block mg-b-10">Guardar</button>
+            </li>
+            <li id="ubicación">
+                <h1>Ubicación</h1>
+                <p>Para mantenernos conectados y al tanto de tus logros, te animamos a actualizar tu ubicación actual en
+                    nuestra plataforma
+                    Alumni. Este simple paso nos permitirá seguir tu trayectoria profesional, conocer tus éxitos y
+                    facilitar la conexión con
+                    otros exalumnos que puedan estar en tu área.</p>
+                <form>
+                    <div class="mb-4 my-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="cedula"
+                                id="InputCedula">
+                            <label for="" class="form-label">Ingresa tu ubicación</label>
+                            <i class="fa-solid fa-id-card form-icon"></i>
+                        </div>
+
+                        <div class="text-danger">
+                            <!-- *ngIf="registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched"> -->
+                            La ubicación es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                                id="InputTelefono">
+                            <label for="" class="form-label">Ingresa tu Telefono</label>
+                            <i class="fa-solid fa-phone-volume form-icon"></i>
+                        </div>
+
+                        <div class="text-danger">
+                            <!-- *ngIf="registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched"> -->
+                            El número de telefono es obligatorio.
+                        </div>
+                    </div>
+
+                </form>
+            </li>
+            <li id="titulo">
+                <h1>Titulo</h1>
+                <p>Para asegurarnos de mantener actualizada nuestra base de datos y celebrar tus logros académicos, te
+                    pedimos que subas
+                    una copia de tu título universitario y completes algunos datos clave sobre tu experiencia educativa.
+                </p>
+                <form>
+                    <div class="mb-4">
+                        <label style="color: var(--alumni-color)">Actualiazr Titulo</label>
+
+                        <div class="card mg-b-20">
+                            <div class="card-header">
+                                <h4 class="card-header-title">
+                                    <!-- <div class="preview-img" *ngIf="previsualizacion">
+                                                                <button class="clear-image form-control border-0 cancel-button" type="button"
+                                                                    (click)="clearImage()">
+                                                                    Cancelar
+                                                                </button>
+                                        
+                                                                <div class="image-container text-center" style="margin-top: 3rem;">
+                                                                    <img [src]="previsualizacion" alt=""
+                                                                        style="width: 220px; height: 220px; object-fit: cover;" />
+                                                                </div>
+                                                            </div> -->
+                                </h4>
+                                <div class="card-header-btn">
+                                    <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
+                                        aria-expanded="true">
+                                        <i class="ion-ios-arrow-down"></i>
+                                    </a>
+                                    <!-- Eliminé botones innecesarios -->
+                                </div>
+                            </div>
+                            <div class="card-body collapse show" id="collapse8">
+                                <!-- Moví el input type="file" aquí -->
+                                <!-- <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)" -->
+                                <input type="file" class="dropify" data-show-remove="false"
+                                    accept=".jpg, .jpeg, .png" />
+                            </div>
+                        </div>
+
+                        <!-- <div class="wrapper-button" *ngIf="previsualizacion"> -->
+                        <div class="wrapper-button">
+                            <!-- Agrega el botón necesario aquí -->
+                        </div>
+                    </div>
+                </form>
+            </li>
+            <li id="otros">
+                <h1>Settings</h1>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit quaerat magnam sit, nobis sed cum
+                    eius voluptatem quis facilis sunt, quia? Non atque, facere obcaecati veniam! Impedit atque, facilis
+                    similique doloribus quidem quibusdam quod! Quam odit quasi quia accusantium natus eos accusamus
+                    sequi repellat modi reiciendis vitae provident tenetur sint tempora quaerat expedita facere,
+                    assumenda quos consequatur minima quod deleniti.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, sapiente.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error molestias quasi est expedita, a
+                    pariatur deleniti cum reiciendis similique cupiditate?</p>
+            </li>
+        </ul>
+    </div>
+</div>

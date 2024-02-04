@@ -8,14 +8,14 @@
             <h4>El cargo ofertado es para: {{ofertaDetail.cargo}}</h4>
             <p class="text-muted mt-4">
               {{obtenerTiempoTranscurrido()}} por
-              <a href="pages-job-company.html" class="text-primary h6">{{ofertaDetail.empresa?.nombre}}</a>
+              <a href="pages-job-company.html" class="text-primary h6">{{ofertaDetail.empresa.nombre}}</a>
             </p>
             <div class="d-flex justify-content-between align-items-center">
               <ul class="list-unstyled mb-0">
                 <li class="list-inline-item mr-3">
                   <div class="d-flex h6 mb-0 align-items-center">
                     <i data-feather="map-pin" class="fea icon-sm mr-1"></i>
-                    <p class="text-muted mb-0">{{ofertaDetail.empresa?.ciudad?.nombre}}</p>
+                    <p class="text-muted mb-0">{{ofertaDetail.empresa.ciudad.nombre}}</p>
                   </div>
                 </li>
                 <li class="list-inline-item">
@@ -25,7 +25,7 @@
                   </div>
                 </li>
               </ul>
-              <button href="page-job-apply.html.html" class="btn btn-primary">Editar</button>
+              <button class="btn btn-primary" (click)="requestOffer(createGraduadoDTO())">Aplicar</button>
             </div>
           </div>
         </div>
@@ -51,15 +51,15 @@
                 <i data-feather="user" class="float-left mr-3"></i>
                 <div class="overflow-hidden d-block">
                   <h6 class="mb-0">Tipo de Empleo:</h6>
-                  <p class="text-primary mb-0">{{ofertaDetail?.empresa?.nombre}}</p>
+                  <p class="text-primary mb-0">{{ofertaDetail.empresa.nombre}}</p>
                 </div>
               </div>
               <div class="d-flex align-items-center mt-3">
                 <i data-feather="map-pin" class="float-left mr-3"></i>
                 <div class="overflow-hidden d-block">
                   <h6 class="mb-0">Ubicacion:</h6>
-                  <p class="text-primary mb-0">{{ofertaDetail.empresa?.ciudad?.nombre}},
-                    {{ofertaDetail.empresa?.ciudad?.provincia?.pais}}</p>
+                  <p class="text-primary mb-0">{{ofertaDetail.empresa.ciudad.nombre}},
+                    {{ofertaDetail.empresa.ciudad.provincia.pais}}</p>
                 </div>
               </div>
               <div class="d-flex align-items-center mt-3">
@@ -129,8 +129,8 @@
               </td>
               <td>
                 <h4 class="title">
-                  <a class="text-dark">{{graduado.usuario?.persona?.primer_nombre}}
-                    {{graduado.usuario?.persona?.apellido_paterno}}</a>
+                  <a class="text-dark">{{graduado.usuario.persona.primer_nombre}}
+                    {{graduado.usuario.persona.apellido_paterno}}</a>
                 </h4>
                 <ul class="list-unstyled mb-0">
                   <li class="list-inline-item mr-3">

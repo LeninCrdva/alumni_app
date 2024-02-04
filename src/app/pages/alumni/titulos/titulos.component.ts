@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { TituloService } from '../../../data/service/titulo.service';
 import { Titulo } from '../../../data/model/titulo';
 import { Carrera } from '../../../data/model/carrera';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CarreraService } from '../../../data/service/carrera.service';
-
+import { DataTableDirective } from 'angular-datatables';
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
@@ -20,6 +21,7 @@ export class TitulosComponent implements OnInit {
   tituloList: Titulo[] = [];
 
   editarClicked = false;
+  
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
@@ -31,13 +33,20 @@ export class TitulosComponent implements OnInit {
   constructor(private tituloService: TituloService, private carrerasService: CarreraService) { }
 
   ngOnInit(): void {
+    this.setupDtOptions();
+    this.obtenerIDUsuario();
+    this.obtenerCarreras();
+    this.loadData();
+  }
+  
+  setupDtOptions() {
     this.dtoptions = {
       pagingType: 'full_numbers',
       searching: true,
       lengthChange: true,
       language: {
         search: 'Buscar:',
-        searchPlaceholder: 'Buscar titulo ...',
+        searchPlaceholder: 'Buscar titulo...',
         info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         paginate: {
@@ -49,20 +58,16 @@ export class TitulosComponent implements OnInit {
         lengthMenu: 'Mostrar _MENU_ registros por página',
         zeroRecords: 'No se encontraron registros coincidentes'
       },
-      lengthMenu: [10, 20, 50]
+      lengthMenu: [10, 25, 50]
     };
-
-    this.obtenerIDUsuario();
-    this.obtenerCarreras();
-    this.loadData();
   }
 
   // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
-
   loadData() {
     this.tituloService.getTitulos().subscribe(
       titulos => {
         this.tituloList = titulos;
+        this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );
@@ -115,7 +120,7 @@ export class TitulosComponent implements OnInit {
 
     this.tituloService.updateTitulo(this.idEdit, this.tituloCarga).subscribe(
       titulosActualizado => {
-        console.log('Sector actualizado exitosamente:', titulosActualizado);
+        console.log('Titulo actualizado exitosamente:', titulosActualizado);
         this.titulo = titulosActualizado;
         this.mostrarSweetAlert(true, 'El titulo se ha actualizado exitosamente.');
         this.loadData();
