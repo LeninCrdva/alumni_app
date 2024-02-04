@@ -1,5 +1,13 @@
 .card {
-    width: 600px;
-    margin-bottom: 20px; 
+  width: 100%; /* Establecer el ancho al 100% por defecto */
+
+  max-width: 600px; /* Establecer un ancho máximo para pantallas grandes */
+  margin: 0 auto;
+  margin-bottom: 20px; 
+}
+@media (max-width: 600px) {
+  .card {
+    max-width: 100%; /* Hacer la tarjeta ocupar el ancho completo en pantallas más pequeñas */
   }
-  
+}
+

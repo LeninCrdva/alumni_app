@@ -13,5 +13,8 @@ import { Observable } from 'rxjs';
     getPostulacionesPorDia(): Observable<any> {
       return this.http.get<any>(`${this.baseUrl}/ofertas-laborales/postulaciones-por-dia`);
     }
+    getGraduadosConExperiencia(): Observable<any> {
+      return this.http.get<any>(`${this.baseUrl}/experiencias/graduados-con-experiencia`);
+    }
     
   }
