@@ -7,6 +7,96 @@
     </div>
 </section>
 
+<!-- Nuevo Modal -->
+<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-success">
+                <h5>
+                    PERFIL DEL GRADUADO
+                </h5>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25 my-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="nombres">NOMBRES: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="nombres"
+                                        placeholder="Ingrese los nombres" id="nombres">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="apellidos">APELLIDOS: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="apellidos"
+                                        placeholder="Ingrese los apellidos" id="apellidos">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mg-b-25 my-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="foto">FOTO: <span
+                                            class="tx-danger">*</span></label>
+                                    <!-- Agrega un elemento img para mostrar la imagen -->
+                                    <img src="URL_DE_LA_IMAGEN" alt="Foto" style="max-width: 250px; max-height: 250px;">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="fechaGraduacion">FECHA DE GRADUACIÓN:
+                                        <span class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="fechaGraduacion"
+                                        placeholder="Ingrese la fecha de graduación" id="fechaGraduacion">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mg-b-25 my-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="ciudad">CIUDAD: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="ciudad"
+                                        placeholder="Ingrese la ciudad" id="ciudad">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label active" for="estadoCivil">ESTADO CIVIL: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="estadoCivil"
+                                        placeholder="Ingrese el estado civil" id="estadoCivil">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Nuevo Modal -->
+
+
+
 <div class="card">
     <div class="card-body collapse show">
 
@@ -18,6 +108,7 @@
                         <tr>
                             <th>#</th>
                             <th>NOMBRES</th>
+                            <th>FOTO</th>
                             <th>APELLIDOS</th>
                             <th>FECHA DE GRADUACIÓN</th>
                             <th>CIUDAD</th>
@@ -33,10 +124,11 @@
                             <td>{{ graduadoItem.ciudad }}</td>
                             <td>{{ graduadoItem.ciudad }}</td>
                             <td>{{ graduadoItem.ciudad }}</td>
+                            <td>{{ graduadoItem.ciudad }}</td>
                             <td>{{ graduadoItem.estadocivil }}</td>
                             <td class="text-center table-actions align-middle justify-content-center">
-                                <button type="button"
-                                    class="btn btn-oblong btn-outline-success btn-block">
+                                <button data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_4" type="button" class="btn btn-oblong btn-outline-success btn-block">
                                     Ver Perfil
                                 </button>
                             </td>
