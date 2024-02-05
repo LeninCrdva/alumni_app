@@ -108,7 +108,7 @@
                         <tr>
                             <th>#</th>
                             <th>NOMBRES</th>
-                            <th>FOTO</th>
+                            <th>TELEFONO</th>
                             <th>APELLIDOS</th>
                             <th>FECHA DE GRADUACIÓN</th>
                             <th>CIUDAD</th>
@@ -120,11 +120,11 @@
                         <tr *ngFor="let graduadoItem of graduadosList;">
                             <th scope="row">{{ graduadoItem.id }}</th>
                             <!-- <td>{{ graduadoItem.usuario.persona.primer_nombre + graduadoItem.usuario.persona.segundo_nombre }}</td> -->
-                            <td>{{ graduadoItem.ciudad }}</td>
-                            <td>{{ graduadoItem.ciudad }}</td>
-                            <td>{{ graduadoItem.ciudad }}</td>
-                            <td>{{ graduadoItem.ciudad }}</td>
-                            <td>{{ graduadoItem.ciudad }}</td>
+                            <td>{{ graduadoItem.usuario.persona.primer_nombre }} {{ graduadoItem.usuario.persona.segundo_nombre}}</td>
+                            <td>{{ graduadoItem.usuario.persona.telefono }}</td>
+                            <td>{{ graduadoItem.usuario.persona.apellido_paterno }} {{ graduadoItem.usuario.persona.apellido_materno}}</td>
+                            <td>{{ graduadoItem['año_graduacion'] }} </td>
+                            <td>{{ graduadoItem.ciudad.nombre }} - {{graduadoItem.ciudad.provincia.nombre}} - {{graduadoItem.ciudad.provincia.pais}}</td>
                             <td>{{ graduadoItem.estadocivil }}</td>
                             <td class="text-center table-actions align-middle justify-content-center">
                                 <button data-bs-toggle="modal"

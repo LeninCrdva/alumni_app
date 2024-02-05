@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Graduado } from '../model/graduado';
 import { Graduado3 } from '../model/graduado';
+import { Graduado1 } from '../model/graduado';
 import { map } from 'rxjs/operators';
 import { ofertaLaboral } from '../model/ofertaLaboral';
 import { tap, catchError } from 'rxjs/operators';
@@ -112,4 +113,7 @@ export class GraduadoService {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<GraduadoDTO>(url, graduado, { headers: this.httpHeaders });
   } 
+  getGraduadosWithoutDTO(): Observable<Graduado1[]> {
+    return this.http.get<Graduado1[]>(`${this.urlEndPoint}/all`);
+  }
 }
