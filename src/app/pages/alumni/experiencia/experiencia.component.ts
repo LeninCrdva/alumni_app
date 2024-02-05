@@ -60,11 +60,23 @@ export class ExperienciaComponent {
   }
 
   // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
-
+/**
+ loadData() {
+    this.capacitacionesService.getCapacitaciones().subscribe(
+      capacitaciones => {
+        // Filtrar las capacitaciones por cédula
+        this.capacitacionList = capacitaciones.filter(capacitacion => capacitacion.cedula === this.cedula);
+        this.dtTrigger.next(null);
+      },
+      (error: any) => console.error(error)
+    );
+  }
+ */
   loadData() {
     this.experienciaService.getExperiencias().subscribe(
-      result => {
-        this.experienciaList = result;
+      experiencias => {
+        // Filtrar las experiencias por cédula
+        this.experienciaList = experiencias.filter(experiencia => experiencia.cedulaGraduado === this.cedula);
         this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)

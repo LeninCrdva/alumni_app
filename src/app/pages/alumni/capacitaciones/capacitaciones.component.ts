@@ -64,13 +64,15 @@ export class CapacitacionesComponent {
 
   loadData() {
     this.capacitacionesService.getCapacitaciones().subscribe(
-      capacitacion => {
-        this.capacitacionList = capacitacion;
+      capacitaciones => {
+        // Filtrar las capacitaciones por cédula
+        this.capacitacionList = capacitaciones.filter(capacitacion => capacitacion.cedula === this.cedula);
         this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );
   }
+  
 
   // NOTE: CRUD EVENTS
   onRegistrarClick(): void {

@@ -64,15 +64,13 @@ export class ReferenciasLaboralesComponent {
 
   loadData() {
     this.referenciaProService.getReferenciasProfesionales().subscribe(
-      result => {
-        this.referenciaProfesionalList = result;
+      referencias => {
+        this.referenciaProfesionalList = referencias.filter(referencia => referencia.graduado === this.cedula);
         this.dtTrigger.next(null);
       },
       (error: any) => console.error(error)
     );
   }
-
-
   // NOTE: CRUD EVENTS
   onRegistrarClick(): void {
     this.editarClicked = false;

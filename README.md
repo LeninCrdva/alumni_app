@@ -115,6 +115,7 @@ npm install --save sweetalert2
 ng add angular-datatables (Escoger bootstrap 5)
 npm i apexcharts
 ng-apexcharts --save
+npm i ng-multiselect-dropdown
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

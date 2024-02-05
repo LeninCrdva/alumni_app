@@ -65,15 +65,17 @@ export class ReferenciasPersonalesComponent {
 
   // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
 
-  loadData() {
-    this.referenciaPService.getReferenciasPersonales().subscribe(
-      referenciasP => {
-        this.referenciaPersonalList = referenciasP;
-        this.dtTrigger.next(null);
-      },
-      (error: any) => console.error(error)
-    );
-  }
+  
+loadData() {
+  this.referenciaPService.getReferenciasPersonales().subscribe(
+    referenciasP => {
+      // Filtrar las referencias personales por cédula
+      this.referenciaPersonalList = referenciasP.filter(referenciaP => referenciaP.cedulaGraduado === this.cedula);
+      this.dtTrigger.next(null);
+    },
+    (error: any) => console.error(error)
+  );
+}
 
 
   // NOTE: CRUD EVENTS
