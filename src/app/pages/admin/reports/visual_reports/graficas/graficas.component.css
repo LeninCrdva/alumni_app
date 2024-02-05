@@ -1,13 +1,24 @@
 .card {
-  width: 100%; /* Establecer el ancho al 100% por defecto */
-
-  max-width: 600px; /* Establecer un ancho máximo para pantallas grandes */
-  margin: 0 auto;
-  margin-bottom: 20px; 
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  margin-bottom: 20px;
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.279); /* Modifica estos valores para ajustar la sombra */
+  opacity: 0;
+  animation: fadeIn 4s ease-in-out forwards;
 }
-@media (max-width: 600px) {
-  .card {
-    max-width: 100%; /* Hacer la tarjeta ocupar el ancho completo en pantallas más pequeñas */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
+@media (max-width: 600px) {
+  .card {
+    max-width: 100%;
+  }
+}

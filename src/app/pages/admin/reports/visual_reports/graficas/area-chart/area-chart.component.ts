@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
-import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, 
-  ApexDataLabels, ApexYAxis, ApexTitleSubtitle, 
-  ApexLegend, ApexFill } from 'ng-apexcharts';
+import {
+  ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke,
+  ApexDataLabels, ApexYAxis, ApexTitleSubtitle,
+  ApexLegend, ApexFill, ApexPlotOptions
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -16,6 +18,7 @@ export type ChartOptions = {
   legend: ApexLegend;
   subtitle: ApexTitleSubtitle;
   fill: ApexFill;
+  options: ApexPlotOptions;
 };
 
 @Component({
@@ -30,7 +33,7 @@ export class AreaChartComponent implements OnInit {
   public fechas: string[] = [];
   public cantidades: number[] = [];
 
-  constructor(private apiservice: ApiService) {}
+  constructor(private apiservice: ApiService) { }
 
   ngOnInit(): void {
     this.apiservice.getPostulacionesPorDia().subscribe(
@@ -45,7 +48,7 @@ export class AreaChartComponent implements OnInit {
         if (this.fechas.length > 0 && this.cantidades.length > 0) {
           // Crear un array de objetos { x, y } para cada fecha y cantidad
           const dataPoints = this.fechas.map((fecha, index) => ({
-            x: fecha, 
+            x: fecha,
             y: this.cantidades[index],
           }));
 
@@ -58,28 +61,49 @@ export class AreaChartComponent implements OnInit {
             ],
             chart: {
               type: 'area',
-              height: 420,
-              width: 560,
+              width: "100%",
+              animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800,
+                animateGradually: {
+                  enabled: true,
+                  delay: 150
+                },
+                dynamicAnimation: {
+                  enabled: true,
+                  speed: 350
+                }
+              },
               zoom: {
                 enabled: false,
               },
             },
+            options: {
+              area: {
+                fillTo:'end'
+              }
+            },
             dataLabels: {
               style: {
-                colors: [ '#1ed760']
+                colors: ['#1ed760']
               },
               enabled: false,
             },
             stroke: {
               curve: 'smooth',
-              width: 1,
+              width: 2.25,
             },
             fill: {
-              colors: ['#1cc759'],
-              opacity: 0.3,
+              type: 'gradient',
+              gradient: {
+                gradientToColors: ["#28b2bc"],
+                inverseColors: true,
+                stops: [20, 80]
+              },
             },
             title: {
-              text: 'Reporte de Postulaciones por Día',
+              text: 'Postulaciones por Día',
               align: 'center',
             },
             subtitle: {
