@@ -6,7 +6,8 @@ import {
   ApexNonAxisChartSeries,
   ApexTitleSubtitle,
   ApexOptions,
-  ApexResponsive
+  ApexResponsive,
+  ApexFill
 } from 'ng-apexcharts';
 
 export type ChartOptions = {
@@ -17,6 +18,7 @@ export type ChartOptions = {
   labels: string[];
   options: ApexOptions;
   responsive: ApexResponsive;
+  fill: ApexFill;
 };
 
 @Component({
@@ -54,7 +56,7 @@ export class PieChartComponent implements OnInit {
             series: this.cantidad,
             chart: {
               type: 'pie',
-              width: 580,
+              width: "100%",
               fontFamily: 'Poppins, sans-serif',
               redrawOnParentResize:true,
               selection: {
@@ -101,6 +103,14 @@ export class PieChartComponent implements OnInit {
                 autoSelected: 'zoom' 
               },
                
+            },
+            fill: {
+              type: 'gradient',
+              gradient: {
+                gradientToColors: ["#28b2bc"],
+                inverseColors: true,
+                stops: [20, 80]
+              },
             },
             dataLabels: {
               style: {

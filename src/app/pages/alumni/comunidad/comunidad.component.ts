@@ -62,7 +62,6 @@ export class ComunidadComponent {
     this.graduadoService.getGraduados().subscribe(
       result => {
         this.graduadosList = result;
-        console.log("usuario"+this.graduadosList[0].usuario.nombre_usuario);
       },
       (error: any) => console.error(error),
       () => this.dtTrigger.next(null)

@@ -16,5 +16,7 @@ import { Observable } from 'rxjs';
     getGraduadosConExperiencia(): Observable<any> {
       return this.http.get<any>(`${this.baseUrl}/experiencias/graduados-con-experiencia`);
     }
-    
+    getCargoConOfertas(): Observable<any> {
+      return this.http.get<any>(`${this.baseUrl}/ofertas-laborales/cargos-con-ofertas`);
+    }
   }
