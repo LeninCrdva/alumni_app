@@ -15,7 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-empresas-2',
   templateUrl: './empresas-2.component.html',
-  styleUrl: './empresas-2.component.css'
+  styleUrls: ['./empresas-2.component.css', '../../../../assets/prefabs/headers.css', '../../../../assets/prefabs/headers.css']
 })
 export class Empresas2Component {
 
