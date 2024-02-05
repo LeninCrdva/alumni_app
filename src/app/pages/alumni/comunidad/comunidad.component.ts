@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Graduado } from '../../../data/model/graduado';
 import { Subject } from 'rxjs';
 import { GraduadoService } from '../../../data/service/graduado.service';
+import { Usuario } from '../../../data/model/usuario';
+import { Ciudad } from '../../../data/model/ciudad';
 
 @Component({
   selector: 'app-comunidad',
@@ -9,61 +11,44 @@ import { GraduadoService } from '../../../data/service/graduado.service';
   styleUrls: ['comunidad.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class ComunidadComponent {
-  // graduado: Graduado = { cedulaGraduado: '', cargo: '', duracion: '', institucionNombre: '', actividad: '', area_trabajo: '' };
-  // graduadoCarga: Graduado = { id: 0, cedulaGraduado: '', cargo: '', duracion: '', institucionNombre: '', actividad: '', area_trabajo: '' };
-  // graduadoList: Graduado[] = [];
-  // editarClicked = false;
 
-  // dtoptions: DataTables.Settings = {};
-  // dtTrigger: Subject<any> = new Subject<any>();
+  public urlImage: string = '';
+  public rutaimagen: string = '';
+  public graduadoid: number = 0;
+  public idstring: string = '';
+  graduado: Graduado = { id: 0, usuario: new Usuario(), ciudad: new Ciudad(), fecha_graduacion: new Date(), emailPersonal: '', estadocivil: '', ruta_pdf: '', url_pdf: '' };
 
-  // idEdit: number = 0;
+  constructor(private graduadoService: GraduadoService) { }
 
-  // @Output() onClose: EventEmitter<string> = new EventEmitter();
+  ngOnInit(): void {
+    this.loadUserDataByUsername();
+    this.idstring = localStorage.getItem('idGraduado') || '';
+    this.graduadoid = parseInt(this.idstring, 10)
+    if (this.graduadoid > 0) {
+      this.getGraduadoById();
+    }
+  }
 
-  // constructor(private graduadoService: GraduadoService) { }
+  getGraduadoById() {
+    this.graduadoService.getGraduadoById(this.graduadoid).subscribe(
+      data => {
+        this.graduado = data;
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
 
-  // ngOnDestroy(): void {
-  //   this.dtTrigger.unsubscribe();
-  // }
-
-  // ngOnInit(): void {
-  //   this.obtenerCedula();
-  //   this.loadData();
-  //   this.setupDtOptions();
-  // }
-
-  // setupDtOptions() {
-  //   this.dtoptions = {
-  //     pagingType: 'full_numbers',
-  //     searching: true,
-  //     lengthChange: true,
-  //     language: {
-  //       search: 'Buscar:',
-  //       searchPlaceholder: 'Buscar experiencia...',
-  //       info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-  //       infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-  //       paginate: {
-  //         first: 'Primera',
-  //         last: 'Última',
-  //         next: 'Siguiente',
-  //         previous: 'Anterior',
-  //       },
-  //       lengthMenu: 'Mostrar _MENU_ registros por página',
-  //       zeroRecords: 'No se encontraron registros coincidentes'
-  //     },
-  //     lengthMenu: [10, 25, 50]
-  //   };
-  // }
-
-  // // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
-
-  // loadData() {
-  //   this.graduadoService.getExperiencias().subscribe(
-  //     result => {
-  //       this.graduadoList = result;
-  //     },
-  //     (error: any) => console.error(error)
-  //   );
-  // }
+  loadUserDataByUsername() {
+    const storedRutaImagen = localStorage.getItem('ruta_imagen');
+    const storedUrlImagen = localStorage.getItem('url_imagen');
+    if (storedRutaImagen && storedUrlImagen) {
+      this.rutaimagen = storedRutaImagen;
+      this.urlImage = storedUrlImagen;
+    } else {
+      // Manejar el caso en el que la información no esté disponible en localStorage
+      console.error('La información de imagen no está disponible en localStorage.');
+    }
+  }
 }

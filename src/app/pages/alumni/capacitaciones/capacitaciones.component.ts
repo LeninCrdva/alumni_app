@@ -93,7 +93,6 @@ export class CapacitacionesComponent {
     this.capacitacionesService.createCapacitacion(this.capacitacion).subscribe(
       newData => {
         console.log('Capacitación creada exitosamente:', newData);
-        this.loadData();
         this.mostrarSweetAlert(true, 'La capacitación se ha guardado exitosamente.');
       },
       error => {
@@ -120,7 +119,6 @@ export class CapacitacionesComponent {
       updateData => {
         this.capacitacion = updateData;
         this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
-        this.loadData();
       },
       error => {
         this.mostrarSweetAlert(false, 'Error al actualizar la capacitación.');
@@ -132,7 +130,6 @@ export class CapacitacionesComponent {
     this.capacitacionesService.deleteCapacitacion(id).subscribe(
       () => {
         this.mostrarSweetAlert(true, 'La capacitacion se ha eliminado exitosamente.');
-        this.loadData();
       },
       error => {
         this.mostrarSweetAlert(false, 'Error al eliminar la capacitación.');
@@ -180,6 +177,7 @@ export class CapacitacionesComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        location.reload();
       }
     });
   }

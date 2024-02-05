@@ -96,7 +96,6 @@ export class ReferenciasPersonalesComponent {
     this.referenciaPService.createReferenciasPersonales(this.referencia_personal).subscribe(
       referenciasP => {
         console.log('Refencia personal creada exitosamente:', referenciasP);
-        this.loadData();
         this.mostrarSweetAlert(true, 'La referencia personal se ha guardado exitosamente.');
       },
       error => {
@@ -123,7 +122,6 @@ export class ReferenciasPersonalesComponent {
         console.log('Referencia personal actualizado exitosamente:', refeActualizado);
         this.referencia_personal = refeActualizado;
         this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
-        this.loadData();
       },
       error => {
         console.error('Error al actualizar la referencia personal:', error);
@@ -137,7 +135,6 @@ export class ReferenciasPersonalesComponent {
       () => {
         console.log('Referencia personal eliminada exitosamente');
         this.mostrarSweetAlert(true, 'La referencia personal se ha eliminado exitosamente.');
-        this.loadData();
       },
       error => {
         console.error('Error al eliminar la referencia personal:', error);
@@ -186,6 +183,7 @@ export class ReferenciasPersonalesComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        location.reload();
       }
     });
   }
