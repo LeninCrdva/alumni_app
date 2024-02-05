@@ -194,11 +194,6 @@
                     <li><a [routerLink]="['/system/company/crud']" routerLinkActive="router-link-active">Mis
                             Empresas</a>
                     </li>
-                    <li><a [routerLink]="['/system/company/postulaciones_form']"
-                            routerLinkActive="router-link-active">Mis
-                            Trabajos</a>
-                    </li>
-                    <li><a href="#">Mas</a></li>
                 </ul>
             </li>
             <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
@@ -206,7 +201,7 @@
                 <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Postulaciones <i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="#">Ofertar Trabajo</a></li>
+                    <li><a [routerLink]="['/system/company/postulaciones_form']" >Ofertar Trabajo</a></li>
                 </ul>
             </li>
         </ul>
