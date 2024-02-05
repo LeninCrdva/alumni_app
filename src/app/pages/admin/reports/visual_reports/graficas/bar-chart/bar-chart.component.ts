@@ -153,7 +153,7 @@ export class BarChartComponent implements OnInit {
             },
             stroke: {
               curve: 'smooth',
-              width: 1,
+              width: 0,
             },
             fill: {
               type: "gradient",

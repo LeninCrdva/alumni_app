@@ -1,4 +1,3 @@
-
 import { Component, OnInit, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ApiService } from './api.service';
 import { forkJoin } from 'rxjs';
@@ -18,7 +17,7 @@ export class GraficasComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     Swal.fire({
-      text: 'Datos cargados exitosamente',
+      text: 'Cargando Datos...',
       timer: 2000,
       imageUrl: 'assets/imgs/gifs/estadistica.gif',
       imageHeight: 300,
@@ -27,13 +26,11 @@ export class GraficasComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
     forkJoin(
       this.chartComponents.map(component => component.initialize())
     ).subscribe(
       () => {
         this.datosCargados = true;
-
       },
       (error) => {
         console.error('Error al cargar datos:', error);
@@ -41,10 +38,8 @@ export class GraficasComponent implements OnInit, AfterViewInit {
           icon: 'error',
           text: 'No existen datos'
         });
+        this.datosCargados = false; // Si hay un error, establece datosCargados en false
       }
     );
   }
-  
 }
-
-
