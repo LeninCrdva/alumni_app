@@ -12,21 +12,35 @@
 
         <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
-                <table
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered custom-table">
                     <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
-                            <th>CARGO</th>
-                            <th>DURACIÓN</th>
-                            <th>INSTITUCION</th>
-                            <th>ACTIVIDAD</th>
-                            <th>AREA DE TRABAJO</th>
+                            <th>NOMBRES</th>
+                            <th>APELLIDOS</th>
+                            <th>FECHA DE GRADUACIÓN</th>
+                            <th>CIUDAD</th>
+                            <th>ESTADO CIVIL</th>
                             <th class="text-center w-100px">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <tr *ngFor="let graduadoItem of graduadosList;">
+                            <th scope="row">{{ graduadoItem.id }}</th>
+                            <!-- <td>{{ graduadoItem.usuario.persona.primer_nombre + graduadoItem.usuario.persona.segundo_nombre }}</td> -->
+                            <td>{{ graduadoItem.ciudad }}</td>
+                            <td>{{ graduadoItem.ciudad }}</td>
+                            <td>{{ graduadoItem.ciudad }}</td>
+                            <td>{{ graduadoItem.ciudad }}</td>
+                            <td>{{ graduadoItem.estadocivil }}</td>
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <button type="button"
+                                    class="btn btn-oblong btn-outline-success btn-block">
+                                    Ver Perfil
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

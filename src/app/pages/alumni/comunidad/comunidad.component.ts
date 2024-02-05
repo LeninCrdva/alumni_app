@@ -16,27 +16,56 @@ export class ComunidadComponent {
   public rutaimagen: string = '';
   public graduadoid: number = 0;
   public idstring: string = '';
+  public nombres: string = '';
+  public apellidos: string = '';
   graduado: Graduado = { id: 0, usuario: new Usuario(), ciudad: new Ciudad(), fecha_graduacion: new Date(), emailPersonal: '', estadocivil: '', ruta_pdf: '', url_pdf: '' };
+
+  graduadosList: Graduado[] = [];
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private graduadoService: GraduadoService) { }
 
   ngOnInit(): void {
-    this.loadUserDataByUsername();
-    this.idstring = localStorage.getItem('idGraduado') || '';
-    this.graduadoid = parseInt(this.idstring, 10)
-    if (this.graduadoid > 0) {
-      this.getGraduadoById();
-    }
+    this.setupDtOptions();
+    this.loadData();
+
+    // this.loadUserDataByUsername();
+    // this.idstring = localStorage.getItem('idGraduado') || '';
+    // this.graduadoid = parseInt(this.idstring, 10);
   }
 
-  getGraduadoById() {
-    this.graduadoService.getGraduadoById(this.graduadoid).subscribe(
-      data => {
-        this.graduado = data;
+  setupDtOptions() {
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language: {
+        search: 'Buscar:',
+        searchPlaceholder: 'Buscar experiencia...',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        paginate: {
+          first: 'Primera',
+          last: 'Última',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        },
+        lengthMenu: 'Mostrar _MENU_ registros por página',
+        zeroRecords: 'No se encontraron registros coincidentes'
       },
-      error => {
-        console.error(error);
-      }
+      lengthMenu: [10, 25, 50]
+    };
+  }
+
+  loadData() {
+    this.graduadoService.getGraduados().subscribe(
+      result => {
+        this.graduadosList = result;
+        console.log("usuario"+this.graduadosList[0].usuario.nombre_usuario);
+      },
+      (error: any) => console.error(error),
+      () => this.dtTrigger.next(null)
     );
   }
 
@@ -47,7 +76,6 @@ export class ComunidadComponent {
       this.rutaimagen = storedRutaImagen;
       this.urlImage = storedUrlImagen;
     } else {
-      // Manejar el caso en el que la información no esté disponible en localStorage
       console.error('La información de imagen no está disponible en localStorage.');
     }
   }
