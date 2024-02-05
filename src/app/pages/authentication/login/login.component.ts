@@ -53,6 +53,7 @@ export class LoginComponent {
           const authorities: string[] = response.authorities.map((authority: { authority: any; }) => authority.authority);
           console.log("authorities here: " + authorities);
           localStorage.setItem('token', accessToken);
+          
           localStorage.setItem('authorities', JSON.stringify(authorities));
           localStorage.setItem('user_id', user_id);
           this.mensaje = 'success';

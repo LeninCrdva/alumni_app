@@ -72,8 +72,9 @@ export class LayoutSystemComponent implements OnInit {
 
 
   redirectToProfile(): void {
-    const userRole = localStorage.getItem('userRole');
-
+  //  localStorage.setItem('authorities', JSON.stringify(authorities));
+  const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
+console.log('es de la autoridad 1',userRole);
     console.log("Rol: " + userRole);
     switch (userRole) {
       case 'ROL_ADMINISTRADOR':
@@ -89,7 +90,7 @@ export class LayoutSystemComponent implements OnInit {
   }
 
   redirectToUpdateProfile(): void {
-    const userRole = localStorage.getItem('userRole');
+    const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
 
     console.log("Rol: " + userRole);
     switch (userRole) {
@@ -218,8 +219,8 @@ export class LayoutSystemComponent implements OnInit {
 
 
   private checkUserRole() {
-    const userRole = localStorage.getItem('userRole');
-    console.log(userRole);
+    const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
+console.log('prueba de rol', userRole);
 
     if (userRole === 'ROL_ADMINISTRADOR') {
       this.showAdminOptions = true;
