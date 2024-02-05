@@ -9,6 +9,10 @@ import { UsuariosFormComponent } from './usuarios-form/usuarios-form.component';
 import { DocumentosComponent } from './reports/docs_reports/documentos/documentos.component';
 import { EmpresaReportComponent } from './reports/empresa-report/empresa-report.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
+import { ProvinciaComponent } from './provincia/provincia.component';
+import { Ciudad } from '../../data/model/ciudad';
+import { PeriodoCarreraComponent } from './periodo-carrera/periodo-carrera.component';
+import { CarreraComponent } from './carrera/carrera.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -16,6 +20,12 @@ const routes: Routes = [
     { path: 'perfil-admin', component: PerfilUsuarioComponent },
     { path: 'sector-empresarial', component: SectorEmpComponent },
     { path: 'reportes', component: GraficasComponent },
+    { path: 'sector-empresarial', component: SectorEmpComponent},
+    { path: 'reportes', component: GraficasComponent},
+    { path: 'provincia', component: ProvinciaComponent},
+    { path: 'carrera', component: CarreraComponent},
+    { path: 'ciudad', component: Ciudad},
+    { path: 'periodo', component: PeriodoCarreraComponent},
     { path: 'usuarios-list', component: UsuariosListsComponent },
     { path: 'usuarios-form', component: UsuariosFormComponent },
     { path: 'documentos', component: DocumentosComponent },

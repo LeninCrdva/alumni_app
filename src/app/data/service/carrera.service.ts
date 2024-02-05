@@ -26,4 +26,10 @@ export class CarreraService {
   getCarreraById(id: any): Observable<Carrera> {
     return this.http.get<Carrera>(`${this.urlEndPoint}/${id}`)
   }
+
+  updateCarrera(id: number, carrera: Carrera): Observable<Carrera> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Carrera>(url, carrera, { headers: this.httpHeaders });
+  }
+
 }

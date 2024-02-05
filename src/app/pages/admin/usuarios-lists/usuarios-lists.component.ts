@@ -14,6 +14,10 @@ import { RolService } from '../../../data/service/rol.service';
 import { Graduado } from '../../../data/model/graduado';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { Ciudad } from '../../../data/model/ciudad';
+import { MAIN_ROUTE } from '../../../data/service/MAIN_ROUTE';
+import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
+import { CiudadService } from '../../../data/service/ciudad.service';
+import { Observable, catchError, forkJoin, map, of, switchMap, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios-lists',
@@ -23,14 +27,16 @@ import { Ciudad } from '../../../data/model/ciudad';
 export class UsuariosListsComponent implements OnInit {
 
   registerNewUserForm: FormGroup;
+  editMode: boolean = false;
 
 
   ngOnInit(): void {
-    this.getAllUsers();
-    this.getAllRoles();
-    this.registerNewUserForm.get('nombreDelRol')?.disable();
+    this.getAllUsersBySelectedRoles();
+    this.getAllSelectedRoles();
+    this.getAllCities();
+    this.getAllPersons();
+    this.getAllGraduatesDTO();
   }
-
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +44,7 @@ export class UsuariosListsComponent implements OnInit {
     private personService: PersonaService,
     private rolService: RolService,
     private graduateService: GraduadoService,
+    private cityService: CiudadService,
     private authService: AuthService,
     private assetService: AssetService,
     private sanitizer: DomSanitizer,
@@ -52,26 +59,34 @@ export class UsuariosListsComponent implements OnInit {
       fechaNacimiento: ['', Validators.required],
       nombreUsuario: ['', Validators.required],
       clave: ['', Validators.required],
-      nombreDelRol: ['ROL_GRADUADO', Validators.required,],
-      fechaGraduacion: ['', Validators.required],
+      nombreDelRol: ['', Validators.required,],
+      año_graduacion: ['', Validators.required],
       estadoCivil: ['', Validators.required],
-      emailPersonal: ['', Validators.required]
+      email_personal: ['', Validators.required],
+      ciudadNombre: ['', Validators.required],
     });
   };
 
   usersList: UserDTO[] = [];
   roleList: Rol[] = [];
   graduatedList: Graduado[] = [];
+  graduatedDTOList: GraduadoDTO[] = [];
   person: Persona = new Persona();
+  personList: Persona[] = [];
+  newPerson: Persona = new Persona();
   usuarioDTO: UserDTO = new UserDTO();
+  newDTOUser: UserDTO = new UserDTO();
   role: Rol = new Rol();
-  graduate: Graduado = new Graduado;
+  citiesList: Ciudad[] = [];
+  city: Ciudad = new Ciudad();
+  graduate: GraduadoDTO = new GraduadoDTO;
+  newGraduate: GraduadoDTO = new GraduadoDTO;
 
   editarClicked = false;
   public previsualizacion?: string;
   public archivos: any = []
   public loading?: boolean
-  'mensaje': string;
+  public serialNumberArray: Array<number> = [];
 
   //Imágenes
   public rutaimagen: string = '';
@@ -86,18 +101,39 @@ export class UsuariosListsComponent implements OnInit {
   }
 
   onRegistrarClick(): void {
-    this.editarClicked = false;
+    this.editMode = false;
   }
 
-  getAllUsers(): void {
+  getAllUsersBySelectedRoles(): void {
+    const rolesToShow = ['ROL_GRADUADO', 'ROL_EMPRESARIO'];
     this.userService.getUsersDTO().subscribe(users => {
-      this.usersList = users;
+      this.usersList = users.filter(user => rolesToShow.includes(user.rol));
     });
   }
 
-  getAllRoles(): void {
+  getAllPersons(): void {
+    this.personService.getPerson().subscribe(persons => {
+      this.personList = persons;
+    });
+  }
+
+  getAllSelectedRoles(): void {
+    const rolesToDisplay = ['ROL_GRADUADO', 'ROL_EMPRESARIO'];
     this.rolService.getRoles().subscribe(roles => {
-      this.roleList = roles;
+      this.roleList = roles.filter(role => rolesToDisplay.includes(role.nombre));
+    });
+  }
+
+  getAllCities(): void {
+    this.cityService.getCiudades().subscribe(cities => {
+      this.citiesList = cities;
+    });
+  }
+
+  getAllGraduatesDTO(): void {
+    this.graduateService.getGraduadosDTO().subscribe(gradu => {
+      this.graduatedDTOList = gradu;
+      console.log(gradu);
     });
   }
 
@@ -113,13 +149,10 @@ export class UsuariosListsComponent implements OnInit {
   }
 
   register() {
+    this.editMode = false;
     if (this.registerNewUserForm.valid) {
-
       const formData = this.registerNewUserForm.value;
-      console.log(formData);
-
       this.person = {
-
         cedula: formData.cedula,
         primer_nombre: formData.primerNombre,
         segundo_nombre: formData.segundoNombre,
@@ -127,16 +160,15 @@ export class UsuariosListsComponent implements OnInit {
         telefono: formData.telefono,
         apellido_paterno: formData.primerApellido,
         apellido_materno: formData.segundoApellido
-
       };
 
-      // Crear la persona usando PersonaService
       this.personService.createPerson(this.person).subscribe(
         (personaResponse) => {
+          const EndPoint = MAIN_ROUTE.API_ENDPOINT;
 
           this.mensajevalidado = 'Persona registrada exitosamente';
           if (this.mensajevalidado == 'Persona registrada exitosamente') {
-            this.assetService.post(`http://localhost:8080/assets/upload`, formularioDeDatos)
+            this.assetService.post(EndPoint + `/assets/upload`, formularioDeDatos)
               .subscribe(res => {
                 this.loading = false;
                 console.log('Respuesta del servidor', res);
@@ -156,32 +188,28 @@ export class UsuariosListsComponent implements OnInit {
 
                 this.authService.signup(usuarioDTO).subscribe(response => {
 
-                  console.log('Usuario registrado:', response);
-                  this.username = usuarioDTO.nombreUsuario;
-                  localStorage.setItem('name', this.username);
+                  this.graduate = {
+                    usuario: formData.nombreUsuario,
+                    ciudad: formData.ciudadNombre,
+                    año_graduacion: formData.año_graduacion,
+                    email_personal: formData.email_personal,
+                    estadocivil: formData.estadoCivil,
+                    ruta_pdf: '',
+                    url_pdf: '',
+                    idOferta: [],
+                  }
 
-                });
+                  console.log("Graduado datos: " + this.graduate.email_personal);
 
-                this.graduate = {
-                  usuario: new Usuario,
-                  ciudad: new Ciudad(),
-                  fecha_graduacion: formData.fechaGraduacion,
-                  emailPersonal: formData.emailPersonal,
-                  estadocivil: formData.estadoCivil,
-                  ruta_pdf: '',
-                  url_pdf: ''
+                  this.graduateService.createGraduadoDTO(this.graduate).subscribe(response => {
 
-                }
-                this.graduateService.createGraduado(this.graduate).subscribe(response => {
+                    console.log(this.graduate);
 
-                  console.log(this.graduate);
-
-
-                });
-
-                Swal.fire({
-                  icon: 'success',
-                  text: 'Datos cargados'
+                    Swal.fire({
+                      icon: 'success',
+                      text: 'Datos cargados'
+                    });
+                  });
                 });
 
               }, () => {
@@ -210,14 +238,189 @@ export class UsuariosListsComponent implements OnInit {
     }
   }
 
+
   updateStateUser(id: any, usuarioDTO: UserDTO): void {
     this.userService.updateUser(id, usuarioDTO).subscribe(updatedUser => {
       const index = this.usersList.findIndex(u => u.id === updatedUser.id);
-      this.getAllUsers();
+      this.getAllUsersBySelectedRoles();
       if (index !== -1) {
         this.usersList[index] = updatedUser;
       }
     });
+  }
+
+  catchUserDTOInContext(userDto: UserDTO): void {
+    try {
+      this.editMode = true;
+      if (userDto) {
+        const contextDTO: UserDTO = { ...userDto };
+
+        this.getPersonByIndentification(contextDTO.cedula).pipe(
+          switchMap(person => {
+            return forkJoin([
+              of(person),
+              this.getGraduateDTOByUserId(userDto.id)
+            ]);
+          }),
+          map(([person, graduate]: [Persona, GraduadoDTO]) => {
+            console.log(graduate);
+            if (!graduate || !person) {
+              console.error('Graduado o persona no válidos.');
+              return null;
+            }
+
+            this.registerNewUserForm.patchValue({
+              nombreUsuario: contextDTO.nombreUsuario,
+              cedula: contextDTO.cedula,
+              rol: contextDTO.rol,
+              estado: contextDTO.estado,
+              primerNombre: person.primer_nombre,
+              segundoNombre: person.segundo_nombre,
+              fechaNacimiento: person.fechaNacimiento,
+              telefono: person.telefono,
+              primerApellido: person.apellido_paterno,
+              segundoApellido: person.apellido_materno,
+              ciudadNombre: graduate.ciudad,
+              año_graduacion: graduate.año_graduacion,
+              estadoCivil: graduate.estadocivil,
+              nombreDelRol: userDto.rol,
+              email_personal: graduate.email_personal
+            });
+
+            this.newDTOUser = userDto;
+            this.newPerson = person;
+            this.newGraduate = graduate;
+            return null;
+          }),
+          catchError(error => {
+            console.error('Error al obtener datos de persona y graduado:', error);
+            // Manejar el error de manera apropiada para tu aplicación
+            return of(null);
+          })
+        ).subscribe();
+      }
+    } catch (error) {
+      console.error('Error en catchUserDTOInContext:', error);
+    }
+  }
+
+
+  UpdateAllData(): void {
+    this.editMode = true;
+    try {
+
+      const idPerson = this.newPerson.id;
+      const idUSer = this.newDTOUser.id;
+      const idGrad = this.newGraduate.id;
+      if (idPerson !== undefined) {
+        const formData = this.registerNewUserForm.value;
+        const personEdit: Persona = {
+          id: idPerson,
+          cedula: formData.cedula,
+          primer_nombre: formData.primerNombre,
+          segundo_nombre: formData.segundoNombre,
+          fechaNacimiento: formData.fechaNacimiento,
+          telefono: formData.telefono,
+          apellido_paterno: formData.primerApellido,
+          apellido_materno: formData.segundoApellido
+        };
+
+        const userEdit = {
+          id: idUSer,
+          nombreUsuario: formData.nombreUsuario,
+          clave: formData.clave,
+          rol: this.newDTOUser.rol,
+          estado: this.newDTOUser.estado,
+          cedula: this.newDTOUser.cedula,
+          url_imagen: this.newDTOUser.ruta_imagen,
+          ruta_imagen: this.newDTOUser.ruta_imagen
+        }
+
+        const graduteEdit : GraduadoDTO = {
+          id: idGrad,
+          usuario: formData.nombreUsuario,
+          ciudad: formData.ciudadNombre,
+          año_graduacion: formData.año_graduacion,
+          email_personal: formData.email_personal,
+          estadocivil: formData.estadoCivil,
+          ruta_pdf: this.newGraduate.ruta_pdf,
+          url_pdf: this.newGraduate.url_pdf,
+          idOferta: this.newGraduate.idOferta
+        }
+
+        console.log(graduteEdit);
+
+        this.editPerEndPoint(idPerson, personEdit);
+        this.editUserEndPoint(idUSer, userEdit);
+        this.editGraduateEndPoint(idGrad, graduteEdit);
+      } else {
+        console.error('Fatal Error: No se proporcionó un ID válido.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  getGraduateDTOByUserId(idUser: any): Observable<GraduadoDTO> {
+    return this.graduateService.getGraduadoDTOByUserId(idUser);
+  }
+
+  getPersonByIndentification(identification: string): Observable<Persona> {
+    return this.personService.getPersonByIdentification(identification);
+  }
+
+  editPerEndPoint(id: any, pers: Persona) {
+    try {
+      this.personService.updatePerson(id, pers).subscribe(updatedPer => {
+        const index = this.personList.findIndex(u => u.id === updatedPer.id);
+        this.getAllUsersBySelectedRoles();
+        if (index !== -1) {
+          this.personList[index] = updatedPer;
+        }
+        Swal.fire({
+          icon: 'success',
+          text: 'Persona actualizada'
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  editUserEndPoint(id: any, user: UserDTO) {
+    try {
+      this.userService.updateUser(id, user).subscribe(updatedPer => {
+        const index = this.usersList.findIndex(u => u.id === updatedPer.id);
+        this.getAllUsersBySelectedRoles();
+        if (index !== -1) {
+          this.usersList[index] = updatedPer;
+        }
+        Swal.fire({
+          icon: 'success',
+          text: 'Usuario Actualizado'
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  editGraduateEndPoint(id: any, grad: GraduadoDTO) {
+    try {
+      this.graduateService.updateGraduadoDTO(id, grad).subscribe(updatedGrad => {
+        const index = this.graduatedDTOList.findIndex(u => u.id === updatedGrad.id);
+        this.getAllUsersBySelectedRoles();
+        if (index !== -1) {
+          this.graduatedDTOList[index] = updatedGrad;
+        }
+        Swal.fire({
+          icon: 'success',
+          text: 'Graduado Actualizado'
+        });
+      });
+    } catch (error) {
+      console.log(error + " Error aquí");
+    }
   }
 
   capturarFile(event: any): any {
@@ -257,7 +460,6 @@ export class UsuariosListsComponent implements OnInit {
       });
     }
   });
-
 
   clearImage(): any {
     this.previsualizacion = '';

@@ -9,7 +9,7 @@ import { Periodo } from '../model/periodo';
 })
 export class PeriodoService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/periodos';
+  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/peridos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 
@@ -25,4 +25,11 @@ export class PeriodoService {
 
   getPeriodoById(id: any): Observable<Periodo> {
     return this.http.get<Periodo>(`${this.urlEndPoint}/${id}`)
-  }}
+  }
+
+  updatePeriod(id: number, period: Periodo): Observable<Periodo> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Periodo>(url, period, { headers: this.httpHeaders });
+  }
+
+}

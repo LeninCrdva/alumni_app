@@ -29,4 +29,14 @@ import { Persona } from '../model/persona';
       return this.http.get<Persona>(`${this.urlEndPoint}/${id}`)
     }
   
+    getPersonByIdentification(identification: any): Observable<Persona> {
+      return this.http.get<Persona>(`${this.urlCreate}/cedula/${identification}`)
+    }
+
+    //Change to Edit Person
+    updatePerson(id: number, person: Persona): Observable<Persona> {
+      const url = `${this.urlCreate}/${id}`;
+      return this.http.put<Persona>(url, person, { headers: this.httpHeaders });
+    }
+
   }

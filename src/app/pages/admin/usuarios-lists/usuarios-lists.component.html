@@ -14,45 +14,74 @@
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
-            <h5 [innerText]="editarClicked ? 'Modificar Usuario' : 'Crear nuevo Usuario'">
+          <div [class.bg-success]="!editMode" [class.bg-primary]="editMode" class="modal-header text-white">
+            <h5 [innerText]="editMode ? 'Modificar Usuario' : 'Crear nuevo Usuario'">
             </h5>
           </div>
 
           <div class="modal-body">
-            <form [formGroup]="registerNewUserForm" (ngSubmit)="register()">
+            <form [formGroup]="registerNewUserForm">
               <div class="form-layout form-layout-1">
                 <div class="row mg-b-25">
                   <div class="col-lg-6 mb-3">
                     <div class="form-group">
                       <label class="form-control-label active">Primer Nombre: <span class="tx-danger">*</span></label>
                       <input type="text" placeholder="Marco" formControlName="primerNombre">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('primerNombre')?.hasError('required') && registerNewUserForm.get('primerNombre')?.touched">
+                        El primer nombre es obligatorio.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Segundo Nombre: <span class="tx-danger">*</span></label>
                       <input type="text" placeholder="Aurelio" formControlName="segundoNombre">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('segundoNombre')?.hasError('required') && registerNewUserForm.get('segundoNombre')?.touched">
+                        El segundo nombre es obligatorio.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Primer Apellido: <span class="tx-danger">*</span></label>
                       <input type="text" placeholder="Pérez" formControlName="primerApellido">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('primerApellido')?.hasError('required') && registerNewUserForm.get('primerApellido')?.touched">
+                        El primer apellido es obligatorio.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Segundo Apellido: <span
                           class="tx-danger">*</span></label>
                       <input type="text" placeholder="Gonzales" formControlName="segundoApellido">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('segundoApellido')?.hasError('required') && registerNewUserForm.get('segundoApellido')?.touched">
+                        El segundo apellido es obligatorio.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Cédula: <span class="tx-danger">*</span></label>
                       <input type="text" placeholder="01054495932" formControlName="cedula">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('cedula')?.hasError('required') && registerNewUserForm.get('cedula')?.touched">
+                        La cédula es obligatoria.
+                      </div>
                     </div>
-                    <div class="form-group">
+
+                    <div  class="form-group">
                       <label class="form-control-label active">Fecha de Graduación: <span
                           class="tx-danger">*</span></label>
-                      <input type="date" class="form-control" formControlName="fechaGraduacion">
+                      <input type="date" class="form-control" formControlName="año_graduacion">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('año_graduacion')?.hasError('required') && registerNewUserForm.get('año_graduacion')?.touched">
+                        Seleccione la fecha de graduación del usuario.
+                      </div>
                     </div>
-                    <div class="form-group">
+                    <div  class="form-group">
                       <label class="form-control-label active">Correo Personal: <span class="tx-danger">*</span></label>
-                      <input type="email" placeholder="personal@gmail.com" formControlName="emailPersonal">
+                      <input type="email" placeholder="personal@gmail.com" formControlName="email_personal">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('email_personal')?.hasError('required') && registerNewUserForm.get('email_personal')?.touched">
+                        El correo personal del usuario es obligatorio.
+                      </div>
                     </div>
                   </div>
 
@@ -60,45 +89,71 @@
                     <div class="form-group">
                       <label class="form-control-label active">Teléfono: <span class="tx-danger">*</span></label>
                       <input type="text" placeholder="01234567289" formControlName="telefono">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('telefono')?.hasError('required') && registerNewUserForm.get('telefono')?.touched">
+                        El número de teléfono es obligatorio.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Fecha de Nacimiento: <span
                           class="tx-danger">*</span></label>
                       <input type="date" class="form-control" formControlName="fechaNacimiento">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('fechaNacimiento')?.hasError('required') && registerNewUserForm.get('fechaNacimiento')?.touched">
+                        Seleccione una fecha de nacimiento.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="form-control-label active">Nombre de usuario: <span
                           class="tx-danger">*</span></label>
                       <input type="text" placeholder="User1" formControlName="nombreUsuario">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('required') && registerNewUserForm.get('nombreUsuario')?.touched">
+                        Ingrese un nombre de usuario.
+                      </div>
                     </div>
-                    <div class="form-group">
+                    <div *ngIf="editMode == false" class="form-group">
                       <label class="form-control-label active">Contraseña: <span class="tx-danger">*</span></label>
                       <input type="password" class="form-control" formControlName="clave">
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('clave')?.hasError('required') && registerNewUserForm.get('clave')?.touched">
+                        Ingrese una contraseña.
+                      </div>
                     </div>
                     <div class="form-group">
-                      <label class="form-control-label active">Foto: <span class="tx-danger">*</span></label>
+                      <label  class="form-control-label active">Foto: <span class="tx-danger">*</span></label>
                       <input type="file" class="form-control" (change)="capturarFile($event)"
                         accept=".png, .jpeg, .jpg">
                     </div>
-                    <div class="form-group">
+                    <div  class="form-group">
                       <label class="form-control-label active">Rol: <span class="tx-danger">*</span></label>
                       <select class="form-control" formControlName="nombreDelRol">
                         <option *ngFor="let role of roleList" value="{{role.nombre}}">{{role.nombre}}</option>
                       </select>
                     </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label active">Ciudad: <span class="tx-danger">*</span></label>
+                      <select class="form-control" formControlName="ciudadNombre">
+                        <option *ngFor="let city of citiesList" value="{{city.nombre}}">{{city.nombre}}</option>
+                      </select>
+                    </div>
+
                     <div class="form-group">
                       <label class="form-control-label active">Estado civil: <span class="tx-danger">*</span></label>
                       <select class="form-control" formControlName="estadoCivil">
-                        <option value="casado">Casado</option>
-                        <option value="soltero">Soltero</option>
-                        <option value="divorciado">Divorciado</option>
-                        <option value="otro">Otro</option>
+                        <option value="CASADO">CASADO</option>
+                        <option value="SOLTERO">SOLTERO</option>
+                        <option value="DIVORCIADO">DIVORCIADO</option>
+                        <option value="OTRO">OTRO</option>
                       </select>
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('estadoCivil')?.hasError('required') && registerNewUserForm.get('estadoCivil')?.touched">
+                        Seleccione el estado civil del usuario.
+                      </div>
                     </div>
                   </div>
-
                 </div>
-
               </div>
 
               <div class="preview-img" *ngIf="previsualizacion">
@@ -117,11 +172,11 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button (click)="register()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-              class="btn btn-oblong">Enviar Formulario</button>
-            <button type="submit" data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong"
-              [class.btn-success]="!editarClicked" [class.btn-primary]="editarClicked">
-              {{ editarClicked ? 'Actualizar' : 'Enviar Formulario' }}
+          
+            <button (click)="!editMode ? register() : UpdateAllData()" type="submit" data-bs-toggle="modal"
+              class="btn btn-oblong" [class.btn-success]="!editMode"
+              [class.btn-primary]="editMode">
+              {{ editMode ? 'Actualizar' : 'Enviar Formulario' }}
             </button>
             <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
           </div>
@@ -129,6 +184,7 @@
       </div>
     </div>
     <!--/ Modal -->
+
     <div class="col-md-12 col-lg-12">
       <div class="d-flex">
         <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
@@ -142,7 +198,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="card-body pd-0 collapse show" id="collapse1">
       <div class="table-responsive">
@@ -165,14 +220,9 @@
               <td>{{usuarioDTO?.rol}}</td>
 
               <td class="text-center table-actions d-flex justify-content-center">
-                <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                  class="table-action mg-r-10" [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked"
-                  href="#">
+                <a (click)="catchUserDTOInContext(usuarioDTO)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                  class="table-action mg-r-10" href="#">
                   <i class="fa-regular fa-pen-to-square"></i>
-                </a>
-
-                <a class="table-action ms-2 text-danger" href="#">
-                  <i class="fa fa-trash"></i>
                 </a>
               </td>
 
@@ -182,7 +232,6 @@
                   <span class="slider round"></span>
                 </label>
               </td>
-
             </tr>
           </tbody>
         </table>

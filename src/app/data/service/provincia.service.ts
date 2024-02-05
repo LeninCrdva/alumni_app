@@ -27,4 +27,9 @@ export class ProvinciaService {
     return this.http.get<Provincia>(`${this.urlEndPoint}/${id}`)
   }
 
+  updateProvincia(id: number, provincia: Provincia): Observable<Provincia> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<Provincia>(url, provincia, { headers: this.httpHeaders });
+  }
+
 }

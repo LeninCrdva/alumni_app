@@ -13,7 +13,10 @@ import { PieChartComponent } from './reports/visual_reports/graficas/pie-chart/p
 import { GraficasComponent } from './reports/visual_reports/graficas/graficas.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import ApexCharts from 'apexcharts';
-
+import { ProvinciaComponent } from './provincia/provincia.component';
+import { PeriodoCarreraComponent } from './periodo-carrera/periodo-carrera.component';
+import { CarreraComponent } from './carrera/carrera.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
     declarations: [
@@ -25,14 +28,18 @@ import ApexCharts from 'apexcharts';
     AreaChartComponent,
     PieChartComponent,
     DocumentosComponent,
-    GraficasComponent
+    GraficasComponent,
+    ProvinciaComponent,
+    PeriodoCarreraComponent,
+    CarreraComponent
   ],
     imports: [
         CommonModule,
         AdminRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        NgApexchartsModule
+        NgApexchartsModule,
+        NgMultiSelectDropDownModule.forRoot()
     ]
 })
 
