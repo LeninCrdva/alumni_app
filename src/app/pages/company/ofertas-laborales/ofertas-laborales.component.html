@@ -141,7 +141,9 @@
                 </div>
             </div>
         </div>
-        <!--/ Modal -->
+
+
+        <!--/ Modal1 -->
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
@@ -188,7 +190,7 @@
         </div>
 
     </div>
-</div>
+</div> <!--/ Modal 1 -->
 
 
 <!-- MODAL 2-->
@@ -203,8 +205,18 @@
                     </div>
 
                     <div class="modal-body">
-                        <button (click)="sendSelectedIDs()">Enviar IDs Seleccionados</button> <!-- Button to trigger method -->
-           
+                        
+                        <button *ngIf="filtropostulados == 1" (click)="sendSelectedIDs()" class="btn btn-oblong btn-success">
+                            Contratar personal
+                        </button>
+
+                        <label for="" style="margin-left: 10px;">
+                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select form-select-sm" [(ngModel)]="filtropostulados" (ngModelChange)="filtroPostulados()">
+                                <option [value]="1">Todos</option>
+                                <option [value]="2">Contratados</option>
+                            </select>
+                        </label>
+
                                 <div class="card-body pd-0 collapse show" id="collapse1">
                                     <div class="table-responsive">
                                         <table class="table">
@@ -215,7 +227,7 @@
                                                     <th>Cedula</th>
                                                     <th>Email</th>
                                                     <th>Acciones</th>
-                                                    <th>Seleccionar</th>
+                                                    <th *ngIf="filtropostulados == 1">Seleccionar</th>
 
                                                 </tr>
                                             </thead>
@@ -229,11 +241,11 @@
                                                         <a  class="table-action ms-2 text-danger" [routerLink]="['/system/company/graduado-perfil']" (click)="setIDGraduado(graduado.id)">
                                                             <i class="fa fa-info-circle"></i>
                                                         </a>
-                                                        <a  data-bs-toggle="modal" data-bs-target="#m_modal_5" class="table-action ms-2 text-muted">
-                                                            <i class="fa fa-check-circle"></i>
+                                                        <a  class="table-action ms-2 text-danger" *ngIf="filtropostulados == 2"  (click)="descontratarGraduado(graduado.id)">
+                                                            <i class="fa fa-trash-alt" *ngIf="filtropostulados == 2" ></i>
                                                         </a>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td class="text-center" *ngIf="filtropostulados == 1">
                                                         <input type="checkbox" [(ngModel)]="selectedRows[i]" />
                                                     </td>
                                                 </tr>

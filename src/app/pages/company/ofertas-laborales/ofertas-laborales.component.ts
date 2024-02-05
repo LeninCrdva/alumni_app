@@ -8,13 +8,14 @@ import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 import { Graduado } from '../../../data/model/graduado';
+import { GraduadoService } from '../../../data/service/graduado.service';
 
 
 
 @Component({
   selector: 'app-postulaciones-add-form',
   templateUrl: './ofertas-laborales.component.html',
-  styleUrls: ['./ofertas-laborales.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./ofertas-laborales.component.css', '../../../../assets/prefabs/headers.css', '../../../../assets/prefabs/headers.css']
 })
 export class OfertasLaboralesComponent {
   editarClicked = false;
@@ -37,11 +38,14 @@ export class OfertasLaboralesComponent {
   fechaPublicacion: String = '';
   name: string | null = localStorage.getItem('name');
   graduados: Graduado[] = [];
-
+  idOferta: number = 0;
+  selectedIDs: (number| undefined)[] = [];
+  filtropostulados: number = 1;
+  idgraduados: Graduado[] = []
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private ofertalaburoService: OfertalaboralService, private empresaService: EmpresaService) { }
+  constructor(public bsModalRef: BsModalRef, private ofertalaburoService: OfertalaboralService, private empresaService: EmpresaService, private graduadoService: GraduadoService) { }
 
   ngOnInit(): void {
     this.getAllEmpresas();
@@ -85,13 +89,34 @@ export class OfertasLaboralesComponent {
   listpostulantes(idoferta: number | undefined) {
     this.ofertalaburoService.getGraduadosByOfertaLaboral(idoferta||0).subscribe(
       graduadoss => {
+        this.idOferta = idoferta||0;
         this.graduados = graduadoss;
-        console.log('agraduados', this.graduados);
+        console.log('postulantes lista', this.graduados);
+        console.log(' lista', idoferta);
+
         
       }
      
     )
   }
+
+  listContratados(){
+    this.graduados = [];
+    this.ofertalaburoService.getGraduadosContradatosByOfertaLaboral(this.idOferta).subscribe(
+      contratados => {
+        this.idgraduados = contratados.map(contratado => contratado.graduados);
+        for(const graduado of this.idgraduados){
+          this.graduadoService.getGraduadoById(graduado).subscribe(
+            graduado => {
+              this.graduados.push(graduado);
+              console.log('contratados lista', this.graduados);
+            }
+          );
+        }
+      }
+    );
+  }
+
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
 
@@ -159,16 +184,63 @@ export class OfertasLaboralesComponent {
   setIDGraduado(id: number | undefined = 0){
     localStorage.setItem('idGraduado', id.toString());
   }
+
   selectedRows: boolean[] = [];
+
   sendSelectedIDs() {
-       const selectedIDs = this.graduados
+        this.selectedIDs = this.graduados
           .filter((graduado, index) => this.selectedRows[index])
           .map(graduado => graduado.id);
   
       // Now you have an array of 'number' IDs
-      console.log(selectedIDs);
+      console.log(this.selectedIDs);
+      if(this.filtropostulados == 1){
+        this.contratarGraduado();
+      }else if(this.filtropostulados == 2){
+        this.descontratarGraduado();
+      }
   }
-  contratarGraduado(){}
+
+  contratarGraduado(){
+    this.ofertalaburoService.selectContratados(this.idOferta, this.selectedIDs).subscribe(
+      (response) => {
+        // Manejar la respuesta exitosa aquí
+        console.log('Respuesta exitosa:', response);
+        // Puedes realizar otras operaciones con la respuesta si es necesario
+    },
+    (error) => {
+        // Manejar el error aquí
+        console.error('Error en la solicitud:', error);
+        // Puedes realizar otras operaciones para manejar el error si es necesario
+    }
+    );
+  }
+  descontratarGraduado(id: number | undefined = 0){
+    this.ofertalaburoService.deleteGraduadoContratado(id).subscribe(
+      (response) => {
+        // Manejar la respuesta exitosa aquí
+        console.log('Respuesta exitosa:', response);
+        // Puedes realizar otras operaciones con la respuesta si es necesario
+    },
+    (error) => {
+        // Manejar el error aquí
+        console.error('Error en la solicitud:', error);
+        // Puedes realizar otras operaciones para manejar el error si es necesario
+    }
+    );
+  }
+    
+
+  filtroPostulados(){
+    console.log(this.filtropostulados)
+
+    if(this.filtropostulados == 1){
+      this.listpostulantes(this.idOferta);
+    }else if(this.filtropostulados == 2){
+      this.listContratados();
+  }
+  }
+
   getAllOfertasLaborales() {
 
     this.ofertalaburoService.OfertasLaborales(this.name||"").subscribe(
