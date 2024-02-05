@@ -135,7 +135,7 @@ npm i ng-multiselect-dropdown
 
 ### FRONTEND
 
-| [<img src="Recursos/Integrantes/Jose.jpeg" width=115><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) |
+| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=115><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) |
 | :------------------------------------------------------------------------------------------------------------------: |
 
 </div>
@@ -147,7 +147,7 @@ npm i ng-multiselect-dropdown
 | [<img src="Recursos/Integrantes/Angel.jpeg" width=115><br><sub>Jose Farez</sub>](https://github.com/Lokyre) | [<img src="Recursos/Integrantes/Vicente.jpeg" width=115><br><sub>Vicente Guaman</sub>](https://github.com/UsuarioVicente) | [<img src="Recursos/Integrantes/Miguel.jpeg" width=115><br><sub>Miguel Haro</sub>](https://github.com/UsuarioMiguel) | [<img src="Recursos/Integrantes/Evelyn.jpeg" width=115><br><sub>Evelyn Chichande</sub>](https://github.com/UsuarioEvelyn) |
 | :---------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
 
-| [<img src="Recursos/Integrantes/Luis.jpeg" width=115><br><sub>Luis Duchi</sub>](https://github.com/UsuarioLuis) | [<img src="Recursos/Integrantes/Henry.jpeg" width=115><br><sub>Henry Duchi</sub>](https://github.com/henproduchi) | [<img src="Recursos/Integrantes/Lenin.jpeg" width=115><br><sub>Lenin Córdova</sub>](https://github.com/UsuarioLenin) |
+| [<img src="Screenshots/Integrantes/Luis_Foto.jpg" width=115><br><sub>Luis Duchi</sub>](https://github.com/UsuarioLuis) | [<img src="Recursos/Integrantes/Henry.jpg" width=115><br><sub>Henry Duchi</sub>](https://github.com/henproduchi) | [<img src="Recursos/Integrantes/Lenin.jpeg" width=115><br><sub>Lenin Córdova</sub>](https://github.com/UsuarioLenin) |
 | :-------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 
 </div>

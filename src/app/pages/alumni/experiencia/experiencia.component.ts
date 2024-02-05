@@ -104,7 +104,6 @@ export class ExperienciaComponent {
     this.experienciaService.createExperiencia(this.experiencia).subscribe(
       result => {
         console.log('Experiencia creada exitosamente:', result);
-        this.loadData();
         this.mostrarSweetAlert(true, 'La experiencia se ha guardado exitosamente.');
       },
       error => {
@@ -134,7 +133,6 @@ export class ExperienciaComponent {
       result => {
         console.log('Experiencia actualizada exitosamente:', result);
         this.mostrarSweetAlert(true, 'La experiencia se ha actualizado exitosamente.');
-        this.loadData();
       },
       error => {
         console.error('Error al actualizar la experiencia:', error);
@@ -148,7 +146,6 @@ export class ExperienciaComponent {
       () => {
         console.log('Experiencia eliminada exitosamente');
         this.mostrarSweetAlert(true, 'La experiencia se ha eliminado exitosamente.');
-        this.loadData();
       },
       error => {
         console.error('Error al eliminar la experiencia:', error);
@@ -197,6 +194,7 @@ export class ExperienciaComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        location.reload();
       }
     });
   }

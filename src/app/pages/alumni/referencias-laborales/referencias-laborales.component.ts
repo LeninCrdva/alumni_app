@@ -91,7 +91,6 @@ export class ReferenciasLaboralesComponent {
     this.referenciaProService.createReferenciasProfesionales(this.referencia_profesional).subscribe(
       referenciasP => {
         console.log('Refencia profesional creada exitosamente:', referenciasP);
-        this.loadData();
         this.mostrarSweetAlert(true, 'La referencia profesional se ha guardado exitosamente.');
       },
       error => {
@@ -118,7 +117,6 @@ export class ReferenciasLaboralesComponent {
         console.log('Referencia personal actualizado exitosamente:', refeActualizado);
         this.referencia_profesional = refeActualizado;
         this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
-        this.loadData();
       },
       error => {
         console.error('Error al actualizar la referencia personal:', error);
@@ -132,7 +130,6 @@ export class ReferenciasLaboralesComponent {
       () => {
         console.log('Experiencia eliminada exitosamente');
         this.mostrarSweetAlert(true, 'La experiencia se ha eliminado exitosamente.');
-        this.loadData();
       },
       error => {
         console.error('Error al eliminar la referencia personal:', error);
@@ -181,6 +178,7 @@ export class ReferenciasLaboralesComponent {
     }).then((result) => {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
+        location.reload();
       }
     });
   }
