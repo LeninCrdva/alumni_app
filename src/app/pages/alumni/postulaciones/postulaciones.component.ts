@@ -116,7 +116,6 @@ export class PostulacionesComponent implements OnInit {
                   });
                 }
               );
-
             }
           });
         }

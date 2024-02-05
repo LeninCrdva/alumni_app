@@ -99,7 +99,7 @@ li {
     margin-bottom: 20px;
 }
 
-.form-input {
+.form-input, select {
     width: 100%;
     padding: 12px 16px 12px 40px;
     outline: none;
@@ -109,7 +109,7 @@ li {
     transition: border-color .2s;
 }
 
-.form-input:focus {
+.form-input:focus, select:focus {
     border-color: #0051ff;
 }
 
