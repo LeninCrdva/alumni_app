@@ -5,6 +5,7 @@ import { ofertaLaboral } from '../model/ofertaLaboral';
 import { ofertaLaboralDTO } from '../model/ofertaLaboralDTO';
 import { Observable } from 'rxjs';
 import { Graduado } from '../model/graduado';
+import { contratacion } from '../model/contratacion';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,14 @@ export class OfertalaboralService {
 
     return this.http.get<Graduado[]>(`${this.urlEndPoint}/graduados/${id}`)
   }
+  getGraduadosContradatosByOfertaLaboral(id: number): Observable<contratacion[]>{
+
+    return this.http.get<contratacion[]>(`${this.urlEndPoint}/ofertaLaboral/${id}`)
+  }
+  deleteGraduadoContratado(id: number): Observable<any> {
+    return this.http.delete(`${this.urlEndPoint}/contrataciones/${id}`);
+  }
+
   OfertasLaborales(name:string): Observable<ofertaLaboralDTO[]> {
     return this.http.get<ofertaLaboralDTO[]>(`${this.urlEndPoint}/empresario/${name}`);
   }
@@ -50,7 +59,15 @@ export class OfertalaboralService {
   updateOfertaLaboral(id: number, ofertaLaboralDTO: ofertaLaboralDTO): Observable<any> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put(url, ofertaLaboralDTO);
+      
   }
+
+  selectContratados(id: number,data: Array<any>): Observable<any> {
+    const url = `${this.urlEndPoint}/seleccionar-contratados/${id}`;
+
+    return this.http.post(url, data);
+  }
+
 
   deleteOfertabyID  (id: number): Observable<any> {
     return this.http.delete(`${this.urlEndPoint}/${id}`);
