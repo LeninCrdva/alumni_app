@@ -40,7 +40,7 @@ Alumni es una aplicación web desarrollada como proyecto final para la materia d
 
 ## 📖 **Capturas del Proyecto**
 <details>
-<summary>Alumni</summary>
+<summary>Capturas de Pantalla y detalle de las mismas</summary>
 
 ## Pantalla de Inicio
 
@@ -77,15 +77,7 @@ Alumni es una aplicación web desarrollada como proyecto final para la materia d
  <br>
  Esta pantalla mostrará accesos rápidos a diferentes funciones según el usuario y presentará informes.
 
-## Pantalla de Perfil
-
-- **Path:** [http://localhost:4200/#/system/alumni/perfil](http://localhost:4200/#/system/alumni/perfil)
-  <img src="Screenshots/Cap_5.png" alt="cap5">
- **Descripción**
- <br>
-  Se mostrará la foto y nombre de usuario, así como datos personales y un botón para actualizar la información.
-
-### CRUDS
+### Todas las demas interfaces varian segun el tipo de usuario
 </details>
 
 ## 😺 **CARACTERISTICAS:**
