@@ -135,7 +135,7 @@ npm i ng-multiselect-dropdown
 
 ### FRONTEND
 
-| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=115><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) |
+| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=180><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) |
 | :------------------------------------------------------------------------------------------------------------------: |
 
 </div>
@@ -144,10 +144,10 @@ npm i ng-multiselect-dropdown
 
 ### DOCUMENTACIÓN Y BACKEND
 
-| [<img src="Recursos/Integrantes/Angel.jpeg" width=115><br><sub>Jose Farez</sub>](https://github.com/Lokyre) | [<img src="Recursos/Integrantes/Vicente.jpeg" width=115><br><sub>Vicente Guaman</sub>](https://github.com/UsuarioVicente) | [<img src="Recursos/Integrantes/Miguel.jpeg" width=115><br><sub>Miguel Haro</sub>](https://github.com/UsuarioMiguel) | [<img src="Recursos/Integrantes/Evelyn.jpeg" width=115><br><sub>Evelyn Chichande</sub>](https://github.com/UsuarioEvelyn) |
+| [<img src="Screenshots/Integrantes/Jose_Foto.png" width=180><br><sub>Jose Farez</sub>](https://github.com/Lokyre) | [<img src="Recursos/Integrantes/Vicente.jpeg" width=115><br><sub>Vicente Guaman</sub>](https://github.com/UsuarioVicente) | [<img src="Screenshots/Integrantes/Alejandro_Foto.jpeg" width=135><br><sub>Miguel Haro</sub>](https://github.com/UsuarioMiguel) | [<img src="Screenshots/Integrantes/Evelyn_Foto.png" width=185><br><sub>Evelyn Chichande</sub>](https://github.com/UsuarioEvelyn) |
 | :---------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
 
-| [<img src="Screenshots/Integrantes/Luis_Foto.jpg" width=115><br><sub>Luis Duchi</sub>](https://github.com/UsuarioLuis) | [<img src="Recursos/Integrantes/Henry.jpg" width=115><br><sub>Henry Duchi</sub>](https://github.com/henproduchi) | [<img src="Recursos/Integrantes/Lenin.jpeg" width=115><br><sub>Lenin Córdova</sub>](https://github.com/UsuarioLenin) |
+| [<img src="Screenshots/Integrantes/Luis_Foto.jpg" width=220><br><sub>Luis Duchi</sub>](https://github.com/UsuarioLuis) | [<img src="Screenshots/Integrantes/Henry_Foto.jpeg" width=114><br><sub>Henry Duchi</sub>](https://github.com/henproduchi) | [<img src="Recursos/Integrantes/Lenin.jpeg" width=115><br><sub>Lenin Córdova</sub>](https://github.com/UsuarioLenin) |
 | :-------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
 
 </div>
