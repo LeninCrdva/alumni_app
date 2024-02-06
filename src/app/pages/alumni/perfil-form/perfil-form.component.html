@@ -145,8 +145,7 @@
                     <div class="mb-4 my-4">
                         <div class="form-group flex-grow-1 mr-3">
                             <i class="fa-solid fa-id-card form-icon"></i>
-                            <select formControlName="ciudad" id="" (change)="onCiudadChange()"
-                                [(ngModel)]="updateUbicacionForm.value.ciudad">
+                            <select title="" formControlName="ciudad" id="" (change)="onCiudadChange()">
                                 <option *ngFor="let ciudad of ciudades">{{ciudad.nombre}}</option>
                             </select>
                         </div>
@@ -156,11 +155,10 @@
                         </div>
                     </div>
 
-                    <!-- Segundo select -->
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
                             <i class="fa-solid fa-id-card form-icon"></i>
-                            <select formControlName="provincia" id="" [(ngModel)]="updateUbicacionForm.value.provincia">
+                            <select formControlName="provincia" id="" >
                                 <option *ngFor="let provincia of provincias">{{provincia}}</option>
                             </select>
                         </div>
