@@ -1,19 +1,17 @@
-<!-- graficas.component.html -->
-
 <div class="container-fluid">
   <!-- 1er row -->
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <app-area-chart *ngIf="datosCargados; else noDataMessage"></app-area-chart>
+          <app-area-chart></app-area-chart>
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <app-pie-chart *ngIf="datosCargados; else noDataMessage"></app-pie-chart>
+          <app-pie-chart></app-pie-chart>
         </div>
       </div>
     </div>
@@ -24,24 +22,16 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <app-bar-chart *ngIf="datosCargados; else noDataMessage"></app-bar-chart>
+          <app-bar-chart></app-bar-chart>
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <app-area-chart *ngIf="datosCargados; else noDataMessage"></app-area-chart>
+          <app-area-chart></app-area-chart>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<ng-template #noDataMessage>
-  <div class="card">
-    <div class="card-body">
-      <p>No hay datos disponibles.</p>
-    </div>
-  </div>
-</ng-template>
