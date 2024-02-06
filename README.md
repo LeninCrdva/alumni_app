@@ -126,9 +126,9 @@ npm i ng-multiselect-dropdown
 <div align="center">
 
 ### FRONTEND
-
-| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=280><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) |
-| :------------------------------------------------------------------------------------------------------------------: |
+| [<img src="Screenshots/Integrantes/Jose_Foto.png" width=260><br><sub>Jose Farez</sub>](https://github.com/Lokyre) |
+|
+ [<img src="Screenshots/Integrantes/Henry_Foto.jpeg" width=205><br><sub>Henry Duchi</sub>](https://github.com/Henduchi11) | 
 
 </div>
 
@@ -136,12 +136,14 @@ npm i ng-multiselect-dropdown
 
 ### DOCUMENTACIÓN Y BACKEND
 
-| [<img src="Screenshots/Integrantes/Jose_Foto.png" width=260><br><sub>Jose Farez</sub>](https://github.com/Lokyre) | [<img src="Screenshots/Integrantes/Vicente_Foto.jpg" width=255><br><sub>Vicente Guaman</sub>](https://github.com/SantiagoGuaman) | [<img src="Screenshots/Integrantes/Alejandro_Foto.jpeg" width=194><br><sub>Miguel Haro</sub>](https://github.com/Miguel13fdf) | [<img src="Screenshots/Integrantes/Evelyn_Foto.png" width=260><br><sub>Evelyn Chichande</sub>](https://github.com/eveelyyn-c) |
-| :---------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-
-| [<img src="Screenshots/Integrantes/Luis_Foto.jpg" width=400><br><sub>Luis Duchi</sub>](https://github.com/lduchi) | [<img src="Screenshots/Integrantes/Henry_Foto.jpeg" width=205><br><sub>Henry Duchi</sub>](https://github.com/Henduchi11) | [<img src="Screenshots/Integrantes/Lenin_Foto.jpg" width=260><br><sub>Lenin Córdova</sub>](https://github.com/LeninCrdva) |
+ [<img src="Screenshots/Integrantes/Vicente_Foto.jpg" width=255><br><sub>Vicente Guaman</sub>](https://github.com/SantiagoGuaman) | [<img src="Screenshots/Integrantes/Alejandro_Foto.jpeg" width=194><br><sub>Miguel Haro</sub>](https://github.com/Miguel13fdf) [<img src="Screenshots/Integrantes/Lenin_Foto.jpg" width=260><br><sub>Lenin Córdova</sub>](https://github.com/LeninCrdva) |
 | :-------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+### DOCUMENTACION y graficos
+| [<img src="Screenshots/Integrantes/Evelyn_Foto.png" width=260><br><sub>Evelyn Chichande</sub>](https://github.com/eveelyyn-c) | [<img src="Screenshots/Integrantes/Luis_Foto.jpg" width=400><br><sub>Luis Duchi</sub>](https://github.com/lduchi) |
+ 
+:---------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
 
+|
 </div>
 
 
