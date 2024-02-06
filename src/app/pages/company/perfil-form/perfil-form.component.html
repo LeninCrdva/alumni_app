@@ -2,7 +2,7 @@
     style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Actulizar Informacion</h1>
+            <h1>Actualizar Informacion</h1>
         </div>
     </div>
 </section>
@@ -11,92 +11,127 @@
     <div class="wrapper">
         <ul class="indicator">
             <li class="active" data-target="#home"><i class="ph-house"></i> Perfil</li>
-            <li data-target="#profile"><i class="ph-user-circle"></i> Ubicación</li>
-            <li data-target="#contact"><i class="ph-phone"></i> Titulos</li>
-            <li data-target="#settings"><i class="ph-gear-six"></i> asa</li>
+            <li data-target="#ubicación"><i class="ph-user-circle"></i> Ubicación</li>
         </ul>
         <ul class="content">
             <li class="active" id="home">
                 <h1>Perfil</h1>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem esse perspiciatis inventore. Modi,
-                    nostrum debitis eum placeat suscipit veniam adipisci explicabo est natus, doloribus reprehenderit
-                    dolor maiores ut asperiores quam voluptas iure a doloremque vel odio ipsam molestias nihil
-                    blanditiis nam, in. Soluta doloribus iste repellendus quos hic itaque eaque.</p>
+                <p>Por favor, complete todos los campos del formulario con información personal precisa y actualizada.
+                    Los datos
+                    proporcionados serán utilizados únicamente con fines académicos y de contacto. Asegúrese de revisar
+                    cuidadosamente la
+                    información antes de enviar el formulario. Gracias por su colaboración.</p>
                 <br>
-                <div class="form-layout form-layout-1">
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4 mb-3">
-                            <div class="form-group">
-                                <label class="form-control-label active">Nombre de Usuario: <span
-                                        class="tx-danger">*</span></label>
-                                <input class="form-control" type="text" name="username" placeholder="Enter username">
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label active">Primer Nombre: <span
-                                        class="tx-danger">*</span></label>
-                                <input class="form-control" type="text" name="firstname" placeholder="Enter first name">
-                            </div>
+                <form [formGroup]="updatePersonForm" class="mb-5">
+
+                    <div class="mb-4">
+                        <div class="form-group mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
+                                id="InputNombreM1">
+                            <label for="InputNombreM1" class="form-label">Ingresa tu primer Nombre</label>
+                            <i class="ri-user-smile-line form-icon"></i>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="text-danger mb-4"
+                            *ngIf="updatePersonForm.get('primerNombre')?.hasError('required') && updatePersonForm.get('primerNombre')?.touched">
+                            El primer nombre es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
                             <div class="form-group">
-                                <label class="form-control-label active">Segundo Nombre: <span
-                                        class="tx-danger">*</span></label>
-                                <input class="form-control" type="text" name="lastname" placeholder="Enter last name">
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre"
+                                    id="InputNombreP">
+                                <label for="InputNombreP" class="form-label">Ingresa tu segundo Nombre</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4"
+                                *ngIf="updatePersonForm.get('segundoNombre')?.hasError('required') && updatePersonForm.get('seygundoNombre')?.touched">
+                                El segundo nombre es obligatorio.
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
-                    </div>
-
-                    <div class="col-lg-12 mb-3">
-                        <div class="form-group mg-b-10-force">
-                            <label class="form-control-label active">Teléfono: <span class="tx-danger">*</span></label>
-                            <input class="form-control" type="text" name="phone" placeholder="Enter phone number">
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group mr-3">
+                                <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
+                                    id="InputApellidoM">
+                                <label for="" class="form-label">Ingresa tu primer Apellido</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+                            <div class="text-danger mb-4"
+                                *ngIf="updatePersonForm.get('primerApellido')?.hasError('required') && updatePersonForm.get('primerApellido')?.touched">
+                                El primer apellido es obligatorio.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button class="btn btn-oblong btn-primary btn-block mg-b-10">Siguiente Paso</button>
-                <br>
-                <br>
-                <button class="btn btn-oblong btn-success btn-block mg-b-10">Guardar</button>
-            </li>
-            <li id="profile">
-                <h1>Profile</h1>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem esse perspiciatis inventore. Modi,
-                    nostrum debitis eum placeat suscipit veniam adipisci explicabo est natus, doloribus reprehenderit
-                    dolor maiores ut asperiores quam voluptas iure a doloremque vel odio ipsam molestias nihil
-                    blanditiis nam, in. Soluta doloribus iste repellendus quos hic itaque eaque.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error molestias quasi est expedita, a
-                    pariatur deleniti cum reiciendis similique cupiditate?</p>
-            </li>
-            <li id="contact">
-                <h1>Contact</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error molestias quasi est expedita, a
-                    pariatur deleniti cum reiciendis similique cupiditate?</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum explicabo magni facere quo voluptas
-                    error, nulla nihil maxime fugiat earum iure fugit quas eligendi harum accusantium esse libero totam
-                    eveniet reprehenderit dignissimos ex, eius, voluptate! A maxime ad nostrum voluptatem, placeat,
-                    assumenda fugiat? Accusamus fuga repellendus nisi qui.</p>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur optio in pariatur ab officiis
-                    aperiam harum veritatis adipisci eveniet fuga soluta voluptas minima a necessitatibus, blanditiis.
-                </p>
-            </li>
-            <li id="settings">
-                <h1>Settings</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit quaerat magnam sit, nobis sed cum
-                    eius voluptatem quis facilis sunt, quia? Non atque, facere obcaecati veniam! Impedit atque, facilis
-                    similique doloribus quidem quibusdam quod! Quam odit quasi quia accusantium natus eos accusamus
-                    sequi repellat modi reiciendis vitae provident tenetur sint tempora quaerat expedita facere,
-                    assumenda quos consequatur minima quod deleniti.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, sapiente.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error molestias quasi est expedita, a
-                    pariatur deleniti cum reiciendis similique cupiditate?</p>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoApellido"
+                                    id="InputApellidoP">
+                                <label for="" class="form-label">Ingresa tu segundo Apellido</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4"
+                                *ngIf="updatePersonForm.get('segundoApellido')?.hasError('required') && updatePersonForm.get('segundoApellido')?.touched">
+                                El segundo apellido es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="cedula"
+                                id="InputCedula">
+                            <label for="" class="form-label">Ingresa tu Cedula</label>
+                            <i class="fa-solid fa-id-card form-icon"></i>
+                        </div>
+
+                        <div class="text-danger"
+                            *ngIf="updatePersonForm.get('cedula')?.hasError('required') && updatePersonForm.get('cedula')?.touched">
+                            La cedula es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                                id="InputTelefono">
+                            <label for="" class="form-label">Ingresa tu Telefono</label>
+                            <i class="fa-solid fa-phone-volume form-icon"></i>
+                        </div>
+
+                        <div class="text-danger"
+                            *ngIf="updatePersonForm.get('telefono')?.hasError('required') && updatePersonForm.get('telefono')?.touched">
+                            El número de telefono es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+
+                        <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
+                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                        <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
+                        <div class="text-danger"
+                            *ngIf="updatePersonForm.get('fechaNacimiento')?.hasError('required') && updatePersonForm.get('fechaNacimiento')?.touched">
+                            La fecha de nacimiento es obligatoria.
+                        </div>
+
+                        <div class="mt-3">
+                            <button class="btn btn-oblong btn-success btn-block mg-b-10"
+                                (click)="updateInfoGraduate()">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+
             </li>
         </ul>
     </div>
