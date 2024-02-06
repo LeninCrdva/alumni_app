@@ -68,6 +68,21 @@ export class LayoutSystemComponent implements OnInit {
     // NOTE: END SLIDER BAR
     this.cerrarSesion();
     this.checkUserRole();
+    this.checkSession();
+  }
+  
+  checkSession(): void {
+    const isLoggedIn = localStorage.getItem('name');
+    if (!isLoggedIn) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sesión expirada',
+        text: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        this.router.navigate(['/account/login']);
+      });
+    }
   }
 
 
