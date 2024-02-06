@@ -7,6 +7,7 @@ import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales
 import { CrudEmpresasComponent } from './crud-empresas/crud-empresas.component';
 import { Empresas2Component } from './empresas-2/empresas-2.component';
 import { NuevoEmpresarioModalComponent } from './nuevo-empresario-modal/nuevo-empresario-modal.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
     declarations: [
@@ -19,8 +20,9 @@ import { NuevoEmpresarioModalComponent } from './nuevo-empresario-modal/nuevo-em
     imports: [
         CommonModule,
         CompanyRoutingModule,
-        [FormsModule],
-        ReactiveFormsModule
+        FormsModule,
+        ReactiveFormsModule,
+        DataTablesModule
     ]
 })
 
