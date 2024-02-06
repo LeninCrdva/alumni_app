@@ -17,7 +17,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   usuarioInfo: Usuario = new Usuario();
   empresarioInfo: Empresario = new Empresario();
   updatePersonForm: FormGroup;
-  updateUbicacionForm: FormGroup;
   provincias: string[] = [];
 
   constructor(private renderer: Renderer2, private el: ElementRef, private userService: UserService,
@@ -32,10 +31,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       fechaNacimiento: ['', Validators.required]
     })
 
-    this.updateUbicacionForm = formBuilder.group({
-      ciudad: ['', Validators.required],
-      provincia: ['', Validators.required]
-    })
   }
 
   ngOnInit(): void {
@@ -72,7 +67,9 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
     if (userIdStorage) {
       this.userService.getUserByUsername(userIdStorage).subscribe(
-        user => { this.usuarioInfo = user; this.initializeForm() }
+        user => { this.usuarioInfo = user; this.initializeForm() 
+        console.log(user)
+        }
       )
     }
   }
@@ -87,10 +84,10 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       cancelButtonColor: "#d33",
       confirmButtonText: "¡Sí, actualizar información!"
     }).then((result) => {
-      if (result.isConfirmed && this.updatePersonForm.valid && this.updateUbicacionForm) {
+      if (result.isConfirmed && this.updatePersonForm.valid) {
         const formDataPerson = this.updatePersonForm.value;
         const idUser = this.usuarioInfo.persona.id
-        const idEmpresario = this.empresarioInfo.id || 0;
+        //const idEmpresario = this.empresarioInfo.id || 0;
 
         this.usuarioInfo.persona = {
           cedula: formDataPerson.cedula,
@@ -104,16 +101,18 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
 
         this.personaService.updatePerson(idUser, this.usuarioInfo.persona).subscribe(
+          
           persona => {
+            console.log(this.usuarioInfo.persona),
             this.usuarioInfo.persona = persona;
-            this.empresarioService.updateEmpresario(idEmpresario, this.empresarioInfo).subscribe(data => {
+            //this.empresarioService.updateEmpresario(idEmpresario, this.empresarioInfo).subscribe(data => {
               Swal.fire({
                 title: '¡Información actualizada!',
                 text: 'Tu información se ha actualizado correctamente',
                 icon: "success"
               });
-              this.router.navigate(['system/alumni/perfil']);
-            })
+              this.router.navigate(['system/company/perfil']);
+           // })
           }
         )
       }
@@ -137,7 +136,8 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
     const userId = localStorage.getItem('user_id');
 
     if (userId) {
-      this.empresarioService.getEmpresarioById(userId).subscribe(data => { this.empresarioInfo = data })
+      this.empresarioService.getEmpresarioById(userId).subscribe(data => { this.empresarioInfo = data 
+      console.log(data)})
 
     }
   }
