@@ -42,11 +42,11 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllCitiesAndGraduate()
     this.getAllInfoGraduate()
+    this.getGraduadoDTOInfoAndCity()
   }
 
-  async ngAfterViewInit() {
+  ngAfterViewInit() {
     const allIndicator = this.el.nativeElement.querySelectorAll('.indicator li') as NodeListOf<HTMLLIElement>;
     const allContent = this.el.nativeElement.querySelectorAll('.content li') as NodeListOf<HTMLLIElement>;
 
@@ -70,24 +70,20 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
     });
   }
 
-  async getAllInfoGraduate(): Promise<void> {
+  getAllInfoGraduate(): void {
     const userIdStorage = localStorage.getItem('name')
 
     if (userIdStorage) {
-      await this.userService.getUserByUsername(userIdStorage).subscribe(
-        user => { 
-          if (user.persona) {
-            this.usuarioInfo = user; 
-            this.initializeForm(); 
-          } else {
-            console.error('Persona received from service is undefined');
-          }
+      this.userService.getUserByUsername(userIdStorage).subscribe(
+        user => {
+          this.usuarioInfo = user;
+          this.initializePersonForm()
         }
       )
     }
   }
 
-  async updateInfoGraduate() {
+  updateInfoGraduate() {
     Swal.fire({
       title: "¿Realmente deseas cambiar tus datos personales?",
       text: "Esta acción es irreversible",
@@ -96,7 +92,7 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "¡Sí, actualizar información!"
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed && this.updatePersonForm.valid && this.updateUbicacionForm) {
         const formDataPerson = this.updatePersonForm.value;
         const ciudadSeleccionada = this.updateUbicacionForm.get('ciudad')?.value;
@@ -115,28 +111,24 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
         this.graduadoInfo.ciudad = ciudadSeleccionada;
 
-        await this.personaService.updatePerson(idUser, this.usuarioInfo.persona).subscribe(
+        this.personaService.updatePerson(idUser, this.usuarioInfo.persona).subscribe(
           persona => {
-            if (persona) {
-              this.usuarioInfo.persona = persona;
-              this.graduateService.updateGraduadoDTO(idGraduado, this.graduadoInfo).subscribe(data => {
-                Swal.fire({
-                  title: '¡Información actualizada!',
-                  text: 'Tu información se ha actualizado correctamente',
-                  icon: "success"
-                });
-                this.router.navigate(['system/alumni/perfil']);
+            this.usuarioInfo.persona = persona;
+            this.graduateService.updateGraduadoDTO(idGraduado, this.graduadoInfo).subscribe(data => {
+              Swal.fire({
+                title: '¡Información actualizada!',
+                text: 'Tu información se ha actualizado correctamente',
+                icon: "success"
               });
-            } else {
-              console.error('Persona received from service is undefined');
-            }
+              this.router.navigate(['system/alumni/perfil']);
+            })
           }
         )
       }
     });
   }
 
-  async initializeForm(): Promise<void> {
+  initializePersonForm(): void {
     this.updatePersonForm.patchValue({
       primerNombre: this.usuarioInfo.persona?.primer_nombre,
       segundoNombre: this.usuarioInfo.persona?.segundo_nombre,
@@ -146,36 +138,28 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       telefono: this.usuarioInfo.persona?.telefono,
       fechaNacimiento: this.usuarioInfo.persona?.fechaNacimiento,
     });
+  }
 
-    const ciudadSeleccionada = this.ciudades.find(ciu => ciu.nombre === this.graduadoInfo.ciudad);
-
-    console.log(this.graduadoInfo)
-
+  initializeCityForm(): void {
+    
     this.updateUbicacionForm.patchValue({
-      ciudad: this.graduadoInfo.ciudad,
+      ciudad: this.graduadoInfo.ciudad
     });
 
     this.onCiudadChange();
   }
 
-  async getAllCitiesAndGraduate(): Promise<void> {
+  getGraduadoDTOInfoAndCity(): void {
     const userId = localStorage.getItem('user_id');
 
     if (userId) {
-      await this.ciudadService.getCiudadesDTO().subscribe(data => { 
-        if (data) {
-          this.ciudades = data;
-        } else {
-          console.error('Ciudades received from service is undefined');
-        }
-      });
-      await this.graduateService.getGraduadoDTOByUserId(userId).subscribe(data => { 
-        if (data) {
+      this.ciudadService.getCiudadesDTO().subscribe(data => {
+        this.ciudades = data;
+        this.graduateService.getGraduadoDTOByUserId(parseInt(userId)).subscribe(data => {
           this.graduadoInfo = data;
-        } else {
-          console.error('GraduadoDTO received from service is undefined');
-        }
-      });
+          this.initializeCityForm();
+        })
+      })
     }
   }
 

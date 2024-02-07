@@ -77,7 +77,7 @@ export class GraduadoService {
     return this.http.get<Graduado>(`${this.urlEndPoint}/usuario/${idUser}`);
   }
 
-  getGraduadoDTOByUserId(idUser: any): Observable<GraduadoDTO> {
+  getGraduadoDTOByUserId(idUser: number): Observable<GraduadoDTO> {
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${idUser}`);
   }
 
