@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-
+import { AuthGuard } from './pages/authentication/login/AuthGuard';
 const routes: Routes = [
   {
     path: 'account',
@@ -21,12 +21,12 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'system', component: LayoutSystemComponent,
+    path: 'system', component: LayoutSystemComponent, canActivate: [AuthGuard],
     children: [
       { path: 'alumni', loadChildren: () => import('./pages/alumni/alumni.module').then((m) => m.AlumniModule) },
       { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) },
       { path: 'company', loadChildren: () => import('./pages/company/company.module').then((m) => m.CompanyModule) }
-    ], // Steve: Revisar esto: canActivate: [AuthGuard]
+    ], 
   },
 
   // Ruta para manejar errores 404
