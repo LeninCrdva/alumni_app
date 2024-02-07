@@ -14,6 +14,7 @@ import { UserService } from '../../../data/service/UserService';
   styleUrls: ['comunidad.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class ComunidadComponent {
+  selectedGraduado: Graduado1 | null = null;
 
   public urlImage: string = '';
   public rutaimagen: string = '';
@@ -37,6 +38,15 @@ export class ComunidadComponent {
     // this.idstring = localStorage.getItem('idGraduado') || '';
     // this.graduadoid = parseInt(this.idstring, 10);
   }
+  showGraduadoDetails(graduado: Graduado1) {
+    this.selectedGraduado = graduado;
+  }
+  contactarPorWhatsapp(numeroTelefono: string): void {
+    const mensaje = "Hola, estoy interesado en contactarte.";
+    const enlaceWhatsapp = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(enlaceWhatsapp, "_blank");
+  }
+  
 
   setupDtOptions() {
     this.dtoptions = {

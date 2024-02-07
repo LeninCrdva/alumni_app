@@ -24,39 +24,44 @@
                         <div class="row mg-b-25 my-3">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active" for="nombres">NOMBRES: <span
+                                    <label class="form-control-label active" for="nombres">Cedula: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="nombres"
-                                        placeholder="Ingrese los nombres" id="nombres">
+                                        placeholder="Ingrese los nombres" id="nombres"  [value]="selectedGraduado?.usuario?.persona?.cedula" disabled>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active" for="apellidos">APELLIDOS: <span
+                                    <label class="form-control-label active" for="apellidos">Correo: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="apellidos"
-                                        placeholder="Ingrese los apellidos" id="apellidos">
+                                        placeholder="Ingrese los apellidos" id="apellidos"  [value]="selectedGraduado?.emailPersonal" disabled>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mg-b-25 my-3">
-                            <div class="col-lg-6">
+                         <!--   <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label active" for="foto">FOTO: <span
                                             class="tx-danger">*</span></label>
-                                    <!-- Agrega un elemento img para mostrar la imagen -->
-                                    <img src="URL_DE_LA_IMAGEN" alt="Foto" style="max-width: 250px; max-height: 250px;">
+                                    
+                                    <ng-container *ngIf="selectedGraduado && selectedGraduado.usuario">
+                                        <img [src]="selectedGraduado.usuario.url_imagen ? selectedGraduado.usuario.url_imagen : 'ruta_por_defecto.jpg'" alt="Foto" style="max-width: 250px; max-height: 250px;">
+                                    </ng-container>
+                                    <ng-container *ngIf="!selectedGraduado || !selectedGraduado.usuario">
+                                        <span>No tiene foto</span>
+                                    </ng-container>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label active" for="fechaGraduacion">FECHA DE GRADUACIÓN:
                                         <span class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="fechaGraduacion"
-                                        placeholder="Ingrese la fecha de graduación" id="fechaGraduacion">
+                                        placeholder="Ingrese la fecha de graduación" id="fechaGraduacion"  [value]="selectedGraduado?.['año_graduacion']" disabled>
                                 </div>
                             </div>
                         </div>
@@ -67,18 +72,20 @@
                                     <label class="form-control-label active" for="ciudad">CIUDAD: <span
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="ciudad"
-                                        placeholder="Ingrese la ciudad" id="ciudad">
+                                        placeholder="Ingrese la ciudad" id="ciudad"   [value]="selectedGraduado?.ciudad?.nombre" disabled>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active" for="estadoCivil">ESTADO CIVIL: <span
-                                            class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="estadoCivil"
-                                        placeholder="Ingrese el estado civil" id="estadoCivil">
+                                    <label class="form-control-label active" for="estadoCivil">Titulo: <span class="tx-danger">*</span></label>
+                                    <input class="form-control" type="text" name="estadoCivil" placeholder="Ingrese el estado civil" id="estadoCivil" [value]="selectedGraduado?.url_pdf" disabled>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <a href="{{ selectedGraduado?.url_pdf }}" target="_blank">Ver Título</a>
+                            </div>
+                            
                         </div>
                     </div>
 
@@ -114,6 +121,7 @@
                             <th>CIUDAD</th>
                             <th>ESTADO CIVIL</th>
                             <th class="text-center w-100px">Acciones</th>
+                            <th class="text-center w-100px">Contactar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,9 +135,15 @@
                             <td>{{ graduadoItem.ciudad.nombre }} - {{graduadoItem.ciudad.provincia.nombre}} - {{graduadoItem.ciudad.provincia.pais}}</td>
                             <td>{{ graduadoItem.estadocivil }}</td>
                             <td class="text-center table-actions align-middle justify-content-center">
-                                <button data-bs-toggle="modal"
+                                <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal" 
                                     data-bs-target="#m_modal_4" type="button" class="btn btn-oblong btn-outline-success btn-block">
                                     Ver Perfil
+                                </button>
+                            </td>
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <button data-bs-toggle="modal" (click)="contactarPorWhatsapp(graduadoItem.usuario.persona.telefono)"
+                                    type="button" class="btn btn-oblong btn-outline-success btn-block">
+                                    Contacta
                                 </button>
                             </td>
                         </tr>
