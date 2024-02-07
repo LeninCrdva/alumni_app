@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 import { Graduado } from '../../../data/model/graduado';
 import { GraduadoService } from '../../../data/service/graduado.service';
+import { Subject } from 'rxjs';
 
 
 
@@ -42,19 +43,64 @@ export class OfertasLaboralesComponent {
   selectedIDs: (number| undefined)[] = [];
   filtropostulados: number = 1;
   idgraduados: Graduado[] = []
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+  public emptrds: string = '';
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
   constructor(public bsModalRef: BsModalRef, private ofertalaburoService: OfertalaboralService, private empresaService: EmpresaService, private graduadoService: GraduadoService) { }
 
   ngOnInit(): void {
+    this.loadData();
+    this.setupDtOptions();
     this.getAllEmpresas();
-    this.getAllOfertasLaborales();
+    //this.getAllOfertasLaborales();
     this.loadCleanObject();
     this.getFechaPublicacion();
     this.ofertaslaborales.estado = false;
   }
+  setupDtOptions() {
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language: {
+        search: 'Buscar:',
+        searchPlaceholder: 'Buscar trabajo...',
+        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+        paginate: {
+          first: 'Primera',
+          last: 'Última',
+          next: 'Siguiente',
+          previous: 'Anterior',
+        },
+        lengthMenu: 'Mostrar _MENU_ registros por página',
+        zeroRecords: 'No se encontraron registros coincidentes'
+      },
+      lengthMenu: [10, 25, 50]
+    };
+  }
+  loadData() {
+    this.ofertalaburoService.OfertasLaborales(this.name||"").subscribe(
+      ofertas => {
+        console.log('ofertas', ofertas);
+        // Filtrar las referencias personales por cédula
+        this.ofertaslaboraleslist = ofertas;
+        this.dtTrigger.next(null);
+      },
+      (error: any) => console.error(error)
+    );
+  }
 
+  getAllOfertasLaborales() {
+
+    this.ofertalaburoService.OfertasLaborales(this.name||"").subscribe(
+  ofertas => this.ofertaslaboraleslist = ofertas,
+  error => console.error(error)
+)
+}
   loadCleanObject(): void {
     this.ofertaslaborales = {
       id: 0,
@@ -241,13 +287,7 @@ export class OfertasLaboralesComponent {
   }
   }
 
-  getAllOfertasLaborales() {
-
-    this.ofertalaburoService.OfertasLaborales(this.name||"").subscribe(
-  ofertas => this.ofertaslaboraleslist = ofertas,
-  error => console.error(error)
-)
-}
+  
 
   deleteOfertaLaboral(id: number | undefined = 0) {
     // Mostrar SweetAlert de confirmación
@@ -307,6 +347,7 @@ export class OfertasLaboralesComponent {
     // console.log('Oferta enviada:' + this.ofertaslaborales)
     this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
       (response) => {
+        this.emptrds = this.ofertaslaborales.empresa;
         console.log(response);
         this.ofertaslaborales = response;
         this.mostrarSweetAlert(true, 'La oferta laboral se ha creado exitosamente.');

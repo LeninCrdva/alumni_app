@@ -7,8 +7,7 @@
     </div>
 </section>
 
-<div class="card">
-    <div class="card-body collapse show" id="collapse1">
+
         <!-- Modal -->
         <div class="modal" #m_modal_4 id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
             aria-hidden="true">
@@ -97,11 +96,11 @@
                                         <div class="form-group">
                                             <label class="form-control-label active" for="salario">SALARIO: <span
                                                     class="tx-danger">*</span></label>
-                                            <input class="form-control" type="text" name="salario"
+                                            <input class="form-control" type="number" name="salario"
                                                 placeholder="Ingrese la Salario" id="salario"
                                                 [(ngModel)]="editarClicked ? ofertaslaboralesCarga.salario : ofertaslaborales.salario"
                                                 (ngModelChange)="editarClicked ? ofertaslaboralesCarga.salario = $event : ofertaslaborales.salario = $event"
-                                                required>
+                                                 required>
                                         </div>
                                     </div>
                                 </div>
@@ -143,6 +142,8 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-body collapse show">
 
         <!--/ Modal1 -->
         <div class="col-md-12 col-lg-12">
@@ -151,18 +152,17 @@
                     class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
                     Registrar Trabajo
                 </button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show">
+
+        <div class="card-body pd-0 collapse show" id="collapse1">
             <div class="table-responsive">
-                <table datatable class="table table-bordered custom-table">
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                class="table table-bordered custom-table">
                     <thead class="bg-dark text-white">
                         <tr>
                             <th>#</th>
