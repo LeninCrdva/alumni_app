@@ -34,6 +34,7 @@ export class UserService {
   getUserById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/usuarios/${id}`);
   }
+  
   getUsersDTO(): Observable<UserDTO[]> {
     return this.http.get(this.urlCreateUsuario).pipe(
       map(response => response as UserDTO[])

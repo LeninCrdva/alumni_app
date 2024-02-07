@@ -105,7 +105,7 @@ export class UsuariosListsComponent implements OnInit {
   }
 
   getAllUsersBySelectedRoles(): void {
-    const rolesToShow = ['ROL_GRADUADO', 'ROL_EMPRESARIO'];
+    const rolesToShow = ['ROL_GRADUADO'];
     this.userService.getUsersDTO().subscribe(users => {
       this.usersList = users.filter(user => rolesToShow.includes(user.rol));
     });

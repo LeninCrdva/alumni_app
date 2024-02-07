@@ -1,3 +1,4 @@
+import { Persona } from "./persona";
 import { Usuario } from "./usuario";
 
 export class Administrador {
@@ -23,4 +24,13 @@ export class Administrador3 {
     'estado': boolean;
     'email': string;
     'usuario': string;
+}
+
+export class AdministradorFullData {
+    id?: number;
+    'cargo': string;
+    'estado': boolean;
+    'email': string;
+    'usuario': string;
+    'persona': Persona;
 }

@@ -11,3 +11,14 @@ export class Usuario {
     'ruta_imagen': string;
     'rol': Rol;
 }
+
+export class UsuarioFixed { 
+    id?: number;
+    'clave': string;
+    'nombreUsuario': string;
+    'estado': boolean;
+    'url_imagen': string;
+    'persona': Persona;
+    'ruta_imagen': string;
+    'rol': Rol;
+}
