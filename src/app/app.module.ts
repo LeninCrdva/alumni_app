@@ -16,6 +16,8 @@ import {PerfilUsuarioComponent} from '../app/pages/company/perfil-usuario/perfil
 import {NuevoEmpresarioModalComponent} from '../app/pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { PerfilGraduadoComponent } from './pages/company/perfil-graduado/perfil-graduado.component';
+import { WhatsAppBtnComponent } from './components/whats-app-btn/whats-app-btn.component';
+
 export function playerFactory() {
   return player;
 }
@@ -30,6 +32,7 @@ export function playerFactory() {
     NuevoEmpresarioModalComponent,
     NotFoundComponent,
     PerfilGraduadoComponent,
+    WhatsAppBtnComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
