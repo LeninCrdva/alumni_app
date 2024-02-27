@@ -4,8 +4,9 @@ import { GraduadoService } from '../../../data/service/graduado.service';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import Swal from 'sweetalert2';
-import { ofertaLaboralDTO } from '../../../Models/ofertaLaboralDTO';
 import { Subject } from 'rxjs';
+import { MailService } from '../../../data/service/mail.service';
+import { MailRequest } from '../../../data/model/Mail/MailRequest';
 
 @Component({
   selector: 'app-postulaciones',
@@ -13,6 +14,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./postulaciones.component.css', '../../../../assets/prefabs/headers.css']
 })
 export class PostulacionesComponent implements OnInit {
+  mailRequest: MailRequest = new MailRequest();
   postulaciones: ofertaLaboral[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
   dtoptions: DataTables.Settings = {};
@@ -21,7 +23,7 @@ export class PostulacionesComponent implements OnInit {
   @Output() onClose: EventEmitter<string> = new EventEmitter();
   searchTerm: string = '';
 
-  constructor(private postulacionesService: GraduadoService, private router: Router, private activeRoute: ActivatedRoute) { }
+  constructor(private postulacionesService: GraduadoService, private mailService: MailService) { }
 
   ngOnInit(): void {
     this.setupDtOptions();
@@ -63,11 +65,6 @@ export class PostulacionesComponent implements OnInit {
         if (userIdStorage) {
           this.postulaciones = (await this.postulacionesService.getOfertasLaboralesByUsername(userIdStorage).toPromise()) || [];
         }
-        console.log('El usuario es graduado. Realizar acciones para graduados.');
-      } else if (Array.isArray(parsedData) && parsedData.includes('ROL_EMPRESARIO')) {
-        console.log('El usuario es empresario. Realizar acciones para empresarios.');
-      } else {
-        console.log('El usuario no tiene un rol específico.');
       }
     }
   }
@@ -107,6 +104,7 @@ export class PostulacionesComponent implements OnInit {
             if (result.isConfirmed && this.graduadoDTO?.id !== undefined) {
               this.postulacionesService.cancelOfferInGraduado(Offer, this.graduadoDTO.id).subscribe(
                 grad => {
+                  Offer.email_personal = this.graduadoDTO.email_personal;
                   this.graduadoDTO = grad;
                   this.detallarOferta();
                   Swal.fire({
@@ -114,7 +112,8 @@ export class PostulacionesComponent implements OnInit {
                     text: "Se ha cancelado la postulación",
                     icon: "success"
                   });
-                }
+                  this.sendMail(Offer);
+                },
               );
             }
           });
@@ -131,5 +130,23 @@ export class PostulacionesComponent implements OnInit {
         value !== null && typeof value === 'string' && value.toLowerCase().includes(lowerCaseSearchTerm)
       )
     );
+  }
+
+  sendMail(graduado: GraduadoDTO): void {
+    this.mailRequest = {
+      name:  graduado.idOferta[0].toString(),
+      to: graduado.email_personal,
+      from: 'info.alumni.est@gmail.com',
+      subject: '¡Se ha cancelado una postulación!',
+      caseEmail: 'remove-postulate'
+    }
+
+    this.mailService.sendCasePostulateEmail(this.mailRequest).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Correo enviado!',
+        text: 'Se ha enviado un correo con la notificación de cancelación de postulación'
+      });
+    })
   }
 }

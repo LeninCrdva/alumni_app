@@ -6,6 +6,8 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { ResetPasswordComponent } from './reset-password/reset-password/reset-password.component';
+import { RequestPasswordComponent } from './request-password/request-password/request-password.component';
 
 // Note: Para las imagenes animadas
 export function playerFactory() {
@@ -15,7 +17,9 @@ export function playerFactory() {
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResetPasswordComponent,
+    RequestPasswordComponent
   ],
   imports: [
     CommonModule,

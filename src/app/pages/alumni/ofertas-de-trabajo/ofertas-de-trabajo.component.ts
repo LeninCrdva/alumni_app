@@ -5,6 +5,8 @@ import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import Swal from 'sweetalert2';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
+import { MailService } from '../../../data/service/mail.service';
+import { MailRequest } from '../../../data/model/Mail/MailRequest';
 
 @Component({
   selector: 'app-ofertas-de-trabajo',
@@ -12,11 +14,12 @@ import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
   styleUrls: ['./ofertas-de-trabajo.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class OfertasDeTrabajoComponent implements OnInit {
+  mailRequest: MailRequest = new MailRequest();
   listOfertas: ofertaLaboralDTO[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO()
   value: string = 'seleccionar'
 
-  constructor(private ofertasService: OfertalaboralService, private postulacionesService: GraduadoService) { }
+  constructor(private ofertasService: OfertalaboralService, private postulacionesService: GraduadoService, private mailService: MailService) { }
 
   ngOnInit(): void {
     this.cargarOfertas()
@@ -50,7 +53,7 @@ export class OfertasDeTrabajoComponent implements OnInit {
       this.postulacionesService.getGraduadoByUsuarioId(parseInt(idUser)).subscribe(
         grad => {
           this.graduadoDTO = grad;
-
+          Offer.email_personal = this.graduadoDTO.email_personal;
           outerLoop: for (const id of this.graduadoDTO?.idOferta || []) {
             for (const newOffer of Offer.idOferta) {
               if (id === newOffer) {
@@ -78,6 +81,7 @@ export class OfertasDeTrabajoComponent implements OnInit {
                 title: 'Genial',
                 text: 'Has realizado la postulación correctamente',
               });
+              this.sendMail(Offer);
             }
           }
         }
@@ -102,5 +106,17 @@ export class OfertasDeTrabajoComponent implements OnInit {
         }
       });
     }
+  }
+
+  sendMail(graduado: GraduadoDTO): void {
+    this.mailRequest = {
+      name:  graduado.idOferta[0].toString(),
+      to: graduado.email_personal,
+      from: 'info.alumni.est@gmail.com',
+      subject: '¡Haz realizado una postulación!',
+      caseEmail: 'postulate'
+    }
+
+    this.mailService.sendCasePostulateEmail(this.mailRequest).subscribe()
   }
 }
