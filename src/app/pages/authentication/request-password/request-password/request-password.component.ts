@@ -4,7 +4,6 @@ import { MailRequest } from '../../../../data/model/Mail/MailRequest';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MailService } from '../../../../data/service/mail.service';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-request-password',
   templateUrl: './request-password.component.html',
@@ -30,6 +29,7 @@ export class RequestPasswordComponent {
   sendMail(): void {
     if (this.formMail.valid) {
       const emailRequest = this.formMail.value;
+      let responseBack;
 
       this.mailRequest = {
         name: emailRequest.email,
@@ -43,10 +43,18 @@ export class RequestPasswordComponent {
         Swal.fire({
           icon: 'success',
           title: 'Correo enviado',
-          text: 'Si tu dirección es correcta se ha enviado un correo a su dirección de correo electrónico para restablecer su contraseña'
+          text: 'Se ha enviado un correo a su dirección de correo electrónico para restablecer su contraseña'
         })
         this.formMail.reset();
-      })
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo no enviado',
+          text: 'Esta dirección de correo electrónico no está registrada en el sistema. Por favor, verifique que la dirección de correo electrónico sea correcta o contacte al administrador del sistema.'
+        })
+      }
+      )
     }
   }
 }

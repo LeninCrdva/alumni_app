@@ -61,7 +61,7 @@ export class ResetPasswordComponent {
           }
 
           this.authService.resetPassword(this.newReset).subscribe(
-            (response) => {
+            () => {
               Swal.fire({
                 icon: 'success',
                 title: 'Contraseña restablecida',
@@ -87,7 +87,7 @@ export class ResetPasswordComponent {
         messageError = 'La petición hecha no es válida. Por favor, solicite un nuevo enlace de restablecimiento.';
         break;
       case 403:
-        messageError = 'El solicitud ya no está activa. Por favor, solicite un nuevo enlace de restablecimiento.';
+        messageError = 'La solicitud ya no está activa. Por favor, solicite un nuevo enlace de restablecimiento.';
         break;
       case 410:
         messageError = 'Este link ya ha expirado. Por favor, solicite un nuevo enlace de restablecimiento.';
