@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Experiencia } from '../../../data/model/experiencia';
 import { ExperienciaService } from '../../../data/service/experiencia.service';
 import { Subject } from 'rxjs';

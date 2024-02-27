@@ -262,6 +262,7 @@ export class UsuariosListsComponent implements OnInit {
               this.getGraduateDTOByUserId(userDto.id)
             ]);
           }),
+          
           map(([person, graduate]: [Persona, GraduadoDTO]) => {
             console.log(graduate);
             if (!graduate || !person) {

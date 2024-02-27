@@ -4,7 +4,7 @@ import { GraduadoService } from '../../../data/service/graduado.service';
 import { Graduado3 } from '../../../data/model/graduado';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Ciudad} from '../../../data/model/ciudad';
+import { Ciudad } from '../../../data/model/ciudad';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 export class NuevoGraduadoModalComponent implements OnInit {
 
   nuevoGraduadoForm: FormGroup = new FormGroup({});
- 
+
   usuarioGuardado: string = localStorage.getItem('name') || '';
   ciudades: Ciudad[] = [];
   nuevoGraduado: Graduado3 = new Graduado3();
@@ -40,8 +40,8 @@ export class NuevoGraduadoModalComponent implements OnInit {
     private ciudadService: CiudadService,
     private assetService: AssetService,
     private sanitizer: DomSanitizer,
-    
-  ) { 
+
+  ) {
 
   }
 
@@ -51,14 +51,14 @@ export class NuevoGraduadoModalComponent implements OnInit {
     this.nuevoGraduadoForm.get('usuario')?.setValue(this.usuarioGuardado);
     this.cargarCiudades();
   }
-   buildForm() {
+  buildForm() {
     this.nuevoGraduadoForm = this.fb.group({
       usuario: ['', Validators.required],
       emailPersonal: ['', Validators.required],
       ciudad: ['', Validators.required],
       fecha_graduacion: ['', Validators.required],
       estadoCivil: ['', Validators.required],
-    
+
     });
   }
 
@@ -109,7 +109,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
     }
   });
   showSuccessModal() {
-   
+
     console.log('Modal de éxito mostrado');
   }
 
@@ -138,23 +138,23 @@ export class NuevoGraduadoModalComponent implements OnInit {
           (res: any) => {
             this.loading = false;
             this.inforest = res;
-           
+
             this.nuevoGraduado.usuario = this.nuevoGraduadoForm.get('usuario')?.value;
             this.nuevoGraduado.email_personal = this.nuevoGraduadoForm.get('emailPersonal')?.value;
             this.nuevoGraduado.ciudad = this.nuevoGraduadoForm.get('ciudad')?.value;
             this.nuevoGraduado.año_graduacion = this.nuevoGraduadoForm.get('fecha_graduacion')?.value;
             this.nuevoGraduado.estadocivil = this.nuevoGraduadoForm.get('estadoCivil')?.value;
-            this.nuevoGraduado.url_pdf=res.url;
-            this.nuevoGraduado.ruta_pdf=res.key;
+            this.nuevoGraduado.url_pdf = res.url;
+            this.nuevoGraduado.ruta_pdf = res.key;
             this.graduadoService.createGraduado2(this.nuevoGraduado).subscribe(
               (res) => {
-              
-               Swal.fire({
-                icon: 'success',
-                text: 'Graduado creado exitosamente'
-            });
-        
-            this.bsModalRef.hide();
+
+                Swal.fire({
+                  icon: 'success',
+                  text: 'Graduado creado exitosamente'
+                });
+
+                this.bsModalRef.hide();
               },
               (error) => {
                 // Muestra un SweetAlert de error
@@ -165,7 +165,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
               }
             );
 
-           
+
 
             this.bsModalRef.hide(); // Cierra el modal después de cargar los datos
           },
