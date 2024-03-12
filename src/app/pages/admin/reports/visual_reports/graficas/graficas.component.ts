@@ -38,7 +38,7 @@ export class GraficasComponent implements OnInit, AfterViewInit {
           icon: 'error',
           text: 'No existen datos'
         });
-        this.datosCargados = false; // Si hay un error, establece datosCargados en false
+        this.datosCargados = false; 
       }
     );
   }

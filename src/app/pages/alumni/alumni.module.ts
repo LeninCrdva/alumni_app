@@ -17,6 +17,10 @@ import { OfertasDeTrabajoComponent } from './ofertas-de-trabajo/ofertas-de-traba
 import { OfertaDetalleComponent } from './oferta-detalle/oferta-detalle.component';
 import { PostulacionesComponent } from './postulaciones/postulaciones.component';
 import { DataTablesModule } from 'angular-datatables';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import ApexCharts from 'apexcharts';
+import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/bar-chart.component';
+import { GraficasComponent } from './reports/visual_reports/graficas/graficas.component';
 
 @NgModule({
     declarations: [
@@ -33,14 +37,18 @@ import { DataTablesModule } from 'angular-datatables';
         NuevoGraduadoModalComponent,
         OfertasDeTrabajoComponent,
         OfertaDetalleComponent,
-        PostulacionesComponent
+        PostulacionesComponent,
+        BarChartComponent,
+        GraficasComponent
+        
     ],
     imports: [
         CommonModule,
         AlumniRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        DataTablesModule
+        DataTablesModule,
+        NgApexchartsModule,
     ]
 })
 

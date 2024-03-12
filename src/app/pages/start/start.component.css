@@ -234,6 +234,10 @@ header.abajo {
     -o-transition: all .4s ease .2s;
     transition: all .4s ease .2s;
 }
+.descripcion-servicio {
+    text-align: justify; 
+    margin: 0 auto; 
+}
 
 .serviceArea.StartUpTwo .singleService:hover h2 {
     color: rgb(23, 92, 195);
