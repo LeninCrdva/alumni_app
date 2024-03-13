@@ -37,6 +37,8 @@ export class CarreraComponent {
   }
 
   closeModal() {
+    this.registerCareerForm.reset();
+    this.editMode = false;
     const cancelButton = document.getElementById('close-button') as HTMLElement;
     if (cancelButton) {
       cancelButton.click();

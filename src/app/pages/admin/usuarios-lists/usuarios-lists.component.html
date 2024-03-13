@@ -14,10 +14,11 @@
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div [class.bg-success]="!editMode" [class.bg-primary]="editMode" class="modal-header text-white">
-            <h5 [innerText]="editMode ? 'Modificar Usuario' : 'Crear nuevo Usuario'">
-            </h5>
-          </div>
+          <div class="modal-header text-white bg-primary">
+            <h5 [innerText]="editMode ? 'Modificar Usuario' : 'Crear nuevo Usuario'"></h5>
+        </div>
+        
+        
 
           <div class="modal-body">
             <form [formGroup]="registerNewUserForm">
@@ -172,12 +173,12 @@
             </form>
           </div>
           <div class="modal-footer">
-          
             <button (click)="!editMode ? register() : UpdateAllData()" type="submit" data-bs-toggle="modal"
-              class="btn btn-oblong" [class.btn-success]="!editMode"
-              [class.btn-primary]="editMode">
-              {{ editMode ? 'Actualizar' : 'Enviar Formulario' }}
-            </button>
+            class="btn btn-oblong btn-primary">
+        {{ editMode ? 'Actualizar' : 'Enviar Formulario' }}
+    </button>
+    
+    
             <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
           </div>
         </div>
@@ -187,17 +188,21 @@
 
     <div class="col-md-12 col-lg-12">
       <div class="d-flex">
-        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-          class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
-          Registrar Usuario</button>
-        <div class="input-group">
-          <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-          <button class="btn btn-outline-secondary" type="button" id="searchButton">
-            <i class="fa fa-search"></i>
+          <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+              class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+              Registrar Usuario
           </button>
-        </div>
+          <div class="input-group">
+              <input type="text" class="form-control" id="searchInput" placeholder="Buscar..."
+                  style="border-color: blue;">
+              <button class="btn btn-outline-secondary" type="button" id="searchButton"
+                  style="border-color: blue;">
+                  <i class="fa fa-search"></i>
+              </button>
+          </div>
       </div>
-    </div>
+  </div>
+  
 
     <div class="card-body pd-0 collapse show" id="collapse1">
       <div class="table-responsive">

@@ -10,14 +10,17 @@
 <div class="card">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
-        <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+        <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true" data-bs-backdrop="static">
+
+            <div class="modal-dialog modal-lg" role="document" data-bs-backdrop="static">
+
                 <div class="modal-content">
-                    <div [class.bg-success]="!editMode" [class.bg-primary]="editMode" class="modal-header text-white">
-                        <h5 [innerText]="editMode ? 'Modificar Carrera' : 'Crear nueva Carrera'">
-                        </h5>
+                    <div [class.bg-primary]="true" class="modal-header text-white">
+                        <h5 [innerText]="editMode ? 'Modificar Carrera' : 'Crear nueva Carrera'"></h5>
                     </div>
+                    
+                    
+                    
                     
                     <div class="modal-body">
                         <form [formGroup]="registerCareerForm">
@@ -52,8 +55,8 @@
                             data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
                             {{editMode ? 'Editar' : 'Crear'}}
                         </button>
-                        <button data-bs-dismiss="modal" id="close-button"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+                        <button data-bs-dismiss="modal" id="close-button" class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
+
                     </div>
                 </div>
             </div>
@@ -61,20 +64,25 @@
 
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
-                <button data-bs-toggle="modal" data-bs-target="#m_modal_5" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                <button data-bs-toggle="modal" [attr.data-bs-target]="!editMode ? '#m_modal_5' : null" type="button" class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;" (click)="editMode = false">
                     Registrar Carrera
                 </button>
-            </div>
-            <div class="input-group">
-                <input type="text" class="form-control" #searchInput placeholder="Buscar...">
-              </div>
+                
+                
+                
+                
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" class="form-control rounded" #searchInput placeholder="Buscar...">
+                </div>
+                
         </div>
 
         <div class="card-body pd-0 collapse show" id="collapse1">
             <div class="table-responsive">
                 <table class="table">
-                    <thead class="table-light">
+                    <thead class="bg-primary text-white">
                         <tr>
                             <th>#</th>
                             <th>CARRERA</th>
@@ -89,15 +97,17 @@
                             <td>{{career.descripcion}}</td>
                             <td class="text-center">
                                 <a (click)="catchCareer(career)" data-bs-toggle="modal" data-bs-target="#m_modal_5"
-                                    class="table-action mg-r-10" [class.text-primary]="!editMode"
-                                    >
+                                    class="table-action mg-r-10" [class.text-primary]="!editMode">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
         </div>
+
+        
+        
     </div>
+</div>
