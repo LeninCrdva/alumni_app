@@ -1,5 +1,5 @@
 import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
-import { Component, ElementRef, Renderer2, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit, Input, HostListener } from '@angular/core';
 import { UserService } from '../../data/service/UserService'
 import { AssetService } from '../../data/service/Asset.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -70,7 +70,7 @@ export class LayoutSystemComponent implements OnInit {
     this.checkUserRole();
     this.checkSession();
   }
-  
+
   checkSession(): void {
     const isLoggedIn = localStorage.getItem('name');
     if (!isLoggedIn) {
@@ -87,9 +87,9 @@ export class LayoutSystemComponent implements OnInit {
 
 
   redirectToProfile(): void {
-  //  localStorage.setItem('authorities', JSON.stringify(authorities));
-  const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
-console.log('es de la autoridad 1',userRole);
+    //  localStorage.setItem('authorities', JSON.stringify(authorities));
+    const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
+    console.log('es de la autoridad 1', userRole);
     console.log("Rol: " + userRole);
     switch (userRole) {
       case 'ROL_ADMINISTRADOR':
@@ -154,7 +154,9 @@ console.log('es de la autoridad 1',userRole);
 
   setActiveMenuItem(menuItem: string): void {
     this.activeMenuItem = menuItem;
+    localStorage.setItem('activeMenuItem', menuItem);
   }
+  
   capturarFile(event: any): any {
 
     const archivoCapturado = event.target.files[0]
@@ -235,7 +237,7 @@ console.log('es de la autoridad 1',userRole);
 
   private checkUserRole() {
     const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
-console.log('prueba de rol', userRole);
+    console.log('prueba de rol', userRole);
 
     if (userRole === 'ROL_ADMINISTRADOR') {
       this.showAdminOptions = true;
@@ -453,17 +455,19 @@ console.log('prueba de rol', userRole);
     });
   }
 
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    const profileElement = this.el.nativeElement.querySelector('.profile');
+    const dropdownElement = this.el.nativeElement.querySelector('.profile-link');
+    if (!profileElement.contains(event.target) && dropdownElement.classList.contains('show')) {
+      this.toggleDropdown();
+    }
+  }
+  
   private setupProfileDropdown() {
     const profile = this.el.nativeElement.querySelector('nav .profile');
-    const imgProfile = profile.querySelector('img');
-    const aProfile = profile.querySelector('a');
 
-    this.renderer.listen(imgProfile, 'click', () => {
-      this.toggleDropdown();
-    });
-
-    this.renderer.listen(aProfile, 'click', (event) => {
-      event.preventDefault();
+    this.renderer.listen(profile, 'click', () => {
       this.toggleDropdown();
     });
   }

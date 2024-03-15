@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-experiencia',
   templateUrl: './experiencia.component.html',
-  styleUrls: ['./experiencia.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./experiencia.component.css']
 })
 export class ExperienciaComponent {
   public cedula: string = '';

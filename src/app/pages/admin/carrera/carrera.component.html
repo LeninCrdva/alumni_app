@@ -7,10 +7,12 @@
     </div>
 </section>
 
+
 <div class="card">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
-        <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+            aria-hidden="true" data-bs-backdrop="static">
 
             <div class="modal-dialog modal-lg" role="document" data-bs-backdrop="static">
 
@@ -18,10 +20,10 @@
                     <div [class.bg-primary]="true" class="modal-header text-white">
                         <h5 [innerText]="editMode ? 'Modificar Carrera' : 'Crear nueva Carrera'"></h5>
                     </div>
-                    
-                    
-                    
-                    
+
+
+
+
                     <div class="modal-body">
                         <form [formGroup]="registerCareerForm">
                             <div class="form-layout form-layout-1">
@@ -51,11 +53,12 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button (click)="!editMode ? createCareer() : UpdateCareer()" type="submit" data-bs-toggle="modal"
-                            data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
+                        <button (click)="!editMode ? createCareer() : UpdateCareer()" type="submit"
+                            data-bs-toggle="modal" data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
                             {{editMode ? 'Editar' : 'Crear'}}
                         </button>
-                        <button data-bs-dismiss="modal" id="close-button" class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
+                        <button data-bs-dismiss="modal" id="close-button"
+                            class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
 
                     </div>
                 </div>
@@ -64,19 +67,21 @@
 
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
-                <button data-bs-toggle="modal" [attr.data-bs-target]="!editMode ? '#m_modal_5' : null" type="button" class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;" (click)="editMode = false">
+                <button data-bs-toggle="modal" [attr.data-bs-target]="!editMode ? '#m_modal_5' : null" type="button"
+                    class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;"
+                    (click)="editMode = false">
                     Registrar Carrera
                 </button>
-                
-                
-                
-                
-                </div>
-                
-                <div class="input-group">
-                    <input type="text" class="form-control rounded" #searchInput placeholder="Buscar...">
-                </div>
-                
+
+
+
+
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="form-control rounded" #searchInput placeholder="Buscar...">
+            </div>
+
         </div>
 
         <div class="card-body pd-0 collapse show" id="collapse1">
@@ -107,7 +112,7 @@
             </div>
         </div>
 
-        
-        
+
+
     </div>
 </div>

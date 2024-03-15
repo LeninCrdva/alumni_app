@@ -128,7 +128,7 @@ npm i ng-multiselect-dropdown
 
 ### FRONTEND
 
-| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=190><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) | [<img src="Screenshots/Integrantes/Jose_Foto.png" width=190><br><sub>Jose Farez</sub>](https://github.com/Lokyre) |
+| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=150><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) | [<img src="Screenshots/Integrantes/Jose_Foto.png" width=190><br><sub>Jose Farez</sub>](https://github.com/Lokyre) |
 | :-------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 
 </div>

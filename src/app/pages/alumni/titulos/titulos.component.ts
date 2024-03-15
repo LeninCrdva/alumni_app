@@ -10,7 +10,7 @@ import { DataTableDirective } from 'angular-datatables';
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
-  styleUrls: ['./titulos.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./titulos.component.css']
 })
 export class TitulosComponent implements OnInit {
   public idGraduado: number = 0;

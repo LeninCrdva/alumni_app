@@ -8,7 +8,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-referencias-laborales',
   templateUrl: './referencias-laborales.component.html',
-  styleUrls: ['./referencias-laborales.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./referencias-laborales.component.css']
 })
 export class ReferenciasLaboralesComponent {
   public cedula: string = '';

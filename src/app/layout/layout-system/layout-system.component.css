@@ -148,6 +148,7 @@ li {
 
 #sidebar .side-dropdown a:hover {
     color: #1775F1;
+    transform: translateX(-5px);
 }
 
 /* SIDEBAR */
@@ -241,7 +242,8 @@ nav .profile .profile-link a {
 }
 
 nav .profile .profile-link a:hover {
-    background: #F1F0F6;
+    background: #1775F1;
+    color: white;
 }
 
 nav .profile .icon {

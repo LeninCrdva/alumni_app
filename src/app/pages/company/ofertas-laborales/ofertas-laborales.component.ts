@@ -16,7 +16,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-postulaciones-add-form',
   templateUrl: './ofertas-laborales.component.html',
-  styleUrls: ['./ofertas-laborales.component.css', '../../../../assets/prefabs/headers.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./ofertas-laborales.component.css']
 })
 export class OfertasLaboralesComponent {
   editarClicked = false;

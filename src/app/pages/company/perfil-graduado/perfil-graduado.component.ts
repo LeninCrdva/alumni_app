@@ -8,7 +8,7 @@ import { error } from 'jquery';
 @Component({
   selector: 'app-perfil-graduado',
   templateUrl: './perfil-graduado.component.html',
-  styleUrls: ['./perfil-graduado.component.css', '../../../../assets/prefabs/PerfilUser.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./perfil-graduado.component.css', '../../../../assets/prefabs/PerfilUser.css']
 
 
 })

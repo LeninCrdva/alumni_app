@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-capacitaciones',
   templateUrl: './capacitaciones.component.html',
-  styleUrls: ['./capacitaciones.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./capacitaciones.component.css']
 })
 export class CapacitacionesComponent {
   public cedula: string = '';

@@ -27,10 +27,98 @@
     scroll-behavior: smooth;
 }
 
-/* ===============PACE STYLES - LOADING PAGE BAR=============== */
+
+/** =============== PARTE DEL FONDO PARALLAX EN EL INICIO DE CADA PAGINA ===============*/
+
+.page-title {
+    display: block;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    position: relative;
+}
+
+.page-title span {
+    text-transform: capitalize;
+}
+
+.page-title h1 {
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+}
+
+.page-title .page-breadcrumb {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+ul.page-breadcrumb {
+    padding-top: 30px;
+    padding-right: 30px;
+}
+
+ul.page-breadcrumb li span {
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+ul.page-breadcrumb li {
+    color: #fff;
+    display: inline-block;
+    list-style: none;
+}
+
+ul.page-breadcrumb li i {
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+ul.page-breadcrumb li a {
+    color: #fff;
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+ul.page-breadcrumb li a:hover {
+    color: #6984ff;
+    font-weight: bold;
+}
+
+.bg-overlay-black::before {
+    background: rgba(0, 0, 0, 0.7);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/** =============== FIN DE LA PARTE DEL FONDO EN EL INICIO DE CADA PAGINA ===============*/
+
+
+
+
+
+
+
+/** =============== PACE STYLES - LOADING PAGE BAR =============== */
 .pace {
     -webkit-pointer-events: none;
     pointer-events: none;
+
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
@@ -47,99 +135,5 @@
     top: 0;
     right: 100%;
     width: 100%;
-    height: 5px;
-}
-
-.pace .pace-progress-inner {
-    display: block;
-    position: absolute;
-    right: 0px;
-    width: 100px;
-    height: 100%;
-    box-shadow: 0 0 10px #29d, 0 0 5px #29d;
-    opacity: 1.0;
-    -webkit-transform: rotate(3deg) translate(0px, -4px);
-    -moz-transform: rotate(3deg) translate(0px, -4px);
-    -ms-transform: rotate(3deg) translate(0px, -4px);
-    -o-transform: rotate(3deg) translate(0px, -4px);
-    transform: rotate(3deg) translate(0px, -4px);
-}
-
-.pace .pace-activity {
-    display: block;
-    position: fixed;
-    z-index: 2000;
-    top: 25px;
-    right: 15px;
-    width: 30px;
-    height: 30px;
-    border: solid 2px transparent;
-    border-top-color: #29d;
-    border-left-color: #29d;
-    border-radius: 10px;
-    -webkit-animation: pace-spinner 400ms linear infinite;
-    -moz-animation: pace-spinner 400ms linear infinite;
-    -ms-animation: pace-spinner 400ms linear infinite;
-    -o-animation: pace-spinner 400ms linear infinite;
-    animation: pace-spinner 400ms linear infinite;
-}
-
-@-webkit-keyframes pace-spinner {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@-moz-keyframes pace-spinner {
-    0% {
-        -moz-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -moz-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@-o-keyframes pace-spinner {
-    0% {
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@-ms-keyframes pace-spinner {
-    0% {
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes pace-spinner {
-    0% {
-        transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+    height: 4px;
 }

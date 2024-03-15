@@ -11,7 +11,7 @@ import { MailRequest } from '../../../data/model/Mail/MailRequest';
 @Component({
   selector: 'app-postulaciones',
   templateUrl: './postulaciones.component.html',
-  styleUrls: ['./postulaciones.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./postulaciones.component.css']
 })
 export class PostulacionesComponent implements OnInit {
   mailRequest: MailRequest = new MailRequest();

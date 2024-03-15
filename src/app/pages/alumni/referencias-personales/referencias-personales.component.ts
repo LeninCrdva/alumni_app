@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-referencias-personales',
   templateUrl: './referencias-personales.component.html',
-  styleUrls: ['./referencias-personales.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./referencias-personales.component.css']
 })
 export class ReferenciasPersonalesComponent {
   public cedula: string = '';
