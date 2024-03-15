@@ -37,7 +37,6 @@ export class StartComponent implements OnInit {
       this.renderer.removeClass(header, 'abajo');
     }
 
-    this.handleScroll();
   }
 
   private handleScroll() {

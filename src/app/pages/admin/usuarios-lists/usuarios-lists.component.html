@@ -192,13 +192,14 @@
               class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
               Registrar Usuario
           </button>
+
           <div class="input-group">
               <input type="text" class="form-control" id="searchInput" placeholder="Buscar..."
-                  style="border-color: blue;">
-              <button class="btn btn-outline-secondary" type="button" id="searchButton"
-                  style="border-color: blue;">
-                  <i class="fa fa-search"></i>
-              </button>
+                  style="border-color: blue;" (input)="onSearch($event)">
+                <select class="form-control" id="selectInput">
+                    <option value="1">Nombre</option>
+                    <option value="2">Cedula</option>
+                </select>
           </div>
       </div>
   </div>

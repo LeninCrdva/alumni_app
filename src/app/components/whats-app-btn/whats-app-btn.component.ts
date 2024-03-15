@@ -7,7 +7,7 @@ import { Component, HostListener } from '@angular/core';
 })
 export class WhatsAppBtnComponent {
   scrollPosition = 0;
-
+  whatsAppMessage = "";
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
     this.scrollPosition = window.scrollY;

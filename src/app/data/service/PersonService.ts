@@ -17,7 +17,7 @@ import { Persona } from '../model/persona';
     constructor(private http: HttpClient) { }
   
     getPerson(): Observable<Persona[]> {
-      return this.http.get<Persona[]>(this.urlEndPoint);
+      return this.http.get<Persona[]>(this.urlCreate );
     }
   
     createPerson(persona: Persona): Observable<Persona>{
