@@ -127,12 +127,14 @@
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_5" type="button"
                     class="btn btn-oblong btn-primary mg-b-10 mt-2" style="margin-right:10px; width: 17rem; height: 2.5rem;">
                     Registrar Ciudad</button>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
-                    <button class="btn btn-outline-secondary ms-2" type="button" id="searchButton">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Buscar..."
+                            style="border-color: blue;" (input)="onSearch($event)">
+                          <select class="form-control" id="selectInput">
+                              <option value="1">Ciudad</option>
+                              <option value="2">Provincia</option>
+                          </select>
+                    </div>
             </div>
         </div>
 

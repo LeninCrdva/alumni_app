@@ -68,6 +68,7 @@ export class UsuariosListsComponent implements OnInit {
   };
 
   usersList: UserDTO[] = [];
+  usersListFiltered: UserDTO[] = [];
   roleList: Rol[] = [];
   graduatedList: Graduado[] = [];
   graduatedDTOList: GraduadoDTO[] = [];
@@ -105,9 +106,10 @@ export class UsuariosListsComponent implements OnInit {
   }
 
   getAllUsersBySelectedRoles(): void {
-    const rolesToShow = ['ROL_GRADUADO'];
-    this.userService.getUsersDTO().subscribe(users => {
-      this.usersList = users.filter(user => rolesToShow.includes(user.rol));
+    const rolesToShow = ['ROL_GRADUADO', 'ROL_EMPRESARIO'];
+    this.userService.getUsersDTO().subscribe((users) => {
+      this.usersList = users.filter((user) => rolesToShow.includes(user.rol));
+      this.usersListFiltered = [...this.usersList];
     });
   }
 
@@ -146,6 +148,31 @@ export class UsuariosListsComponent implements OnInit {
   toggleSwitch(usuarioDTO: UserDTO): void {
     usuarioDTO.estado = !usuarioDTO.estado;
     this.updateStateUser(usuarioDTO.id, usuarioDTO);
+  }
+
+  onSearch(event: Event) {
+    const selectValue = (
+      document.getElementById('selectInput') as HTMLSelectElement
+    ).value;
+
+    const value = (event.target as HTMLInputElement).value;
+    if (selectValue == '1') {
+      if (value === '' || value === null || value === undefined) {
+        this.getAllUsersBySelectedRoles();
+      } else {
+        this.usersList = this.usersListFiltered.filter((user) =>
+          user.nombreUsuario.startsWith(value.toLocaleUpperCase())
+        );
+      }
+    } else {
+      if (value === '' || value === null || value === undefined) {
+        this.getAllUsersBySelectedRoles();
+      } else {
+        this.usersList = this.usersListFiltered.filter((user) =>
+          user.cedula.startsWith(value.toLocaleUpperCase())
+        );
+      }
+    }
   }
 
   register() {

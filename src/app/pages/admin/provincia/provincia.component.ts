@@ -34,18 +34,24 @@ export class ProvinciaComponent implements OnInit {
     this.getAllProvinces();
     this.getAllCities();
   }
+  
+ 
 
   provincesList: Provincia[] = [];
+  provincesListFiltered: Provincia[] = [];
+
   province: Provincia = new Provincia();
   newProvince: Provincia = new Provincia();
   newCity: CiudadDTO = new CiudadDTO();
   citiesListDTO: CiudadDTO[] = [];
+  citiesListDTOFiltered: CiudadDTO[] = [];
   cities: Ciudad[] = [];
   city: CiudadDTO = new CiudadDTO();
 
   getAllCities(): void {
     this.ciudadService.getCiudadesDTO().subscribe(ciudades => {
       this.citiesListDTO = ciudades;
+      this.citiesListDTOFiltered = [...this.citiesListDTO];
     })
   }
 
@@ -56,9 +62,36 @@ export class ProvinciaComponent implements OnInit {
   getAllProvinces(): void {
     this.provinciaService.getProvincias().subscribe(prov => {
       this.provincesList = prov;
+      this.provincesListFiltered = [...this.provincesList];
     });
   }
 
+  onSearch(event: Event) {
+    const selectValue = (
+      document.getElementById('selectInput') as HTMLSelectElement
+    ).value;
+
+    const value = (event.target as HTMLInputElement).value;
+    if (selectValue == '1') {
+      if (value === '' || value === null || value === undefined) {
+        this.getAllProvinces();
+         this.getAllCities();
+      } else {
+        this.citiesListDTO = this.citiesListDTOFiltered.filter((city) =>
+        city.nombre.startsWith(value.toLocaleUpperCase())
+        );
+      }
+    } else {
+      if (value === '' || value === null || value === undefined) {
+        this.getAllProvinces();
+         this.getAllCities(); 
+      } else {
+        this.provincesList = this.provincesListFiltered.filter((province) =>
+        province.nombre.startsWith(value.toLocaleUpperCase())
+        );
+      }
+    }
+  }
   createProvince(): void {
     this.editModeProvince = false;
     if (this.registerProvinceForm.valid) {
