@@ -42,14 +42,15 @@
                 <i class="ri-eye-off-fill" *ngIf="!passwordVisible"></i>
               </span>
             </div>
-            
+
             <div id="passwordError" class="text-danger"
               *ngIf="loginForm.get('password')?.hasError('required') && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
               La contraseña es obligatoria.
             </div>
           </div>
           <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-          <p class="text-end  mt-3"><a routerLink="/account/login/request-password" class=" font-weight-bold text-decoration-none fs-6">¿Has olvidado la contraseña?</a>.</p>
+          <p class="text-end  mt-3"><a routerLink="/account/login/request-password"
+              class=" font-weight-bold text-decoration-none fs-6">¿Has olvidado la contraseña?</a>.</p>
 
           <!-- Modal -->
           <ng-template #template>
