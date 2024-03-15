@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-perfil-form',
   templateUrl: './perfil-form.component.html',
-  styleUrls: ['./perfil-form.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./perfil-form.component.css']
 })
 export class PerfilFormComponent implements AfterViewInit, OnInit {
   usuarioInfo: Usuario = new Usuario();

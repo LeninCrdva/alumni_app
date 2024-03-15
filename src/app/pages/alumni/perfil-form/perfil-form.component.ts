@@ -13,7 +13,7 @@ import { GraduadoService } from '../../../data/service/graduado.service';
 @Component({
   selector: 'app-perfil-form',
   templateUrl: './perfil-form.component.html',
-  styleUrls: ['./perfil-form.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./perfil-form.component.css']
 })
 export class PerfilFormComponent implements AfterViewInit, OnInit {
   usuarioInfo: Usuario = new Usuario();

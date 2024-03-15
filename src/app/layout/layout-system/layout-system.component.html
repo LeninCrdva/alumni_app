@@ -71,16 +71,12 @@
                     </li>
                 </ul>
             </li>
-             
-
-            
-
-
 
             <li class="divider" data-text="Comunidad Tecazuay">Comunidad Tecazuay</li>
             <li>
-                <a [routerLink]="['/system/alumni/comunidad']" routerLinkActive="router-link-active"
-                    (click)="setActiveMenuItem('Comunidad De Graduados - Tecazuay')" href="javascript:void(0)"><i
+                <a [class.active]="activeMenuItem === 'Comunidad De Graduados'"
+                    [routerLink]="['/system/alumni/comunidad']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Comunidad De Graduados')" href="javascript:void(0)"><i
                         class='fa-solid fa-graduation-cap icon'></i>Comunidad
                 </a>
             </li>
@@ -106,52 +102,30 @@
                     <li><a [routerLink]="['admin/perfil-admin']" routerLinkActive="router-link-active">Mi
                             Perfil</a>
                     </li>
-                   
+
                 </ul>
             </li>
 
-            <li class="divider" data-text="Usuarios">Usuarios</li>
+            <li class="divider" data-text="Gestión">Gestión</li>
+
             <li>
-                <a href="javascript:void(0)"><i class='bx bxs-user icon'></i> Administrar usuarios <i
-                        class='bx bx-chevron-right icon-right'></i></a>
-                <ul class="side-dropdown">
-                    <li><a [routerLink]="['admin/usuarios-list']" routerLinkActive="router-link-active">Ver usuarios</a>
-                    </li>
-                </ul>
+                <a [class.active]="activeMenuItem === 'Gestión usuarios'" [routerLink]="['admin/usuarios-list']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión usuarios')"
+                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Gestión usuarios
+                </a>
+                <a [class.active]="activeMenuItem === 'Gestión Carreras'" [routerLink]="['admin/carrera']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión Carreras')"
+                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Gestión Carreras
+                </a>
+                <a [class.active]="activeMenuItem === 'Gestión Periodos'" [routerLink]="['admin/periodo']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión Periodos')"
+                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Gestión Periodos
+                </a>
+                <a [class.active]="activeMenuItem === 'Ciudades y Provincia'" [routerLink]="['admin/provincia']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ciudades y Provincia')"
+                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Ciudades y Provincia
+                </a>
             </li>
-           <!-- <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
-            <li>
-                <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Postulaciones <i
-                        class='bx bx-chevron-right icon-right'></i></a>
-                <ul class="side-dropdown">
-                    <li><a href="#">Postulantes</a></li>
-                </ul>
-
-            </li>-->
-            <li class="divider" data-text="Insituto">Insituto </li>
-            <li>
-                <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Carreras<i
-                        class='bx bx-chevron-right icon-right'></i></a>
-                <ul class="side-dropdown">
-                    <li><a [routerLink]="['admin/carrera']" routerLinkActive="router-link-active"> Carreras</a></li>
-                </ul>
-             
-
-            </li>
-
-            <li class="divider" data-text="Mas">Mas</li>
-            <li>
-                <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Otro<i
-                        class='bx bx-chevron-right icon-right'></i></a>
-                <ul class="side-dropdown">
-                    <li><a [routerLink]="['admin/provincia']" routerLinkActive="router-link-active">Ciudades y Provincia</a></li>
-                </ul>
-                <ul class="side-dropdown">
-                    <li><a [routerLink]="['admin/periodo']" routerLinkActive="router-link-active">Periodos</a></li>
-                </ul>
-
-            </li>
-
 
             <li class="divider" data-text="Analitica y Reportes">Analítica y Reportes</li>
 
@@ -193,8 +167,9 @@
                     <li><a [routerLink]="['/system/company/perfil']" routerLinkActive="router-link-active">Mi
                             Perfil</a>
                     </li>
-                    <li><a [routerLink]="['/system/company/update-perfil']" routerLinkActive="router-link-active">Actualizar
-                        Perfil</a>
+                    <li><a [routerLink]="['/system/company/update-perfil']"
+                            routerLinkActive="router-link-active">Actualizar
+                            Perfil</a>
                     </li>
                     <li><a [routerLink]="['/system/company/crud']" routerLinkActive="router-link-active">Mis
                             Empresas</a>
@@ -206,7 +181,7 @@
                 <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Postulaciones <i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                    <li><a [routerLink]="['/system/company/postulaciones_form']" >Ofertar Trabajo</a></li>
+                    <li><a [routerLink]="['/system/company/postulaciones_form']">Ofertar Trabajo</a></li>
                 </ul>
             </li>
         </ul>
@@ -221,9 +196,9 @@
             <form action="#">
                 <a style="font-weight: 700; font-size: 22px;">{{activeMenuItem}}</a>
             </form>
-            <div class="profile">
+            <div class="profile dropdown-toggle">
                 <a>Bienvenido "{{ name }}"</a>
-                <img [src]="urlImage" alt="Imagen de usuario" alt="Alumni">
+                <img [src]="urlImage" alt="Imagen de usuario" alt="Foto Alumni">
                 <ul class="profile-link">
                     <li><a (click)="redirectToProfile()">
                             <i class='bx bxs-user-circle icon'></i> Perfil</a></li>

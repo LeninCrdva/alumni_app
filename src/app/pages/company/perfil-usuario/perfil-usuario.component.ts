@@ -13,7 +13,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
-  styleUrls: ['./perfil-usuario.component.css', '../../../../assets/prefabs/PerfilUser.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./perfil-usuario.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class PerfilUsuarioComponent {
   name: string | null = localStorage.getItem('name');

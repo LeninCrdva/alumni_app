@@ -22,7 +22,7 @@ import { Observable, catchError, forkJoin, map, of, switchMap, tap, throwError }
 @Component({
   selector: 'app-usuarios-lists',
   templateUrl: './usuarios-lists.component.html',
-  styleUrls: ['./usuarios-lists.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./usuarios-lists.component.css']
 })
 export class UsuariosListsComponent implements OnInit {
 

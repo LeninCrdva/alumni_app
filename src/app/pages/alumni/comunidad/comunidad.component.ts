@@ -11,7 +11,7 @@ import { UserService } from '../../../data/service/UserService';
 @Component({
   selector: 'app-comunidad',
   templateUrl: './comunidad.component.html',
-  styleUrls: ['comunidad.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['comunidad.component.css']
 })
 export class ComunidadComponent {
   selectedGraduado: Graduado1 | null = null;

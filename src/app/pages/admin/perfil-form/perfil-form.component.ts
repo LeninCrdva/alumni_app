@@ -3,7 +3,7 @@ import { Component, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
 @Component({
   selector: 'app-perfil-form',
   templateUrl: './perfil-form.component.html',
-  styleUrls: ['./perfil-form.component.css', '../../../../assets/prefabs/headers.css']
+  styleUrls: ['./perfil-form.component.css']
 })
 export class PerfilFormComponent implements AfterViewInit {
   constructor(private renderer: Renderer2, private el: ElementRef) { }
