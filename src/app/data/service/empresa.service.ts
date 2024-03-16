@@ -45,4 +45,7 @@ export class EmpresaService {
   deleteEmpresa(id: number): Observable<Empresa> {
     return this.http.delete<Empresa>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders });
   }
+  getEmpresaSinOfertasLab(): Observable<Empresa[]> {
+    return this.http.get<Empresa[]>(`${this.urlEndPoint}/sin-oferta-laboral`);
+  }
 }
