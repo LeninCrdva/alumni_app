@@ -46,7 +46,6 @@ export class LoginComponent {
       this.authService.login(username, password).subscribe(
         (response) => {
           const accessToken = response.accessToken;
-          console.log("token here: " + accessToken);
 
           const user_id = response.usuario_id;
 
@@ -79,12 +78,12 @@ export class LoginComponent {
   }
   private redirectBasedOnAuthorities(authorities: string[]): void {
     // Redirigir según el rol del usuario
-    if (authorities.includes('ROL_ADMINISTRADOR')) {
+    if (authorities.includes('ADMINISTRADOR')) {
       this.router.navigate(['system/admin']);
-    } else if (authorities.includes('ROL_EMPRESARIO')) {
+    } else if (authorities.includes('EMPRESARIO')) {
       this.router.navigate(['system/company']);
     } else {
-      if (authorities.includes('ROL_GRADUADO')) {
+      if (authorities.includes('GRADUADO')) {
         this.router.navigate(['system/alumni']);
       }
     }

@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 })
 export class StartComponent implements OnInit {
 
-  private readonly ROL_ADMINISTRADOR = 'ROL_ADMINISTRADOR';
-  private readonly ROL_EMPRESARIO = 'ROL_EMPRESARIO';
-  private readonly ROL_GRADUADO = 'ROL_GRADUADO';
+  private readonly ADMINISTRADOR = 'ADMINISTRADOR';
+  private readonly EMPRESARIO = 'EMPRESARIO';
+  private readonly GRADUADO = 'GRADUADO';
 
   constructor(private renderer: Renderer2, private el: ElementRef, private router: Router) { }
 
@@ -60,16 +60,16 @@ export class StartComponent implements OnInit {
   }
 
   loginAsAdmin(): void {
-    localStorage.setItem('userRole', this.ROL_ADMINISTRADOR);
+    localStorage.setItem('userRole', this.ADMINISTRADOR);
     this.router.navigate(['/account/login']);
   }
   loginAsEmpresario(): void {
-    localStorage.setItem('userRole', this.ROL_EMPRESARIO);
+    localStorage.setItem('userRole', this.EMPRESARIO);
     this.router.navigate(['/account/login']);
   }
 
   loginAsGraduado(): void {
-    localStorage.setItem('userRole', this.ROL_GRADUADO);
+    localStorage.setItem('userRole', this.GRADUADO);
     this.router.navigate(['/account/login']);
   }
   private navigateToRegister(): void {
