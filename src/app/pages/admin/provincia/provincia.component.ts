@@ -70,28 +70,39 @@ export class ProvinciaComponent implements OnInit {
     const selectValue = (
       document.getElementById('selectInput') as HTMLSelectElement
     ).value;
-
+  
     const value = (event.target as HTMLInputElement).value;
     if (selectValue == '1') {
       if (value === '' || value === null || value === undefined) {
-        this.getAllProvinces();
-         this.getAllCities();
+        this.getAllCities();
+        this.provincesList = this.provincesListFiltered;
       } else {
         this.citiesListDTO = this.citiesListDTOFiltered.filter((city) =>
-        city.nombre.startsWith(value.toLocaleUpperCase())
+          city.nombre.startsWith(value.toLocaleUpperCase())
         );
       }
     } else {
       if (value === '' || value === null || value === undefined) {
-        this.getAllProvinces();
-         this.getAllCities(); 
+        this.getAllCities();
+        this.provincesList = this.provincesListFiltered;
       } else {
         this.provincesList = this.provincesListFiltered.filter((province) =>
-        province.nombre.startsWith(value.toLocaleUpperCase())
+          province.nombre.startsWith(value.toLocaleUpperCase())
         );
+        // Filtrar las ciudades basándose en la provincia seleccionada
+        if (this.provincesList.length > 0) {
+          const selectedProvince = this.provincesList[0];
+          this.citiesListDTO = this.citiesListDTOFiltered.filter((city) =>
+            city.provincia === selectedProvince.nombre
+          );
+        } else {
+          this.citiesListDTO = [];
+        }
       }
     }
   }
+
+
   createProvince(): void {
     this.editModeProvince = false;
     if (this.registerProvinceForm.valid) {
