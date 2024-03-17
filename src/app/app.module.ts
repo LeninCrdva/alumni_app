@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,7 @@ import {NuevoEmpresarioModalComponent} from '../app/pages/company/nuevo-empresar
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { PerfilGraduadoComponent } from './pages/company/perfil-graduado/perfil-graduado.component';
 import { WhatsAppBtnComponent } from './components/whats-app-btn/whats-app-btn.component';
+import { LoaderPeticionesInterceptor } from './interceptors/auth.interceptor';
 
 export function playerFactory() {
   return player;
@@ -34,7 +35,11 @@ export function playerFactory() {
     PerfilGraduadoComponent,
     WhatsAppBtnComponent
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderPeticionesInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

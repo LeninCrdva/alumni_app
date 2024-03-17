@@ -60,7 +60,7 @@ export class PostulacionesComponent implements OnInit {
     if (authoritieStorage) {
       const parsedData = JSON.parse(authoritieStorage);
 
-      if (Array.isArray(parsedData) && parsedData.includes('ROL_GRADUADO')) {
+      if (Array.isArray(parsedData) && parsedData.includes('GRADUADO')) {
         const userIdStorage = localStorage.getItem('name')
         if (userIdStorage) {
           this.postulaciones = (await this.postulacionesService.getOfertasLaboralesByUsername(userIdStorage).toPromise()) || [];

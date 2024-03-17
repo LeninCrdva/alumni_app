@@ -92,13 +92,13 @@ export class LayoutSystemComponent implements OnInit {
     console.log('es de la autoridad 1', userRole);
     console.log("Rol: " + userRole);
     switch (userRole) {
-      case 'ROL_ADMINISTRADOR':
+      case 'ADMINISTRADOR':
         this.router.navigate(['/system/admin/perfil-admin']);
         break;
-      case 'ROL_EMPRESARIO':
+      case 'EMPRESARIO':
         this.router.navigate(['/system/company/perfil']);
         break;
-      case 'ROL_GRADUADO':
+      case 'GRADUADO':
         this.router.navigate(['system/alumni/perfil']);
         break;
     }
@@ -109,13 +109,13 @@ export class LayoutSystemComponent implements OnInit {
 
     console.log("Rol: " + userRole);
     switch (userRole) {
-      case 'ROL_ADMINISTRADOR':
+      case 'ADMINISTRADOR':
         this.router.navigate(['/system/admin/update-perfil']);
         break;
-      case 'ROL_EMPRESARIO':
+      case 'EMPRESARIO':
         this.router.navigate(['/system/company/update-perfil']);
         break;
-      case 'ROL_GRADUADO':
+      case 'GRADUADO':
         this.router.navigate(['system/alumni/update-perfil']);
         break;
     }
@@ -239,7 +239,7 @@ export class LayoutSystemComponent implements OnInit {
     const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
     console.log('prueba de rol', userRole);
 
-    if (userRole === 'ROL_ADMINISTRADOR') {
+    if (userRole === 'ADMINISTRADOR') {
       this.showAdminOptions = true;
       this.rolType = 'Admin';
       this.nuevoAdministrador.usuario = this.usuarioGuardado;
@@ -271,7 +271,7 @@ export class LayoutSystemComponent implements OnInit {
         }
       );
 
-    } else if (userRole === 'ROL_EMPRESARIO') {
+    } else if (userRole === 'EMPRESARIO') {
       this.showEmpresarioOptions = true;
       this.rolType = 'Empresario';
       this.nuevoEmpresario.usuario = this.usuarioGuardado; // Cambiado de this.usuarioEmpresario
@@ -317,7 +317,7 @@ export class LayoutSystemComponent implements OnInit {
         }
       );
 
-    } else if (userRole === 'ROL_GRADUADO') {
+    } else if (userRole === 'GRADUADO') {
       this.showAlumniOptions = true;
       this.rolType = 'Alumni';
       this.nuevoGraduado.usuario = this.usuarioGuardado;

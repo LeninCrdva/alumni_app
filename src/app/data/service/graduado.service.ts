@@ -100,6 +100,12 @@ export class GraduadoService {
   getGraduadosWithOutOferta(): Observable<Graduado[]> {
     return this.http.get<Graduado[]>(`${this.urlEndPoint}/without-oferta`);
   }
+  getGraduadoSinPostular(): Observable<Graduado1[]> {
+    return this.http.get<Graduado1[]>(`${this.urlEndPoint}/without-oferta`);
+  }
+  getGraduadoConPostulacion(): Observable<Graduado1[]> {
+    return this.http.get<Graduado1[]>(`${this.urlEndPoint}/with-oferta`);
+  }
   searchGraduadosByUsuario(usuario: string): Observable<Graduado3[]> {
     return this.http.get<Graduado3[]>(this.urlEndPoint).pipe(
       map(graduados => {
@@ -115,5 +121,8 @@ export class GraduadoService {
   } 
   getGraduadosWithoutDTO(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/all`);
+  }
+  getGraduadoSinExperiencia():Observable<Graduado1[]>{
+    return this.http.get<Graduado1[]>(`${this.urlEndPoint}/sin-experiencia`)
   }
 }

@@ -26,6 +26,7 @@
     "datatables.net-bs5": "^1.11.3",
     "footable": "^2.0.6",
     "jquery": "^3.7.1",
+    "jwt-decode": "^4.0.0",
     "lottie-web": "^5.12.2",
     "ng-apexcharts": "^1.8.0",
     "ng-multiselect-dropdown": "^1.0.0",
@@ -41,7 +42,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.3",
-    "@angular/cli": "^17.0.3",
+    "@angular/cli": "^17.3.0",
     "@angular/compiler-cli": "^17.0.0",
     "@types/datatables.net": "^1.10.21",
     "@types/jasmine": "~5.1.0",

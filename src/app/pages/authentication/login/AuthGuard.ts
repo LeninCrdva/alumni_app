@@ -18,11 +18,11 @@ export class AuthGuard implements CanActivate {
       const role = authorities.match(/[a-zA-Z_]+/)?.[0];
       
       // Verificar el rol del usuario y la ruta a la que intenta acceder
-      if (role === 'ROL_GRADUADO' && state.url.includes('alumni')) {
+      if (role === 'GRADUADO' && state.url.includes('alumni')) {
         return true; // Permitir acceso a alumni solo si es graduado
-      } else if (role === 'ROL_EMPRESARIO' && state.url.includes('company')) {
+      } else if (role === 'EMPRESARIO' && state.url.includes('company')) {
         return true; // Permitir acceso a company solo si es empresario
-      } else if (role === 'ROL_ADMINISTRADOR' && state.url.includes('admin')) {
+      } else if (role === 'ADMINISTRADOR' && state.url.includes('admin')) {
         return true; // Permitir acceso a admin solo si es administrador
       } else {
        
