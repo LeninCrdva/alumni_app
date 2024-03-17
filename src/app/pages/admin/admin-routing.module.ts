@@ -13,6 +13,7 @@ import { ProvinciaComponent } from './provincia/provincia.component';
 import { Ciudad } from '../../data/model/ciudad';
 import { PeriodoCarreraComponent } from './periodo-carrera/periodo-carrera.component';
 import { CarreraComponent } from './carrera/carrera.component';
+import { EncuestasComponent } from './encuestas/encuestas.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
     { path: 'usuarios-form', component: UsuariosFormComponent },
     { path: 'documentos', component: DocumentosComponent },
     { path: 'empresa-document', component: EmpresaReportComponent },
-    { path: 'update-perfil', component: PerfilFormComponent }
+    { path: 'update-perfil', component: PerfilFormComponent },
+    { path: 'encuestas', component: EncuestasComponent },
 ];
 
 @NgModule({

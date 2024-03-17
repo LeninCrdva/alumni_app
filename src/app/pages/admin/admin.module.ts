@@ -18,7 +18,7 @@ import { PeriodoCarreraComponent } from './periodo-carrera/periodo-carrera.compo
 import { CarreraComponent } from './carrera/carrera.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/bar-chart.component';
-
+import { EncuestasComponent } from './encuestas/encuestas.component';
 @NgModule({
     declarations: [
     DashboardComponent,
@@ -33,7 +33,8 @@ import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/b
     ProvinciaComponent,
     PeriodoCarreraComponent,
     CarreraComponent,
-    BarChartComponent
+    BarChartComponent,
+    EncuestasComponent
   ],
     imports: [
         CommonModule,
