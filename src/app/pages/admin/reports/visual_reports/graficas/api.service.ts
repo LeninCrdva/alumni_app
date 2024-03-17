@@ -19,4 +19,7 @@ import { Observable } from 'rxjs';
     getCargoConOfertas(): Observable<any> {
       return this.http.get<any>(`${this.baseUrl}/ofertas-laborales/cargos-con-ofertas`);
     }
+    getSexCount(): Observable<any>{
+      return this.http.get<any>(`${this.baseUrl}/graduados/count-sex`)
+    }
   }

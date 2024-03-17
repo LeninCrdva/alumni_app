@@ -20,6 +20,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/bar-chart.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
+import { PieChart2Component } from './reports/visual_reports/graficas/pie-chart2/pie-chart2.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -36,7 +37,8 @@ import { PerfilFormComponent } from './perfil-form/perfil-form.component';
     CarreraComponent,
     BarChartComponent,
     PerfilFormComponent,
-    EncuestasComponent
+    EncuestasComponent,
+    PieChart2Component
   ],
   imports: [
     CommonModule,
