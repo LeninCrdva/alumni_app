@@ -86,6 +86,10 @@ export class CarreraComponent {
         });
         this.closeModal();
       })
+    } else {
+      Object.values(this.registerCareerForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
     }
   }
 
@@ -106,20 +110,26 @@ export class CarreraComponent {
   UpdateCareer(): void {
     this.editMode = true;
     const id = this.newCarrer.id;
-    if (id !== undefined) {
-      const formData = this.registerCareerForm.value;
+    if (this.registerCareerForm.valid) {
+      if (id !== undefined) {
+        const formData = this.registerCareerForm.value;
 
-      const careerEdit = {
-        id: id,
-        nombre: formData.nombreCarrera,
-        descripcion: formData.descripcionCarrera
-      };
-      this.editCareerEndPoint(id, careerEdit);
-      this.registerCareerForm.clearValidators();
-      this.registerCareerForm.reset();
-      this.closeModal();
+        const careerEdit = {
+          id: id,
+          nombre: formData.nombreCarrera,
+          descripcion: formData.descripcionCarrera
+        };
+        this.editCareerEndPoint(id, careerEdit);
+        this.registerCareerForm.clearValidators();
+        this.registerCareerForm.reset();
+        this.closeModal();
+      } else {
+        console.error('Fatal Error: No se proporcionó un ID válido.');
+      }
     } else {
-      console.error('Fatal Error: No se proporcionó un ID válido.');
+      Object.values(this.registerCareerForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
     }
   }
 
@@ -132,7 +142,9 @@ export class CarreraComponent {
       }
       Swal.fire({
         icon: 'success',
-        text: 'Carrera actualizada'
+        title: 'Carrera actualizada',
+        text: 'Carrera actualizada correctamente',
+        timer: 1000
       });
     });
   }

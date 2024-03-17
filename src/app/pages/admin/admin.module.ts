@@ -19,8 +19,9 @@ import { CarreraComponent } from './carrera/carrera.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/bar-chart.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
+import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 @NgModule({
-    declarations: [
+  declarations: [
     DashboardComponent,
     SectorEmpComponent,
     NuevoAdministradorModalComponent,
@@ -34,16 +35,17 @@ import { EncuestasComponent } from './encuestas/encuestas.component';
     PeriodoCarreraComponent,
     CarreraComponent,
     BarChartComponent,
+    PerfilFormComponent,
     EncuestasComponent
   ],
-    imports: [
-        CommonModule,
-        AdminRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgApexchartsModule,
-        NgMultiSelectDropDownModule.forRoot()
-    ]
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgApexchartsModule,
+    NgMultiSelectDropDownModule.forRoot()
+  ]
 })
 
 export class AdminModule { }

@@ -30,6 +30,10 @@ export class AdministradorService {
     return this.http.get<Administrador3[]>(this.urlEndPoint);
   }
 
+  getAdministradorByUserId(user_id: any): Observable<Administrador2> {
+    return this.http.get<Administrador2>(`${this.urlEndPoint}/usuario/${user_id}`);
+  }
+
   createAdministrador(administrador: Administrador): Observable<Administrador> {
     return this.http.post<Administrador>(this.urlEndPoint, administrador, { headers: this.httpHeaders })
   }
@@ -55,5 +59,8 @@ export class AdministradorService {
     );
   }
   
+  updateAdministrador( id: any, administrador: Administrador): Observable<Administrador> {
+    return this.http.put<Administrador>(`${this.urlEndPoint}/${id}`, administrador)
+  }
   
 }

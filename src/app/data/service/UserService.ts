@@ -46,6 +46,11 @@ export class UserService {
     return this.http.get<Usuario>(url);
   }
 
+  getUserDTOById(id: any): Observable<UserDTO> {
+    const url = `${this.apiUrl}/usuarios/resumen/${id}`;
+    return this.http.get<UserDTO>(url);
+  }
+
   createPerson(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/users`, usuario, { headers: this.httpHeaders, });
   }
@@ -53,6 +58,11 @@ export class UserService {
   updateUser(id: number, usuario: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/usuarios/${id}`, usuario);
   }
+
+  updateUserPhoto(id: number, route: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/usuarios/photo/${id}/${route}`, null);
+  }
+
   getUserByUsername(username: string): Observable<any> {
     const url = `${this.apiUrl}/usuarios/by-username/${username}`;
 

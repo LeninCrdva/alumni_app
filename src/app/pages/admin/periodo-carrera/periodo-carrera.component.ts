@@ -33,6 +33,16 @@ export class PeriodoCarreraComponent implements OnInit {
       allowSearchFilter: this.ShowFilter
     };
   }
+
+  closeModal() {
+    this.registerPeriodForm.reset();
+    this.editMode = false;
+    const cancelButton = document.getElementById('close-button') as HTMLElement;
+    if (cancelButton) {
+      cancelButton.click();
+    }
+  }
+
   registerPeriodForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -43,8 +53,7 @@ export class PeriodoCarreraComponent implements OnInit {
       nombrePeriodo: ['', Validators.required],
       fecha_inicio: ['', Validators.required],
       fecha_fin: ['', Validators.required],
-      carreras: [[Carrera], Validators.required],
-      city: [this.selectedItems]
+      carreras: [this.selectedItems, Validators.required],
     });
   }
 
@@ -126,15 +135,21 @@ export class PeriodoCarreraComponent implements OnInit {
         fecha_fin: formData.fecha_fin,
         carreras: formData.carreras
       }
-      this.periodService.createPeriodo(this.period).subscribe(response => {
+      this.periodService.createPeriodo(this.period).subscribe(() => {
         this.getAllPeriods();
         Swal.fire({
           icon: 'success',
-          text: 'Período creado'
+          title: 'Período creado',
+          text: 'El período ha sido creado correctamente',
+          timer: 1000
         });
         this.registerPeriodForm.reset();
         this.closeModal();
       })
+    } else {
+      Object.values(this.registerPeriodForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
     }
   }
 
@@ -154,6 +169,7 @@ export class PeriodoCarreraComponent implements OnInit {
   }
 
   UpdatePeriod(): void {
+    this.editMode = true;
     const id = this.newPeriod.id;
     if (id !== undefined) {
       const formData = this.registerPeriodForm.value;
@@ -167,6 +183,7 @@ export class PeriodoCarreraComponent implements OnInit {
         carreras: formData.carreras
       };
       this.editPeriodEndPoint(id, periodEdit);
+      this.closeModal();
     } else {
       console.error('Fatal Error: No se proporcionó un ID válido.');
     }
@@ -181,7 +198,9 @@ export class PeriodoCarreraComponent implements OnInit {
       }
       Swal.fire({
         icon: 'success',
-        text: 'Período actualizado'
+        title: 'Período actualizado',
+        text: 'El período ha sido actualizado correctamente',
+        timer: 1000
       });
       this.registerPeriodForm.reset();
       this.closeModal();
@@ -213,13 +232,6 @@ export class PeriodoCarreraComponent implements OnInit {
       this.dropdownSettings = Object.assign({}, this.dropdownSettings, { limitSelection: 2 });
     } else {
       this.dropdownSettings = Object.assign({}, this.dropdownSettings, { limitSelection: null });
-    }
-  }
-
-  closeModal() {
-    const cancelButton = document.getElementById('close-button') as HTMLElement;
-    if (cancelButton) {
-      cancelButton.click();
     }
   }
 

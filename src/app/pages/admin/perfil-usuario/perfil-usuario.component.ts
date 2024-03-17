@@ -1,8 +1,9 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdministradorService } from '../../../data/service/administrador.service';
-import { Administrador } from '../../../data/model/administrador';
+import { Administrador2 } from '../../../data/model/administrador';
 import { UserService } from '../../../data/service/UserService';
-import { Usuario, UsuarioFixed } from '../../../data/model/usuario';
+import { UsuarioFixed } from '../../../data/model/usuario';
+import { Persona } from '../../../data/model/persona';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -11,77 +12,44 @@ import { Usuario, UsuarioFixed } from '../../../data/model/usuario';
 })
 export class PerfilUsuarioComponent implements OnInit {
 
-  public id: number = 0;
-  public clave: string = '';
-  public nombreUsuario: string = '';
-  public estado: boolean = false;
-  
-  public rolId: number = 0;
-  public rolNombre: string = '';
-  public rolDescripcion: string = '';
-  
-  public rutaImagen: string = '';
-  public urlImagen: string = '';
-  
-  public personaId: number = 0;
-  public cedula: string = '';
-  public primerNombre: string = '';
-  public segundoNombre: string = '';
-  public fechaNacimiento: string = '';
-  public telefono: string = '';
-  public apellidoPaterno: string = '';
-  public apellidoMaterno: string = '';
+  person: Persona = new Persona();
+  admin: Administrador2 = new Administrador2();
+  photoURL: any;
   public idUser: any = localStorage.getItem('user_id');
-  aficiones:any[] = []
+  aficiones: any[] = []
   aficionSeleccionada: any;
   userData: UsuarioFixed = new UsuarioFixed();
 
   ngOnInit() {
-    this.cargardatos();
     this.loadDATAJson();
     this.seleccionarAficionAleatoria();
-    this.getSomeDataById();
+    this.getUserData();
   }
 
-  constructor(private adminService: AdministradorService, private userService: UserService) {
+  constructor(private adminService: AdministradorService, private userService: UserService) { }
 
-  }
-
-  cargardatos() {
-    const userDataString = localStorage.getItem('user_data');
-    
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
-
-      // Asignar valores a variables públicas
-      this.id = userData.id;
-      this.clave = userData.clave;
-      this.nombreUsuario = userData.nombreUsuario;
-      this.estado = userData.estado;
-
-      this.rolId = userData.rol.id;
-      this.rolNombre = userData.rol.nombre;
-      this.rolDescripcion = userData.rol.descripcion;
-
-      this.rutaImagen = userData.ruta_imagen;
-      this.urlImagen = userData.url_imagen;
-
-      this.personaId = userData.persona.id;
-      this.cedula = userData.persona.cedula;
-      this.primerNombre = userData.persona.primer_nombre;
-      this.segundoNombre = userData.persona.segundo_nombre;
-      this.fechaNacimiento = userData.persona.fechaNacimiento;
-      this.telefono = userData.persona.telefono;
-      this.apellidoPaterno = userData.persona.apellido_paterno;
-      this.apellidoMaterno = userData.persona.apellido_materno;
-    }
-  }
-
-  getSomeDataById(): void { 
-    this.userService.getUserById(this.idUser).subscribe(data => { 
+  getUserData() {
+    this.userService.getUserById(this.idUser).subscribe(data => {
       this.userData = data;
-      console.log(this.userData);
+      this.person = data.persona;
+      this.getAdminByUserId();
     });
+  }
+
+  getAdminByUserId(): void {
+    this.adminService.getAdministradorByUserId(this.idUser).subscribe(data => {
+      this.admin = data;
+      this.getPhotoUrl();
+    });
+  }
+
+  getPhotoUrl() {
+    const userIdStorage = localStorage.getItem('name');
+    if (userIdStorage !== null) {
+      this.userService.getUserByUsername(userIdStorage).subscribe(data => {
+        this.photoURL = data.url_imagen;
+      });
+    }
   }
 
   seleccionarAficionAleatoria(): void {
@@ -90,7 +58,7 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   contactarPorWhatsapp(): void {
-    const numeroTelefono = this.telefono;
+    const numeroTelefono = this.person.telefono;
 
     const mensaje = "Hola, estoy interesado en contactarte.";
 

@@ -11,9 +11,9 @@
     <div class="wrapper">
         <ul class="indicator">
             <li class="active" data-target="#home"><i class="ph-house"></i> Perfil</li>
-            <li data-target="#ubicación"><i class="ph-user-circle"></i> Ubicación</li>
+            <!-- <li data-target="#ubicación"><i class="ph-user-circle"></i> Ubicación</li>
             <li data-target="#titulo"><i class="ph-phone"></i> Titulo</li>
-            <li data-target="#otros"><i class="ph-gear-six"></i> Otros</li>
+            <li data-target="#otros"><i class="ph-gear-six"></i> Otros</li> -->
         </ul>
         <ul class="content">
             <li class="active" id="home">
@@ -24,17 +24,18 @@
                     cuidadosamente la
                     información antes de enviar el formulario. Gracias por su colaboración.</p>
                 <br>
-                <form class="mb-5">
+                <form [formGroup]="updateAdminDataForm" class="mb-5">
 
                     <div class="mb-4">
                         <div class="form-group mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
+                            <input type="text" class="form-input" placeholder=" " formControlName="primer_nombre"
                                 id="InputNombreM1">
                             <label for="InputNombreM1" class="form-label">Ingresa tu primer Nombre</label>
                             <i class="ri-user-smile-line form-icon"></i>
                         </div>
 
-                        <div class="text-danger mb-4">
+                        <div class="text-danger mb-4"
+                            *ngIf="updateAdminDataForm.get('primer_nombre')?.hasError('required') && updateAdminDataForm.get('primer_nombre')?.touched">
                             El primer nombre es obligatorio.
                         </div>
                     </div>
@@ -42,13 +43,14 @@
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group">
-                                <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre"
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundo_nombre"
                                     id="InputNombreP">
                                 <label for="InputNombreP" class="form-label">Ingresa tu segundo Nombre</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
 
-                            <div class="text-danger mb-4">
+                            <div class="text-danger mb-4"
+                                *ngIf="updateAdminDataForm.get('segundo_nombre')?.hasError('required') && updateAdminDataForm.get('segundo_nombre')?.touched">
                                 El segundo nombre es obligatorio.
                             </div>
                         </div>
@@ -57,13 +59,13 @@
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group mr-3">
-                                <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
+                                <input type="text" class="form-input" placeholder=" " formControlName="apellido_paterno"
                                     id="InputApellidoM">
                                 <label for="" class="form-label">Ingresa tu primer Apellido</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
-                            <div class="text-danger mb-4">
-                                <!-- *ngIf="registerForm.get('primerApellido')?.hasError('required') && registerForm.get('primerApellido')?.touched"> -->
+                            <div class="text-danger mb-4"
+                                *ngIf="updateAdminDataForm.get('apellido_paterno')?.hasError('required') && updateAdminDataForm.get('apellido_paterno')?.touched">
                                 El primer apellido es obligatorio.
                             </div>
                         </div>
@@ -72,19 +74,35 @@
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group">
-                                <input type="text" class="form-input" placeholder=" " formControlName="segundoApellido"
+                                <input type="text" class="form-input" placeholder=" " formControlName="apellido_materno"
                                     id="InputApellidoP">
                                 <label for="" class="form-label">Ingresa tu segundo Apellido</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
 
-                            <div class="text-danger mb-4">
-                                <!-- *ngIf="registerForm.get('segundoApellido')?.hasError('required') && registerForm.get('segundoApellido')?.touched"> -->
+                            <div class="text-danger mb-4"
+                                *ngIf="updateAdminDataForm.get('apellido_materno')?.hasError('required') && updateAdminDataForm.get('apellido_materno')?.touched">
                                 El segundo apellido es obligatorio.
                             </div>
                         </div>
                     </div>
-                    
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder=" " formControlName="email"
+                                    id="InputApellidoP">
+                                <label for="" class="form-label">Ingrese su Email</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4"
+                                *ngIf="updateAdminDataForm.get('email')?.hasError('required') && updateAdminDataForm.get('email')?.touched">
+                                El email es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
                             <input type="text" class="form-input" placeholder=" " formControlName="cedula"
@@ -93,9 +111,9 @@
                             <i class="fa-solid fa-id-card form-icon"></i>
                         </div>
 
-                        <div class="text-danger">
-                            <!-- *ngIf="registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched"> -->
-                            La cedula es obligatoria.
+                        <div class="text-danger"
+                            *ngIf="updateAdminDataForm.get('cedula')?.hasError('required') && updateAdminDataForm.get('cedula')?.touched">
+                            La cédula es obligatoria.
                         </div>
                     </div>
 
@@ -107,9 +125,9 @@
                             <i class="fa-solid fa-phone-volume form-icon"></i>
                         </div>
 
-                        <div class="text-danger">
-                            <!-- *ngIf="registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched"> -->
-                            El número de telefono es obligatorio.
+                        <div class="text-danger"
+                            *ngIf="updateAdminDataForm.get('telefono')?.hasError('required') && updateAdminDataForm.get('telefono')?.touched">
+                            El número de teléfono es obligatorio.
                         </div>
                     </div>
 
@@ -119,9 +137,8 @@
 
                         <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
                             class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
-                        <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
-                        <div class="text-danger">
-                            <!-- *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched"> -->
+                        <div class="text-danger"
+                            *ngIf="updateAdminDataForm.get('fechaNacimiento')?.hasError('required') && updateAdminDataForm.get('fechaNacimiento')?.touched">
                             La fecha de nacimiento es obligatoria.
                         </div>
                     </div>
@@ -132,31 +149,24 @@
                         <div class="card mg-b-20">
                             <div class="card-header">
                                 <h4 class="card-header-title">
-                                    <!-- <div class="preview-img" *ngIf="previsualizacion">
-                                        <button class="clear-image form-control border-0 cancel-button" type="button"
-                                            (click)="clearImage()">
-                                            Cancelar
-                                        </button>
-                
-                                        <div class="image-container text-center" style="margin-top: 3rem;">
-                                            <img [src]="previsualizacion" alt=""
+                                    <div class="preview-img">
+
+                                        <div class="image-container text-center" style="margin-top: 3rem;" *ngIf="adminInfo?.url_imagen">
+                                            <img [src]="adminInfo.url_imagen" alt=""
                                                 style="width: 220px; height: 220px; object-fit: cover;" />
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </h4>
                                 <div class="card-header-btn">
                                     <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
                                         aria-expanded="true">
                                         <i class="ion-ios-arrow-down"></i>
                                     </a>
-                                    <!-- Eliminé botones innecesarios -->
                                 </div>
                             </div>
                             <div class="card-body collapse show" id="collapse8">
-                                <!-- Moví el input type="file" aquí -->
-                                <!-- <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)" -->
-                                <input type="file" class="dropify" data-show-remove="false"
-                                    accept=".jpg, .jpeg, .png" />
+                                <input type="file" class="dropify" data-show-remove="false" accept=".jpg, .jpeg, .png"
+                                    (change)="uploadPhoto($event)" />
                             </div>
                         </div>
 
@@ -167,63 +177,60 @@
                     </div>
                 </form>
 
-                <button class="btn btn-oblong btn-primary btn-block mg-b-10">Siguiente Paso</button>
-                <br>
-                <br>
-                <button class="btn btn-oblong btn-success btn-block mg-b-10">Guardar</button>
+                <!-- <button class="btn btn-oblong btn-primary btn-block mg-b-10">Siguiente Paso</button>
+                <br> -->
+                <button class="btn btn-oblong btn-primary btn-block mg-b-10"
+                    (click)="updateAdminData()">Guardar</button>
             </li>
-            <li id="ubicación">
+            <!-- <li id="ubicación">
                 <h1>Ubicación</h1>
                 <p>Para mantenernos conectados y al tanto de tus logros, te animamos a actualizar tu ubicación actual en
-                    nuestra plataforma
-                    Alumni. Este simple paso nos permitirá seguir tu trayectoria profesional, conocer tus éxitos y
-                    facilitar la conexión con
-                    otros exalumnos que puedan estar en tu área.</p>
-                <form>
+                    nuestra plataforma Alumni. Este simple paso nos permitirá seguir tu trayectoria profesional, conocer
+                    tus éxitos y
+                    facilitar la conexión con otros exalumnos que puedan estar en tu área.</p>
+                <form [formGroup]="updateUbicacionForm">
                     <div class="mb-4 my-4">
                         <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="cedula"
+                            <input type="text" class="form-input" placeholder=" " formControlName="ciudad"
                                 id="InputCedula">
                             <label for="" class="form-label">Ingresa tu ubicación</label>
                             <i class="fa-solid fa-id-card form-icon"></i>
                         </div>
 
                         <div class="text-danger">
-                            <!-- *ngIf="registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched"> -->
                             La ubicación es obligatoria.
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                            <input type="text" class="form-input" placeholder=" " formControlName="provincia"
                                 id="InputTelefono">
                             <label for="" class="form-label">Ingresa tu Telefono</label>
                             <i class="fa-solid fa-phone-volume form-icon"></i>
                         </div>
 
                         <div class="text-danger">
-                            <!-- *ngIf="registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched"> -->
                             El número de telefono es obligatorio.
                         </div>
                     </div>
 
                 </form>
-            </li>
-            <li id="titulo">
+            </li> -->
+            <!-- <li id="titulo">
                 <h1>Titulo</h1>
                 <p>Para asegurarnos de mantener actualizada nuestra base de datos y celebrar tus logros académicos, te
                     pedimos que subas
                     una copia de tu título universitario y completes algunos datos clave sobre tu experiencia educativa.
                 </p>
-                <form>
+                 <form>
                     <div class="mb-4">
                         <label style="color: var(--alumni-color)">Actualiazr Titulo</label>
 
                         <div class="card mg-b-20">
                             <div class="card-header">
                                 <h4 class="card-header-title">
-                                    <!-- <div class="preview-img" *ngIf="previsualizacion">
+                                     <div class="preview-img" *ngIf="previsualizacion">
                                                                 <button class="clear-image form-control border-0 cancel-button" type="button"
                                                                     (click)="clearImage()">
                                                                     Cancelar
@@ -233,31 +240,27 @@
                                                                     <img [src]="previsualizacion" alt=""
                                                                         style="width: 220px; height: 220px; object-fit: cover;" />
                                                                 </div>
-                                                            </div> -->
+                                                            </div> 
                                 </h4>
                                 <div class="card-header-btn">
                                     <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
                                         aria-expanded="true">
                                         <i class="ion-ios-arrow-down"></i>
                                     </a>
-                                    <!-- Eliminé botones innecesarios -->
                                 </div>
                             </div>
                             <div class="card-body collapse show" id="collapse8">
-                                <!-- Moví el input type="file" aquí -->
-                                <!-- <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)" -->
+                                
                                 <input type="file" class="dropify" data-show-remove="false"
                                     accept=".jpg, .jpeg, .png" />
                             </div>
                         </div>
 
-                        <!-- <div class="wrapper-button" *ngIf="previsualizacion"> -->
                         <div class="wrapper-button">
-                            <!-- Agrega el botón necesario aquí -->
                         </div>
                     </div>
-                </form>
-            </li>
+                </form> 
+            </li> -->
             <li id="otros">
                 <h1>Settings</h1>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit quaerat magnam sit, nobis sed cum
