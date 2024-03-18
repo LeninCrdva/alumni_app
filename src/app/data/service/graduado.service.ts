@@ -118,6 +118,7 @@ export class GraduadoService {
   getByUsuarioId(id: any): Observable<GraduadoDTO> {
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${id}`)
   }
+
   updateGraduadoDTO(id: any, graduado: GraduadoDTO): Observable<GraduadoDTO> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<GraduadoDTO>(url, graduado, { headers: this.httpHeaders });
