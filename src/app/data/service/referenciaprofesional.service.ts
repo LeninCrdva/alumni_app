@@ -15,24 +15,24 @@ export class ReferenciaProfesionalService {
 
   constructor(private http: HttpClient) { }
 
-  getReferenciasProfesionales(): Observable<Referencias_profesionales[]> {
+  get(): Observable<Referencias_profesionales[]> {
     return this.http.get<Referencias_profesionales[]>(this.urlEndPoint);
   }
 
-  createReferenciasProfesionales(referencias_profesionales: Referencias_profesionales): Observable<Referencias_profesionales> {
+  create(referencias_profesionales: any): Observable<Referencias_profesionales> {
     return this.http.post<Referencias_profesionales>(this.urlEndPoint, referencias_profesionales, { headers: this.httpHeaders })
   }
 
-  getReferenciasProfesionalesById(id: any): Observable<Referencias_profesionales> {
+  getById(id: any): Observable<Referencias_profesionales> {
     return this.http.get<Referencias_profesionales>(`${this.urlEndPoint}/${id}`)
   }
 
-  updateReferenciasProfesionales(id: number, referencias_profesionales: Referencias_profesionales): Observable<Referencias_profesionales> {
+  update(id: number, referencias_profesionales: Referencias_profesionales): Observable<Referencias_profesionales> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Referencias_profesionales>(url, referencias_profesionales);
   }
 
-  deleteReferenciasProfesionales(id: any): Observable<void> {
+  delete(id: any): Observable<void> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.delete<void>(url, { headers: this.httpHeaders });
   }

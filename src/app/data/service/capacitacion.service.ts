@@ -15,24 +15,24 @@ export class CapacitacionService {
 
   constructor(private http: HttpClient) { }
 
-  getCapacitaciones(): Observable<Capacitacion[]> {
+  get(): Observable<Capacitacion[]> {
     return this.http.get<Capacitacion[]>(`${this.urlEndPoint}/list`);
   }
 
-  createCapacitacion(capacitacion: Capacitacion): Observable<Capacitacion> {
+  create(capacitacion: Capacitacion): Observable<Capacitacion> {
     return this.http.post<Capacitacion>(`${this.urlEndPoint}/save-cap`, capacitacion, { headers: this.httpHeaders })
   }
 
-  getCapacitacionById(id: any): Observable<Capacitacion> {
+  getById(id: any): Observable<Capacitacion> {
     return this.http.get<Capacitacion>(`${this.urlEndPoint}/find-cap/${id}`)
   }
 
-  updateCapacitacion(id: any, Capacitacion: Capacitacion): Observable<Capacitacion> {
+  update(id: any, Capacitacion: Capacitacion): Observable<Capacitacion> {
     const url = `${this.urlEndPoint}/update-cap/${id}`;
     return this.http.put<Capacitacion>(url, Capacitacion, { headers: this.httpHeaders });
   }
 
-  deleteCapacitacion(id: any): Observable<void> {
+  delete(id: any): Observable<void> {
     const url = `${this.urlEndPoint}/delete-cap/${id}`;
     return this.http.delete<void>(url, { headers: this.httpHeaders });
   }

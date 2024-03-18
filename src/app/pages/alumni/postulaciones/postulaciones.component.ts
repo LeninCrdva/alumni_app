@@ -52,7 +52,7 @@ export class PostulacionesComponent implements OnInit {
       lengthMenu: [10, 25, 50]
     };
   }
-  
+
   async detallarOferta(): Promise<void> {
 
     const authoritieStorage = localStorage.getItem('authorities')
@@ -86,7 +86,7 @@ export class PostulacionesComponent implements OnInit {
     const idUser = localStorage.getItem('user_id');
 
     if (idUser) {
-      this.postulacionesService.getGraduadoByUsuarioId(parseInt(idUser)).subscribe(
+      this.postulacionesService.getByUsuarioId(parseInt(idUser)).subscribe(
         grad => {
           this.graduadoDTO = grad;
 
@@ -125,7 +125,7 @@ export class PostulacionesComponent implements OnInit {
   filterOfertasLaborales(): ofertaLaboral[] {
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase().trim();
 
-    return this.postulaciones.filter(oferta => 
+    return this.postulaciones.filter(oferta =>
       Object.values(oferta).some(value =>
         value !== null && typeof value === 'string' && value.toLowerCase().includes(lowerCaseSearchTerm)
       )
@@ -134,7 +134,7 @@ export class PostulacionesComponent implements OnInit {
 
   sendMail(graduado: GraduadoDTO): void {
     this.mailRequest = {
-      name:  graduado.idOferta[0].toString(),
+      name: graduado.idOferta[0].toString(),
       to: graduado.email_personal,
       from: 'info.alumni.est@gmail.com',
       subject: '¡Se ha cancelado una postulación!',

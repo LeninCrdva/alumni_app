@@ -21,6 +21,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import ApexCharts from 'apexcharts';
 import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/bar-chart.component';
 import { GraficasComponent } from './reports/visual_reports/graficas/graficas.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { GraficasComponent } from './reports/visual_reports/graficas/graficas.co
         ReactiveFormsModule,
         DataTablesModule,
         NgApexchartsModule,
+        NgMultiSelectDropDownModule.forRoot()
     ]
 })
 

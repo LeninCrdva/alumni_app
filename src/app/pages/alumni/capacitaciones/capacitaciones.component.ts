@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Capacitacion } from '../../../data/model/capacitacion';
+import { Component, Renderer2, ViewChild } from '@angular/core';
+import { AlertsService } from '../../../data/Alerts.service';
+import { DataTablesService } from '../../../data/DataTables.service';
+import { FiltersService } from '../../../data/Filters.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Capacitacion } from '../../../data/model/capacitacion';
 import { CapacitacionService } from '../../../data/service/capacitacion.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-capacitaciones',
@@ -11,184 +14,254 @@ import Swal from 'sweetalert2';
   styleUrls: ['./capacitaciones.component.css']
 })
 export class CapacitacionesComponent {
-  public cedula: string = '';
 
-  capacitacion: Capacitacion = { nombre: '', cedula: this.cedula, institucion: '', tipoCertificado: '', numHoras: 0, fechaInicio: new Date(), fechaFin: new Date() };
-  capacitacionCarga: Capacitacion = { id: 0, nombre: '', cedula: this.cedula, institucion: '', tipoCertificado: '', numHoras: 0, fechaInicio: new Date(), fechaFin: new Date() };
-  capacitacionList: Capacitacion[] = [];
-  editarClicked = false;
+  // =====================================================
+  //*               DATA TABLE Y FILTROS
+  // =======================================================
 
-  dtoptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
+  initializeTable: boolean = true;
+  dtoptions: DataTables.Settings = {};
+
+  // =====================================================
+  //*                   VALIDACIONES
+  // =======================================================
+
+  @ViewChild('myModalClose') modalClose: any;
+
+  @ViewChild('codeModal') codeModal!: any;
+
+  capacitacionList: Capacitacion[] = [];
 
   idEdit: number = 0;
 
-  @Output() onClose: EventEmitter<string> = new EventEmitter();
+  editarClicked = false;
 
-  constructor(private capacitacionesService: CapacitacionService) { }
+  validateForm: FormGroup;
 
+  private renderer!: Renderer2;
+
+  // =====================================================
+  //*                   CONSTURCTOR
+  // =======================================================
+
+  constructor(
+    private fb: FormBuilder,
+    private capacitacionesService: CapacitacionService,
+    private alertService: AlertsService,
+    public dtService: DataTablesService,
+    public filterService: FiltersService
+  ) {
+    this.validateForm = this.fb.group({
+      nombre: ['', Validators.required],
+      institucion: ['', Validators.required],
+      tipoCertificado: ['', Validators.required],
+      numHoras: ['', Validators.required],
+      fechaInicio: ['', Validators.required],
+      fechaFin: ['', Validators.required]
+    });
+  }
+
+  // Note: Desuscribirse del evento para evitar fugas de memoria
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.obtenerCedula();
+  // Note: Cargar la tabla con los datos despues de que la vista se haya inicializado
+  ngAfterViewInit(): void {
+    const columnTitles = ['#', 'Nombre', 'Institución', '# Horas', 'Tipo Certificado', 'Fecha Inicio','Fecha Fin'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar referencia...');
+    this.filterService.initializeDropdowns(columnTitles, this.dtElement);
     this.loadData();
-    this.setupDtOptions();
   }
-
-  setupDtOptions() {
-    this.dtoptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      lengthChange: true,
-      language: {
-        search: 'Buscar:',
-        searchPlaceholder: 'Buscar capacitación...',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        paginate: {
-          first: 'Primera',
-          last: 'Última',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        },
-        lengthMenu: 'Mostrar _MENU_ registros por página',
-        zeroRecords: 'No se encontraron registros coincidentes'
-      },
-      lengthMenu: [10, 25, 50]
-    };
-  }
-
-  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
 
   loadData() {
-    this.capacitacionesService.getCapacitaciones().subscribe(
-      capacitaciones => {
-        // Filtrar las capacitaciones por cédula
-        this.capacitacionList = capacitaciones.filter(capacitacion => capacitacion.cedula === this.cedula);
-        this.dtTrigger.next(null);
+    this.capacitacionesService.get().subscribe(
+      result => {
+        this.capacitacionList = [];
+        this.capacitacionList = result;
+
+        this.capacitacionList = result.filter(resultData => resultData.cedula === this.obtenerCedula());
+
+        if (this.initializeTable) {
+          this.dtTrigger.next(null);
+          this.initializeTable = false;
+        } else {
+          this.dtService.rerender(this.dtElement, this.dtTrigger);
+        }
       },
       (error: any) => console.error(error)
     );
   }
-  
 
   // NOTE: CRUD EVENTS
   onRegistrarClick(): void {
-    this.editarClicked = false;
-  }
+    this.validateForm.reset();
 
-  onSubmit() {
-    if (this.editarClicked) {
-      this.onUpdateClick(); // Lógica de actualización
-    } else {
-      this.createExperiencia(); // Lógica de creación
-    }
-  }
-
-  createExperiencia() {
-    this.capacitacion.cedula = this.cedula;
+    this.alertService.resetInputsValidations(this.renderer);
 
     this.editarClicked = false;
-
-    this.capacitacionesService.createCapacitacion(this.capacitacion).subscribe(
-      newData => {
-        console.log('Capacitación creada exitosamente:', newData);
-        this.mostrarSweetAlert(true, 'La capacitación se ha guardado exitosamente.');
-      },
-      error => {
-        console.error('Error al crear la Capacitación:', error)
-        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la capacitación.');
-      }
-    );
   }
 
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
 
-    this.capacitacionesService.getCapacitacionById(id).subscribe(
-      refe => this.capacitacionCarga = refe,
-      error => console.error(error)
-    )
+    this.validateForm.reset();
+
+    const dataToEdit = this.capacitacionList.find(item => item.id === id);
+
+    if (dataToEdit) {
+      this.validateForm.patchValue({
+        nombre: dataToEdit.nombre,
+        institucion: dataToEdit.institucion,
+        tipoCertificado: dataToEdit.tipoCertificado,
+        numHoras: dataToEdit.numHoras,
+        fechaInicio: dataToEdit.fechaInicio,
+        fechaFin: dataToEdit.fechaFin,
+      });
+    } else {
+      console.error(`Elemento con id ${id} no encontrado en la lista.`);
+    }
+
+    this.alertService.resetInputsValidations(this.renderer);
     this.idEdit = id;
   }
 
-  onUpdateClick() {
-    this.capacitacionCarga.cedula = this.cedula;
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick();
+    } else {
+      this.createNewData();
+    }
+  }
 
-    this.capacitacionesService.updateCapacitacion(this.idEdit, this.capacitacionCarga).subscribe(
-      updateData => {
-        this.capacitacion = updateData;
-        this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
-      },
-      error => {
-        this.mostrarSweetAlert(false, 'Error al actualizar la capacitación.');
-      }
-    );
+  obtenerDatosFormulario(): any {
+    return {
+
+      nombre: this.validateForm.value.nombre,
+      institucion: this.validateForm.value.institucion,
+      tipoCertificado: this.validateForm.value.tipoCertificado,
+      numHoras: this.validateForm.value.numHoras,
+      fechaInicio: this.validateForm.value.fechaInicio,
+      fechaFin: this.validateForm.value.fechaFin
+    };
+  }
+
+  createNewData() {
+    if (this.validateForm.valid) {
+      this.alertService.mostrarAlertaCargando('Guardando...');
+      this.capacitacionesService.create(this.obtenerDatosFormulario()).subscribe(
+        result => {
+          this.alertService.detenerAlertaCargando();
+          this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
+
+          this.loadData();
+        },
+        error => {
+          this.alertService.mostrarSweetAlert(false, 'Error al crear.');
+          console.error('Error al crear:', error);
+        }
+      );
+    } else {
+      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
+
+      this.alertService.showInputsValidations(this.renderer);
+
+      this.alertService.mostrarAlertaSweet();
+    }
+  }
+
+  onUpdateClick() {
+    if (this.validateForm.valid) {
+      this.alertService.mostrarAlertaCargando('Actualizando...');
+      this.capacitacionesService.update(this.idEdit, this.obtenerDatosFormulario()).subscribe(
+        result => {
+          this.alertService.detenerAlertaCargando();
+          this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);
+          this.loadData();
+        },
+        error => {
+          this.alertService.mostrarSweetAlert(false, 'Error al actualizar.');
+        }
+      );
+    } else {
+      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
+
+      this.alertService.showInputsValidations(this.renderer);
+    }
   }
 
   onDeleteClick(id: number | undefined = 0) {
-    this.capacitacionesService.deleteCapacitacion(id).subscribe(
+    this.alertService.mostrarAlertaCargando('Eliminando...');
+
+    this.capacitacionesService.delete(id).subscribe(
       () => {
-        this.mostrarSweetAlert(true, 'La capacitacion se ha eliminado exitosamente.');
+        this.alertService.detenerAlertaCargando();
+        this.alertService.mostrarSweetAlert(true, 'Se ha eliminado correctamente.');
+
+        this.loadData();
       },
       error => {
-        this.mostrarSweetAlert(false, 'Error al eliminar la capacitación.');
+        this.alertService.mostrarSweetAlert(false, 'Error al eliminar.');
       }
     );
   }
 
-  // NOTE: VALIDACIONES
-
-  validarNumero(event: any) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  allowOnlyLetters(event: KeyboardEvent): void {
-    const inputChar = String.fromCharCode(event.charCode);
-    const lettersRegex = /^[a-zA-Z]+$/;
-
-    if (!lettersRegex.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  allowOnlyNumbers(event: any) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
-    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
-
-    Swal.fire({
-      icon: esExitoso ? 'success' : 'error',
-      title: titulo,
-      text: mensaje,
-      allowOutsideClick: !esExitoso,
-    }).then((result) => {
-      if (esExitoso || result.isConfirmed) {
-        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        location.reload();
-      }
-    });
-  }
-
-  obtenerCedula() {
+  obtenerCedula(): string {
     const userDataString = localStorage.getItem('user_data');
     if (userDataString) {
       const userData = JSON.parse(userDataString);
-      this.cedula = userData.persona.cedula;
+      return userData.persona.cedula;
     }
+    return '';
+  }
+
+  exportarDatos() {
+    this.dtService.generarJSON(this.capacitacionList, 'capacitaciones');
+  }
+
+  fileContent: string | ArrayBuffer | null = null;
+
+  onFileSelect(event: Event): void {
+    const element = event.currentTarget as HTMLInputElement;
+    let file: File | null = element.files ? element.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fileContent = reader.result;
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  async importarDatos(): Promise<void> {
+    if (!this.fileContent || typeof this.fileContent !== 'string') {
+      this.alertService.mostrarSweetAlert(false, 'No hay archivo o formato inválido.');
+      return;
+    }
+
+    try {
+      this.alertService.mostrarAlertaCargando('Importando datos...');
+      const data = JSON.parse(this.fileContent);
+
+      if (Array.isArray(data)) {
+        for (const dataToRestore of data) {
+          await this.capacitacionesService.create(dataToRestore).toPromise();
+        }
+        this.codeModal.nativeElement.click();
+        this.alertService.mostrarSweetAlert(true, 'Todo el contenido fue restaurado con éxito.');
+      } else {
+        this.alertService.mostrarSweetAlert(false, 'El JSON proporcionado no es un array.');
+      }
+    } catch (error: any) {
+      this.alertService.mostrarSweetAlert(false, 'Error al parsear JSON: ' + error.message);
+    } finally {
+      this.alertService.detenerAlertaCargando();
+    }
+
+    this.loadData();
   }
 }

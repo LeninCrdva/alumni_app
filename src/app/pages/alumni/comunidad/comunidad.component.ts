@@ -28,7 +28,7 @@ export class ComunidadComponent {
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private graduadoService: GraduadoService, private userservice : UserService) { }
+  constructor(private graduadoService: GraduadoService, private userservice: UserService) { }
 
   ngOnInit(): void {
     this.setupDtOptions();
@@ -46,7 +46,7 @@ export class ComunidadComponent {
     const enlaceWhatsapp = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
     window.open(enlaceWhatsapp, "_blank");
   }
-  
+
 
   setupDtOptions() {
     this.dtoptions = {
@@ -55,7 +55,7 @@ export class ComunidadComponent {
       lengthChange: true,
       language: {
         search: 'Buscar:',
-        searchPlaceholder: 'Buscar experiencia...',
+        searchPlaceholder: 'Buscar graduado...',
         info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
         paginate: {
@@ -71,20 +71,20 @@ export class ComunidadComponent {
     };
   }
 
- 
+
   loadData() {
     this.graduadoService.getGraduadosWithoutDTO().subscribe(
       result => {
-       
-      this.graduadosList = result;
+
+        this.graduadosList = result;
         console.log("Graduados obtenidos:", this.graduadosList);
-        
+
       },
       (error: any) => console.error(error),
       () => this.dtTrigger.next(null)
     );
   }
-  
+
   private mapGraduado(graduado: Graduado1): Graduado1 {
     const usuario = new Usuario();
     usuario.id = graduado.usuario.id;
@@ -95,12 +95,12 @@ export class ComunidadComponent {
     usuario.persona = this.mapPersona(graduado.usuario.persona);
     usuario.ruta_imagen = graduado.usuario.ruta_imagen;
     usuario.rol = this.mapRol(graduado.usuario.rol);
-  
+
     const ciudad = new Ciudad();
     ciudad.id = graduado.ciudad.id;
     ciudad.nombre = graduado.ciudad.nombre;
     ciudad.provincia = this.mapProvincia(graduado.ciudad.provincia);
-  
+
     const graduadoMapped = new Graduado1();
     graduadoMapped.id = graduado.id;
     graduadoMapped.usuario = usuario;
@@ -110,10 +110,10 @@ export class ComunidadComponent {
     graduadoMapped.estadocivil = graduado.estadocivil;
     graduadoMapped.ruta_pdf = graduado.ruta_pdf;
     graduadoMapped.url_pdf = graduado.url_pdf;
-  
+
     return graduadoMapped;
   }
-  
+
   private mapPersona(persona: Persona): Persona {
     const personaMapped = new Persona();
     personaMapped.id = persona.id;
@@ -124,25 +124,25 @@ export class ComunidadComponent {
     personaMapped.telefono = persona.telefono;
     personaMapped.apellido_paterno = persona.apellido_paterno;
     personaMapped.apellido_materno = persona.apellido_materno;
-  
+
     return personaMapped;
   }
-  
+
   private mapRol(rol: Rol): Rol {
     const rolMapped = new Rol();
     rolMapped.id = rol.id;
     rolMapped.nombre = rol.nombre;
     rolMapped.descripcion = rol.descripcion;
-  
+
     return rolMapped;
   }
-  
+
   private mapProvincia(provincia: Provincia): Provincia {
     const provinciaMapped = new Provincia();
     provinciaMapped.id = provincia.id;
     provinciaMapped.nombre = provincia.nombre;
     provinciaMapped.pais = provincia.pais;
-  
+
     return provinciaMapped;
   }
 

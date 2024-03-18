@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Referencias_personales } from '../../../data/model/referencia_personal';
-import { Graduado } from '../../../data/model/graduado';
-import { ReferenciaPersonalService } from '../../../data/service/referenciapersonal.service';
-import { UserService } from '../../../data/service/UserService';
-import { Usuario } from '../../../data/model/usuario';
+import { Component, Renderer2, ViewChild } from '@angular/core';
+import { AlertsService } from '../../../data/Alerts.service';
+import { DataTablesService } from '../../../data/DataTables.service';
+import { FiltersService } from '../../../data/Filters.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import Swal from 'sweetalert2';
+import { Referencias_personales } from '../../../data/model/referencia_personal';
+import { ReferenciaPersonalService } from '../../../data/service/referenciapersonal.service';
 
 @Component({
   selector: 'app-referencias-personales',
@@ -14,187 +14,242 @@ import Swal from 'sweetalert2';
   styleUrls: ['./referencias-personales.component.css']
 })
 export class ReferenciasPersonalesComponent {
-  public cedula: string = '';
 
-  referencia_personal: Referencias_personales = { nombreReferencia: '', cedulaGraduado: '', telefono: '', email: '' };
-  referenciaPersonalCarga: Referencias_personales = { id: 0, nombreReferencia: '', cedulaGraduado: '', telefono: '', email: '' };
-  referenciaPersonalList: Referencias_personales[] = [];
-  editarClicked = false;
+  // =====================================================
+  //*               DATA TABLE Y FILTROS
+  // =======================================================
 
-  dtoptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
   dtTrigger: Subject<any> = new Subject<any>();
+  initializeTable: boolean = true;
+  dtoptions: DataTables.Settings = {};
+
+  // =====================================================
+  //*                   VALIDACIONES
+  // =======================================================
+
+  @ViewChild('myModalClose') modalClose: any;
+
+  @ViewChild('codeModal') codeModal!: any;
+
+  referenciaPersonalList: Referencias_personales[] = [];
 
   idEdit: number = 0;
 
-  @Output() onClose: EventEmitter<string> = new EventEmitter();
+  editarClicked = false;
 
-  constructor(private referenciaPService: ReferenciaPersonalService) { }
+  validateForm: FormGroup;
 
+  // =====================================================
+  //*                   CONSTURCTOR
+  // =======================================================
+
+  constructor(
+    private fb: FormBuilder,
+    private referenciaPService: ReferenciaPersonalService,
+    private alertService: AlertsService,
+    public dtService: DataTablesService,
+    public filterService: FiltersService,
+    private renderer: Renderer2
+  ) {
+    this.validateForm = this.fb.group({
+      nombreReferencia: ['', Validators.required],
+      telefono: ['', Validators.required],
+      email: ['', Validators.required]
+    });
+  }
+
+  // Note: Desuscribirse del evento para evitar fugas de memoria
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.obtenerCedula();
+  // Note: Cargar la tabla con los datos despues de que la vista se haya inicializado
+  ngAfterViewInit(): void {
+    const columnTitles = ['#', 'Nombre', 'Telefono', 'Email'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar referencia...');
+    this.filterService.initializeDropdowns(columnTitles, this.dtElement);
     this.loadData();
-    this.setupDtOptions();
   }
 
-  setupDtOptions() {
-    this.dtoptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      lengthChange: true,
-      language: {
-        search: 'Buscar:',
-        searchPlaceholder: 'Buscar referencia...',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        paginate: {
-          first: 'Primera',
-          last: 'Última',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        },
-        lengthMenu: 'Mostrar _MENU_ registros por página',
-        zeroRecords: 'No se encontraron registros coincidentes'
+  loadData() {
+    this.referenciaPService.get().subscribe(
+      result => {
+        this.referenciaPersonalList = [];
+        this.referenciaPersonalList = result;
+
+        this.referenciaPersonalList = result.filter(resultData => resultData.cedulaGraduado === this.obtenerCedula());
+
+        if (this.initializeTable) {
+          this.dtTrigger.next(null);
+          this.initializeTable = false;
+        } else {
+          this.dtService.rerender(this.dtElement, this.dtTrigger);
+        }
       },
-      lengthMenu: [10, 25, 50]
-    };
+      (error: any) => console.error(error)
+    );
   }
-
-  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
-
-  
-loadData() {
-  this.referenciaPService.getReferenciasPersonales().subscribe(
-    referenciasP => {
-      // Filtrar las referencias personales por cédula
-      this.referenciaPersonalList = referenciasP.filter(referenciaP => referenciaP.cedulaGraduado === this.cedula);
-      this.dtTrigger.next(null);
-    },
-    (error: any) => console.error(error)
-  );
-}
-
 
   // NOTE: CRUD EVENTS
   onRegistrarClick(): void {
+    this.validateForm.reset();
+
+    this.alertService.resetInputsValidations(this.renderer);
+
     this.editarClicked = false;
-  }
-
-  onSubmit() {
-    if (this.editarClicked) {
-      this.onUpdateClick(); // Lógica de actualización
-    } else {
-      this.createNewData(); // Lógica de creación
-    }
-  }
-
-  createNewData() {
-    this.referencia_personal.cedulaGraduado = this.cedula;
-    this.editarClicked = false;
-
-    this.referenciaPService.createReferenciasPersonales(this.referencia_personal).subscribe(
-      referenciasP => {
-        console.log('Refencia personal creada exitosamente:', referenciasP);
-        this.mostrarSweetAlert(true, 'La referencia personal se ha guardado exitosamente.');
-      },
-      error => {
-        console.error('Error al crear la refencia personal:', error)
-        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
-      }
-    );
   }
 
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
-    this.referenciaPService.getReferenciasPersonalesById(id).subscribe(
-      refe => this.referenciaPersonalCarga = refe,
-      error => console.error(error)
-    )
+
+    this.validateForm.reset();
+
+    const dataToEdit = this.referenciaPersonalList.find(item => item.id === id);
+
+    if (dataToEdit) {
+      this.validateForm.patchValue({
+        nombreReferencia: dataToEdit.nombreReferencia,
+        telefono: dataToEdit.telefono,
+        email: dataToEdit.email,
+      });
+    } else {
+      console.error(`Elemento con id ${id} no encontrado en la lista.`);
+    }
+
+    this.alertService.resetInputsValidations(this.renderer);
     this.idEdit = id;
   }
 
-  onUpdateClick() {
-    this.referenciaPersonalCarga.cedulaGraduado = this.cedula;
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick();
+    } else {
+      this.createNewData();
+    }
+  }
 
-    this.referenciaPService.updateReferenciasPersonales(this.idEdit, this.referenciaPersonalCarga).subscribe(
-      refeActualizado => {
-        console.log('Referencia personal actualizado exitosamente:', refeActualizado);
-        this.referencia_personal = refeActualizado;
-        this.mostrarSweetAlert(true, 'La referencia personal se ha actualizado exitosamente.');
-      },
-      error => {
-        console.error('Error al actualizar la referencia personal:', error);
-        this.mostrarSweetAlert(false, 'Error al actualizar la referencia personal.');
-      }
-    );
+  obtenerDatosFormulario(): any {
+    return {
+      nombreReferencia: this.validateForm.value.nombreReferencia,
+      email: this.validateForm.value.email,
+      telefono: this.validateForm.value.telefono,
+      cedulaGraduado: this.obtenerCedula()
+    };
+  }
+
+  createNewData() {
+    if (this.validateForm.valid) {
+      this.alertService.mostrarAlertaCargando('Guardando...');
+      this.referenciaPService.create(this.obtenerDatosFormulario()).subscribe(
+        result => {
+          this.alertService.detenerAlertaCargando();
+          this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
+
+          this.loadData();
+        },
+        error => {
+          this.alertService.mostrarSweetAlert(false, 'Error al crear.');
+          console.error('Error al crear:', error);
+        }
+      );
+    } else {
+      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
+
+      this.alertService.showInputsValidations(this.renderer);
+    }
+  }
+
+  onUpdateClick() {
+    if (this.validateForm.valid) {
+      this.alertService.mostrarAlertaCargando('Actualizando...');
+      this.referenciaPService.update(this.idEdit, this.obtenerDatosFormulario()).subscribe(
+        result => {
+          this.alertService.detenerAlertaCargando();
+          this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);
+          this.loadData();
+        },
+        error => {
+          this.alertService.mostrarSweetAlert(false, 'Error al actualizar.');
+        }
+      );
+    } else {
+      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
+
+      this.alertService.showInputsValidations(this.renderer);
+    }
   }
 
   onDeleteClick(id: number | undefined = 0) {
-    this.referenciaPService.deleteReferenciasPersonales(id).subscribe(
+    this.alertService.mostrarAlertaCargando('Eliminando...');
+
+    this.referenciaPService.delete(id).subscribe(
       () => {
-        console.log('Referencia personal eliminada exitosamente');
-        this.mostrarSweetAlert(true, 'La referencia personal se ha eliminado exitosamente.');
+        this.alertService.detenerAlertaCargando();
+        this.alertService.mostrarSweetAlert(true, 'Se ha eliminado correctamente.');
+
+        this.loadData();
       },
       error => {
-        console.error('Error al eliminar la referencia personal:', error);
-        this.mostrarSweetAlert(false, 'Error al eliminar la referencia personal.');
+        this.alertService.mostrarSweetAlert(false, 'Error al eliminar.');
       }
     );
   }
 
-  // NOTE: VALIDACIONES
-
-  validarNumero(event: any) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  allowOnlyLetters(event: KeyboardEvent): void {
-    const inputChar = String.fromCharCode(event.charCode);
-    const lettersRegex = /^[a-zA-Z]+$/;
-
-    if (!lettersRegex.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  allowOnlyNumbers(event: any) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
-    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
-
-    Swal.fire({
-      icon: esExitoso ? 'success' : 'error',
-      title: titulo,
-      text: mensaje,
-      allowOutsideClick: !esExitoso,
-    }).then((result) => {
-      if (esExitoso || result.isConfirmed) {
-        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        location.reload();
-      }
-    });
-  }
-
-  obtenerCedula() {
+  obtenerCedula(): string {
     const userDataString = localStorage.getItem('user_data');
     if (userDataString) {
       const userData = JSON.parse(userDataString);
-      this.cedula = userData.persona.cedula;
+      return userData.persona.cedula;
     }
+    return '';
+  }
+
+  exportarDatos() {
+    this.dtService.generarJSON(this.referenciaPersonalList, 'referencia_profesional');
+  }
+
+  fileContent: string | ArrayBuffer | null = null;
+
+  onFileSelect(event: Event): void {
+    const element = event.currentTarget as HTMLInputElement;
+    let file: File | null = element.files ? element.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fileContent = reader.result;
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  async importarDatos(): Promise<void> {
+    if (!this.fileContent || typeof this.fileContent !== 'string') {
+      this.alertService.mostrarSweetAlert(false, 'No hay archivo o formato inválido.');
+      return;
+    }
+
+    try {
+      this.alertService.mostrarAlertaCargando('Importando datos...');
+      const data = JSON.parse(this.fileContent);
+
+      if (Array.isArray(data)) {
+        for (const dataToRestore of data) {
+          await this.referenciaPService.create(dataToRestore).toPromise();
+        }
+        this.codeModal.nativeElement.click();
+        this.alertService.mostrarSweetAlert(true, 'Todo el contenido fue restaurado con éxito.');
+      } else {
+        this.alertService.mostrarSweetAlert(false, 'El JSON proporcionado no es un array.');
+      }
+    } catch (error: any) {
+      this.alertService.mostrarSweetAlert(false, 'Error al parsear JSON: ' + error.message);
+    } finally {
+      this.alertService.detenerAlertaCargando();
+    }
+
+    this.loadData();
   }
 }

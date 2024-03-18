@@ -108,10 +108,102 @@ ul.page-breadcrumb li a:hover {
 
 /** =============== FIN DE LA PARTE DEL FONDO EN EL INICIO DE CADA PAGINA ===============*/
 
+/** =============== ALERTAS ===============*/
+.cancel-button {
+    background-color: var(--cruz-roja-color) !important;
+    color: #ffffff !important;
+}
+
+.oaerror {
+    padding: 20px;
+    margin-top: 17px !important;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 6px;
+    /* color: #000000 !important; */
+}
+
+.danger {
+    border-left-color: #d9534f;
+    background-color: rgba(217, 83, 79, 0.1)
+}
+
+.danger strong {
+    color: #d9534f
+}
+
+.warning {
+    border-left-color: #f0ad4e;
+    background-color: rgba(240, 173, 78, 0.1);
+}
+
+.warning strong {
+    color: #f0ad4e;
+}
+
+/** =============== FIN DE ESTILOS DE ALERTAS ===============*/
+
+/*=============== CUSTOM DELETE BUTTON  ===============*/
+.btn.btn-label-danger {
+    background-color: rgba(253, 57, 122, .1);
+    color: #fd397a !important
+}
+
+.btn.btn-label-danger:hover {
+    background-color: #f00;
+    color: #fff !important
+}
+
+/*=============== CUSTOM EDIT BUTTON  ===============*/
+.btn.btn-label-primary {
+    background-color: rgba(93, 120, 255, .1);
+    color: #605dff !important
+}
+
+.btn.btn-label-primary:hover {
+    background-color: #5926ff;
+    color: #fff !important
+}
 
 
 
+/** =============== ESTILOS ANGULAR - DATATABLES =============== */
 
+table.dataTable thead th {
+    background-color: #1e90ff;
+    color: white;
+}
+
+table.dataTable thead th:hover {
+    background-color: #067bf1;
+}
+
+.dataTables_length,
+.dataTables_filter {
+    padding: 5px;
+}
+
+.dataTables_filter input {
+    height: 2.6rem;
+    border-radius: .6rem;
+    width: 18rem !important;
+    border-color: rgb(159, 159, 159);
+}
+
+.dataTables_filter input:hover {
+    border-color: rgb(0, 140, 255);
+}
+
+.dataTables_filter input:focus {
+    box-shadow: 0 0 8px rgb(0, 111, 201);
+}
+
+/* Ocultar texto de buscar */
+/* .dataTables_filter label {
+    font-size: 0;
+} */
+
+/** =============== FIN ESTILOS ANGULAR - DATATABLES ===============*/
 
 
 /** =============== PACE STYLES - LOADING PAGE BAR =============== */

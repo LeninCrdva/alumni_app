@@ -77,8 +77,6 @@ export class AlertsService {
     }
 
     showInputsValidations(renderer: Renderer2): void {
-        // this.resetInputsValidations(renderer);
-
         const form = document.querySelector('.needs-validation');
 
         if (form && form.classList.contains('needs-validation')) {

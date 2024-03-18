@@ -7,157 +7,214 @@
     </div>
 </section>
 
-<!-- Modal -->
-<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<!-- =====================================================
+    *           MODAL PARA IMPORTAR DATOS
+ ======================================================= -->
+
+<div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
-                <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Crear Experiencia'">
-                </h5>
+            <div class="modal-header text-white bg-dark">
+                <h5>Restaurar Información (TEMPORAL)</h5>
             </div>
-
             <div class="modal-body">
-                <form #validateForm="ngForm" (ngSubmit)="onSubmit()">
-                    <div class="form-layout form-layout-1">
-                        <div class="row mg-b-25" data-parsley-validate>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label active" for="cargo">CARGO: <span
-                                            class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
-                                        id="cargo"
-                                        [(ngModel)]="editarClicked ? experienciaCarga.cargo : experiencia.cargo"
-                                        (ngModelChange)="editarClicked ? experienciaCarga.cargo = $event : experiencia.cargo = $event"
-                                        required (keypress)="allowOnlyLetters($event)">
-                                    <div *ngIf="validateForm.controls['cargo'].invalid && validateForm.controls['cargo'].dirty"
-                                        class="text-danger">
-                                        El cargo es obligatorio y debe contener solo letras.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label active" for="duracion">DURACIÓN: <span
-                                            class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="duracion"
-                                        placeholder="Ingrese la duración"
-                                        [(ngModel)]="editarClicked ? experienciaCarga.duracion : experiencia.duracion"
-                                        (ngModelChange)="editarClicked ? experienciaCarga.duracion = $event : experiencia.duracion = $event"
-                                        required>
-                                </div>
-                            </div>
-                        </div>
+                <form (ngSubmit)="importarDatos()">
+                    <div class="row mg-b-25 mb-3" data-parsley-validate>
+                        <div class="form-group">
+                            <label for="fileInput" class="form-label"><b>Seleccione el archivo JSON:</b></label>
 
-                        <div class="row mg-b-25 my-3" data-parsley-validate>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label active" for="institucion">INSTITUCIÓN: <span
-                                            class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="institucion"
-                                        placeholder="Ingrese la institución"
-                                        [(ngModel)]="editarClicked ? experienciaCarga.institucionNombre : experiencia.institucionNombre"
-                                        (ngModelChange)="editarClicked ? experienciaCarga.institucionNombre = $event : experiencia.institucionNombre = $event"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label active" for="actividad">ACTIVIDAD: <span
-                                            class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="actividad"
-                                        placeholder="Ingrese la actividad"
-                                        [(ngModel)]="editarClicked ? experienciaCarga.actividad : experiencia.actividad"
-                                        (ngModelChange)="editarClicked ? experienciaCarga.actividad = $event : experiencia.actividad = $event"
-                                        required>
-                                </div>
-                            </div>
-                        </div>
+                            <input type="file" #fileInput class="form-control" id="fileInput"
+                                (change)="onFileSelect($event)" required>
 
-                        <div class="row mg-b-25 my-3" data-parsley-validate>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label active" for="area_trabajo">AREA DE TRABAJO: <span
-                                            class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="area_trabajo"
-                                        placeholder="Ingrese la area de trabajo"
-                                        [(ngModel)]="editarClicked ? experienciaCarga.area_trabajo : experiencia.area_trabajo"
-                                        (ngModelChange)="editarClicked ? experienciaCarga.area_trabajo = $event : experiencia.area_trabajo = $event"
-                                        required>
-                                </div>
+                            <div class="oaerror warning" *ngIf="fileInput.value">
+                                <strong>Advertencia:</strong> Por favor, confirme que los datos a importar son correctos
+                                y corresponden a la tabla.
                             </div>
                         </div>
                     </div>
-
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-oblong" [class.btn-success]="!editarClicked"
-                            [class.btn-primary]="editarClicked" [disabled]="validateForm.invalid"
-                            data-bs-dismiss="modal">
-                            {{ editarClicked ? 'Actualizar Experiencia' : 'Registrar Experiencia' }}
-                        </button>
-
-                        <button type="button" data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">
-                            Cancelar
-                        </button>
+                        <button type="submit" class="btn btn-primary">Importar Datos</button>
+                        <button type="button" #codeModal data-bs-dismiss="modal"
+                            class="btn btn-outline-danger btn-block">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!--/ Modal -->
 
+<!-- =====================================================
+    *          MODAL PARA REGISTRAR DATOS
+ ======================================================= -->
 
+<div class="modal fade" id="modalData" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDataLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" [class.bg-dark]="!editarClicked" [class.bg-primary]="editarClicked">
+                <h5 [innerText]="editarClicked ? 'Modificar Experiencia' : 'Agregar Experiencia'">
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form class="needs-validation" [formGroup]="validateForm">
+                    <div class="form-group col-lg-6">
+                        <label for="cargo" class="form-label">CARGO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-icons"></i>
+                            </a>
+                            <input type="text" class="form-control" id="cargo" name="cargo"
+                                placeholder="Ingrese el cargo que desempeño" formControlName="cargo" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Error</strong> - El cargo es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="duracion" class="form-label">DURACIÓN:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-link"></i>
+                            </span>
+                            <input type="text" class="form-control" id="duracion" name="duracion"
+                                placeholder="Ingrese la duracion de su experiencia" formControlName="duracion" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Error</strong> - La duración de su experiencia es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="institucion" class="form-label">INSTITUCIÓN:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-icons"></i>
+                            </a>
+                            <input type="text" class="form-control" id="institucion" name="institucion"
+                                placeholder="Ingrese el nombre de la institucion" formControlName="institucion"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Error</strong> - El nombre de la institución es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="actividad" class="form-label">ACTIVIDAD:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-link"></i>
+                            </span>
+                            <input type="text" class="form-control" id="actividad" name="actividad"
+                                placeholder="Ingrese la actividad que desempeño" formControlName="actividad" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Error</strong> - Por favor, indique cual fue La actividad que desempeño.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="area_trabajo" class="form-label">AREA DE TRABAJO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-icons"></i>
+                            </a>
+                            <input type="text" class="form-control" id="area_trabajo" name="area_trabajo"
+                                placeholder="Ingrese el area de trabajo que desempeño" formControlName="area_trabajo"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Error</strong> - Por favor, especifique el area de trabajo que desempeño.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                    [class.btn-primary]="editarClicked">
+                    {{ editarClicked ? 'Actualizar Experiencia' : 'Registrar Experiencia' }}
+                </button>
+
+                <button type="button" #myModalClose data-bs-dismiss="modal"
+                    class="btn btn-oblong btn-outline-danger btn-block">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+    *          TABLA DE DATOS
+ ======================================================= -->
 <div class="card">
     <div class="card-body collapse show">
 
-        <div class="col-md-12 col-lg-12 animate__animated animate__fadeIn animate__fast">
+        <!-- =====================================================
+            *             BOTONES DE ACCIONES
+         ======================================================= -->
+        <div>
             <div class="d-flex">
-                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
-                    Registrar Experiencia
+                <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+                <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters()"
+                    class="btn btn-dark ms-2">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <ng-multiselect-dropdown style="width: 20rem;" *ngIf="filterService.editFilterTabs"
+                    [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings"
+                    [data]="filterService.dropdownList" [(ngModel)]="filterService.selectedItems"
+                    (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll($event)"
+                    (onDeSelect)="filterService.onItemDeSelect($event)"
+                    (onDeSelectAll)="filterService.onDeSelectAll($event)" class="ms-2">
+                </ng-multiselect-dropdown>
+
+                <button title="Generar copia del contenido de la tabla" (click)="exportarDatos()"
+                    class="btn btn-dark mx-2">
+                    <i class="fa-regular fa-floppy-disk"></i>
+                </button>
+
+                <button title="Restaurar Datos" data-bs-toggle="modal" data-bs-target="#codeModal"
+                    class="btn btn-primary">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </button>
+
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                    class="btn btn-primary ms-2" style="width: 15rem;">
+                    Agregar Experiencia
                 </button>
             </div>
         </div>
 
-        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
+        <!-- =====================================================
+            *            CONTENIDO DE LA TABLA
+         ======================================================= -->
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
-                    class="table table-bordered custom-table">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th>#</th>
-                            <th>CARGO</th>
-                            <th>DURACIÓN</th>
-                            <th>INSTITUCION</th>
-                            <th>ACTIVIDAD</th>
-                            <th>AREA DE TRABAJO</th>
-                            <th class="text-center w-100px">Acciones</th>
-                        </tr>
-                    </thead>
+                    class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let experienciaItem of experienciaList;">
-                            <th scope="row">{{ experienciaItem.id }}</th>
-                            <td>{{ experienciaItem.cargo }}</td>
-                            <td>{{ experienciaItem.duracion }}</td>
-                            <td>{{ experienciaItem.institucionNombre }}</td>
-                            <td>{{ experienciaItem.actividad }}</td>
-                            <td>{{ experienciaItem.area_trabajo }}</td>
-                            <td class="text-center table-actions align-middle justify-content-center">
-                                <a (click)="onEditarClick(experienciaItem.id)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
-                                    <i class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
-                                </a>
-                                <a (click)="onDeleteClick(experienciaItem.id)" class="table-action ms-2 text-danger">
-                                    <i class="fa fa-trash" style="cursor: pointer;"></i>
-                                </a>
+                        <tr *ngFor="let item of experienciaList;">
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.cargo }}</td>
+                            <td>{{ item.duracion }}</td>
+                            <td>{{ item.area_trabajo }}</td>
+                            <td>{{ item.institucionNombre }}</td>
+                            <td>{{ item.actividad }}</td>
+                            <td class="text-right text-center">
+                                <button (click)="onEditarClick(item.id)" data-bs-toggle="modal"
+                                    data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </button>
+                                <button (click)="onDeleteClick(item.id)"
+                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>

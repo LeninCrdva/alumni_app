@@ -22,40 +22,40 @@ export class GraduadoService {
 
   constructor(private http: HttpClient) { }
 
-  getGraduados(): Observable<Graduado[]> {
+  get(): Observable<Graduado[]> {
     return this.http.get<Graduado[]>(this.urlEndPoint);
   }
 
-  getGraduadosDTO(): Observable<GraduadoDTO[]> {
+  getDTO(): Observable<GraduadoDTO[]> {
     return this.http.get<GraduadoDTO[]>(this.urlEndPoint);
   }
-  
-  createGraduado(graduado: Graduado): Observable<Graduado> {
+
+  create(graduado: Graduado): Observable<Graduado> {
     return this.http.post<Graduado>(this.urlEndPoint, graduado, { headers: this.httpHeaders })
   }
 
-  getGraduadoById(id: any): Observable<Graduado> {
+  getById(id: any): Observable<Graduado> {
     return this.http.get<Graduado>(`${this.urlEndPoint}/${id}`)
   }
   //llenado de informacion 
-  getGraduados2(): Observable<Graduado3[]> {
+  gets2(): Observable<Graduado3[]> {
     return this.http.get<Graduado3[]>(this.urlEndPoint);
   }
 
-  createGraduado2(graduado2: Graduado3): Observable<Graduado3> {
+  create2(graduado2: Graduado3): Observable<Graduado3> {
     return this.http.post<Graduado3>(this.urlEndPoint, graduado2, { headers: this.httpHeaders })
   }
 
-  createGraduadoDTO(graduadoDTO: GraduadoDTO): Observable<GraduadoDTO> {
+  createDTO(graduadoDTO: GraduadoDTO): Observable<GraduadoDTO> {
     return this.http.post<GraduadoDTO>(this.urlEndPoint, graduadoDTO, { headers: this.httpHeaders })
   }
-  
+
   checkGraduadoExists(nombre: string): Observable<boolean> {
-    return this.getGraduados2().pipe(
+    return this.gets2().pipe(
       tap(graduados => console.log('Administradores obtenidos:', graduados)),
       map(graduados => {
-        const exists = graduados.some(gradu => 
-          gradu.usuario && gradu.usuario && 
+        const exists = graduados.some(gradu =>
+          gradu.usuario && gradu.usuario &&
           gradu.usuario.toLowerCase() === nombre.toLowerCase()
         );
         console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
@@ -67,43 +67,43 @@ export class GraduadoService {
       })
     );
   }
-  getGraduadoByUsuario(usuario: string): Observable<Graduado3 | null> {
+  getByUsuario(usuario: string): Observable<Graduado3 | null> {
     return this.http.get<Graduado3[]>(this.urlEndPoint).pipe(
       map(graduados => graduados.find(graduado => graduado.usuario === usuario) || null)
     );
   }
-  
-  getGraduadoByUserId(idUser: any): Observable<Graduado> {
+
+  getByUserId(idUser: any): Observable<Graduado> {
     return this.http.get<Graduado>(`${this.urlEndPoint}/usuario/${idUser}`);
   }
 
-  getGraduadoDTOByUserId(idUser: number): Observable<GraduadoDTO> {
+  getDTOByUserId(idUser: number): Observable<GraduadoDTO> {
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${idUser}`);
   }
 
-  updateOfferInGraduado(graduado: GraduadoDTO, idGraduado:number): Observable<GraduadoDTO> {
-    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/postulaciones/${idGraduado}`, graduado, {headers: this.httpHeaders})
+  updateOfferInGraduado(graduado: GraduadoDTO, idGraduado: number): Observable<GraduadoDTO> {
+    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/postulaciones/${idGraduado}`, graduado, { headers: this.httpHeaders })
   }
 
   cancelOfferInGraduado(graduado: GraduadoDTO, idGraduado: number): Observable<GraduadoDTO> {
-    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/cancel-postulaciones/${idGraduado}`, graduado, {headers: this.httpHeaders})
-  } 
+    return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/cancel-postulaciones/${idGraduado}`, graduado, { headers: this.httpHeaders })
+  }
 
   getOfertasLaboralesByUsername(username: string): Observable<ofertaLaboral[]> {
     return this.http.get<ofertaLaboral[]>(`${this.urlEndPoint}/user/${username}`);
   }
 
-  getGraduadoByUsuarioId(id: any): Observable<GraduadoDTO>{
+  getByUsuarioId(id: any): Observable<GraduadoDTO> {
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${id}`)
   }
 
-  getGraduadosWithOutOferta(): Observable<Graduado[]> {
+  getsWithOutOferta(): Observable<Graduado[]> {
     return this.http.get<Graduado[]>(`${this.urlEndPoint}/without-oferta`);
   }
-  getGraduadoSinPostular(): Observable<Graduado1[]> {
+  getSinPostular(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/without-oferta`);
   }
-  getGraduadoConPostulacion(): Observable<Graduado1[]> {
+  getConPostulacion(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/with-oferta`);
   }
   searchGraduadosByUsuario(usuario: string): Observable<Graduado3[]> {
@@ -114,15 +114,15 @@ export class GraduadoService {
       })
     );
   }
-  
-  updateGraduadoDTO(id:any, graduado: GraduadoDTO): Observable<GraduadoDTO> {
+
+  updateGraduadoDTO(id: any, graduado: GraduadoDTO): Observable<GraduadoDTO> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<GraduadoDTO>(url, graduado, { headers: this.httpHeaders });
-  } 
-  getGraduadosWithoutDTO(): Observable<Graduado1[]> {
+  }
+  getWithoutDTO(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/all`);
   }
-  getGraduadoSinExperiencia():Observable<Graduado1[]>{
+  getSinExperiencia(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/sin-experiencia`)
   }
 }

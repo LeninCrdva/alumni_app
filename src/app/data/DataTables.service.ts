@@ -54,7 +54,6 @@ export class DataTablesService {
         });
     }
 
-
     public generarJSON(tableList: any, name: string): void {
         const dataSinIds = this.omitirPropsConId(tableList);
         const dataStr = JSON.stringify(dataSinIds, null, 4);
