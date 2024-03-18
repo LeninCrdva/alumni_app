@@ -7,4 +7,10 @@ export class Persona {
     'telefono': string;
     'apellido_paterno': string;
     'apellido_materno': string;
+    'sexo'?: Sexo;
 }
+export enum Sexo {
+    MASCULINO = 'MASCULINO',
+    FEMENINO = 'FEMENINO',
+    OTRO = 'OTRO'
+  }

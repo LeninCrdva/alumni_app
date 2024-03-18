@@ -88,6 +88,39 @@
           </div>
 
           <div class="mb-4">
+            <label style="color: var(--alumni-color); margin-bottom: 0.8rem;">Sexo: </label>
+            <div style="display: flex; flex-direction: row;">
+              <div class="form-check form-check-inline" style="display: block;">
+                <input class="form-check-input" type="radio" id="radioMasculino" name="sexo" (change)="onSexoChange($event, 'MASCULINO')">
+                <label class="form-check-label" for="radioMasculino" style="order: 1;">
+                  Masculino
+                </label>
+              </div>
+              <div class="form-check form-check-inline" style="display: block;">
+                <input class="form-check-input" type="radio" id="radioFemenino" name="sexo" (change)="onSexoChange($event, 'FEMENINO')">
+                <label class="form-check-label" for="radioFemenino" style="order: 1;">
+                  Femenino
+                </label>
+              </div>
+              <div class="form-check form-check-inline" style="display: block;">
+                <input class="form-check-input" type="radio" id="radioOtro" name="sexo" (change)="onSexoChange($event, 'OTRO')">
+                <label class="form-check-label" for="radioOtro" style="order: 1;">
+                  Otro
+                </label>
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="!registerForm.get('sexo')?.value && registerForm.get('sexo')?.touched">
+              Por favor, seleccione un sexo.
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          
+
+          <div class="mb-4">
             <div class="form-group flex-grow-1 mr-3">
               <input type="text" class="form-input" placeholder=" " formControlName="telefono" id="InputTelefono">
               <label for="" class="form-label">Ingresa tu Telefono</label>

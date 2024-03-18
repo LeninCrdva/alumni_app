@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
       primerApellido: ['', Validators.required],
       segundoApellido: ['', Validators.required],
       cedula: ['', Validators.required],
+      sexo: ['', Validators.required],
       telefono: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
       nombreUsuario: ['', Validators.required],
@@ -64,6 +65,17 @@ export class RegisterComponent implements OnInit {
 
     console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
 
+  }
+  onSexoChange(event: any, value: string) {
+    if (event.target.checked) {
+      this.registerForm.patchValue({
+        sexo: value
+      });
+    } else {
+      this.registerForm.patchValue({
+        sexo: ''
+      });
+    }
   }
   closeModal(): void {
     this.modalRef.hide();
@@ -145,7 +157,8 @@ export class RegisterComponent implements OnInit {
         fechaNacimiento: formData.fechaNacimiento,
         telefono: formData.telefono,
         apellido_paterno: formData.primerApellido,
-        apellido_materno: formData.segundoApellido
+        apellido_materno: formData.segundoApellido,
+        sexo: formData.sexo,
 
       };
       // Crear la persona usando PersonaService
@@ -179,6 +192,7 @@ export class RegisterComponent implements OnInit {
                 this.authService.signup(usuarioDTO).subscribe(response => {
 
                   console.log('Usuario registrado:', response);
+                 
                   this.username = usuarioDTO.nombreUsuario;
                   localStorage.setItem('name', this.username);
                   this.router.navigate(['account/login']);
