@@ -43,8 +43,8 @@ export class PieChart2Component implements OnInit {
         this.opci = Object.keys(this.response);
         this.cantidad = Object.values(this.response);
 
-        console.log('opc: :', this.opci);
-        console.log('Cantidad:', this.cantidad);
+        console.log('sexo: :', this.opci);
+        console.log('Cantidadsexo:', this.cantidad);
 
         if (this.opci.length > 0 && this.cantidad.length > 0) {
           const dataPoints = this.opci.map((opci, index) => ({
@@ -81,7 +81,7 @@ export class PieChart2Component implements OnInit {
                 export: {
                   csv: {
                     filename: "Graduados por tipo de Sexo",
-                    columnDelimiter: '\t',
+                    columnDelimiter: '/t',
                     headerCategory: 'Graduado',
                     headerValue: 'Cantidad',
                     dateFormatter(timestamp?: string | number) {
@@ -94,10 +94,10 @@ export class PieChart2Component implements OnInit {
                     }
                   },
                   svg: {
-                    filename: "Reporte de Experiencia laboral de Gradados",
+                    filename: "Reporte de Graduados por Sexo",
                   },
                   png: {
-                    filename: "Reporte de Experiencia laboral de Gradados",
+                    filename: "Reporte de Graduados por Sexo",
                   }
                 },
                 autoSelected: 'zoom' 
