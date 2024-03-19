@@ -203,6 +203,11 @@ table.dataTable thead th:hover {
     font-size: 0;
 } */
 
+.form-label {
+    font-weight: bold;
+    font-size: 15px;
+}
+
 /** =============== FIN ESTILOS ANGULAR - DATATABLES ===============*/
 
 

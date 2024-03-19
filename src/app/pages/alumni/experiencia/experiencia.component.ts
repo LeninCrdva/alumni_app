@@ -162,8 +162,7 @@ export class ExperienciaComponent {
         }
       );
     } else {
-      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
-
+      
       this.alertService.showInputsValidations(this.renderer);
     }
   }
@@ -182,8 +181,7 @@ export class ExperienciaComponent {
         }
       );
     } else {
-      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
-
+      
       this.alertService.showInputsValidations(this.renderer);
     }
   }

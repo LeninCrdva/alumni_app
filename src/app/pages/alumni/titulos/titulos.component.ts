@@ -1,73 +1,101 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { TituloService } from '../../../data/service/titulo.service';
-import { Titulo } from '../../../data/model/titulo';
-import { Carrera } from '../../../data/model/carrera';
-import { Subject } from 'rxjs';
-import Swal from 'sweetalert2';
-import { CarreraService } from '../../../data/service/carrera.service';
+import { Component, Renderer2, ViewChild } from '@angular/core';
+import { AlertsService } from '../../../data/Alerts.service';
+import { DataTablesService } from '../../../data/DataTables.service';
+import { FiltersService } from '../../../data/Filters.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { Titulo } from '../../../data/model/titulo';
+import { TituloService } from '../../../data/service/titulo.service';
+import { CarreraService } from '../../../data/service/carrera.service';
+import { Carrera } from '../../../data/model/carrera';
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
   styleUrls: ['./titulos.component.css']
 })
-export class TitulosComponent implements OnInit {
-  public idGraduado: number = 0;
+export class TitulosComponent {
+
+  // =====================================================
+  //*               DATA TABLE Y FILTROS
+  // =======================================================
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  initializeTable: boolean = true;
+  dtoptions: DataTables.Settings = {};
   public carrerasList: Carrera[] = [];
 
-  titulo: Titulo = { idgraduado: this.idGraduado, tipo: '', nivel: '', institucion: '', nombre_titulo: '', fecha_registro: new Date(), fecha_emision: new Date(), num_registro: '', nombrecarrera: '' };
-  tituloCarga: Titulo = { id: 0, idgraduado: this.idGraduado, tipo: '', nivel: '', institucion: '', nombre_titulo: '', fecha_registro: new Date(), fecha_emision: new Date(), num_registro: '', nombrecarrera: '' };
-  tituloList: Titulo[] = [];
+  // =====================================================
+  //*                   VALIDACIONES
+  // =======================================================
 
-  editarClicked = false;
-  
-  dtoptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  @ViewChild('myModalClose') modalClose: any;
 
-  mensajeMostrado = false;
+  @ViewChild('codeModal') codeModal!: any;
+
+  titulosList: Titulo[] = [];
+
   idEdit: number = 0;
 
-  @Output() onClose: EventEmitter<string> = new EventEmitter();
+  editarClicked = false;
 
-  constructor(private tituloService: TituloService, private carrerasService: CarreraService) { }
+  validateForm: FormGroup;
 
-  ngOnInit(): void {
-    this.setupDtOptions();
-    this.obtenerIDUsuario();
-    this.obtenerCarreras();
+  private renderer!: Renderer2;
+
+  // =====================================================
+  //*                   CONSTURCTOR
+  // =======================================================
+
+  constructor(
+    private fb: FormBuilder,
+    private tituloService: TituloService,
+    private alertService: AlertsService,
+    private carrerasService: CarreraService,
+    public dtService: DataTablesService,
+    public filterService: FiltersService
+  ) {
+    this.validateForm = this.fb.group({
+      tipo: ['', Validators.required],
+      nivel: ['', Validators.required],
+      institucion: ['', Validators.required],
+      nombre_titulo: ['', Validators.required],
+      fecha_registro: ['', Validators.required],
+      fecha_emision: ['', Validators.required],
+      num_registro: ['', Validators.required],
+      nombrecarrera: ['', Validators.required]
+    });
+  }
+
+  // Note: Desuscribirse del evento para evitar fugas de memoria
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  // Note: Cargar la tabla con los datos despues de que la vista se haya inicializado
+  ngAfterViewInit(): void {
+    const columnTitles = ['#', 'Título', 'Tipo', 'Nivel', 'Institución', 'Carrera', 'Fecha de Registro', 'Fecha de Emisión', '# de Registro'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar titulos...');
+    this.filterService.initializeDropdowns(columnTitles, this.dtElement);
     this.loadData();
   }
-  
-  setupDtOptions() {
-    this.dtoptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      lengthChange: true,
-      language: {
-        search: 'Buscar:',
-        searchPlaceholder: 'Buscar titulo...',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        paginate: {
-          first: 'Primera',
-          last: 'Última',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        },
-        lengthMenu: 'Mostrar _MENU_ registros por página',
-        zeroRecords: 'No se encontraron registros coincidentes'
-      },
-      lengthMenu: [10, 25, 50]
-    };
-  }
 
-  // NOTE: MOSTRAR LISTA DE EXPERIENCIAS
   loadData() {
-    this.tituloService.getTitulos().subscribe(
-      titulos => {
-        this.tituloList = titulos;
-        this.dtTrigger.next(null);
+    this.tituloService.get().subscribe(
+      result => {
+        this.titulosList = [];
+        this.titulosList = result;
+
+        this.titulosList = result.filter(resultData => resultData.idgraduado === this.obtenerIDGraduado());
+
+        if (this.initializeTable) {
+          this.dtTrigger.next(null);
+          this.initializeTable = false;
+        } else {
+          this.dtService.rerender(this.dtElement, this.dtTrigger);
+        }
       },
       (error: any) => console.error(error)
     );
@@ -75,130 +103,126 @@ export class TitulosComponent implements OnInit {
 
   // NOTE: CRUD EVENTS
   onRegistrarClick(): void {
-    this.editarClicked = false;
-  }
+    this.validateForm.reset();
 
-  onSubmit() {
-    if (this.editarClicked) {
-      this.onUpdateClick(); // Lógica de actualización
-    } else {
-      this.createExperiencia(); // Lógica de creación
-    }
-  }
-
-  createExperiencia() {
-    this.titulo.idgraduado = this.idGraduado;
+    this.alertService.resetInputsValidations(this.renderer);
 
     this.editarClicked = false;
-    console.log('ID del graduado:', this.titulo.idgraduado);
-
-    this.tituloService.createTitulo(this.titulo).subscribe(
-      titulo => {
-        console.log('Titulo creado exitosamente:', titulo);
-        this.loadData();
-        this.mostrarSweetAlert(true, 'El titulo se ha guardado exitosamente.');
-        this.mensajeMostrado = true;
-      },
-      error => {
-        this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar el titulo.');
-      }
-    );
   }
 
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
-    this.tituloService.getTituloById(id).subscribe(
-      titulo => this.tituloCarga = titulo,
-      error => console.error(error)
-    )
+
+    this.validateForm.reset();
+
+    const dataToEdit = this.titulosList.find(item => item.id === id);
+
+    if (dataToEdit) {
+      this.validateForm.patchValue({
+        tipo: dataToEdit.tipo,
+        nivel: dataToEdit.nivel,
+        institucion: dataToEdit.institucion,
+        nombre_titulo: dataToEdit.nombre_titulo,
+        fecha_registro: dataToEdit.fecha_registro,
+        fecha_emision: dataToEdit.fecha_emision,
+        num_registro: dataToEdit.num_registro,
+        nombrecarrera: dataToEdit.nombrecarrera
+      });
+    } else {
+      console.error(`Elemento con id ${id} no encontrado en la lista.`);
+    }
+
+    this.alertService.resetInputsValidations(this.renderer);
     this.idEdit = id;
   }
 
-  onUpdateClick() {
-    console.log('ID del titulo:', this.idEdit);
-    this.tituloCarga.idgraduado = this.idGraduado;
+  onSubmit() {
+    if (this.editarClicked) {
+      this.onUpdateClick();
+    } else {
+      this.createNewData();
+    }
+  }
 
-    this.tituloService.updateTitulo(this.idEdit, this.tituloCarga).subscribe(
-      titulosActualizado => {
-        console.log('Titulo actualizado exitosamente:', titulosActualizado);
-        this.titulo = titulosActualizado;
-        this.mostrarSweetAlert(true, 'El titulo se ha actualizado exitosamente.');
-        this.loadData();
-      },
-      error => {
-        console.error('Error al actualizar el titulo:', error);
-        this.mostrarSweetAlert(false, 'Error al actualizar el titulo.');
-      }
-    );
+  obtenerDatosFormulario(): any {
+    return {
+      tipo: this.validateForm.value.tipo,
+      nivel: this.validateForm.value.nivel,
+      institucion: this.validateForm.value.institucion,
+      nombre_titulo: this.validateForm.value.nombre_titulo,
+      fecha_registro: this.validateForm.value.fecha_registro,
+      fecha_emision: this.validateForm.value.fecha_emision,
+      num_registro: this.validateForm.value.num_registro,
+      nombrecarrera: this.validateForm.value.nombrecarrera,
+      idgraduado: this.obtenerIDGraduado()
+    };
+  }
+
+  createNewData() {
+    if (this.validateForm.valid) {
+      this.alertService.mostrarAlertaCargando('Guardando...');
+      this.tituloService.create(this.obtenerDatosFormulario()).subscribe(
+        result => {
+          this.alertService.detenerAlertaCargando();
+          this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
+
+          this.loadData();
+        },
+        error => {
+          this.alertService.mostrarSweetAlert(false, 'Error al crear.');
+          console.error('Error al crear:', error);
+        }
+      );
+    } else {
+
+      this.alertService.showInputsValidations(this.renderer);
+
+      this.alertService.mostrarAlertaSweet();
+    }
+  }
+
+  onUpdateClick() {
+    if (this.validateForm.valid) {
+      this.alertService.mostrarAlertaCargando('Actualizando...');
+      this.tituloService.update(this.idEdit, this.obtenerDatosFormulario()).subscribe(
+        result => {
+          this.alertService.detenerAlertaCargando();
+          this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);
+          this.loadData();
+        },
+        error => {
+          this.alertService.mostrarSweetAlert(false, 'Error al actualizar.');
+        }
+      );
+    } else {
+
+      this.alertService.showInputsValidations(this.renderer);
+    }
   }
 
   onDeleteClick(id: number | undefined = 0) {
-    this.tituloService.deleteTitulo(id).subscribe(
+    this.alertService.mostrarAlertaCargando('Eliminando...');
+
+    this.tituloService.delete(id).subscribe(
       () => {
-        console.log('Titulo eliminado exitosamente');
-        this.mostrarSweetAlert(true, 'El titulo se ha eliminado exitosamente.');
+        this.alertService.detenerAlertaCargando();
+        this.alertService.mostrarSweetAlert(true, 'Se ha eliminado correctamente.');
+
         this.loadData();
       },
       error => {
-        console.error('Error al eliminar el titulo:', error);
-        this.mostrarSweetAlert(false, 'Error al eliminar el titulo.');
+        this.alertService.mostrarSweetAlert(false, 'Error al eliminar.');
       }
     );
   }
 
-  // NOTE: VALIDACIONES
-
-  validarNumero(event: any) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  allowOnlyLetters(event: KeyboardEvent): void {
-    const inputChar = String.fromCharCode(event.charCode);
-    const lettersRegex = /^[a-zA-Z]+$/;
-
-    if (!lettersRegex.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  allowOnlyNumbers(event: any) {
-    const pattern = /[0-9]/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
-    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
-
-    Swal.fire({
-      icon: esExitoso ? 'success' : 'error',
-      title: titulo,
-      text: mensaje,
-      allowOutsideClick: !esExitoso,
-    }).then((result) => {
-      if (esExitoso || result.isConfirmed) {
-        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-      }
-    });
-  }
-
-  obtenerIDUsuario() {
+  obtenerIDGraduado(): number {
     const userDataString = localStorage.getItem('user_data');
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
-      this.idGraduado = userData.persona.id;
-    }
-    console.log('ID del usuario:', this.idGraduado);
-  }
+    const userData = JSON.parse(userDataString!);
 
+    return userData.persona.id;
+  }
+  
   obtenerCarreras() {
     this.carrerasService.getCarreras().subscribe(
       carreras => {
@@ -206,5 +230,52 @@ export class TitulosComponent implements OnInit {
       },
       (error: any) => console.error(error)
     );
+  }
+
+  exportarDatos() {
+    this.dtService.generarJSON(this.titulosList, 'titulos');
+  }
+
+  fileContent: string | ArrayBuffer | null = null;
+
+  onFileSelect(event: Event): void {
+    const element = event.currentTarget as HTMLInputElement;
+    let file: File | null = element.files ? element.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fileContent = reader.result;
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  async importarDatos(): Promise<void> {
+    if (!this.fileContent || typeof this.fileContent !== 'string') {
+      this.alertService.mostrarSweetAlert(false, 'No hay archivo o formato inválido.');
+      return;
+    }
+
+    try {
+      this.alertService.mostrarAlertaCargando('Importando datos...');
+      const data = JSON.parse(this.fileContent);
+
+      if (Array.isArray(data)) {
+        for (const dataToRestore of data) {
+          await this.tituloService.create(dataToRestore).toPromise();
+        }
+        this.codeModal.nativeElement.click();
+        this.alertService.mostrarSweetAlert(true, 'Todo el contenido fue restaurado con éxito.');
+      } else {
+        this.alertService.mostrarSweetAlert(false, 'El JSON proporcionado no es un array.');
+      }
+    } catch (error: any) {
+      this.alertService.mostrarSweetAlert(false, 'Error al parsear JSON: ' + error.message);
+    } finally {
+      this.alertService.detenerAlertaCargando();
+    }
+
+    this.loadData();
   }
 }

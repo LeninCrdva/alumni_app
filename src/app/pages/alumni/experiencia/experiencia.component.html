@@ -56,14 +56,14 @@
                 </h5>
             </div>
             <div class="modal-body">
-                <form class="needs-validation" [formGroup]="validateForm">
+                <form class="row g-3 needs-validation" [formGroup]="validateForm">
                     <div class="form-group col-lg-6">
                         <label for="cargo" class="form-label">CARGO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-icons"></i>
                             </a>
-                            <input type="text" class="form-control" id="cargo" name="cargo"
+                            <input type="text" class="form-control" id="cargo"
                                 placeholder="Ingrese el cargo que desempeño" formControlName="cargo" required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Error</strong> - El cargo es obligatorio.
@@ -76,7 +76,7 @@
                             <span class="input-group-text">
                                 <i class="fa-solid fa-link"></i>
                             </span>
-                            <input type="text" class="form-control" id="duracion" name="duracion"
+                            <input type="text" class="form-control" id="duracion"
                                 placeholder="Ingrese la duracion de su experiencia" formControlName="duracion" required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Error</strong> - La duración de su experiencia es obligatorio.
@@ -84,13 +84,13 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-6">
-                        <label for="institucion" class="form-label">INSTITUCIÓN:</label>
+                        <label for="institucionNombre" class="form-label">INSTITUCIÓN:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-icons"></i>
                             </a>
-                            <input type="text" class="form-control" id="institucion" name="institucion"
-                                placeholder="Ingrese el nombre de la institucion" formControlName="institucion"
+                            <input type="text" class="form-control" id="institucionNombre"
+                                placeholder="Ingrese el nombre de la institución." formControlName="institucionNombre"
                                 required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Error</strong> - El nombre de la institución es obligatorio.
@@ -103,7 +103,7 @@
                             <span class="input-group-text">
                                 <i class="fa-solid fa-link"></i>
                             </span>
-                            <input type="text" class="form-control" id="actividad" name="actividad"
+                            <input type="text" class="form-control" id="actividad"
                                 placeholder="Ingrese la actividad que desempeño" formControlName="actividad" required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Error</strong> - Por favor, indique cual fue La actividad que desempeño.
@@ -116,7 +116,7 @@
                             <a class="input-group-text">
                                 <i class="fa-solid fa-icons"></i>
                             </a>
-                            <input type="text" class="form-control" id="area_trabajo" name="area_trabajo"
+                            <input type="text" class="form-control" id="area_trabajo"
                                 placeholder="Ingrese el area de trabajo que desempeño" formControlName="area_trabajo"
                                 required>
                             <div class="oaerror danger invalid-feedback">

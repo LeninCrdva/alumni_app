@@ -15,24 +15,24 @@ export class TituloService {
 
   constructor(private http: HttpClient) { }
 
-  getTitulos(): Observable<Titulo[]> {
+  get(): Observable<Titulo[]> {
     return this.http.get<Titulo[]>(this.urlEndPoint);
   }
 
-  createTitulo(titulo: Titulo): Observable<Titulo> {
+  create(titulo: any): Observable<Titulo> {
     return this.http.post<Titulo>(this.urlEndPoint, titulo, { headers: this.httpHeaders });
   }
 
-  getTituloById(id: number): Observable<Titulo> {
+  getById(id: number): Observable<Titulo> {
     return this.http.get<Titulo>(`${this.urlEndPoint}/${id}`);
   }
 
-  updateTitulo(id: number, titulo: Titulo): Observable<Titulo> {
+  update(id: number, titulo: any): Observable<Titulo> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Titulo>(url, titulo, { headers: this.httpHeaders });
   }
 
-  deleteTitulo(id: number): Observable<void> {
+  delete(id: number): Observable<void> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.delete<void>(url, { headers: this.httpHeaders });
   }

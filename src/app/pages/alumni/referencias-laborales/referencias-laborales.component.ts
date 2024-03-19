@@ -156,8 +156,7 @@ export class ReferenciasLaboralesComponent {
         }
       );
     } else {
-      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
-
+      
       this.alertService.showInputsValidations(this.renderer);
 
       this.alertService.mostrarAlertaSweet();
@@ -178,8 +177,7 @@ export class ReferenciasLaboralesComponent {
         }
       );
     } else {
-      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
-
+      
       this.alertService.showInputsValidations(this.renderer);
     }
   }

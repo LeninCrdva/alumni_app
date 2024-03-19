@@ -155,8 +155,7 @@ export class ReferenciasPersonalesComponent {
         }
       );
     } else {
-      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
-
+      
       this.alertService.showInputsValidations(this.renderer);
     }
   }
@@ -175,8 +174,7 @@ export class ReferenciasPersonalesComponent {
         }
       );
     } else {
-      Object.keys(this.validateForm.controls).forEach(controlName => this.validateForm.controls[controlName].markAsTouched());
-
+      
       this.alertService.showInputsValidations(this.renderer);
     }
   }
