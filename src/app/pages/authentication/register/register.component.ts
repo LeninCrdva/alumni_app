@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AnimationOptions } from 'ngx-lottie';
+import { RegisterDTO } from '../../../data/model/DTO/RegisterDTO';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { firstValueFrom, lastValueFrom, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -20,21 +23,20 @@ export class RegisterComponent implements OnInit {
   options_Register: AnimationOptions = {
     path: '../../../assets/anims/register_anim.json',
   };
-
+  isSubmit = false;
   registerForm: FormGroup;
   'mensaje': string;
   'modalRef': BsModalRef;
   //imagenes//
-  public previsualizacion?: string;
   public archivos: any = []
   public loading?: boolean
-  public rutaimagen: string = '';
-  public urlImage: string = '';
   public username: string = '';
   public inforest: any = [];
   public getRuta: string = '';
   //public deleteimage: any = localStorage.getItem('rutaimagen');
   public mensajevalidado: string = '';
+  urlPhoto: any;
+  'registerDto': RegisterDTO;
 
   constructor(
     private fb: FormBuilder,
@@ -59,13 +61,11 @@ export class RegisterComponent implements OnInit {
       nombreDelRol: [localStorage.getItem('userRole'), Validators.required],
     });
   }
-  'persona': Persona;
+
   ngOnInit(): void {
-
-
     console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
-
   }
+
   onSexoChange(event: any, value: string) {
     if (event.target.checked) {
       this.registerForm.patchValue({
@@ -80,158 +80,102 @@ export class RegisterComponent implements OnInit {
   closeModal(): void {
     this.modalRef.hide();
   }
+
   //-----------------------Imagen--------------------------------------------------//
+  rutaImagen: any;
+  selectedFile: File | null = null;
+  previsualizacion: boolean = false;
+  imagenPrevisualizada: string | ArrayBuffer | null = '';
 
-  capturarFile(event: any): any {
-
-    const archivoCapturado = event.target.files[0]
-    this.extraerBase64(archivoCapturado).then((imagen: any) => {
-      this.previsualizacion = imagen.base;
-      console.log(imagen);
-
-    })
-    this.archivos.push(archivoCapturado)
-    // 
-    // console.log(event.target.files);
-  }
-
-  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
-    try {
-      const unsafeImg = window.URL.createObjectURL($event);
-      const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.previsualizacion = true;
       const reader = new FileReader();
-
-      reader.readAsDataURL($event);
-
       reader.onload = () => {
-        resolve({
-          base: reader.result
-        });
+        this.urlPhoto = reader.result as string;
       };
-
-      reader.onerror = error => {
-        resolve({
-          base: null
-        });
-      };
-    } catch (e) {
-      console.error('Error al extraer base64:', e);
-      resolve({
-        base: null
-      });
+      reader.readAsDataURL(file);
+      this.selectedFile = file;
+    } else {
+      this.previsualizacion = false;
+      this.urlPhoto = '';
+      this.selectedFile = null;
     }
-  });
-
-
-  clearImage(): any {
-    this.previsualizacion = '';
-    this.archivos = [];
   }
 
-
-
-
-
+  clearImage(): void {
+    this.previsualizacion = false;
+    this.urlPhoto = '';
+    const fileInput = document.getElementById("file") as HTMLInputElement;
+    fileInput.value = '';
+  }
 
   //----------------------------------------------------------------//
-
   deleteFile(rutakey: string) {
     this.assetService.delete(rutakey).subscribe(r => {
       console.log("archivo eliminado")
     })
   }
 
+  async uploadAndSetRutaImagen(file: File) {
+    try {
+      const observable = this.assetService.upload(file);
+      const data: HttpEvent<any> | undefined = await lastValueFrom(observable);
+
+      if (data instanceof HttpResponse) {
+        const key = data.body?.key;
+        this.rutaImagen = key;
+      }
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    }
+  }
 
 
-  register() {
+  async register() {
+    this.isSubmit = true;
     if (this.registerForm.valid) {
 
       const formData = this.registerForm.value;
-      console.log(formData);
 
-      this.persona = {
+      if (this.selectedFile) {
+        console.log('Archivo seleccionado:', this.selectedFile);
+        await this.uploadAndSetRutaImagen(this.selectedFile);
+      }
+      this.registerDto = {
 
         cedula: formData.cedula,
-        primer_nombre: formData.primerNombre,
-        segundo_nombre: formData.segundoNombre,
+        primerNombre: formData.primerNombre,
+        segundoNombre: formData.segundoNombre,
         fechaNacimiento: formData.fechaNacimiento,
         telefono: formData.telefono,
-        apellido_paterno: formData.primerApellido,
-        apellido_materno: formData.segundoApellido,
+        apellidoPaterno: formData.primerApellido,
+        apellidoMaterno: formData.segundoApellido,
         sexo: formData.sexo,
+        nombreUsuario: formData.nombreUsuario,
+        clave: formData.clave,
+        rol: formData.nombreDelRol,
+        estado: formData.nombreDelRol === 'GRADUADO' ? true : false,
+        rutaImagen: this.rutaImagen,
+        urlImagen: '',
 
       };
-      // Crear la persona usando PersonaService
-      this.personaService.createPerson(this.persona).subscribe(
-        (personaResponse) => {
 
-          this.mensajevalidado = 'Persona registrada exitosamente';
-          console.log(this.mensajevalidado);
-          if (this.mensajevalidado == 'Persona registrada exitosamente') {
-            //Foto
-            this.assetService.post(`http://localhost:8080/assets/upload`, formularioDeDatos)
-              .subscribe(res => {
-                this.loading = false;
-                console.log('Respuesta del servidor', res);
-                this.inforest = res;
-                console.log(this.inforest);
-                this.rutaimagen = this.inforest.key
-                this.urlImage = this.inforest.url
-                //Registro Usuario
-                const usuarioDTO = {
-                  nombreUsuario: formData.nombreUsuario,
-                  clave: formData.clave,
-                  cedula: formData.cedula,
-                  rol: formData.nombreDelRol,
-                  estado: false,
-                  ruta_imagen: this.rutaimagen,
-                  url_imagen: this.urlImage
+      console.log('Datos del formulario:', this.registerDto);
+      this.authService.signup(this.registerDto).subscribe(response => {
 
-                };
+        console.log('Usuario registrado:', response);
 
-                this.authService.signup(usuarioDTO).subscribe(response => {
-
-                  console.log('Usuario registrado:', response);
-                 
-                  this.username = usuarioDTO.nombreUsuario;
-                  localStorage.setItem('name', this.username);
-                  this.router.navigate(['account/login']);
-
-
-                });
-                Swal.fire({
-                  icon: 'success',
-                  text: 'Datos cargados'
-                });
-
-
-
-              }, () => {
-                this.loading = false;
-                alert('Error');
-              })
-
-          }
-        },
-        (error) => {
-          this.mensajevalidado = 'Error: no puede haber campos vacios';
-          console.error(this.mensajevalidado, error);
-
-
-        });
-      this.loading = true;
-      const formularioDeDatos = new FormData();
-      this.archivos.forEach((archivo: string | Blob) => {
-        formularioDeDatos.append('multipartFile', archivo)
-      })
-
-
-
-
+        this.username = this.registerDto.nombreUsuario;
+        localStorage.setItem('name', this.username);
+        
+        this.showAlert(this.registerDto);
+        
+        this.router.navigate(['account/login']);
+      });
     } else {
-
       console.warn('El formulario no es válido.');
-
       Object.keys(this.registerForm.controls).forEach(key => {
         const control = this.registerForm.get(key);
         if (control != null && control.invalid) {
@@ -241,5 +185,17 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-
+  showAlert(resp: RegisterDTO) {
+    if (resp.rol.includes('EMPRESARIO') || resp.rol.includes('ADMINISTRADOR')) {
+      Swal.fire({
+        icon: 'info',
+        text: 'Su cuenta se ha registrado correctamente, pero necesita ser aprobada por un administrador para poder iniciar sesión.'
+      });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        text: 'Datos cargados'
+      });
+    }
+  }
 }

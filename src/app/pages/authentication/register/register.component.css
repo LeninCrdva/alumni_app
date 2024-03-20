@@ -77,6 +77,6 @@
 }
 
 .cancel-button {
-    background-color:#0c6efd;
+    background-color:#0c6efd !important;
     color: #ffffff;
 }

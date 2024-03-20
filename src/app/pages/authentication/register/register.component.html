@@ -24,7 +24,7 @@
               </div>
 
               <div class="text-danger mb-4"
-                *ngIf="registerForm.get('primerNombre')?.hasError('required') && registerForm.get('primerNombre')?.touched">
+                *ngIf="(isSubmit && registerForm.get('primerNombre')?.invalid) || registerForm.get('primerNombre')?.hasError('required') && registerForm.get('primerNombre')?.touched">
                 El primer nombre es obligatorio.
               </div>
             </div>
@@ -37,12 +37,11 @@
               </div>
 
               <div class="text-danger mb-4"
-                *ngIf="registerForm.get('segundoNombre')?.hasError('required') && registerForm.get('segundoNombre')?.touched">
+                *ngIf="(isSubmit && registerForm.get('segundoNombre')?.invalid) || registerForm.get('segundoNombre')?.hasError('required') && registerForm.get('segundoNombre')?.touched">
                 El segundo nombre es obligatorio.
               </div>
             </div>
           </div>
-
 
           <div class="d-flex">
             <div class="flex-grow-1">
@@ -53,7 +52,7 @@
                 <i class="ri-user-smile-line form-icon"></i>
               </div>
               <div class="text-danger mb-4"
-                *ngIf="registerForm.get('primerApellido')?.hasError('required') && registerForm.get('primerApellido')?.touched">
+                *ngIf="(isSubmit && registerForm.get('primerApellido')?.invalid) || registerForm.get('primerApellido')?.hasError('required') && registerForm.get('primerApellido')?.touched">
                 El primer apellido es obligatorio.
               </div>
             </div>
@@ -67,12 +66,11 @@
               </div>
 
               <div class="text-danger mb-4"
-                *ngIf="registerForm.get('segundoApellido')?.hasError('required') && registerForm.get('segundoApellido')?.touched">
+                *ngIf="(isSubmit && registerForm.get('segundoApellido')?.invalid) || registerForm.get('segundoApellido')?.hasError('required') && registerForm.get('segundoApellido')?.touched">
                 El segundo apellido es obligatorio.
               </div>
             </div>
           </div>
-
 
           <div class="mb-4">
             <div class="form-group flex-grow-1 mr-3">
@@ -82,43 +80,40 @@
             </div>
 
             <div class="text-danger"
-              *ngIf="registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched">
+              *ngIf="(isSubmit && registerForm.get('cedula')?.invalid) || registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched">
               La cedula es obligatoria.
             </div>
           </div>
 
           <div class="mb-4">
             <label style="color: var(--alumni-color); margin-bottom: 0.8rem;">Sexo: </label>
-            <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: row;" class="form-group flex-grow-1 mr-3">
               <div class="form-check form-check-inline" style="display: block;">
-                <input class="form-check-input" type="radio" id="radioMasculino" name="sexo" (change)="onSexoChange($event, 'MASCULINO')">
+                <input class="form-check-input" type="radio" id="radioMasculino" name="sexo"
+                  (change)="onSexoChange($event, 'MASCULINO')">
                 <label class="form-check-label" for="radioMasculino" style="order: 1;">
                   Masculino
                 </label>
               </div>
               <div class="form-check form-check-inline" style="display: block;">
-                <input class="form-check-input" type="radio" id="radioFemenino" name="sexo" (change)="onSexoChange($event, 'FEMENINO')">
+                <input class="form-check-input" type="radio" id="radioFemenino" name="sexo"
+                  (change)="onSexoChange($event, 'FEMENINO')">
                 <label class="form-check-label" for="radioFemenino" style="order: 1;">
                   Femenino
                 </label>
               </div>
               <div class="form-check form-check-inline" style="display: block;">
-                <input class="form-check-input" type="radio" id="radioOtro" name="sexo" (change)="onSexoChange($event, 'OTRO')">
+                <input class="form-check-input" type="radio" id="radioOtro" name="sexo"
+                  (change)="onSexoChange($event, 'OTRO')">
                 <label class="form-check-label" for="radioOtro" style="order: 1;">
                   Otro
                 </label>
               </div>
             </div>
-            <div class="text-danger" *ngIf="!registerForm.get('sexo')?.value && registerForm.get('sexo')?.touched">
+            <div class="text-danger" *ngIf="isSubmit && registerForm.get('sexo')?.errors?.['required']">
               Por favor, seleccione un sexo.
             </div>
           </div>
-          
-          
-          
-          
-          
-          
 
           <div class="mb-4">
             <div class="form-group flex-grow-1 mr-3">
@@ -128,7 +123,7 @@
             </div>
 
             <div class="text-danger"
-              *ngIf="registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched">
+              *ngIf="(isSubmit && registerForm.get('telefono')?.invalid) || registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched">
               El número de telefono es obligatorio.
             </div>
           </div>
@@ -143,7 +138,7 @@
             </div>
 
             <div class="text-danger"
-              *ngIf="registerForm.get('nombreUsuario')?.hasError('required') && registerForm.get('nombreUsuario')?.touched">
+              *ngIf="(isSubmit && registerForm.get('nombreUsuario')?.invalid) || registerForm.get('nombreUsuario')?.hasError('required') && registerForm.get('nombreUsuario')?.touched">
               El nombre de usuario es obligatoria.
             </div>
           </div>
@@ -158,20 +153,22 @@
             </div>
 
             <div class="text-danger"
-              *ngIf="registerForm.get('clave')?.hasError('required') && registerForm.get('clave')?.touched">
+              *ngIf="(isSubmit && registerForm.get('clave')?.invalid) || registerForm.get('clave')?.hasError('required') && registerForm.get('clave')?.touched">
               La contraseña es obligatoria.
             </div>
           </div>
 
           <div class="mb-4">
+            <div class="form-group flex-grow-1 mr-3">
+              <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
 
-            <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+              <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento" class="form-control"
+                id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+            </div>
 
-            <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento" class="form-control"
-              id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
             <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
             <div class="text-danger"
-              *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
+              *ngIf="(isSubmit && registerForm.get('fechaNacimiento')?.invalid) || registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
               La fecha de nacimiento es obligatoria.
             </div>
           </div>
@@ -179,26 +176,29 @@
           <div class="mb-4">
             <label style="color: var(--alumni-color)">Subir Foto de perfil</label>
 
-            <div class="card mg-b-20">
+            <div class="card mg-b-20 form-group flex-grow-1 mr-3">
               <div class="card-header">
-                <h4 class="card-header-title">
-                  <!-- Muestra la visa previa dentro del primer seleccionador de archivos -->
-                  <div class="preview-img" *ngIf="previsualizacion">
-                    <button class="clear-image form-control border-0 cancel-button" type="button"
-                      (click)="clearImage()">
+
+                <!-- Muestra la visa previa dentro del primer seleccionador de archivos -->
+                <div class="preview-img" *ngIf="previsualizacion">
+
+
+                  <div class="image-container text-center mt-3">
+                    <!-- Ajusté el estilo del contenedor para centrar y hacer la imagen más grande -->
+                    <img id="preview" [src]="urlPhoto" alt="" style="width: 250px; height: 250px; object-fit: cover;" />
+                  </div>
+
+                  <div>
+                    <button class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
+                      type="button" (click)="clearImage()">
                       Cancelar
                     </button>
-
-                    <div class="image-container text-center" style="margin-top: 3rem;">
-                      <!-- Ajusté el estilo del contenedor para centrar y hacer la imagen más grande -->
-                      <img [src]="previsualizacion" alt="" style="width: 220px; height: 220px; object-fit: cover;" />
-                    </div>
                   </div>
-                </h4>
+                </div>
               </div>
               <div class="card-body collapse show" id="collapse8">
                 <!-- Moví el input type="file" aquí -->
-                <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)"
+                <input id="file" type="file" class="dropify" data-show-remove="false" (change)="onFileSelected($event)"
                   accept=".jpg, .jpeg, .png" />
               </div>
             </div>
@@ -206,7 +206,8 @@
             <!-- Mostrar mensaje de error para el campo inputFoto -->
 
             <!-- Botón para subir la foto de perfil -->
-            <div class="wrapper-button" *ngIf="previsualizacion">
+            <div class="text-danger" *ngIf="isSubmit && !previsualizacion">
+              La foto es obligatoria.
               <!-- Agrega el botón necesario aquí -->
             </div>
           </div>

@@ -9,7 +9,7 @@ export const tokenExistsGuard: (
   if (route.queryParams['reset_token']) {
     return true;
   } else {
-    router.navigate(['/']);
+    router.navigate(['/inicio']);
     return false;
   }
 };
