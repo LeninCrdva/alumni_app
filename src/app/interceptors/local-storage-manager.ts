@@ -26,6 +26,11 @@ export const clearLocalStorage = () => {
     sessionStorage.clear();
 };
 
+export const getRole = (token: string) => {
+    const decodedToken: TokenData = jwtDecode<TokenData>(token);
+    return decodedToken.role[0];
+}
+
 export const isLoggedInKey = (rol: string) => {
     const user = localStorage.getItem(rol);
     if (user) {
