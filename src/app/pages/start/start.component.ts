@@ -2,6 +2,9 @@ import { Component, OnInit, HostListener, Renderer2, ElementRef } from '@angular
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 import { Router } from '@angular/router';
+import { MailService } from '../../data/service/mail.service';
+import { MailRequest } from '../../data/model/Mail/MailRequest';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
@@ -12,8 +15,10 @@ export class StartComponent implements OnInit {
   private readonly ADMINISTRADOR = 'ADMINISTRADOR';
   private readonly EMPRESARIO = 'EMPRESARIO';
   private readonly GRADUADO = 'GRADUADO';
+  
+  mailRequest: MailRequest = new MailRequest();
 
-  constructor(private renderer: Renderer2, private el: ElementRef, private router: Router) { }
+  constructor(private renderer: Renderer2, private el: ElementRef, private router: Router,private mailService: MailService) { }
 
   // Note: Animaciones
   options_Anim1: AnimationOptions = {
@@ -92,5 +97,28 @@ export class StartComponent implements OnInit {
       nav.classList.toggle('open');
     });
   }
-
+  onSubmit(): void {
+    this.mailRequest.to = 'info.alumni.est@gmail.com';
+    this.mailService.contactUs(this.mailRequest).subscribe(response => {
+     
+      Swal.fire({
+        icon: 'success',
+        title: '¡Mensaje enviado!',
+        text: 'Tu mensaje ha sido enviado exitosamente.',
+        confirmButtonText: 'OK'
+      });
+      this.mailRequest.name = '';
+      this.mailRequest.from = '';
+      this.mailRequest.subject = '';
+      this.mailRequest.caseEmail = '';
+    }, error => {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar mensaje',
+        text: 'Ha ocurrido un error al intentar enviar tu mensaje. Por favor, inténtalo de nuevo más tarde.',
+        confirmButtonText: 'OK'
+      });
+    });
+  }
 }

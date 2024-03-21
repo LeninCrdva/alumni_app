@@ -25,4 +25,7 @@ export class MailService {
         const url = `${this.urlEndPoint}/recovery-password`;
         return this.http.post<MailResponse>(url, mailRequest, { headers: this.httpHeaders })
     }
+    contactUs(mailRequest: MailRequest): Observable<MailResponse> {
+        return this.http.post<MailResponse>(`${this.urlEndPoint}/contact-us`, mailRequest, { headers: this.httpHeaders });
+    }
 }

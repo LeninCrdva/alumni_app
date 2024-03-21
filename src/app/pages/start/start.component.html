@@ -249,35 +249,34 @@
                 <p>Si tienes alguna duda puedes comunicarte con el siguiente formulario.</p>
             </div>
             <div class="col-sm-8 col-xs-12">
-                <form class="form" name="enq" method="post" action="contact.php" onsubmit="return validation();">
+                <form class="form" (submit)="onSubmit()">
                     <div class="row">
-                        <div class="input_padding text-center">
-                            <div class="form-group col-md-12 mb-3">
-                                <input type="text" name="name" class="form-control" placeholder="Nombres y Apellidos"
-                                    required="required">
-                            </div>
-                            <div class="form-group col-md-12 mb-3">
-                                <input type="email" name="email" class="form-control" placeholder="Email"
-                                    required="required">
-                            </div>
-                            <div class="form-group col-md-12 mb-3">
-                                <input type="text" name="subject" class="form-control" placeholder="Titulo"
-                                    required="required">
-                            </div>
-                            <div class="form-group col-md-12 mab-none mb-3">
-                                <textarea rows="6" name="message" class="form-control" placeholder="Escriba su mensaje"
-                                    required="required"></textarea>
-                            </div>
-                            <div class="form-group mb0 col-md-12">
-                                <div class="actions">
-                                    <button type="submit" value="Send message" name="submit" id="submitButton"
-                                        class="btn btn-default contact_btn" title="Enviar Mensaje!">Enviar
-                                        Mensaje</button>
-                                </div>
-                            </div>
+                      <div class="input_padding text-center">
+                        <div class="form-group col-md-12 mb-3">
+                          <input type="text" name="name" class="form-control" placeholder="Nombres y Apellidos"
+                            [(ngModel)]="mailRequest.name" required>
                         </div>
+                        <div class="form-group col-md-12 mb-3">
+                          <input type="email" name="email" class="form-control" placeholder="Email"
+                            [(ngModel)]="mailRequest.from" required>
+                        </div>
+                        <div class="form-group col-md-12 mb-3">
+                          <input type="text" name="subject" class="form-control" placeholder="Titulo"
+                            [(ngModel)]="mailRequest.subject" required>
+                        </div>
+                        <div class="form-group col-md-12 mab-none mb-3">
+                          <textarea rows="6" name="message" class="form-control" placeholder="Escriba su mensaje"
+                            [(ngModel)]="mailRequest.caseEmail" required></textarea>
+                        </div>
+                        <div class="form-group mb0 col-md-12">
+                          <div class="actions">
+                            <button type="submit" class="btn btn-default contact_btn" title="Enviar Mensaje!">Enviar Mensaje</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </form>
+                  </form>
+                  
             </div><!-- END COL -->
 
             <div class="col-sm-4">
