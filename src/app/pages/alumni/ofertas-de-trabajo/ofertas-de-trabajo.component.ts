@@ -7,6 +7,10 @@ import Swal from 'sweetalert2';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { MailService } from '../../../data/service/mail.service';
 import { MailRequest } from '../../../data/model/Mail/MailRequest';
+import { PostulacionService } from '../../../data/service/postulacion.service';
+import { PostulacionDTO } from '../../../data/model/DTO/postulacionDTO';
+import { EstadoPostulacion } from '../../../data/model/enum/enums';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ofertas-de-trabajo',
@@ -18,85 +22,54 @@ export class OfertasDeTrabajoComponent implements OnInit {
   listOfertas: ofertaLaboralDTO[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO()
   value: string = 'seleccionar'
+  userId = localStorage.getItem('user_id');
 
-  constructor(private ofertasService: OfertalaboralService, private postulacionesService: GraduadoService, private mailService: MailService) { }
+  constructor(private ofertasService: OfertalaboralService, private mailService: MailService, private postulacionService: PostulacionService, private router: Router) { }
 
   ngOnInit(): void {
-    this.cargarOfertas()
+    this.cargarOfertas(this.userId ? parseInt(this.userId) : 0);
   }
 
-
-  cargarOfertas(): void {
-    this.ofertasService.getOfertasLaborales().subscribe(
+  cargarOfertas(id: number): void {
+    this.ofertasService.getOfertaLaboralWithPostulateByGraduateId(id).subscribe(
       oferta => this.listOfertas = oferta
     )
   }
 
-  createGraduadoDTO(oferta: ofertaLaboralDTO): GraduadoDTO {
-    const nuevoGraduadoDTO: GraduadoDTO = new GraduadoDTO();
-    nuevoGraduadoDTO.idOferta = [];
-
-    if (oferta.id !== undefined) {
-      nuevoGraduadoDTO.idOferta.push(oferta.id);
-    } else {
-      console.error("La oferta no tiene un ID definido.");
-    }
-    return nuevoGraduadoDTO;
-  }
-
-  requestOffer(Offer: GraduadoDTO) {
+  requestOffer(idOFerta: number): void {
     let isPres: boolean = true;
 
     const idUser = localStorage.getItem('user_id');
 
-    if (idUser) {
-      this.postulacionesService.getGraduadoByUsuarioId(parseInt(idUser)).subscribe(
-        grad => {
-          this.graduadoDTO = grad;
-          Offer.email_personal = this.graduadoDTO.email_personal;
-          outerLoop: for (const id of this.graduadoDTO?.idOferta || []) {
-            for (const newOffer of Offer.idOferta) {
-              if (id === newOffer) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Ya has postulado a esta oferta',
-                });
-                isPres = false;
-                break outerLoop;
-              }
-            }
-          }
-
-          if (isPres && this.graduadoDTO?.id !== undefined) {
-            this.postulacionesService.updateOfferInGraduado(Offer, this.graduadoDTO.id).subscribe(
-              grad => {
-                this.graduadoDTO = grad;
-              }
-            );
-
-            if (this.graduadoDTO) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Genial',
-                text: 'Has realizado la postulación correctamente',
-              });
-              this.sendMail(Offer);
-            }
-          }
-        }
-      );
+    const postulacionCreate: PostulacionDTO = {
+      ofertaLaboral: idOFerta,
+      graduado: idUser ? parseInt(idUser) : 0,
+      estado: EstadoPostulacion.APLICANDO.toString()
     }
+
+    this.postulacionService.createPostulacion(postulacionCreate).subscribe(
+      post => {
+        if (post) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Genial',
+            text: 'Has realizado la postulación correctamente',
+          });
+
+          window.location.reload();
+        }
+      }
+    );
   }
 
   sortBy(event: any): void {
     const value = event.target.value;
-  
+
     if (value) {
       this.listOfertas.sort((a, b) => {
         const propA = a[value];
         const propB = b[value];
-  
+
         if (typeof propA === 'number' && typeof propB === 'number') {
           return propB - propA;
         } else if (typeof propA === 'string' && typeof propB === 'string') {
@@ -108,15 +81,7 @@ export class OfertasDeTrabajoComponent implements OnInit {
     }
   }
 
-  sendMail(graduado: GraduadoDTO): void {
-    this.mailRequest = {
-      name:  graduado.idOferta[0].toString(),
-      to: graduado.email_personal,
-      from: 'info.alumni.est@gmail.com',
-      subject: '¡Haz realizado una postulación!',
-      caseEmail: 'postulate'
-    }
-
-    this.mailService.sendCasePostulateEmail(this.mailRequest).subscribe()
+  reloadPage(): void {
+    window.location.reload();
   }
 }

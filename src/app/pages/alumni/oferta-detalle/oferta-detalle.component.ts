@@ -5,6 +5,9 @@ import { OfertalaboralService } from '../../../data/service/ofertalaboral.servic
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import Swal from 'sweetalert2';
+import { PostulacionDTO } from '../../../data/model/DTO/postulacionDTO';
+import { EstadoPostulacion } from '../../../data/model/enum/enums';
+import { PostulacionService } from '../../../data/service/postulacion.service';
 
 @Component({
   selector: 'app-oferta-detalle',
@@ -12,12 +15,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./oferta-detalle.component.css', '../../../../assets/prefabs/PerfilUser.css']
 })
 export class OfertaDetalleComponent implements OnInit {
+  isPressed: boolean = false;
   authoritiesStorage: any;
   ofertaDetail: ofertaLaboral = new ofertaLaboral();
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
   diferenceDate: Date = new Date();
 
-  constructor(private ofertaService: OfertalaboralService, private postulacionesService: GraduadoService, private router: Router, private activeRoute: ActivatedRoute) { }
+  constructor(private ofertaService: OfertalaboralService, private postulacionesService: PostulacionService, private router: Router, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.detallarOferta();
@@ -49,59 +53,29 @@ export class OfertaDetalleComponent implements OnInit {
     }
   }
 
-  createGraduadoDTO(): GraduadoDTO {
-    const nuevoGraduadoDTO: GraduadoDTO = new GraduadoDTO();
-    nuevoGraduadoDTO.idOferta = [];
-
-    if (this.ofertaDetail.id !== undefined) {
-      nuevoGraduadoDTO.idOferta.push(this.ofertaDetail.id);
-    } else {
-      console.error("La oferta no tiene un ID definido.");
-    }
-    return nuevoGraduadoDTO;
-  }
-
-  requestOffer(Offer: GraduadoDTO) {
-    let isPres: boolean = true;
+  requestOffer(idOferta: number) {
+    this.isPressed = true;
 
     const idUser = localStorage.getItem('user_id');
 
-    if (idUser) {
-      this.postulacionesService.getGraduadoByUsuarioId(parseInt(idUser)).subscribe(
-        grad => {
-          this.graduadoDTO = grad;
+    const postulacionCreate: PostulacionDTO = {
+      ofertaLaboral: idOferta,
+      graduado: idUser ? parseInt(idUser) : 0,
+      estado: EstadoPostulacion.APLICANDO.toString()
+    };
 
-          outerLoop: for (const id of this.graduadoDTO?.idOferta || []) {
-            for (const newOffer of Offer.idOferta) {
-              if (id === newOffer) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Ya has postulado a esta oferta',
-                });
-                isPres = false;
-                break outerLoop;
-              }
-            }
-          }
+    this.postulacionesService.createPostulacion(postulacionCreate).subscribe(
+      post => {
+        if (post) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Genial',
+            text: 'Has realizado la postulación correctamente',
+          });
 
-          if (isPres && this.graduadoDTO?.id !== undefined) {
-            this.postulacionesService.updateOfferInGraduado(Offer, this.graduadoDTO.id).subscribe(
-              grad => {
-                this.graduadoDTO = grad;
-              }
-            );
-
-            if (this.graduadoDTO) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Genial',
-                text: 'Has realizado la postulación correctamente',
-              });
-            }
-          }
+          this.router.navigate(['system/alumni/postulaciones']);
         }
-      );
-    }
+      }
+    );
   }
 }

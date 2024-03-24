@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { MailService } from '../../../data/service/mail.service';
 import { MailRequest } from '../../../data/model/Mail/MailRequest';
+import { PostulacionService } from '../../../data/service/postulacion.service';
+import { Postulacion } from '../../../data/model/postulacion';
+import { EstadoPostulacion } from '../../../data/model/enum/enums';
 
 @Component({
   selector: 'app-postulaciones',
@@ -14,8 +17,10 @@ import { MailRequest } from '../../../data/model/Mail/MailRequest';
   styleUrls: ['./postulaciones.component.css']
 })
 export class PostulacionesComponent implements OnInit {
+  estadoPostulacion = EstadoPostulacion;
   mailRequest: MailRequest = new MailRequest();
   postulaciones: ofertaLaboral[] = [];
+  misPostulaciones: Postulacion[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -23,7 +28,7 @@ export class PostulacionesComponent implements OnInit {
   @Output() onClose: EventEmitter<string> = new EventEmitter();
   searchTerm: string = '';
 
-  constructor(private postulacionesService: GraduadoService, private mailService: MailService) { }
+  constructor(private mailService: MailService, private mypPostulacionService: PostulacionService) { }
 
   ngOnInit(): void {
     this.setupDtOptions();
@@ -54,19 +59,9 @@ export class PostulacionesComponent implements OnInit {
   }
 
   async detallarOferta(): Promise<void> {
+    const userIdStorage = localStorage.getItem('user_id')
 
-    const authoritieStorage = localStorage.getItem('authorities')
-
-    if (authoritieStorage) {
-      const parsedData = JSON.parse(authoritieStorage);
-
-      if (Array.isArray(parsedData) && parsedData.includes('GRADUADO')) {
-        const userIdStorage = localStorage.getItem('name')
-        if (userIdStorage) {
-          this.postulaciones = (await this.postulacionesService.getOfertasLaboralesByUsername(userIdStorage).toPromise()) || [];
-        }
-      }
-    }
+    this.misPostulaciones = (await this.mypPostulacionService.getAllPostulacionesByGraduadoId(userIdStorage ? parseInt(userIdStorage) : 0).toPromise()) || [];
   }
 
   createGraduadoDTO(oferta: ofertaLaboral): GraduadoDTO {
@@ -81,72 +76,66 @@ export class PostulacionesComponent implements OnInit {
     return nuevoGraduadoDTO;
   }
 
-  cancelOffer(Offer: GraduadoDTO) {
+  cancelOffer(postulacion: Postulacion) {
 
     const idUser = localStorage.getItem('user_id');
 
-    if (idUser) {
-      this.postulacionesService.getByUsuarioId(parseInt(idUser)).subscribe(
-        grad => {
-          this.graduadoDTO = grad;
-
-          console.log('Valor de ID graduado', this.graduadoDTO);
-
-          Swal.fire({
-            title: "¿Realmente quiere cancelar esta postulación?",
-            text: "Esta acción es irreversible",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "¡Sí, cancelar postulación!"
-          }).then((result) => {
-            if (result.isConfirmed && this.graduadoDTO?.id !== undefined) {
-              this.postulacionesService.cancelOfferInGraduado(Offer, this.graduadoDTO.id).subscribe(
-                grad => {
-                  Offer.email_personal = this.graduadoDTO.email_personal;
-                  this.graduadoDTO = grad;
-                  this.detallarOferta();
-                  Swal.fire({
-                    title: "¡Eliminado!",
-                    text: "Se ha cancelado la postulación",
-                    icon: "success"
-                  });
-                  this.sendMail(Offer);
-                },
-              );
-            }
-          });
-        }
-      );
+    const miPostulacion = {
+      ofertaLaboral: postulacion.ofertaLaboral?.id,
+      graduado: parseInt(idUser ? idUser : '0'),
+      estado: EstadoPostulacion.CANCELADA_POR_GRADUADO.toString()
     }
+
+    this.mypPostulacionService.updateStatePostulacion(postulacion.id ? postulacion.id : 0, miPostulacion).subscribe(() => {
+      Swal.fire({
+        title: "¡Eliminado!",
+        text: "Se ha cancelado la postulación",
+        icon: "success"
+      });
+      this.detallarOferta();
+    });
   }
 
-  filterOfertasLaborales(): ofertaLaboral[] {
+  repostulateOffer(postulacion: Postulacion) {
+
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Desea postularse a la oferta laboral nuevamente?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const idUser = localStorage.getItem('user_id');
+
+        const miPostulacion = {
+          ofertaLaboral: postulacion.ofertaLaboral?.id,
+          graduado: parseInt(idUser ? idUser : '0'),
+          estado: EstadoPostulacion.APLICANDO.toString()
+        }
+
+        this.mypPostulacionService.updateStatePostulacion(postulacion.id ? postulacion.id : 0, miPostulacion).subscribe(() => {
+          Swal.fire({
+            title: "¡Postulado!",
+            text: "Se ha postulado a la oferta nuevamente",
+            icon: "success"
+          });
+          this.detallarOferta();
+        });
+      }
+    });
+  }
+
+  filterOfertasLaborales(): Postulacion[] { //Adapt this method for the new model "Postulacion"
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase().trim();
 
-    return this.postulaciones.filter(oferta =>
+    return this.misPostulaciones.filter(oferta =>
       Object.values(oferta).some(value =>
         value !== null && typeof value === 'string' && value.toLowerCase().includes(lowerCaseSearchTerm)
       )
     );
-  }
-
-  sendMail(graduado: GraduadoDTO): void {
-    this.mailRequest = {
-      name: graduado.idOferta[0].toString(),
-      to: graduado.email_personal,
-      from: 'info.alumni.est@gmail.com',
-      subject: '¡Se ha cancelado una postulación!',
-      caseEmail: 'remove-postulate'
-    }
-
-    this.mailService.sendCasePostulateEmail(this.mailRequest).subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: '¡Correo enviado!',
-        text: 'Se ha enviado un correo con la notificación de cancelación de postulación'
-      });
-    })
   }
 }

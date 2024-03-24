@@ -38,24 +38,29 @@
                             <th>APERTURA</th>
                             <th>EXPERIENCIA</th>
                             <th class="text-center w-100px">CIUDAD</th>
+                            <th>ESTADO</th>
                             <th>ACCIONES</th>
                         </tr>
                     </thead>
                     
                     <tbody>
-                        <tr *ngFor="let postulacion of filterOfertasLaborales(); let id = index">
+                        <tr *ngFor="let postulacion of misPostulaciones; let id = index">
                             <th scope="row">{{id + 1}}</th>
-                            <td>{{postulacion.empresa.nombre}}</td>
-                            <td>{{postulacion.cargo}}</td>
+                            <td>{{postulacion.ofertaLaboral?.empresa?.nombre}}</td>
+                            <td>{{postulacion.ofertaLaboral?.cargo}}</td>
                             <!-- <td>{{postulacion.area_conocimiento}}</td> -->
-                            <td>{{postulacion.area_conocimiento}}</td>
-                            <td>{{postulacion.salario}}</td>
-                            <td>{{postulacion.fecha_apertura}}</td>
+                            <td>{{postulacion.ofertaLaboral?.area_conocimiento}}</td>
+                            <td class="text-center">${{postulacion.ofertaLaboral?.salario}}</td>
+                            <td>{{postulacion.ofertaLaboral?.fecha_apertura}}</td>
                             <!-- Sin información dentro de DB -->
                             <!-- <td>{{postulacion.experiencia}}</td>  -->
-                            <td>{{postulacion.experiencia}}</td>
-                            <td>{{postulacion.empresa.ciudad.nombre}}</td>
-                            <td> <button class="fa fa-trash border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="cancelOffer(createGraduadoDTO(postulacion))"></button></td>
+                            <td>{{postulacion.ofertaLaboral?.experiencia}}</td>
+                            <td>{{postulacion.ofertaLaboral?.empresa?.ciudad?.nombre}}</td>
+                            <td class="text-danger fw-bold">{{postulacion.estado}}</td>
+                            <td class="text-center" >
+                                <button *ngIf="postulacion.estado === 'APLICANDO'" class="fa fa-trash border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="cancelOffer(postulacion)"></button>
+                                <button *ngIf="postulacion.estado === 'CANCELADA_POR_GRADUADO'" class="fas fa-undo-alt border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="repostulateOffer(postulacion)"></button>
+                            </td>                            
                         </tr>
                     </tbody>
                 </table>

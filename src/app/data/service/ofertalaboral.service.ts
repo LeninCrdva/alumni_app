@@ -52,6 +52,10 @@ export class OfertalaboralService {
     return this.http.get<ofertaLaboral>(`${this.urlEndPoint}/${id}`)
   }
 
+  getOfertaLaboralWithPostulateByGraduateId(id:number): Observable<ofertaLaboralDTO[]> {
+    return this.http.get<ofertaLaboralDTO[]>(`${this.urlEndPoint}/ofertas-sin-postular/${id}`);
+  }
+
   getOfertaLaboralByIdToDTO(id: number): Observable<ofertaLaboralDTO> {
     return this.http.get<ofertaLaboralDTO>(`${this.urlEndPoint}/dto/${id}`)
   }

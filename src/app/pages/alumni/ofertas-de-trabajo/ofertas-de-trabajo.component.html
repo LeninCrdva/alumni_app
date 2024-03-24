@@ -29,41 +29,60 @@
 </div><!--end row-->
 
 <div class="col-lg-12 col-md-7 col-12">
-    <div class="row" *ngFor="let oferta of listOfertas">
-        <div class="col-lg-12 col-md-12 mt-4 pt-2">
-            <div class="job-listing p-4 rounded shadow position-relative overflow-hidden">
-                <div class="row align-items-center">
-                    <div class="col-lg-1 col-12">
-                        <div class="text-center text-lg-left">
-                            <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="">
-                        </div>
-                    </div><!--end col-->
-
-                    <div class="col-lg-8 col-md-12 mt-4 mt-lg-0">
-                        <div class="content text-center text-lg-left ml-lg-4">
-                            <h4 class="title">
-                                <a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]" class="text-dark">{{oferta.cargo}}</a>
-                            </h4>
-                            <ul class="list-unstyled mb-0">
-                                <li class="list-inline-item mr-3"><i data-feather="briefcase"
-                                        class="fea icon-sm mr-1"></i><span class="text-muted">
-                                        Fecha de publicacion: {{oferta.fechaPublicacion}}
-                                    </span></li>
-                            </ul>
-                            <div class="tagcloud text-center mt-2 text-lg-left">
-                                <a class="rounded">| {{oferta.nombreEmpresa}} |</a>
-                                <a class="rounded"> {{oferta.areaConocimiento}} |</a>
-                                <a class="rounded"> $ {{oferta.salario}} |</a>
+    <div *ngIf="listOfertas.length > 0; else noOfertas">
+        <div class="row" *ngFor="let oferta of listOfertas">
+            <div class="col-lg-12 col-md-12 mt-4 pt-2">
+                <div class="job-listing p-4 rounded shadow position-relative overflow-hidden">
+                    <div class="row align-items-center">
+                        <div class="col-lg-1 col-12">
+                            <div class="text-center">
+                                <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="">
                             </div>
                         </div>
-                    </div><!--end col-->
 
-                    <div class="col-lg-3 col-md-12 mt-3 mt-lg-0">
-                        <button class="btn btn-block btn-primary" (click)="requestOffer(createGraduadoDTO(oferta))">Aplicar</button>
-                    </div><!--end col-->
-                </div><!--end row-->
-                <a href="javascript:void(0)" class="text-danger like"> <i data-feather="heart"
-                        class="fea icon-sm like-icon"></i> </a>
-            </div><!--end feature Job-->
-        </div><!--end col-->
-    </div><!--end col-->
+                        <div class="col-lg-8 col-md-12 mt-4 mt-lg-0">
+                            <div class="content text-center text-lg-left ml-lg-4">
+                                <h4 class="title text-lg-left">
+                                    <a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]"
+                                        class="text-dark">{{oferta.cargo}}</a>
+                                </h4>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="list-inline-item mr-3"><i data-feather="briefcase"
+                                            class="fea icon-sm mr-1"></i><span class="text-muted">
+                                            Fecha de publicacion: {{oferta.fechaPublicacion}}
+                                        </span></li>
+                                </ul>
+                                <div class="tagcloud text-center mt-2 text-lg-left">
+                                    <a class="rounded">| {{oferta.nombreEmpresa}} |</a>
+                                    <a class="rounded"> {{oferta.areaConocimiento}} |</a>
+                                    <a class="rounded"> $ {{oferta.salario}} |</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-12 mt-3 mt-lg-0">
+                            <button class="btn btn-block btn-primary"
+                                (click)="requestOffer(oferta.id || 0)">Aplicar</button>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" class="text-danger like"> <i data-feather="heart"
+                            class="fea icon-sm like-icon"></i> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Si no hay ofertas disponibles -->
+    <ng-template #noOfertas>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 mt-4 mt-lg-0">
+                <div class="content text-center text-lg-left ml-lg-4">
+                    <h4 class="title">
+                        <a class="text-dark" (click)="reloadPage()">No existen ofertas disponibles para ti para
+                            postular</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

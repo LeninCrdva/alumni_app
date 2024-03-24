@@ -81,10 +81,12 @@ export class GraduadoService {
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${idUser}`);
   }
 
+  //Dont consume this method
   updateOfferInGraduado(graduado: GraduadoDTO, idGraduado: number): Observable<GraduadoDTO> {
     return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/postulaciones/${idGraduado}`, graduado, { headers: this.httpHeaders })
   }
 
+  //Dont consume this method
   cancelOfferInGraduado(graduado: GraduadoDTO, idGraduado: number): Observable<GraduadoDTO> {
     return this.http.put<GraduadoDTO>(`${this.urlEndPoint}/cancel-postulaciones/${idGraduado}`, graduado, { headers: this.httpHeaders })
   }
