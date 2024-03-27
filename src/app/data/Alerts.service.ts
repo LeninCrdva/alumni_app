@@ -58,10 +58,10 @@ export class AlertsService {
         });
     }
 
-    mostrarAlertaMomentanea(mensaje: string): void {
+    mostrarAlertaMomentanea(mensaje: string, isSuccesIcon: boolean = true): void {
         Swal.fire({
             position: "top",
-            icon: "success",
+            icon: (isSuccesIcon) ? "success" : "error",
             title: mensaje,
             showConfirmButton: false,
             timer: 1500

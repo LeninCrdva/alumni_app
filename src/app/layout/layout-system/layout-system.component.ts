@@ -156,7 +156,7 @@ export class LayoutSystemComponent implements OnInit {
     this.activeMenuItem = menuItem;
     localStorage.setItem('activeMenuItem', menuItem);
   }
-  
+
   capturarFile(event: any): any {
 
     const archivoCapturado = event.target.files[0]
@@ -233,7 +233,6 @@ export class LayoutSystemComponent implements OnInit {
       this.router.navigate(['/inicio-sesion']);
     });
   }
-
 
   private checkUserRole() {
     const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
@@ -463,7 +462,7 @@ export class LayoutSystemComponent implements OnInit {
       this.toggleDropdown();
     }
   }
-  
+
   private setupProfileDropdown() {
     const profile = this.el.nativeElement.querySelector('nav .profile');
 

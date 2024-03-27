@@ -40,10 +40,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
     private ciudadService: CiudadService,
     private assetService: AssetService,
     private sanitizer: DomSanitizer,
-
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this.nuevoGraduado.usuario = this.usuarioGuardado;
@@ -51,6 +48,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
     this.nuevoGraduadoForm.get('usuario')?.setValue(this.usuarioGuardado);
     this.cargarCiudades();
   }
+
   buildForm() {
     this.nuevoGraduadoForm = this.fb.group({
       usuario: ['', Validators.required],
@@ -58,7 +56,6 @@ export class NuevoGraduadoModalComponent implements OnInit {
       ciudad: ['', Validators.required],
       fecha_graduacion: ['', Validators.required],
       estadoCivil: ['', Validators.required],
-
     });
   }
 
@@ -108,10 +105,6 @@ export class NuevoGraduadoModalComponent implements OnInit {
       });
     }
   });
-  showSuccessModal() {
-
-    console.log('Modal de éxito mostrado');
-  }
 
   clearImage(): void {
     this.previsualizacion = '';
@@ -188,6 +181,4 @@ export class NuevoGraduadoModalComponent implements OnInit {
       console.error('No se puede cerrar el modal. Verifica que todos los campos estén llenos.');
     }
   }
-
-
 }
