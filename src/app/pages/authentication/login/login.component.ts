@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../data/service/AuthService';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AnimationOptions } from 'ngx-lottie';
+import Swal from 'sweetalert2';
+import { AlertsService } from '../../../data/Alerts.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private modalService: BsModalService
+    private alertService: AlertsService
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -39,7 +41,7 @@ export class LoginComponent {
     passwordInput.type = this.passwordVisible ? 'text' : 'password';
   }
 
-  login(template: any): void {
+  login(): void {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
 
@@ -58,7 +60,8 @@ export class LoginComponent {
           this.mensaje = 'success';
 
           localStorage.setItem('activeMenuItem', "Dashboard");
-          this.modalRef = this.modalService.show(template);
+
+          this.alertService.mostrarAlertaMomentanea('Inicio de sesión exitoso');
 
           // Redirigir según el rol del usuario
           localStorage.setItem('name', username);
@@ -68,14 +71,13 @@ export class LoginComponent {
           // Manejar errores
           console.error('Error en el inicio de sesión', error);
           this.mensaje = 'error';
-          this.modalRef = this.modalService.show(template); // Mostrar modal de error
+
+          this.alertService.mostrarAlertaMomentanea('Error en el inicio de sesión');
         }
       );
     }
   }
-  closeModal(): void {
-    this.modalRef.hide();
-  }
+  
   private redirectBasedOnAuthorities(authorities: string[]): void {
     // Redirigir según el rol del usuario
     if (authorities.includes('ADMINISTRADOR')) {

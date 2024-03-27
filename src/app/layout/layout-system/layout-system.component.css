@@ -101,7 +101,7 @@ li {
 
 #sidebar .divider {
     margin-top: 24px;
-    font-size: 12px;
+    font-size: 14px;
     text-transform: uppercase;
     font-weight: 700;
     color: rgb(33, 33, 33);
@@ -182,7 +182,7 @@ nav {
 }
 
 nav .toggle-sidebar {
-    font-size: 18px;
+    font-size: 24px;
     cursor: pointer;
 }
 

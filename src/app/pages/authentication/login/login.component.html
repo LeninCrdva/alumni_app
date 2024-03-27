@@ -17,7 +17,7 @@
           <p style="color: var(--alumni-color)">Por favor, ingrese sus credenciales</p>
         </div>
 
-        <form [formGroup]="loginForm" class="mb-5" (ngSubmit)="login(template)">
+        <form [formGroup]="loginForm" class="mb-5" (ngSubmit)="login()">
           <div class="mb-4">
             <div class="form-group">
               <input type="email" class="form-input" placeholder=" " id="InputEmail1" formControlName="username"
@@ -51,20 +51,6 @@
           <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
           <p class="text-end  mt-3"><a routerLink="/account/login/request-password"
               class=" font-weight-bold text-decoration-none fs-6">¿Has olvidado la contraseña?</a>.</p>
-
-          <!-- Modal -->
-          <ng-template #template>
-            <div class="modal-header">
-              <h4 class="modal-title">Mensaje</h4>
-              <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p *ngIf="mensaje === 'success'">Inicio de sesión exitoso.</p>
-              <p *ngIf="mensaje === 'error'">Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>
-            </div>
-          </ng-template>
         </form>
       </div>
 

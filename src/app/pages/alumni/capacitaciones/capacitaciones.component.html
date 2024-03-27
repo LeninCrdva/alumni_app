@@ -8,42 +8,6 @@
 </section>
 
 <!-- =====================================================
-    *           MODAL PARA IMPORTAR DATOS
- ======================================================= -->
-
-<div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-white bg-dark">
-                <h5>Restaurar Información (TEMPORAL)</h5>
-            </div>
-            <div class="modal-body">
-                <form (ngSubmit)="importarDatos()">
-                    <div class="row mg-b-25 mb-3" data-parsley-validate>
-                        <div class="form-group">
-                            <label for="fileInput" class="form-label"><b>Seleccione el archivo JSON:</b></label>
-
-                            <input type="file" #fileInput class="form-control" id="fileInput"
-                                (change)="onFileSelect($event)" required>
-
-                            <div class="oaerror warning" *ngIf="fileInput.value">
-                                <strong>Advertencia:</strong> Por favor, confirme que los datos a importar son correctos
-                                y corresponden a la tabla.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Importar Datos</button>
-                        <button type="button" #codeModal data-bs-dismiss="modal"
-                            class="btn btn-outline-danger btn-block">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- =====================================================
     *          MODAL PARA REGISTRAR DATOS
  ======================================================= -->
 
@@ -66,7 +30,7 @@
                             <input type="text" class="form-control" id="nombre"
                                 placeholder="Ingrese el nombre." formControlName="nombre" required>
                             <div class="oaerror danger  invalid-feedback">
-                                <strong>Error</strong> - Ingrese el nombre de su Capacitación.
+                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Capacitación.
                             </div>
                         </div>
                     </div>
@@ -75,13 +39,13 @@
                         <label for="institucion" class="form-label">INSTITUCIÓN:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-solid fa-building"></i>
                             </span>
                             <input type="text" class="form-control" id="institucion"
                                 placeholder="Ingrese el nombre de la institucion" formControlName="institucion"
                                 required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese el nombre de la institución de su
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
                                 Capacitación.
                             </div>
                         </div>
@@ -91,13 +55,13 @@
                         <label for="tipoCertificado" class="form-label">TIPO DE CERTIFICADO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
-                                <i class="fa-regular fa-user"></i>
+                                <i class="fa-regular fa-file"></i>
                             </a>
                             <input type="text" class="form-control" id="tipoCertificado"
                                 placeholder="Ingrese el tipo de certificado." formControlName="tipoCertificado"
                                 required>
                             <div class="oaerror danger  invalid-feedback">
-                                <strong>Error</strong> - Ingrese el tipo de certificado de su Capacitación.
+                                <strong>Dato Faltante</strong> - Ingrese el tipo de certificado de su Capacitación.
                             </div>
                         </div>
                     </div>
@@ -106,12 +70,12 @@
                         <label for="numHoras" class="form-label">HORAS:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-regular fa-clock"></i>
                             </span>
                             <input type="number" class="form-control" id="numHoras"
                                 placeholder="Ingrese la cantidad de horas" formControlName="numHoras" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese la cantidad de horas que realizo en su
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la cantidad de horas que realizo en su
                                 Capacitación.
                             </div>
                         </div>
@@ -121,12 +85,12 @@
                         <label for="fechaInicio" class="form-label">FECHA DE INICIO::</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fechaInicio"
                                 placeholder="Ingrese la fecha de inicio" formControlName="fechaInicio" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese la fecha de inicio de su
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de inicio de su
                                 Capacitación.
                             </div>
                         </div>
@@ -136,12 +100,12 @@
                         <label for="fechaFin" class="form-label">FECHA DE FIN::</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fechaFin"
                                 placeholder="Ingrese la fecha de fin" formControlName="fechaFin" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese la fecha de fin de su
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de fin de su
                                 Capacitación.
                             </div>
                         </div>
@@ -177,26 +141,19 @@
                 <i class="fas fa-sync"></i>
             </button>
 
-            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters()"
+            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
                 class="btn btn-dark ms-2">
                 <i class="fa-solid fa-filter"></i>
             </button>
 
-            <ng-multiselect-dropdown style="width: 20rem;" *ngIf="filterService.editFilterTabs"
-                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings"
-                [data]="filterService.dropdownList" [(ngModel)]="filterService.selectedItems"
-                (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll($event)"
+            <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                [data]="filterService.dropdownLists['filterTable']" [(ngModel)]="filterService.selectedItems['filterTable']"
+                (onSelect)="filterService.onItemSelect($event)"
+                (onSelectAll)="filterService.onSelectAll('filterTable')"
                 (onDeSelect)="filterService.onItemDeSelect($event)"
-                (onDeSelectAll)="filterService.onDeSelectAll($event)" class="ms-2">
+                (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
             </ng-multiselect-dropdown>
-
-            <button title="Generar copia del contenido de la tabla" (click)="exportarDatos()" class="btn btn-dark mx-2">
-                <i class="fa-regular fa-floppy-disk"></i>
-            </button>
-
-            <button title="Restaurar Datos" data-bs-toggle="modal" data-bs-target="#codeModal" class="btn btn-primary">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-            </button>
 
             <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
                 class="btn btn-primary ms-2" style="width: 18rem;">

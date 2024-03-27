@@ -46,7 +46,7 @@ export class AlertsService {
     detenerAlertaCargando(): void {
         Swal.close();
     }
-    
+
     mostrarAlertaCargando(mensaje: string = 'Cargando...'): void {
         Swal.fire({
             title: mensaje,
@@ -55,6 +55,16 @@ export class AlertsService {
             didOpen: () => {
                 Swal.showLoading();
             },
+        });
+    }
+
+    mostrarAlertaMomentanea(mensaje: string): void {
+        Swal.fire({
+            position: "top",
+            icon: "success",
+            title: mensaje,
+            showConfirmButton: false,
+            timer: 1500
         });
     }
 

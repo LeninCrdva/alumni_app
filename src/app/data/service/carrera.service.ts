@@ -31,5 +31,4 @@ export class CarreraService {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Carrera>(url, carrera, { headers: this.httpHeaders });
   }
-
 }

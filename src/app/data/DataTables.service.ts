@@ -41,30 +41,4 @@ export class DataTablesService {
             dtTrigger.next(null);
         });
     }
-
-    omitirPropsConId(dataArray: any[]): any[] {
-        return dataArray.map(obj => {
-            const newObj: { [key: string]: any } = {};
-            Object.keys(obj).forEach(key => {
-                if (!key.startsWith('id')) {
-                    newObj[key] = obj[key];
-                }
-            });
-            return newObj;
-        });
-    }
-
-    public generarJSON(tableList: any, name: string): void {
-        const dataSinIds = this.omitirPropsConId(tableList);
-        const dataStr = JSON.stringify(dataSinIds, null, 4);
-        const dataBlob = new Blob([dataStr], { type: "application/json" });
-        const url = URL.createObjectURL(dataBlob);
-        const link = document.createElement('a');
-        link.setAttribute('href', url);
-        link.setAttribute('download', name + '_Backup.json');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url); // Limpieza de la referencia al objeto Blob
-    }
 }

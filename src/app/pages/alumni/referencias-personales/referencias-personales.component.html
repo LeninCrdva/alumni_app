@@ -8,42 +8,6 @@
 </section>
 
 <!-- =====================================================
-    *           MODAL PARA IMPORTAR DATOS
- ======================================================= -->
-
-<div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-white bg-dark">
-                <h5>Restaurar Información (TEMPORAL)</h5>
-            </div>
-            <div class="modal-body">
-                <form (ngSubmit)="importarDatos()">
-                    <div class="row mg-b-25 mb-3" data-parsley-validate>
-                        <div class="form-group">
-                            <label for="fileInput" class="form-label"><b>Seleccione el archivo JSON:</b></label>
-
-                            <input type="file" #fileInput class="form-control" id="fileInput"
-                                (change)="onFileSelect($event)" required>
-
-                            <div class="oaerror warning" *ngIf="fileInput.value">
-                                <strong>Advertencia:</strong> Por favor, confirme que los datos a importar son correctos
-                                y corresponden a la tabla.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Importar Datos</button>
-                        <button type="button" #codeModal data-bs-dismiss="modal"
-                            class="btn btn-outline-danger btn-block">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- =====================================================
     *          MODAL PARA REGISTRAR DATOS
  ======================================================= -->
 
@@ -52,11 +16,11 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header text-white" [class.bg-dark]="!editarClicked" [class.bg-primary]="editarClicked">
-                <h5 [innerText]="editarClicked ? 'Modificar Referencia Laboral' : 'Agregar Referencia Laboral'">
+                <h5 [innerText]="editarClicked ? 'Modificar Referencia Personal' : 'Agregar Referencia Personal'">
                 </h5>
             </div>
             <div class="modal-body">
-                <form class="needs-validation mb-4" [formGroup]="validateForm">
+                <form class="row g-3 needs-validation" [formGroup]="validateForm">
                     <div class="form-group col-lg-6">
                         <label for="nombreReferencia" class="form-label">Nombre:</label>
                         <div class="input-group has-validation">
@@ -66,7 +30,7 @@
                             <input type="text" class="form-control" id="nombreReferencia" name="nombreReferencia"
                                 placeholder="Ingrese el nombre." formControlName="nombreReferencia" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Ingrese el nombre de su referencia personal.
+                                <strong>Dato Faltante</strong> - Ingrese el nombre de su referencia personal.
                             </div>
                         </div>
                     </div>
@@ -80,8 +44,8 @@
                             <input type="number" class="form-control" id="telefono" name="telefono"
                                 placeholder="Ingrese el número de telefono" formControlName="telefono" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese el nombre de la institución de su
-                                referencia laboral.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
+                                referencia Personal.
                             </div>
                         </div>
                     </div>
@@ -95,7 +59,7 @@
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Ingrese el Email." formControlName="email" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, especifique el Email.
+                                <strong>Dato Faltante</strong> - Por favor, especifique el Email.
                             </div>
                         </div>
                     </div>
@@ -104,7 +68,7 @@
             <div class="modal-footer">
                 <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
                     [class.btn-primary]="editarClicked">
-                    {{ editarClicked ? 'Actualizar Referencia Laboral' : 'Registrar Referencia Laboral' }}
+                    {{ editarClicked ? 'Actualizar Referencia Personal' : 'Registrar Referencia Personal' }}
                 </button>
 
                 <button type="button" #myModalClose data-bs-dismiss="modal"
@@ -130,30 +94,23 @@
                 <i class="fas fa-sync"></i>
             </button>
 
-            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters()"
+            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
                 class="btn btn-dark ms-2">
                 <i class="fa-solid fa-filter"></i>
             </button>
 
-            <ng-multiselect-dropdown style="width: 20rem;" *ngIf="filterService.editFilterTabs"
-                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings"
-                [data]="filterService.dropdownList" [(ngModel)]="filterService.selectedItems"
-                (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll($event)"
+            <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                [data]="filterService.dropdownLists['filterTable']" [(ngModel)]="filterService.selectedItems['filterTable']"
+                (onSelect)="filterService.onItemSelect($event)"
+                (onSelectAll)="filterService.onSelectAll('filterTable')"
                 (onDeSelect)="filterService.onItemDeSelect($event)"
-                (onDeSelectAll)="filterService.onDeSelectAll($event)" class="ms-2">
+                (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
             </ng-multiselect-dropdown>
-
-            <button title="Generar copia del contenido de la tabla" (click)="exportarDatos()" class="btn btn-dark mx-2">
-                <i class="fa-regular fa-floppy-disk"></i>
-            </button>
-
-            <button title="Restaurar Datos" data-bs-toggle="modal" data-bs-target="#codeModal" class="btn btn-primary">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-            </button>
 
             <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
                 class="btn btn-primary ms-2" style="width: 18rem;">
-                Agregar Referencia Laboral
+                Agregar Referencia Personal
             </button>
         </div>
 

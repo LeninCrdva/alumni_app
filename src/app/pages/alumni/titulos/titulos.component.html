@@ -8,42 +8,6 @@
 </section>
 
 <!-- =====================================================
-    *           MODAL PARA IMPORTAR DATOS
- ======================================================= -->
-
-<div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-white bg-dark">
-                <h5>Restaurar Información (TEMPORAL)</h5>
-            </div>
-            <div class="modal-body">
-                <form (ngSubmit)="importarDatos()">
-                    <div class="row mg-b-25 mb-3" data-parsley-validate>
-                        <div class="form-group">
-                            <label for="fileInput" class="form-label"><b>Seleccione el archivo JSON:</b></label>
-
-                            <input type="file" #fileInput class="form-control" id="fileInput"
-                                (change)="onFileSelect($event)" required>
-
-                            <div class="oaerror warning" *ngIf="fileInput.value">
-                                <strong>Advertencia:</strong> Por favor, confirme que los datos a importar son correctos
-                                y corresponden a la tabla.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Importar Datos</button>
-                        <button type="button" #codeModal data-bs-dismiss="modal"
-                            class="btn btn-outline-danger btn-block">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- =====================================================
     *          MODAL PARA REGISTRAR DATOS
  ======================================================= -->
 
@@ -57,16 +21,35 @@
             </div>
             <div class="modal-body">
                 <form class="row g-3 needs-validation" [formGroup]="validateForm">
-                    <div class="form-group col-lg-12">
+                    <div class="form-group col-lg-6">
                         <label for="nombre_titulo" class="form-label">NOMBRE DEL TITULO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
-                                <i class="fa-regular fa-user"></i>
+                                <i class="fa-solid fa-signature"></i>
                             </a>
                             <input type="text" class="form-control" id="nombre_titulo"
                                 placeholder="Ingrese el nombre del titulo." formControlName="nombre_titulo" required>
                             <div class="oaerror danger  invalid-feedback">
-                                <strong>Error</strong> - Ingrese el nombre de su Titulo.
+                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Titulo.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label for="nombrecarrera" class="form-label">CARRERA:</label>
+
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </a>
+
+                            <ng-multiselect-dropdown style="width: 20rem;" [placeholder]="'-- Seleccione una opción --'"
+                                [settings]="filterService.dropdownSettings['careersList']"
+                                [data]="filterService.dropdownLists['careersList']"
+                                [(ngModel)]="filterService.selectedItems['careersList']" formControlName="nombrecarrera">
+                            </ng-multiselect-dropdown>
+                            <div class="oaerror danger" *ngIf="validateForm.get('nombrecarrera')?.invalid">
+                                <strong>Dato Faltante</strong> - Seleccione el nombre de la carrera.
                             </div>
                         </div>
                     </div>
@@ -75,54 +58,55 @@
                         <label for="tipo" class="form-label">TIPO DE TÍTULO:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-solid fa-graduation-cap"></i>
                             </span>
                             <input type="text" class="form-control" id="tipo" placeholder="Ingrese el tipo del titulo."
                                 formControlName="tipo" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese el tipo del titulo.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el tipo de titulo que usted posee.
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group col-lg-6">
-                        <label for="nombrecarrera" class="form-label">CARRERA:</label>
-                        <div class="input-group has-validation">
-                            <a class="input-group-text">
-                                <i class="fa-regular fa-user"></i>
-                            </a>
-                            <input type="text" class="form-control" id="nombrecarrera"
-                                placeholder="Ingrese el nombre de la carrera." formControlName="nombrecarrera" required>
-                            <div class="oaerror danger  invalid-feedback">
-                                <strong>Error</strong> - Ingrese el nombre de la carrera.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group col-lg-6">
-                        <label for="num_registro" class="form-label">FECHA DE EMISIÓN:</label>
+                        <label for="num_registro" class="form-label">Número de Registro:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-solid fa-hashtag"></i>
                             </span>
-                            <input type="date" class="form-control" id="num_registro"
-                                placeholder="Ingrese el número de registro del titulo." formControlName="num_registro" required>
+                            <input type="number" class="form-control" id="num_registro"
+                                placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="num_registro" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese el número de registro del titulo.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del titulo.
                             </div>
                         </div>
                     </div>
-                    
+
+                    <div class="form-group col-lg-6">
+                        <label for="fecha_emision" class="form-label">FECHA DE EMISIÓN:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                            <input type="date" class="form-control" id="fecha_emision"
+                                placeholder="Ingrese el número de registro del titulo." formControlName="fecha_emision"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del titulo.
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group col-lg-6">
                         <label for="fecha_registro" class="form-label">FECHA DE REGISTRO:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-regular fa-calendar-days"></i>
                             </span>
-                            <input type="date" class="form-control" id="fecha_registro" placeholder="Ingrese la fecha de registro."
-                                formControlName="fecha_registro" required>
+                            <input type="date" class="form-control" id="fecha_registro"
+                                placeholder="Ingrese la fecha de registro." formControlName="fecha_registro" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese la fecha de registro titulo.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de registro titulo.
                             </div>
                         </div>
                     </div>
@@ -131,12 +115,12 @@
                         <label for="nivel" class="form-label">NIVEL DE TÍTULO:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
-                                <i class="fa-solid fa-link"></i>
+                                <i class="fa-solid fa-graduation-cap"></i>
                             </span>
                             <input type="text" class="form-control" id="nivel" placeholder="Ingrese el nivel de título"
                                 formControlName="nivel" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese el nivel de título.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nivel de título.
                             </div>
                         </div>
                     </div>
@@ -151,7 +135,7 @@
                                 placeholder="Ingrese el nombre de la institución." formControlName="institucion"
                                 required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Error</strong> - Por favor, ingrese el nombre de la institución.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución.
                             </div>
                         </div>
                     </div>
@@ -186,26 +170,20 @@
                 <i class="fas fa-sync"></i>
             </button>
 
-            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters()"
+            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
                 class="btn btn-dark ms-2">
                 <i class="fa-solid fa-filter"></i>
             </button>
 
-            <ng-multiselect-dropdown style="width: 20rem;" *ngIf="filterService.editFilterTabs"
-                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings"
-                [data]="filterService.dropdownList" [(ngModel)]="filterService.selectedItems"
-                (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll($event)"
+            <ng-multiselect-dropdown *ngIf="filterService.editFilterTabs['filterTable']"
+                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                [data]="filterService.dropdownLists['filterTable']"
+                [(ngModel)]="filterService.selectedItems['filterTable']"
+                (onSelect)="filterService.onItemSelect($event)"
                 (onDeSelect)="filterService.onItemDeSelect($event)"
-                (onDeSelectAll)="filterService.onDeSelectAll($event)" class="ms-2">
+                (onSelectAll)="filterService.onSelectAll('filterTable')"
+                (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
             </ng-multiselect-dropdown>
-
-            <button title="Generar copia del contenido de la tabla" (click)="exportarDatos()" class="btn btn-dark mx-2">
-                <i class="fa-regular fa-floppy-disk"></i>
-            </button>
-
-            <button title="Restaurar Datos" data-bs-toggle="modal" data-bs-target="#codeModal" class="btn btn-primary">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-            </button>
 
             <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
                 class="btn btn-primary ms-2" style="width: 18rem;">
@@ -223,14 +201,14 @@
                     <tbody>
                         <tr *ngFor="let item of titulosList;">
                             <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.nombre_titulo }}</td>
                             <td>{{ item.tipo }}</td>
                             <td>{{ item.nivel }}</td>
                             <td>{{ item.institucion }}</td>
-                            <td>{{ item.nombre_titulo }}</td>
-                            <td>{{ item.fecha_registro }}</td>
-                            <td>{{ item.fecha_emision }}</td>
-                            <td>{{ item.num_registro }}</td>
                             <td>{{ item.nombrecarrera }}</td>
+                            <td>{{ item.fecha_emision }}</td>
+                            <td>{{ item.fecha_registro }}</td>
+                            <td>{{ item.num_registro }}</td>
                             <td class="text-right text-center">
                                 <button (click)="onEditarClick(item.id)" data-bs-toggle="modal"
                                     data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">
