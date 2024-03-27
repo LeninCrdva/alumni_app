@@ -72,7 +72,7 @@ export class LoginComponent {
           console.error('Error en el inicio de sesión', error);
           this.mensaje = 'error';
 
-          this.alertService.mostrarAlertaMomentanea('Error en el inicio de sesión');
+          this.alertService.mostrarAlertaMomentanea('Error en el inicio de sesión', false);
         }
       );
     }

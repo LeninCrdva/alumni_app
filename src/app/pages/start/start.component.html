@@ -117,10 +117,10 @@
                         del Azuay</p>
 
                 </div>
+                
                 <!-- VIDEO POPUP -->
                 <div class="play-video-icon">
-                    <a href="https://www.youtube.com/watch?v=0t5x8UA_260" data-autoplay="true" data-vbtype="video"
-                        class="video-popup vide_btn ">
+                    <a href="https://www.youtube.com/watch?v=0t5x8UA_260" target="_blank" class="video-popup vide_btn ">
                         <i class="fa fa-play"></i>
                         <div class="sonar-wrapper">
                             <div class="sonar-emitter">
@@ -251,32 +251,33 @@
             <div class="col-sm-8 col-xs-12">
                 <form class="form" (submit)="onSubmit()">
                     <div class="row">
-                      <div class="input_padding text-center">
-                        <div class="form-group col-md-12 mb-3">
-                          <input type="text" name="name" class="form-control" placeholder="Nombres y Apellidos"
-                            [(ngModel)]="mailRequest.name" required>
+                        <div class="input_padding text-center">
+                            <div class="form-group col-md-12 mb-3">
+                                <input type="text" name="name" class="form-control" placeholder="Nombres y Apellidos"
+                                    [(ngModel)]="mailRequest.name" required>
+                            </div>
+                            <div class="form-group col-md-12 mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="Email"
+                                    [(ngModel)]="mailRequest.from" required>
+                            </div>
+                            <div class="form-group col-md-12 mb-3">
+                                <input type="text" name="subject" class="form-control" placeholder="Titulo"
+                                    [(ngModel)]="mailRequest.subject" required>
+                            </div>
+                            <div class="form-group col-md-12 mab-none mb-3">
+                                <textarea rows="6" name="message" class="form-control" placeholder="Escriba su mensaje"
+                                    [(ngModel)]="mailRequest.caseEmail" required></textarea>
+                            </div>
+                            <div class="form-group mb0 col-md-12">
+                                <div class="actions">
+                                    <button type="submit" class="btn btn-default contact_btn"
+                                        title="Enviar Mensaje!">Enviar Mensaje</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group col-md-12 mb-3">
-                          <input type="email" name="email" class="form-control" placeholder="Email"
-                            [(ngModel)]="mailRequest.from" required>
-                        </div>
-                        <div class="form-group col-md-12 mb-3">
-                          <input type="text" name="subject" class="form-control" placeholder="Titulo"
-                            [(ngModel)]="mailRequest.subject" required>
-                        </div>
-                        <div class="form-group col-md-12 mab-none mb-3">
-                          <textarea rows="6" name="message" class="form-control" placeholder="Escriba su mensaje"
-                            [(ngModel)]="mailRequest.caseEmail" required></textarea>
-                        </div>
-                        <div class="form-group mb0 col-md-12">
-                          <div class="actions">
-                            <button type="submit" class="btn btn-default contact_btn" title="Enviar Mensaje!">Enviar Mensaje</button>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </form>
-                  
+                </form>
+
             </div><!-- END COL -->
 
             <div class="col-sm-4">
@@ -315,11 +316,12 @@
                     <div><a href="#"><img src="assets/imgs/Alumni_logo_mini.png" alt="logo"></a></div>
 
                     <ul class="fot_menu">
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Politicas De Privacidad</a></li>
-                        <li><a href="#">Terminos y Condiciones</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contacto</a></li>
+                        <li><a href="https://www.tecazuay.edu.ec/" target="_blank">Inicio</a></li>
+                        <!-- <li><a href="#">Politicas De Privacidad</a></li>
+                        <li><a href="#">Terminos y Condiciones</a></li> -->
+                        <li><a href="https://www.tecazuay.edu.ec/acerca-nosotros/" target="_blank">Acerca de
+                                Nosotros</a></li>
+                        <li><a href="https://www.tecazuay.edu.ec/contactos/" target="_blank">Contacto</a></li>
                     </ul>
                     <p>&copy; 2024 ALUMNI - Todos Los Derechos Reservados.</p>
                 </div>
