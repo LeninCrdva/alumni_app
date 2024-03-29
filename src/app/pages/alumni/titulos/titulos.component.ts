@@ -5,10 +5,12 @@ import { FiltersService } from '../../../data/Filters.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { GraduadoService } from '../../../data/service/graduado.service';
 import { Titulo } from '../../../data/model/titulo';
 import { TituloService } from '../../../data/service/titulo.service';
 import { CarreraService } from '../../../data/service/carrera.service';
 import { Carrera } from '../../../data/model/carrera';
+import { Graduado3 } from '../../../data/model/graduado';
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
@@ -43,6 +45,7 @@ export class TitulosComponent {
   editarClicked = false;
 
   validateForm: FormGroup;
+  protected name: string | null = localStorage.getItem('name');
 
   // =====================================================
   //*                   CONSTURCTOR
@@ -55,7 +58,8 @@ export class TitulosComponent {
     private carrerasService: CarreraService,
     public dtService: DataTablesService,
     public filterService: FiltersService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private usuarioGraduado: GraduadoService
   ) {
     this.validateForm = this.fb.group({
       nombre_titulo: ['', Validators.required],
@@ -81,23 +85,24 @@ export class TitulosComponent {
 
     // Para inicializar los dropdowns de los filtros de la tabla.
     this.filterService.initializeDropdowns('filterTable', columnTitles);
-
-    this.loadData();
-
     this.obtenerCarreras();
+    this.obtenerIDGraduado();
+    this.loadData();
+   
   }
+ 
   
   ngAfterViewInit(): void {
     this.filterService.setDtElement(this.dtElement);
   }
-
   loadData() {
     this.tituloService.get().subscribe(
       result => {
         this.titulosList = [];
         this.titulosList = result;
+        
 
-        this.titulosList = result.filter(resultData => resultData.idgraduado === this.obtenerIDGraduado());
+        this.titulosList = result.filter(resultData => resultData.idgraduado === this.numeroUndefinido);
 
         if (this.initializeTable) {
           this.dtTrigger.next(null);
@@ -171,7 +176,7 @@ export class TitulosComponent {
       nivel: this.validateForm.value.nivel,
       institucion: this.validateForm.value.institucion,
       nombrecarrera: this.validateForm.value.nombrecarrera[0].item_text,
-      idgraduado: this.obtenerIDGraduado()
+      idgraduado: this.numeroUndefinido
     };
   }
 
@@ -219,14 +224,25 @@ export class TitulosComponent {
       }
     );
   }
+  public numeroUndefinido?: number;
+  obtenerIDGraduado(): void {
+    console.log("usuario:", this.name);
 
-  obtenerIDGraduado(): number {
-    const userDataString = localStorage.getItem('user_data');
-    const userData = JSON.parse(userDataString!);
-
-    return userData.persona.id;
-  }
-
+    this.usuarioGraduado.getGraduadoByUsuario(this.name).subscribe(
+        (graduado: Graduado3 | null) => {
+            console.log("Id de graduado:", graduado?.id);
+            if (graduado && graduado.id) {
+                this.numeroUndefinido = graduado.id;
+            }
+            console.log("Id de graduado retorna:", this.numeroUndefinido);
+        },
+        (error: any) => {
+            console.error(error);
+        }
+    );
+}
+  
+  
   obtenerCarreras() {
     this.carrerasService.getCarreras().subscribe(
       carreras => {

@@ -4,10 +4,7 @@
 
 <div class="modal-body">
     <form [formGroup]="formularioEmpresario" (ngSubmit)="guardarEmpresario()" >
-        <div class="form-group">
-            <label for="estado" style="color: var(--alumni-color)">Estado:</label>
-            <input type="text" class="form-control" id="estado" formControlName="estado" value="{{usuarios.estado}}" [readOnly]="true">
-        </div>
+       
 
         <div class="form-group">
             <label for="puesto" style="color: var(--alumni-color)">Puesto:</label>

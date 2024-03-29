@@ -41,7 +41,7 @@ export class UserService {
     );
   }
 
-  getUsuarioByUsername(username: string): Observable<Usuario> {
+  getUsuarioByUsername(username: string|null): Observable<Usuario> {
     const url = `${this.apiUrl}/usuarios/by-username/${username}`;
     return this.http.get<Usuario>(url);
   }

@@ -8,7 +8,7 @@ import { tokenExistsGuard } from './token-exists.guard';
 import { sessionGuardGuard } from './session-guard.guard';
 
 const routes: Routes = [
-    { path:'login', component:LoginComponent, canActivate: [sessionGuardGuard] },
+{ path:'login', component:LoginComponent, canActivate: [sessionGuardGuard] },
     { path:'register', component: RegisterComponent, canActivate: [sessionGuardGuard]},
     { path: 'login/request-password', component: RequestPasswordComponent },
     { path: 'login/reset-password', component: ResetPasswordComponent, canActivate: [tokenExistsGuard]},

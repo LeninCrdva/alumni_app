@@ -16,7 +16,7 @@
                 <div class="modal-content">
                     <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
                         class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Referencia Laboral' : 'Crear Referencia Laboral'">
+                        <h5 [innerText]="editarClicked ? 'Modificar Empresa' : 'Crear Empresa'">
                         </h5>
                     </div>
 
@@ -27,106 +27,102 @@
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">RUC: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el RUC" [(ngModel)]="editarClicked ? empresacargar.ruc : empresanueva.ruc" 
-                                                (ngModelChange)="editarClicked ? empresacargar.ruc = $event : empresanueva.ruc = $event" required>
+                                            <label class="form-control-label active">RUC: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="ruc"
+                                                placeholder="Ingrese el RUC"
+                                                [(ngModel)]="editarClicked ? empresacargar.ruc : empresanueva.ruc"
+                                                (ngModelChange)="editarClicked ? empresacargar.ruc = $event : empresanueva.ruc = $event"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">Nombre: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese el nombre" [(ngModel)]="editarClicked ? empresacargar.nombre : empresanueva.nombre"
-                                                (ngModelChange)="editarClicked ? empresacargar.nombre = $event : empresanueva.nombre = $event" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Tipo de Empresa: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="tipoempresa"
-                                                placeholder="Ingrese el tipoempresa"
-                                                [(ngModel)]="editarClicked ? empresacargar.tipoEmpresa : empresanueva.tipoEmpresa" 
-                                                (ngModelChange)="editarClicked ? empresacargar.tipoEmpresa = $event : empresanueva.tipoEmpresa = $event" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Razon Social: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="razonsocial"
-                                                placeholder="Ingrese la Razon Social"
-                                                [(ngModel)]="editarClicked ? empresacargar.razonSocial : empresanueva.razonSocial" 
-                                                (ngModelChange)="editarClicked ? empresacargar.razonSocial = $event : empresanueva.razonSocial = $event" required>
+                                            <label class="form-control-label active">Nombre: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="nombre"
+                                                placeholder="Ingrese el nombre"
+                                                [(ngModel)]="editarClicked ? empresacargar.nombre : empresanueva.nombre"
+                                                (ngModelChange)="editarClicked ? empresacargar.nombre = $event : empresanueva.nombre = $event"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25">
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">Area: <span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="form-control-label active">Tipo de Empresa: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="tipoEmpresa"
+                                                placeholder="Ingrese el tipo de empresa"
+                                                [(ngModel)]="editarClicked ? empresacargar.tipoEmpresa : empresanueva.tipoEmpresa"
+                                                (ngModelChange)="editarClicked ? empresacargar.tipoEmpresa = $event : empresanueva.tipoEmpresa = $event"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Razon Social: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="razonSocial"
+                                                placeholder="Ingrese la Razón Social"
+                                                [(ngModel)]="editarClicked ? empresacargar.razonSocial : empresanueva.razonSocial"
+                                                (ngModelChange)="editarClicked ? empresacargar.razonSocial = $event : empresanueva.razonSocial = $event"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Area: <span class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="area"
-                                                placeholder="Ingrese el area" [(ngModel)]="editarClicked ? empresacargar.area : empresanueva.area" 
-                                                (ngModelChange)="editarClicked ? empresacargar.area = $event : empresanueva.area = $event" required>
+                                                placeholder="Ingrese el área"
+                                                [(ngModel)]="editarClicked ? empresacargar.area : empresanueva.area"
+                                                (ngModelChange)="editarClicked ? empresacargar.area = $event : empresanueva.area = $event"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <div class="form-group">
-                                            <label class="form-control-label active">ubicacion: <span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="form-control-label active">Ubicación: <span class="tx-danger">*</span></label>
                                             <input class="form-control wd-250" type="text" name="ubicacion"
-                                                placeholder="Ingrese la ubicacion" [(ngModel)]="editarClicked ? empresacargar.ubicacion : empresanueva.ubicacion"
-                                                (ngModelChange)="editarClicked ? empresacargar.ubicacion = $event : empresanueva.ubicacion = $event" required>
+                                                placeholder="Ingrese la ubicación"
+                                                [(ngModel)]="editarClicked ? empresacargar.ubicacion : empresanueva.ubicacion"
+                                                (ngModelChange)="editarClicked ? empresacargar.ubicacion = $event : empresanueva.ubicacion = $event"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mg-b-25" data-parsley-validate>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label active">Sitio Web: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="username"
-                                                placeholder="Ingrese su sitio web" [(ngModel)]="editarClicked ? empresacargar.sitioWeb : empresanueva.sitioWeb"
-                                                (ngModelChange)="editarClicked ? empresacargar.sitioWeb = $event : empresanueva.sitioWeb = $event" required>
+                                            <label class="form-control-label active">Sitio Web: <span class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="sitioWeb"
+                                                placeholder="Ingrese su sitio web"
+                                                [(ngModel)]="editarClicked ? empresacargar.sitioWeb : empresanueva.sitioWeb"
+                                                (ngModelChange)="editarClicked ? empresacargar.sitioWeb = $event : empresanueva.sitioWeb = $event"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="col-lg-6">
-
-                                            <div class="form-group">
-                                                <label class="form-control-label active">Ciudad: <span
-                                                        class="tx-danger">*</span></label>
-                                                <select class="form-control" name="ciudad" [(ngModel)]="ID_Ciudad"
-                                                    (ngModelChange)="buscarCiudad(ID_Ciudad)" required>
-                                                    <option value=""  selected>-- Seleccione una ciudad --</option>
-                                                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{
-                                                        ciudad?.nombre }}</option>
-                                                </select>
-                                            </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Ciudad: <span class="tx-danger">*</span></label>
+                                            <select class="form-control" name="ciudad" [(ngModel)]="ID_Ciudad"
+                                                (ngModelChange)="buscarCiudad(ID_Ciudad)" required>
+                                                <option value="" selected>-- Seleccione una ciudad --</option>
+                                                <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{ ciudad?.nombre }}</option>
+                                            </select>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-control-label active">Sectorempresarial: <span
-                                                        class="tx-danger">*</span></label>
-                                                <select class="form-control" name="ciudad" [(ngModel)]="ID_Sector"
-                                                    (ngModelChange)="buscarSector(ID_Sector)" required>
-                                                    <option value=""  selected>-- Seleccione una sector empresarial --
-                                                    </option>
-                                                    <option *ngFor="let sector of sectoresEmpresariales"
-                                                        [value]="sector.id">{{ sector?.nombre }}</option>
-                                                </select>
-                                            </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Sector Empresarial: <span class="tx-danger">*</span></label>
+                                            <select class="form-control" name="sector" [(ngModel)]="ID_Sector"
+                                                (ngModelChange)="buscarSector(ID_Sector)" required>
+                                                <option value="" selected>-- Seleccione un sector empresarial --</option>
+                                                <option *ngFor="let sector of sectoresEmpresariales" [value]="sector.id">{{ sector?.nombre }}</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        
                     </div>
                     <div class="modal-footer">
                          <!-- Botón para registrar -->

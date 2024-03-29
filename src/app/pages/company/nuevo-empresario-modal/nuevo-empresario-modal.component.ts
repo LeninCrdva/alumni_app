@@ -24,9 +24,9 @@ export class NuevoEmpresarioModalComponent implements OnInit {
 
   constructor(
     public bsModalRef: BsModalRef,
-    private empresarioService: EmpresarioService, // Ajusta según la ubicación de tu servicio
+    private empresarioService: EmpresarioService, 
     private formBuilder: FormBuilder,
-    private usuarioService: UserService, // Ajusta según la ubicación de tu servicio
+    private usuarioService: UserService,
     
   ) {}
 
@@ -48,7 +48,7 @@ export class NuevoEmpresarioModalComponent implements OnInit {
 
   buildForm() {
     this.formularioEmpresario = this.formBuilder.group({
-      estado: [true, Validators.required],
+    
       puesto: ['', Validators.required],
       anios: [null, [Validators.required, Validators.min(0)]],
       usuario: [this.usuarioGuardado, Validators.required],
@@ -60,8 +60,8 @@ export class NuevoEmpresarioModalComponent implements OnInit {
       // Realizar la operación de guardado
       this.empresarioService.createEmpresario(this.formularioEmpresario.value).subscribe(
         (result) => {
-          console.log('Empresario creado con éxito:', result);
-          this.mensajeMostrado = true; // Marcar el mensaje como mostrado
+         
+          this.mensajeMostrado = true; 
           this.mostrarSweetAlert(true);
         },
         (error) => {
@@ -92,9 +92,7 @@ export class NuevoEmpresarioModalComponent implements OnInit {
   cerrarModal() {
     if (this.mensajeMostrado) {
       this.bsModalRef.hide();
-    } else {
-      console.log('Espera a que se muestre el mensaje antes de cerrar la modal.');
-    }
+    } 
   }
 
   obtenerUsuario(){
@@ -102,20 +100,20 @@ export class NuevoEmpresarioModalComponent implements OnInit {
     this.usuarioService.getUsuarioByUsername(username).subscribe(
       usuario => {
         this.usuarios = usuario;
-        console.log('Usuario obtenido exitosamente:', this.usuarios.nombreUsuario);
+       
         this.nuevoEmpresario.usuario = this.usuarios.nombreUsuario;
         this.nuevoEmpresario.estado = this.usuarios.estado
         localStorage.setItem('idUser', this.usuarios.id);
-        console.log('Usuario obtenido exitosamente:', localStorage.getItem('idUser'));
+       
       },
       error => console.error('Error al obtener usuario:', error)
     );
   }
 
   calcularEdad(): number {
-    // Fecha de nacimiento ("YYYY-MM-DD")
+   
     const fechaNacimientoString =this.usuarios.persona.fechaNacimiento;
-    console.log('Fecha de nacimiento:', fechaNacimientoString);
+  
     const fechaNacimiento = new Date(fechaNacimientoString);
 
     // Fecha actual

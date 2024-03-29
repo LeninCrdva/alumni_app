@@ -14,5 +14,20 @@ export class Empresa {
     'area': string;
     'ubicacion': string;
     'sitioweb': string;
+    'estado'?:boolean;
 
 }
+export class Empresa2 {
+    id?: number;
+    'empresario': Empresario; 
+    'ciudad': Ciudad;
+    'sectorEmpresarial': sectorempresarial; 
+    'ruc': string;
+    'nombre': string;
+    'tipoEmpresa': string;
+    'razonSocial': string;
+    'area': string;
+    'ubicacion': string;
+    'sitioWeb': string; 
+}
+

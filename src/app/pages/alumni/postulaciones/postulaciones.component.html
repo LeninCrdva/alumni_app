@@ -40,6 +40,7 @@
                             <th class="text-center w-100px">CIUDAD</th>
                             <th>ESTADO</th>
                             <th>ACCIONES</th>
+                            <th>PUBLICACION</th>
                         </tr>
                     </thead>
                     
@@ -50,22 +51,54 @@
                             <td>{{postulacion.ofertaLaboral?.cargo}}</td>
                             <!-- <td>{{postulacion.area_conocimiento}}</td> -->
                             <td>{{postulacion.ofertaLaboral?.area_conocimiento}}</td>
-                            <td class="text-center">${{postulacion.ofertaLaboral?.salario}}</td>
-                            <td>{{postulacion.ofertaLaboral?.fecha_apertura}}</td>
+                            <td class="text-center">
+                                {{ postulacion.ofertaLaboral?.salario !== 0 ? '$' + postulacion.ofertaLaboral?.salario : 'Hablarlo con la empresa' }}
+                              </td>                              
+                              <td>{{ postulacion.ofertaLaboral?.fecha_apertura ? postulacion.ofertaLaboral?.fecha_apertura : 'No definido' }}</td>
                             <!-- Sin información dentro de DB -->
                             <!-- <td>{{postulacion.experiencia}}</td>  -->
-                            <td>{{postulacion.ofertaLaboral?.experiencia}}</td>
+                            <td>{{ postulacion.ofertaLaboral?.experiencia ? postulacion.ofertaLaboral?.experiencia : 'No definido' }}</td>
                             <td>{{postulacion.ofertaLaboral?.empresa?.ciudad?.nombre}}</td>
                             <td class="text-danger fw-bold">{{postulacion.estado}}</td>
                             <td class="text-center" >
                                 <button *ngIf="postulacion.estado === 'APLICANDO'" class="fa fa-trash border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="cancelOffer(postulacion)"></button>
                                 <button *ngIf="postulacion.estado === 'CANCELADA_POR_GRADUADO'" class="fas fa-undo-alt border-0 p-3 mb-2 bg-transparent text-dark" aria-hidden="true" (click)="repostulateOffer(postulacion)"></button>
-                            </td>                            
+                            </td>
+                            <td >
+                                <i class="fas fa-image" 
+                                *ngIf="!loading && postulacion.ofertaLaboral?.foto_portada" 
+                                (click)="openModal(postulacion.ofertaLaboral?.foto_portada)"
+                                style="cursor: pointer;"></i>
+                               
+                            </td>
+                            
+                            
+                            
+                            
+                                                        
                         </tr>
                     </tbody>
                 </table>
+               
             </div>
         </div>
 
+    </div>
+</div>
+<div class="modal" #m_modal_4 id="m_modal_4" tabindex="-1" role="dialog" [hidden]="!modalImage">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Oferta Laboral</h5>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+                <img [src]="modalImage" alt="Foto de Portada" class="img-fluid">
+            </div>
+            
+            <div class="modal-footer">
+                <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
+                id="close-button">Cerrar</button>
+            </div>
+        </div>
     </div>
 </div>

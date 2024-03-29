@@ -12,7 +12,10 @@ import { AnimationOptions } from 'ngx-lottie';
 import { RegisterDTO } from '../../../data/model/DTO/RegisterDTO';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom, switchMap } from 'rxjs';
-
+import { NuevoGraduadoModalComponent } from '../../alumni/nuevo-graduado-modal/nuevo-graduado-modal.component';
+import { NuevoEmpresarioModalComponent } from '../../company/nuevo-empresario-modal/nuevo-empresario-modal.component';
+import { NuevoAdministradorModalComponent } from '../../admin/nuevo-administrador-modal/nuevo-administrador-modal.component';
+import { fechaNacimientoValidator } from './fechaNacimientoValidator';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -45,6 +48,7 @@ export class RegisterComponent implements OnInit {
     private personaService: PersonaService,
     private sanitizer: DomSanitizer,
     private router: Router,
+    public bsModalRef: BsModalRef,
     private modalService: BsModalService
   ) {
     this.registerForm = this.fb.group({
@@ -55,7 +59,7 @@ export class RegisterComponent implements OnInit {
       cedula: ['', Validators.required],
       sexo: ['', Validators.required],
       telefono: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
+      fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
       nombreUsuario: ['', Validators.required],
       clave: ['', Validators.required],
       nombreDelRol: [localStorage.getItem('userRole'), Validators.required],
@@ -63,7 +67,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
+   // console.log('Rol recibido en RegisterComponent:', localStorage.getItem('userRole'));
   }
 
   onSexoChange(event: any, value: string) {
@@ -169,11 +173,62 @@ export class RegisterComponent implements OnInit {
 
         this.username = this.registerDto.nombreUsuario;
         localStorage.setItem('name', this.username);
-        
-        this.showAlert(this.registerDto);
-        
+
+        this.showAlert(this.registerDto); 
+        this.authService.login(this.registerDto.nombreUsuario, this.registerDto.clave).subscribe(
+          (response) => {
+            const accessToken = response.accessToken;
+            const authorities: string[] = response.authorities.map((authority: { authority: any; }) => authority.authority);
+          
+            localStorage.setItem('token', accessToken);
+
+            switch (this.registerDto.rol) {
+              case 'GRADUADO':
+                this.openNuevoGraduadoModal();
+                break;
+              default:
+                console.error('Rol no reconocido:', this.registerDto.rol);
+            }
+
+          },
+          (error) => {
+            // Manejar errores
+            console.error('Error en el inicio de sesión', error);
+            this.mensaje = 'error';
+
+          }
+        );
+
         this.router.navigate(['account/login']);
-      });
+        
+      },
+      (error) => {
+      
+       
+        if (error.status === 500 && error.error && error.error.message) {
+        
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ya se encuentra registrado ' + (error.error.details.includes('cedula') ? ' esta cédula' : 'esta cédula'),
+          });
+        } else if (error.status === 400) {
+         
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El nombre de usuario ya existe',
+          });
+        } else {
+         
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error durante el registro. Por favor, intenta nuevamente más tarde.',
+          });
+        }
+      }
+    );
     } else {
       console.warn('El formulario no es válido.');
       Object.keys(this.registerForm.controls).forEach(key => {
@@ -191,6 +246,15 @@ export class RegisterComponent implements OnInit {
         icon: 'info',
         text: 'Su cuenta se ha registrado correctamente, pero necesita ser aprobada por un administrador para poder iniciar sesión.'
       });
+      /*switch (resp.rol) {
+        case 'ADMINISTRADOR':
+          this.openNuevoAdministradorModal();
+          break;
+        case 'EMPRESARIO':
+          this.openNuevoEmpresarioModal();
+          break;
+       
+      }*/
     } else {
       Swal.fire({
         icon: 'success',
@@ -198,4 +262,48 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+  openNuevoAdministradorModal(): void {
+    const config = {
+      ignoreBackdropClick: true,
+      keyboard: false,
+    };
+    this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
+
+    this.bsModalRef.content.onClose.subscribe((result: string) => {
+      if (result === 'guardadoExitoso') {
+        console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+      }
+    });
+  }
+
+  openNuevoEmpresarioModal(): void {
+    const config = {
+      ignoreBackdropClick: true,
+      keyboard: false,
+    };
+    this.bsModalRef = this.modalService.show(NuevoEmpresarioModalComponent, config);
+
+    this.bsModalRef.content.onClose.subscribe((result: string) => {
+      if (result === 'guardadoExitoso') {
+        console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+      }
+    });
+  }
+
+  openNuevoGraduadoModal(): void {
+    const config = {
+      ignoreBackdropClick: true,
+      keyboard: false,
+    };
+    this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
+
+    this.bsModalRef.content.onClose.subscribe((result: string) => {
+      if (result === 'guardadoExitoso') {
+        console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+      }
+    });
+  }
+
+
 }

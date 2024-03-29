@@ -45,3 +45,13 @@ export class Graduado3 {
     'ruta_pdf': string;
     'url_pdf': string;
 }
+export class Graduado4 {
+    'id': number = 0;
+    'usuario': string;
+    'ciudad': string;
+    'año_graduacion': Date;
+    'email_personal': string;
+    'estadocivil': string;
+    'ruta_pdf': string;
+    'url_pdf': string;
+}

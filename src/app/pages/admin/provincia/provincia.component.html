@@ -11,11 +11,14 @@
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
         <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
+            aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div [class.bg-success]="!editModeProvince" [class.bg-primary]="editModeProvince"
+                   <!--- <div [class.bg-success]="!editModeProvince" [class.bg-primary]="editModeProvince"
                         class="modal-header text-white">
+                        <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Crear nueva Provincia'"></h5>
+                    </div>-->
+                    <div [class.bg-primary]="true" class="modal-header text-white">
                         <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Crear nueva Provincia'"></h5>
                     </div>
 
@@ -53,8 +56,8 @@
                             data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
                             {{!editModeProvince ? 'Guardar Cambios' : 'Crear'}}
                         </button>
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+                        <button data-bs-dismiss="modal"  id="close-button"
+                            class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
                     </div>
                 </div>
             </div>
@@ -63,14 +66,16 @@
         <!--/ Modal -->
 
         <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
+            aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
-                        class="modal-header text-white">
-                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'">
-                        </h5>
+                   <!--- <div [class.bg-success]="!editarClicked" class="modal-header text-white bg-primary">
+                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
+                    </div>-->
+                    <div [class.bg-primary]="true" class="modal-header text-white">
+                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
                     </div>
+                    
 
                     <div class="modal-body">
                         <form [formGroup]="registerCityForm">
@@ -111,8 +116,8 @@
                             data-bs-toggle="modal" data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
                             {{editModeCity ? "Edit" : "Guardar"}}
                         </button>
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+                        <button data-bs-dismiss="modal" id="close-button"
+                            class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Empresa } from '../model/empresa';
 import { Empresario } from '../model/empresario';
-
+import { Empresa2 } from '../model/empresa';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,8 +29,8 @@ export class EmpresaService {
     return this.http.post<Empresa>(this.urlEndPoint, empresa, { headers: this.httpHeaders })
   }
 
-  getEmpresaById(id: any): Observable<Empresa> {
-    return this.http.get<Empresa>(`${this.urlEndPoint}/${id}`)
+  getEmpresaById(id: any): Observable<Empresa2> {
+    return this.http.get<Empresa2>(`${this.urlEndPoint}/${id}`)
   }
 
   updateEmpresa(id: number, empresa: Empresa): Observable<Empresa> {
@@ -42,9 +42,12 @@ export class EmpresaService {
     return this.http.get<Empresario>(`${this.urlEndPoint}/usuario/${id}`)
   }
 
-  deleteEmpresa(id: number): Observable<Empresa> {
-    return this.http.delete<Empresa>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders });
+  deleteEmpresa(id: number): Observable<string> {
+    return this.http.delete(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders, responseType: 'text' });
   }
+  
+  
+  
   getEmpresaSinOfertasLab(): Observable<Empresa[]> {
     return this.http.get<Empresa[]>(`${this.urlEndPoint}/sin-oferta-laboral`);
   }

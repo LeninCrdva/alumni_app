@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Graduado } from '../model/graduado';
 import { Graduado3 } from '../model/graduado';
+import { Graduado4 } from '../model/graduado';
 import { Graduado1 } from '../model/graduado';
 import { map } from 'rxjs/operators';
 import { ofertaLaboral } from '../model/ofertaLaboral';
@@ -67,9 +68,16 @@ export class GraduadoService {
       })
     );
   }
-  getGraduadoByUsuario(usuario: string): Observable<Graduado3 | null> {
+  getGraduadoByUsuario(usuario: string|null): Observable<Graduado3 | null> {
+    const usuarioMayusculas = usuario ? usuario.toUpperCase() : null; 
     return this.http.get<Graduado3[]>(this.urlEndPoint).pipe(
-      map(graduados => graduados.find(graduado => graduado.usuario === usuario) || null)
+      map(graduados => graduados.find(graduado => graduado.usuario === usuarioMayusculas) || null)
+    );
+  }
+  getGraduadoByUsuario2(usuario: string|null): Observable<Graduado4 | null> {
+    const usuarioMayusculas = usuario ? usuario.toUpperCase() : null; 
+    return this.http.get<Graduado4[]>(this.urlEndPoint).pipe(
+      map(graduados => graduados.find(graduado => graduado.usuario === usuarioMayusculas) || null)
     );
   }
 

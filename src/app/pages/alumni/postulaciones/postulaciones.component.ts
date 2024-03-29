@@ -3,14 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
-import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { MailService } from '../../../data/service/mail.service';
 import { MailRequest } from '../../../data/model/Mail/MailRequest';
 import { PostulacionService } from '../../../data/service/postulacion.service';
 import { Postulacion } from '../../../data/model/postulacion';
 import { EstadoPostulacion } from '../../../data/model/enum/enums';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-postulaciones',
   templateUrl: './postulaciones.component.html',
@@ -24,16 +23,48 @@ export class PostulacionesComponent implements OnInit {
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
   dtoptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  loading: boolean = false;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
   searchTerm: string = '';
 
-  constructor(private mailService: MailService, private mypPostulacionService: PostulacionService) { }
+  constructor(private mailService: MailService, private mypPostulacionService: PostulacionService
+    ) { }
 
   ngOnInit(): void {
     this.setupDtOptions();
     this.detallarOferta();
+    
   }
+  modalImage: string | undefined ;
+  openModal(imageUrl: string | undefined) {
+    this.loading = true;
+    
+    Swal.fire({
+        title: 'Cargando...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    setTimeout(() => {
+        this.loading = false; 
+        this.modalImage = imageUrl;
+        ($('#m_modal_4') as any).modal('show'); 
+        Swal.close(); 
+    }, 2000);
+}
+
+
+closeModal() {
+  this.modalImage = '';
+
+  if ($('#m_modal_4').hasClass('show')) {
+    ($('#m_modal_4') as any).modal('hide');
+  }
+}
+
 
   setupDtOptions() {
     this.dtoptions = {

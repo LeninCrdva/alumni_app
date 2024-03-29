@@ -13,5 +13,8 @@ export class ofertaLaboral {
     'estado': boolean;
     'empresa': Empresa;
     'graduados': Graduado[];
+    'tipo': string;
+    'foto_portada': string;
+    'tiempo'?: string;
 
 }

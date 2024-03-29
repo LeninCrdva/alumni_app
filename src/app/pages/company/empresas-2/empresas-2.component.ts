@@ -23,8 +23,7 @@ export class Empresas2Component {
   idEdit: number = 0;
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
-    this.idEdit = id || 0;  // Asignar 0 si id es undefined
-    console.log('ID a editar:', this.idEdit);
+    this.idEdit = id || 0;  
     this.getEmpresaById(this.idEdit);
  }
  
@@ -34,29 +33,36 @@ export class Empresas2Component {
 
   }
 
-  //ID del usuario logueado
+ 
   idUser: number = parseInt(localStorage.getItem('idUser') || '0', 10);
-  //Para obtener el empresario del usuario logueado
   public empresariouser: string | undefined = '';
-  //Para ciudad y sector empresarial
   ciudadSeleccionada: any = {};
   sectorSeleccionado: any = {};
-  //Para obtener el empresario del usuario logueado
   empresass: Empresa[] = [];
   empresanueva: any = {};
   empresacargar: any = {};
   ciudades: Ciudad[] = [];
   sectoresEmpresariales: sectorempresarial[] = [];
 
-  ID_Ciudad: number = 0;
-  ID_Sector: number = 0;
+  ID_Ciudad: number | undefined;
+  ID_Sector: number | undefined;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
 
 
   constructor(public bsModalRef: BsModalRef
     ,private cd: ChangeDetectorRef, private empresaService: EmpresaService, private ciudadService: CiudadService, private sectorempresarialService: SectorEmpresarialService, private serviceempresario: EmpresarioService) { }
-
+    closeModal2(modalId: string): void {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
+        if (modalBackdrop) {
+          modalBackdrop.parentNode?.removeChild(modalBackdrop);
+        }
+      }
+    }
   ngOnInit(): void {
 
     this.ciudadSeleccionada = {
@@ -70,7 +76,7 @@ export class Empresas2Component {
       descripcion: '',
     }
     this.empresanueva = {
-      empresario: '', // O el valor por defecto que desees
+      empresario: '', 
       ciudad: new Ciudad(),
       sectorEmpresarial: new sectorempresarial(),
       ruc: '',
@@ -80,10 +86,10 @@ export class Empresas2Component {
       area: '',
       ubicacion: '',
       sitioWeb: '',
-      // O el valor por defecto que desees
+     
     };
     this.empresacargar = {
-      empresario: '', // O el valor por defecto que desees
+      empresario: '',
       ciudad: new Ciudad(),
       sectorEmpresarial: new sectorempresarial(),
       ruc: '',
@@ -93,45 +99,39 @@ export class Empresas2Component {
       area: '',
       ubicacion: '',
       sitioWeb: '',
-      // O el valor por defecto que desees  
+     
     };
 
+
+
+    this.getCiudadIDName();
+    this.obtenerYAlmacenarUsuarioEmpresario();
+    this.getSectoresEmpresariales();
+
+  }
+  obtenerYAlmacenarUsuarioEmpresario(): void {
     this.serviceempresario.getEmpresario().subscribe(
       empresario => {
         if (empresario?.usuario !== undefined) {
           localStorage.setItem('empresariouser', empresario.usuario);
-          // Recupera el valor almacenado en localStorage
           const storedEmpresariouser = localStorage.getItem('empresariouser');
           
           this.cd.detectChanges();
-          // Comprueba si el valor no es null antes de asignarlo a this.empresariouser
-          if (storedEmpresariouser !== null) {
-            // Convierte el valor a mayúsculas antes de asignarlo a this.empresariouser
+          
+          if (storedEmpresariouser !== null) {       
             this.empresariouser = storedEmpresariouser.toUpperCase();
             console.log('Valor almacenado en localStorage (mayúsculas):', this.empresariouser);
-
-            // Ahora puedes usar this.empresariouser en tu lógica posterior
           } else {
             console.log('No hay valor almacenado en localStorage para la clave "empresariouser".');
           }
-
-
         }
-
-        // Log para imprimir datos antes de la solicitud
-        console.log('Datos enviados al método getEmpresasbyUser:', this.empresariouser);
         
         this.buscarEmpresas();
-       
       },
       error => console.error('Error al obtener el empresario:', error)
     );
-
-
-    this.getCiudadIDName();
-    this.getSectoresEmpresariales();
-
   }
+  
 
 
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
@@ -146,6 +146,8 @@ export class Empresas2Component {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
         this.bsModalRef.hide();
+        this.closeModal2('m_modal_4');
+        this.obtenerYAlmacenarUsuarioEmpresario();
       }
     });
   }
@@ -170,20 +172,16 @@ export class Empresas2Component {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
-    if (this.empresanueva) { // Add null check for this.ciudadSeleccionada
+    if (this.empresanueva) { 
       this.empresanueva.empresario = this.empresariouser;
-      console.log('Empresario:', this.empresanueva.empresario);
-      console.log('Empresario1111:', this.empresanueva);
-
       this.empresaService.createEmpresa(this.empresanueva).subscribe(
         empresa => {
-
-          console.log('Empresa creada exitosamente:', empresa);
           this.mostrarSweetAlert(true, 'La empresa se ha guardado exitosamente.');
-          this.empresanueva = this.createEmpresaVacia(); // Limpiar el formulario
+          this.empresanueva = this.createEmpresaVacia(); 
+          this.bsModalRef.hide(); 
+          this.onClose.emit('guardadoExitoso');
         },
         error => {
-          console.error('Error al crear la empresa:', error);
           this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
         }
       );
@@ -192,13 +190,11 @@ export class Empresas2Component {
 
 
   editarEmpresa() {
-    // Verificar si this.empresacargar es válido
     if (!this.empresacargar) {
       console.error('Error: this.empresacargar es null o undefined.');
       return;
     }
 
-    // Verificar si this.idEdit es válido
     if (this.idEdit <= 0) {
       console.error('Error: this.idEdit no es un valor válido.');
       return;
@@ -209,21 +205,17 @@ export class Empresas2Component {
       return;
     }
     this.editarClicked = true;
-    console.log('Editar clicked:', this.editarClicked);
-
-    // Asignar el empresario antes de actualizar
     this.empresacargar.empresario = this.empresariouser;
-    console.log('Empresa a editar:', this.empresacargar);
-
-    // Llamar al servicio para actualizar la empresa
     this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
       empresaActualizada => {
-        console.log('Empresa actualizada exitosamente:', empresaActualizada);
         this.mostrarSweetAlert(true, 'La empresa se ha actualizado exitosamente.');
-        this.empresacargar = this.createEmpresaVacia(); // Limpiar el formulario
+        this.empresacargar = this.createEmpresaVacia();
+        this.bsModalRef.hide();
+        this.onClose.emit('actualizacionExitosa'); 
+        this.obtenerYAlmacenarUsuarioEmpresario();
+
       },
       error => {
-        console.error('Error al actualizar empresa:', error);
         this.mostrarSweetAlert(false, 'La empresa no se ha actualizado');
       }
     );
@@ -242,19 +234,16 @@ export class Empresas2Component {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Si el usuario confirma, eliminar la empresa
         this.empresaService.deleteEmpresa(id).subscribe(
-          () => {
-            // Mostrar SweetAlert de éxito
+          response => {
             Swal.fire({
               icon: 'success',
               title: 'Eliminado exitosamente',
-              text: 'La empresa ha sido eliminada correctamente.',
+              text: response,
             });
-            // Puedes agregar más acciones después de eliminar, si es necesario
+            this.obtenerYAlmacenarUsuarioEmpresario();
           },
           error => {
-            // Mostrar SweetAlert de error
             Swal.fire({
               icon: 'error',
               title: 'Error al eliminar',
@@ -266,8 +255,7 @@ export class Empresas2Component {
       }
     });
   }
-
-
+  
   getCiudadIDName() {
     this.ciudadService.getCiudades().subscribe(
       ciudades => this.ciudades = ciudades,
@@ -283,31 +271,40 @@ export class Empresas2Component {
     );
   }
 
-  buscarCiudad(id: number) {
+  buscarCiudad(id: number|undefined) {
     this.ciudadService.getCiudadById(id).subscribe(
       ciudad => {
         if (ciudad) {
-          console.log('Ciudad:', ciudad);
-          //this.ciudadSeleccionada = ciudad;
-          this.empresanueva.ciudad = ciudad;
-          console.log('Ciudad seleccionada:', this.empresanueva.ciudad);
+          
+          if (this.editarClicked) {
+            
+            this.empresacargar.ciudad = ciudad;
+            console.log('Ciudad seleccionada:', this.empresacargar.ciudad);
+          } else {
+            this.empresanueva.ciudad = ciudad;
+            console.log('Ciudad seleccionada:', this.empresanueva.ciudad);
+          }
         } else {
           console.log('No se puede obtener la ciudad');
         }
-
       },
       error => console.error(error)
-
-
     );
   }
 
-  buscarSector(id: number) {
+
+  buscarSector(id: number|undefined) {
     this.sectorempresarialService.getSectorEmpresarialById(id).subscribe(
       sector => {
         if (sector) {
-          this.empresanueva.sectorEmpresarial = sector;
-          console.log('Sector seleccionado:', this.empresanueva.sectorEmpresarial);
+        
+          if (this.editarClicked) {
+            this.empresacargar.sectorEmpresarial = sector;
+            console.log('Sector seleccionado:', this.empresacargar.sectorEmpresarial);
+          } else {
+            this.empresanueva.sectorEmpresarial = sector;
+            console.log('Sector seleccionado:', this.empresanueva.sectorEmpresarial);
+          }
         } else {
           console.log('No se puede obtener el sector');
         }
@@ -315,6 +312,7 @@ export class Empresas2Component {
       error => console.error(error)
     );
   }
+
   buscarEmpresas() {
     if (!this.empresariouser) {
       console.error('Error: No hay usuario empresario definido.', this.empresariouser);
@@ -323,7 +321,6 @@ export class Empresas2Component {
 
     this.empresaService.getEmpresasbyUser(this.empresariouser).subscribe(
       empresas => {
-        // Verificar si el resultado es un array no vacío
         if (Array.isArray(empresas) && empresas.length > 0) {
           this.empresass = empresas;
           console.log('Empresas obtenidas exitosamente:', empresas);
@@ -344,13 +341,14 @@ export class Empresas2Component {
 
   getEmpresaById(id: number) {
     this.empresaService.getEmpresaById(id).subscribe(
-      empresa => {
-        this.empresacargar = empresa;
-        console.log('Empresa obtenida exitosamente:', empresa);
-      },
-      error => console.error('Error al obtener empresa:', error)
+        empresa => {
+            this.empresacargar = empresa;  
+            this.ID_Sector = empresa.sectorEmpresarial.id;
+            this.ID_Ciudad = empresa.ciudad.id; this
+        },
+        error => console.error('Error al obtener empresa:', error)
     );
-  }
+}
 
 
   private createEmpresaVacia(): Empresa {

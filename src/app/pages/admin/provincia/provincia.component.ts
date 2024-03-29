@@ -101,6 +101,17 @@ export class ProvinciaComponent implements OnInit {
       }
     }
   }
+  closeModal() {
+    this.registerProvinceForm.reset();
+    this.editModeProvince = false;
+    this.editModeCity=false;
+    this.editarClicked = false;
+    this.registerCityForm.reset();
+    const cancelButton = document.getElementById('close-button') as HTMLElement;
+    if (cancelButton) {
+      cancelButton.click();
+    }
+  }
 
 
   createProvince(): void {
@@ -112,11 +123,14 @@ export class ProvinciaComponent implements OnInit {
         pais: formData.pais,
       }
       this.provinciaService.createProvincia(this.province).subscribe(response => {
+        ($('#m_modal_4') as any).modal('hide'); 
         this.getAllProvinces();
+        
         Swal.fire({
           icon: 'success',
           text: 'Provincia creada'
         });
+        this.closeModal();
       })
     }
   }
@@ -130,11 +144,13 @@ export class ProvinciaComponent implements OnInit {
         provincia: formData.provinciaNombre,
       }
       this.ciudadService.createCiudadDTO(this.city).subscribe(response => {
+        ($('#m_modal_5') as any).modal('hide'); 
         this.getAllCities();
         Swal.fire({
           icon: 'success',
           text: 'Ciudad creada'
         });
+        this.closeModal();
       })
     }
   }
@@ -184,6 +200,7 @@ export class ProvinciaComponent implements OnInit {
   editProvince(id: any, prov: Provincia) {
     this.provinciaService.updateProvincia(id, prov).subscribe(updatedProvince => {
       const index = this.provincesList.findIndex(u => u.id === updatedProvince.id);
+      ($('#m_modal_4') as any).modal('hide'); 
       this.getAllProvinces();
       if (index !== -1) {
         this.provincesList[index] = updatedProvince;
@@ -215,6 +232,7 @@ export class ProvinciaComponent implements OnInit {
   editCityEndPoint(id: any, cityDTO: CiudadDTO) {
     this.ciudadService.updateCityDTO(id, cityDTO).subscribe(updatedCity => {
       const index = this.citiesListDTO.findIndex(u => u.id === updatedCity.id);
+      ($('#m_modal_5') as any).modal('hide'); 
       this.getAllCities();
       if (index !== -1) {
         this.citiesListDTO[index] = updatedCity;

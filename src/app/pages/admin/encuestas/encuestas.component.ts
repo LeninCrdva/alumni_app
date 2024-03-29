@@ -42,7 +42,10 @@ export class EncuestasComponent {
 
   addQuestion() {
     const questions: FormArray = this.form.get('questions') as FormArray
-
+    if (questions.length >= 20) {
+      alert('Ya has alcanzado el límite máximo de preguntas.');
+      return;
+    }
     questions.push(this.fb.group({
       title: [null, [Validators.required]],
       type: [1, [Validators.required]],

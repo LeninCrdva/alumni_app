@@ -161,17 +161,21 @@
           <div class="mb-4">
             <div class="form-group flex-grow-1 mr-3">
               <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
-
+          
               <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento" class="form-control"
                 id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
             </div>
-
-            <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
+          
             <div class="text-danger"
-              *ngIf="(isSubmit && registerForm.get('fechaNacimiento')?.invalid) || registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
+              *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
               La fecha de nacimiento es obligatoria.
             </div>
+            <div class="text-danger"
+              *ngIf="registerForm.get('fechaNacimiento')?.hasError('fechaNacimientoInvalida') && registerForm.get('fechaNacimiento')?.touched">
+              La fecha de nacimiento debe ser posterior a 1950-01-01.
+            </div>
           </div>
+          
 
           <div class="mb-4">
             <label style="color: var(--alumni-color)">Subir Foto de perfil</label>
