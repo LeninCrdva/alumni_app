@@ -129,8 +129,8 @@ export class LayoutSystemComponent implements OnInit {
 
           //console.log('Datos del usuario por nombre:', response);
           localStorage.setItem('user_data', JSON.stringify(response));
-          localStorage.setItem('url_imagen', response.url_imagen);
-          localStorage.setItem('ruta_imagen', response.ruta_imagen);
+          localStorage.setItem('url_imagen', response.urlImagen);
+          localStorage.setItem('ruta_imagen', response.rutaImagen);
           const storedRutaImagen = localStorage.getItem('ruta_imagen');
           const storedUrlImagen = localStorage.getItem('url_imagen');
           if (storedRutaImagen && storedUrlImagen) {
