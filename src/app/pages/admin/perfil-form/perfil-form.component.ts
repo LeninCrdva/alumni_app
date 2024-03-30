@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { Persona } from '../../../data/model/persona';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { Usuario } from '../../../data/model/usuario';
-import { UserDTO } from '../../../data/model/UserDTO';
+import { UserDTO } from '../../../data/model/DTO/UserDTO';
 
 
 @Component({
@@ -54,7 +54,7 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
       this.userService.getUserByUsername(userIdStorage).subscribe(data => {
 
         this.adminInfo = data;
-        this.urlPhoto = this.adminInfo.ruta_imagen;
+        this.urlPhoto = this.adminInfo.rutaImagen;
         console.log(this.adminInfo);
         this.getadminInfoById();
       });
@@ -106,10 +106,10 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
   }
 
   updatePhoto() {
-    const userIdStorage: number = parseInt(localStorage.getItem('user_id') || '0');
+    const userIdStorage: number = parseInt(localStorage.getItem('userId') || '0');
     this.userService.getUserDTOById(userIdStorage).subscribe((data) => {
-      data.ruta_imagen = this.urlPhoto;
-      this.userService.updateUserPhoto(userIdStorage, data.ruta_imagen).subscribe(() => {
+      data.rutaImagen = this.urlPhoto;
+      this.userService.updateUserPhoto(userIdStorage, data.rutaImagen).subscribe(() => {
         this.getAdminInfo();
       });
 

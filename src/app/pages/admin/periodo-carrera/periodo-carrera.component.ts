@@ -131,8 +131,8 @@ export class PeriodoCarreraComponent implements OnInit {
       this.period = {
         nombre: formData.nombrePeriodo,
         estado: true,
-        fecha_inicio: formData.fecha_inicio,
-        fecha_fin: formData.fecha_fin,
+        fechaInicio: formData.fecha_inicio,
+        fechaFin: formData.fecha_fin,
         carreras: formData.carreras
       }
       this.periodService.createPeriodo(this.period).subscribe(() => {
@@ -160,8 +160,8 @@ export class PeriodoCarreraComponent implements OnInit {
 
       this.registerPeriodForm.patchValue({
         nombrePeriodo: periodEdit.nombre,
-        fecha_inicio: periodEdit.fecha_inicio,
-        fecha_fin: periodEdit.fecha_fin,
+        fecha_inicio: periodEdit.fechaInicio,
+        fecha_fin: periodEdit.fechaFin,
         carreras: periodEdit.carreras
       });
       this.newPeriod = period;
@@ -178,8 +178,8 @@ export class PeriodoCarreraComponent implements OnInit {
         id: id,
         nombre: formData.nombrePeriodo,
         estado: this.newPeriod.estado,
-        fecha_inicio: formData.fecha_inicio,
-        fecha_fin: formData.fecha_fin,
+        fechaInicio: formData.fecha_inicio,
+        fechaFin: formData.fecha_fin,
         carreras: formData.carreras
       };
       this.editPeriodEndPoint(id, periodEdit);

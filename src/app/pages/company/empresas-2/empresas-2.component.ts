@@ -356,14 +356,14 @@ export class Empresas2Component {
       id: 0,
       empresario: '',
       ciudad: new Ciudad(),
-      sectorempresarial: new sectorempresarial(),
+      sectorEmpresarial: new sectorempresarial(),
       ruc: '',
       nombre: '',
       tipoEmpresa: '',
       razonSocial: '',
       area: '',
       ubicacion: '',
-      sitioweb: ''
+      sitioWeb: ''
     };
   }
 

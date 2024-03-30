@@ -3,7 +3,7 @@ import { OfertalaboralService } from '../../../data/service/ofertalaboral.servic
 import { Empresa } from '../../../data/model/empresa';
 import { EmpresaService } from '../../../data/service/empresa.service';
 import { error } from 'jquery';
-import { ofertaLaboralDTO } from '../../../Models/ofertaLaboralDTO';
+import { ofertaLaboralDTO } from '../../../data/model/DTO/ofertaLaboralDTO';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';

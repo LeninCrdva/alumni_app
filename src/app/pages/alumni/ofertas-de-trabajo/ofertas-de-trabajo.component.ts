@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ofertaLaboralDTO } from '../../../data/model/ofertaLaboralDTO';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { GraduadoService } from '../../../data/service/graduado.service';
@@ -11,6 +10,7 @@ import { PostulacionService } from '../../../data/service/postulacion.service';
 import { PostulacionDTO } from '../../../data/model/DTO/postulacionDTO';
 import { EstadoPostulacion } from '../../../data/model/enum/enums';
 import { Router } from '@angular/router';
+import { ofertaLaboralDTO } from '../../../data/model/DTO/ofertaLaboralDTO';
 
 @Component({
   selector: 'app-ofertas-de-trabajo',

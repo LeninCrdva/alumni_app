@@ -18,7 +18,7 @@ export class PerfilGraduadoComponent {
   public rutaimagen: string = '';
   public graduadoid: number = 0;
   public idstring: string = '';
-  graduado: Graduado = {id:0, usuario: new Usuario(), ciudad: new Ciudad(), fecha_graduacion: new Date(), emailPersonal: '', estadocivil: '', ruta_pdf: '', url_pdf: ''};
+  graduado: Graduado = {id:0, usuario: new Usuario(), ciudad: new Ciudad(), anioGraduacion: new Date(), emailPersonal: '', estadoCivil: '', rutaPdf: '', urlPdf: ''};
   ngOnInit(): void {
     this.loadUserDataByUsername();
     this.idstring = localStorage.getItem('idGraduado') || '';

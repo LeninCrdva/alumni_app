@@ -101,12 +101,12 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
         this.usuarioInfo.persona = {
           cedula: formDataPerson.cedula,
-          primer_nombre: formDataPerson.primerNombre,
-          segundo_nombre: formDataPerson.segundoNombre,
+          primerNombre: formDataPerson.primerNombre,
+          segundoNombre: formDataPerson.segundoNombre,
           fechaNacimiento: formDataPerson.fechaNacimiento,
           telefono: formDataPerson.telefono,
-          apellido_paterno: formDataPerson.primerApellido,
-          apellido_materno: formDataPerson.segundoApellido
+          apellidoPaterno: formDataPerson.primerApellido,
+          apellidoMaterno: formDataPerson.segundoApellido
         }
 
         this.graduadoInfo.ciudad = ciudadSeleccionada;
@@ -130,10 +130,10 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
   initializePersonForm(): void {
     this.updatePersonForm.patchValue({
-      primerNombre: this.usuarioInfo.persona?.primer_nombre,
-      segundoNombre: this.usuarioInfo.persona?.segundo_nombre,
-      primerApellido: this.usuarioInfo.persona?.apellido_paterno,
-      segundoApellido: this.usuarioInfo.persona?.apellido_materno,
+      primerNombre: this.usuarioInfo.persona?.primerNombre,
+      segundoNombre: this.usuarioInfo.persona?.segundoNombre,
+      primerApellido: this.usuarioInfo.persona?.apellidoPaterno,
+      segundoApellido: this.usuarioInfo.persona?.apellidoMaterno,
       cedula: this.usuarioInfo.persona?.cedula,
       telefono: this.usuarioInfo.persona?.telefono,
       fechaNacimiento: this.usuarioInfo.persona?.fechaNacimiento,

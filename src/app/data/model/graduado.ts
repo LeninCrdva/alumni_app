@@ -5,22 +5,22 @@ export class Graduado {
     id?: number;
     'usuario': Usuario;
     'ciudad': Ciudad;
-    'fecha_graduacion': Date;
+    'anioGraduacion': Date;
     'emailPersonal': string;
-    'estadocivil': string;
-    'ruta_pdf': string;
-    'url_pdf': string;
+    'estadoCivil': string;
+    'rutaPdf': string;
+    'urlPdf': string;
 }
 
 export class Graduado1 {
     id?: number;
     'usuario': Usuario;
     'ciudad': Ciudad;
-    'año_graduacion': Date;
+    'anioGraduacion': Date;
     'emailPersonal': string;
-    'estadocivil': string;
-    'ruta_pdf': string;
-    'url_pdf': string;
+    'estadoCivil': string;
+    'rutaPdf': string;
+    'urlPdf': string;
 }
 
 export class Graduado2 {
@@ -28,30 +28,30 @@ export class Graduado2 {
     'nombre': string;
     'usuario': Usuario;
     'ciudad': Ciudad;
-    'fecha_graduacion': Date;
+    'anioGraduacion': Date;
     'emailPersonal': string;
-    'estadocivil': string;
-    'ruta_pdf': string;
-    'url_pdf': string;
+    'estadoCivil': string;
+    'rutaPdf': string;
+    'urlPdf': string;
 }
 
 export class Graduado3 {
     id?: number;
     'usuario': string;
     'ciudad': string;
-    'año_graduacion': Date;
+    'anioGraduacion': Date;
     'email_personal': string;
-    'estadocivil': string;
-    'ruta_pdf': string;
-    'url_pdf': string;
+    'estadoCivil': string;
+    'rutaPdf': string;
+    'urlPdf': string;
 }
 export class Graduado4 {
     'id': number = 0;
     'usuario': string;
     'ciudad': string;
-    'año_graduacion': Date;
+    'anioGraduacion': Date;
     'email_personal': string;
-    'estadocivil': string;
-    'ruta_pdf': string;
-    'url_pdf': string;
+    'estadoCivil': string;
+    'rutaPdf': string;
+    'urlPdf': string;
 }

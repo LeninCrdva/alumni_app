@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ofertaLaboral } from '../model/ofertaLaboral';
-import { ofertaLaboralDTO } from '../model/ofertaLaboralDTO';
+import { ofertaLaboralDTO } from '../model/DTO/ofertaLaboralDTO';
 import { Observable } from 'rxjs';
 import { Graduado } from '../model/graduado';
 import { contratacion } from '../model/contratacion';

@@ -58,7 +58,7 @@
                 <i data-feather="user" class="float-left mr-3"></i>
                 <div class="overflow-hidden d-block">
                   <h6 class="mb-0">Tipo de Empleo:</h6>
-                  <p class="text-primary mb-0">{{ofertaDetail.area_conocimiento}}</p>
+                  <p class="text-primary mb-0">{{ofertaDetail.areaConocimiento}}</p>
                 </div>
               </div>
               <div class="d-flex align-items-center mt-3">
@@ -113,82 +113,22 @@
           </div>
         </div>
         <div class="col-lg-1 col-md-4 col-12 mt-4 pt-2"></div>
-        <div class="col-lg-6 col-md-8 col-12 mt-4 pt-2" *ngIf="ofertaDetail.foto_portada">
+        <div class="col-lg-6 col-md-8 col-12 mt-4 pt-2" *ngIf="ofertaDetail.fotoPortada">
           <div class="sticky-bar rounded bg-white shadow">
               <div class="border-bottom p-4">
                   <h5 class="mb-0">Oferta laboral</h5>
               </div>
   
               <div class="p-3">
-                <img src="{{ ofertaDetail.foto_portada }}" alt="Foto de Portada" class="img-fluid imagen-portada">
+                <img src="{{ ofertaDetail.fotoPortada }}" alt="Foto de Portada" class="img-fluid imagen-portada">
             </div>
             
           </div>
       </div>
       </div>
       <!--end col-->
-
-      <div class="postulantes" *ngIf="authoritiesStorage === 'GRADUADO'">
-        <!--end col-->
-        <h1>Lista de Candidatos</h1>
-        <!-- Inicio de la tabla -->
-        <table border="0">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Foto</th>
-              <th>Informacion General</th>
-              <th>Detalle</th>
-              <th>Accion</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Aquí empieza la iteración para cada trabajo -->
-            <!-- Puedes copiar y pegar este bloque para cada trabajo que quieras mostrar en la tabla -->
-            <tr *ngFor="let graduado of ofertaDetail.graduados">
-              <td>1</td>
-              <td>
-                <img src="../../../../assets/imgs/Alumni_Logo.png" class="avatar avatar-small" alt="" />
-              </td>
-              <td>
-                <h4 class="title">
-                  <a class="text-dark">{{graduado.usuario.persona.primer_nombre}}
-                    {{graduado.usuario.persona.apellido_paterno}}</a>
-                </h4>
-                <ul class="list-unstyled mb-0">
-                  <li class="list-inline-item mr-3">
-                    <i data-feather="briefcase" class="fea icon-sm mr-1"></i><span class="text-muted">Tiempo
-                      Completo</span>
-                  </li>
-                  <li class="list-inline-item">
-                    <i data-feather="map-pin" class="fea icon-sm mr-1"></i><a href="javascript:void(0)"
-                      class="text-muted">Cuenca</a>
-                  </li>
-                </ul>
-                <div class="tagcloud text-center mt-2 text-lg-left">
-                  <a class="rounded">Software</a>
-                  <a class="rounded">Example1</a>
-                  <a class="rounded">Example2</a>
-                </div>
-              </td>
-              <td>
-                <a href="pages-job-detail.html" class="btn btn-info">Detalles</a>
-              </td>
-              <td>
-                <a href="pages-job-apply.html" class="btn btn-primary">Contratar</a>
-              </td>
-            </tr>
-            <!-- Fin del bloque iterativo -->
-
-            <!-- Puedes repetir el bloque anterior para cada trabajo que desees mostrar en la tabla -->
-          </tbody>
-        </table>
-      </div>
-      <!-- Fin de la tabla -->
     </div>
     <!--end row-->
-
-
   </div>
   <!--end container-->
 

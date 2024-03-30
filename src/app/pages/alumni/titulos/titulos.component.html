@@ -201,14 +201,14 @@
                     <tbody>
                         <tr *ngFor="let item of titulosList;">
                             <th scope="row">{{ item.id }}</th>
-                            <td>{{ item.nombre_titulo }}</td>
+                            <td>{{ item.nombreTitulo }}</td>
                             <td>{{ item.tipo }}</td>
                             <td>{{ item.nivel }}</td>
                             <td>{{ item.institucion }}</td>
-                            <td>{{ item.nombrecarrera }}</td>
-                            <td>{{ item.fecha_emision }}</td>
-                            <td>{{ item.fecha_registro }}</td>
-                            <td>{{ item.num_registro }}</td>
+                            <td>{{ item.nombreCarrera }}</td>
+                            <td>{{ item.fechaEmision }}</td>
+                            <td>{{ item.fechaRegistro }}</td>
+                            <td>{{ item.numRegistro }}</td>
                             <td class="text-right text-center">
                                 <button (click)="onEditarClick(item.id)" data-bs-toggle="modal"
                                     data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">

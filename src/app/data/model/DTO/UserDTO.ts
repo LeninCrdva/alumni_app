@@ -4,6 +4,6 @@ export class UserDTO {
     'rol': string;
     'cedula': string;
     'estado': boolean;
-    'url_imagen': string;
-    'ruta_imagen': string;
+    'urlImagen': string;
+    'rutaImagen': string;
 }

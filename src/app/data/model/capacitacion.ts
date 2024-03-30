@@ -1,5 +1,3 @@
-import { Graduado } from "./graduado";
-
 export class Capacitacion {
     id?: number;
     'nombre': string;

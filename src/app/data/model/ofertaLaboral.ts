@@ -1,5 +1,4 @@
 import { Empresa } from "./empresa";
-import { Graduado } from "./graduado";
 
 export class ofertaLaboral {
     id?: number;
@@ -8,13 +7,11 @@ export class ofertaLaboral {
     'fechaPublicacion': Date;
     'cargo': string;
     'experiencia': string;
-    'fecha_apertura': Date;
-    'area_conocimiento': string;    
+    'fechaApertura': Date;
+    'areaConocimiento': string;    
     'estado': boolean;
     'empresa': Empresa;
-    'graduados': Graduado[];
     'tipo': string;
-    'foto_portada': string;
+    'fotoPortada': string;
     'tiempo'?: string;
-
 }

@@ -102,7 +102,7 @@ export class TitulosComponent {
         this.titulosList = result;
         
 
-        this.titulosList = result.filter(resultData => resultData.idgraduado === this.numeroUndefinido);
+        this.titulosList = result.filter(resultData => resultData.idGraduado === this.numeroUndefinido);
 
         if (this.initializeTable) {
           this.dtTrigger.next(null);
@@ -134,16 +134,16 @@ export class TitulosComponent {
 
     if (dataToEdit) {
       this.validateForm.patchValue({
-        nombre_titulo: dataToEdit.nombre_titulo,
+        nombreTitulo: dataToEdit.nombreTitulo,
         tipo: dataToEdit.tipo,
-        num_registro: dataToEdit.num_registro,
-        fecha_emision: dataToEdit.fecha_emision,
-        fecha_registro: dataToEdit.fecha_registro,
+        numRegistro: dataToEdit.numRegistro,
+        fechaEmision: dataToEdit.fechaEmision,
+        fechaRegistro: dataToEdit.fechaRegistro,
         nivel: dataToEdit.nivel,
         institucion: dataToEdit.institucion
       });
 
-      this.filterService.selectItemByName('careersList', dataToEdit.nombrecarrera);
+      this.filterService.selectItemByName('careersList', dataToEdit.nombreCarrera);
     } else {
       console.error(`Elemento con id ${id} no encontrado en la lista.`);
     }

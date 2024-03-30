@@ -6,12 +6,11 @@ export class ofertaLaboralDTO {
     'cargo': string;
     'experiencia': string;
     'fechaApertura': Date;
-    'areaConocimiento': string;
+    'areaConocimiento': string;    
     'estado': boolean;
     'nombreEmpresa': string;
-    'correoGraduado': string[];
     'tipo'?: string;
-    'foto_portada'?: string;
     'tiempo'?: string;
+    'foto_portada'?: string;
     [key: string]: any;
 }

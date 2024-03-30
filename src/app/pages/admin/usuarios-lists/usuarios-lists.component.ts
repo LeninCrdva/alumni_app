@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../data/service/AuthService';
 import { UserService } from '../../../data/service/UserService';
 import { Usuario } from '../../../data/model/usuario';
-import { UserDTO } from '../../../data/model/UserDTO';
+import { UserDTO } from '../../../data/model/DTO/UserDTO';
 import { Persona } from '../../../data/model/persona';
 import { PersonaService } from '../../../data/service/PersonService';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -181,12 +181,12 @@ export class UsuariosListsComponent implements OnInit {
       const formData = this.registerNewUserForm.value;
       this.person = {
         cedula: formData.cedula,
-        primer_nombre: formData.primerNombre,
-        segundo_nombre: formData.segundoNombre,
+        primerNombre: formData.primerNombre,
+        segundoNombre: formData.segundoNombre,
         fechaNacimiento: formData.fechaNacimiento,
         telefono: formData.telefono,
-        apellido_paterno: formData.primerApellido,
-        apellido_materno: formData.segundoApellido
+        apellidoPaterno: formData.primerApellido,
+        apellidoMaterno: formData.segundoApellido
       };
 
       this.personService.createPerson(this.person).subscribe(
@@ -209,8 +209,8 @@ export class UsuariosListsComponent implements OnInit {
                   cedula: formData.cedula,
                   rol: formData.nombreDelRol,
                   estado: false,
-                  ruta_imagen: this.rutaimagen,
-                  url_imagen: this.urlImage
+                  rutaImagen: this.rutaimagen,
+                  urlImagen: this.urlImage
                 };
 
                 this.authService.signup(usuarioDTO).subscribe(response => {
@@ -218,15 +218,14 @@ export class UsuariosListsComponent implements OnInit {
                   this.graduate = {
                     usuario: formData.nombreUsuario,
                     ciudad: formData.ciudadNombre,
-                    año_graduacion: formData.año_graduacion,
-                    email_personal: formData.email_personal,
+                    anioGraduacion: formData.año_graduacion,
+                    emailPersonal: formData.email_personal,
                     estadocivil: formData.estadoCivil,
-                    ruta_pdf: '',
-                    url_pdf: '',
-                    idOferta: [],
+                    rutaPdf: '',
+                    urlPdf: ''
                   }
 
-                  console.log("Graduado datos: " + this.graduate.email_personal);
+                  console.log("Graduado datos: " + this.graduate.emailPersonal);
 
                   this.graduateService.createGraduadoDTO(this.graduate).subscribe(response => {
 
@@ -302,17 +301,17 @@ export class UsuariosListsComponent implements OnInit {
               cedula: contextDTO.cedula,
               rol: contextDTO.rol,
               estado: contextDTO.estado,
-              primerNombre: person.primer_nombre,
-              segundoNombre: person.segundo_nombre,
+              primerNombre: person.primerNombre,
+              segundoNombre: person.segundoNombre,
               fechaNacimiento: person.fechaNacimiento,
               telefono: person.telefono,
-              primerApellido: person.apellido_paterno,
-              segundoApellido: person.apellido_materno,
+              primerApellido: person.apellidoPaterno,
+              segundoApellido: person.apellidoMaterno,
               ciudadNombre: graduate.ciudad,
-              año_graduacion: graduate.año_graduacion,
+              año_graduacion: graduate.anioGraduacion,
               estadoCivil: graduate.estadocivil,
               nombreDelRol: userDto.rol,
-              email_personal: graduate.email_personal
+              email_personal: graduate.emailPersonal
             });
 
             this.newDTOUser = userDto;
@@ -345,12 +344,12 @@ export class UsuariosListsComponent implements OnInit {
         const personEdit: Persona = {
           id: idPerson,
           cedula: formData.cedula,
-          primer_nombre: formData.primerNombre,
-          segundo_nombre: formData.segundoNombre,
+          primerNombre: formData.primerNombre,
+          segundoNombre: formData.segundoNombre,
           fechaNacimiento: formData.fechaNacimiento,
           telefono: formData.telefono,
-          apellido_paterno: formData.primerApellido,
-          apellido_materno: formData.segundoApellido
+          apellidoPaterno: formData.primerApellido,
+          apellidoMaterno: formData.segundoApellido
         };
 
         const userEdit = {
@@ -360,20 +359,19 @@ export class UsuariosListsComponent implements OnInit {
           rol: this.newDTOUser.rol,
           estado: this.newDTOUser.estado,
           cedula: this.newDTOUser.cedula,
-          url_imagen: this.newDTOUser.ruta_imagen,
-          ruta_imagen: this.newDTOUser.ruta_imagen
+          urlImagen: this.newDTOUser.rutaImagen,
+          rutaImagen: this.newDTOUser.rutaImagen
         }
 
         const graduteEdit : GraduadoDTO = {
           id: idGrad,
           usuario: formData.nombreUsuario,
           ciudad: formData.ciudadNombre,
-          año_graduacion: formData.año_graduacion,
-          email_personal: formData.email_personal,
+          anioGraduacion: formData.año_graduacion,
+          emailPersonal: formData.email_personal,
           estadocivil: formData.estadoCivil,
-          ruta_pdf: this.newGraduate.ruta_pdf,
-          url_pdf: this.newGraduate.url_pdf,
-          idOferta: this.newGraduate.idOferta
+          rutaPdf: this.newGraduate.rutaPdf,
+          urlPdf: this.newGraduate.urlPdf
         }
 
         console.log(graduteEdit);

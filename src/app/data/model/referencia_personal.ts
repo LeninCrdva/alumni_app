@@ -1,5 +1,3 @@
-import { Graduado } from "./graduado";
-
 export class Referencias_personales {
     id?: number;
     'nombreReferencia': string;

@@ -1,6 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GraduadoService } from '../../../data/service/graduado.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { Subject } from 'rxjs';
@@ -10,101 +8,97 @@ import { PostulacionService } from '../../../data/service/postulacion.service';
 import { Postulacion } from '../../../data/model/postulacion';
 import { EstadoPostulacion } from '../../../data/model/enum/enums';
 import Swal from 'sweetalert2';
+import { DataTableDirective } from 'angular-datatables';
+import { DataTablesService } from '../../../data/DataTables.service';
+import { FiltersService } from '../../../data/Filters.service';
 @Component({
   selector: 'app-postulaciones',
   templateUrl: './postulaciones.component.html',
   styleUrls: ['./postulaciones.component.css']
 })
 export class PostulacionesComponent implements OnInit {
+
+  // =====================================================
+  //*               DATA TABLE Y FILTROS
+  // =======================================================
+
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  initializeTable: boolean = true;
+  dtoptions: DataTables.Settings = {};
+
   estadoPostulacion = EstadoPostulacion;
   mailRequest: MailRequest = new MailRequest();
   postulaciones: ofertaLaboral[] = [];
   misPostulaciones: Postulacion[] = [];
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
-  dtoptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
   loading: boolean = false;
 
   @Output() onClose: EventEmitter<string> = new EventEmitter();
   searchTerm: string = '';
 
-  constructor(private mailService: MailService, private mypPostulacionService: PostulacionService
-    ) { }
+  constructor(
+    private mailService: MailService,
+    private mypPostulacionService: PostulacionService,
+    public dtService: DataTablesService,
+    public filterService: FiltersService
+  ) { }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.setupDtOptions();
+    const columnTitles = ['#', 'Empresa', 'Cargo', 'Area conocimientos', 'Salario', 'Apertura', 'Experiencia', 'Ciudad', 'Estado', 'Publicaciones'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar ofertas laborales ...');
+    this.filterService.initializeDropdowns('filterTable', columnTitles);
     this.detallarOferta();
-    
   }
-  modalImage: string | undefined ;
+
+  ngAfterViewInit(): void {
+    this.filterService.setDtElement(this.dtElement);
+  }
+
+  modalImage: string | undefined;
   openModal(imageUrl: string | undefined) {
     this.loading = true;
-    
+
     Swal.fire({
-        title: 'Cargando...',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
+      title: 'Cargando...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
     });
-    
+
     setTimeout(() => {
-        this.loading = false; 
-        this.modalImage = imageUrl;
-        ($('#m_modal_4') as any).modal('show'); 
-        Swal.close(); 
+      this.loading = false;
+      this.modalImage = imageUrl;
+      ($('#m_modal_4') as any).modal('show');
+      Swal.close();
     }, 2000);
-}
-
-
-closeModal() {
-  this.modalImage = '';
-
-  if ($('#m_modal_4').hasClass('show')) {
-    ($('#m_modal_4') as any).modal('hide');
   }
-}
 
+  closeModal() {
+    this.modalImage = '';
 
-  setupDtOptions() {
-    this.dtoptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      lengthChange: true,
-      language: {
-        search: 'Buscar:',
-        searchPlaceholder: 'Buscar experiencia...',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        paginate: {
-          first: 'Primera',
-          last: 'Última',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        },
-        lengthMenu: 'Mostrar _MENU_ registros por página',
-        zeroRecords: 'No se encontraron registros coincidentes'
-      },
-      lengthMenu: [10, 25, 50]
-    };
+    if ($('#m_modal_4').hasClass('show')) {
+      ($('#m_modal_4') as any).modal('hide');
+    }
   }
 
   async detallarOferta(): Promise<void> {
     const userIdStorage = localStorage.getItem('user_id')
 
     this.misPostulaciones = (await this.mypPostulacionService.getAllPostulacionesByGraduadoId(userIdStorage ? parseInt(userIdStorage) : 0).toPromise()) || [];
-  }
 
-  createGraduadoDTO(oferta: ofertaLaboral): GraduadoDTO {
-    const nuevoGraduadoDTO: GraduadoDTO = new GraduadoDTO();
-    nuevoGraduadoDTO.idOferta = [];
-
-    if (oferta.id !== undefined) {
-      nuevoGraduadoDTO.idOferta.push(oferta.id);
+    if (this.initializeTable) {
+      this.dtTrigger.next(null);
+      this.initializeTable = false;
     } else {
-      console.error("La oferta no tiene un ID definido.");
+      this.dtService.rerender(this.dtElement, this.dtTrigger);
     }
-    return nuevoGraduadoDTO;
   }
 
   cancelOffer(postulacion: Postulacion) {
@@ -158,15 +152,5 @@ closeModal() {
         });
       }
     });
-  }
-
-  filterOfertasLaborales(): Postulacion[] { //Adapt this method for the new model "Postulacion"
-    const lowerCaseSearchTerm = this.searchTerm.toLowerCase().trim();
-
-    return this.misPostulaciones.filter(oferta =>
-      Object.values(oferta).some(value =>
-        value !== null && typeof value === 'string' && value.toLowerCase().includes(lowerCaseSearchTerm)
-      )
-    );
   }
 }

@@ -42,7 +42,7 @@ export class ExperienciaComponent {
   validateForm: FormGroup;
 
   // =====================================================
-  //*                   CONSTURCTOR
+  //*                   CONSTRUCTOR
   // =======================================================
 
   constructor(
@@ -119,7 +119,7 @@ export class ExperienciaComponent {
       this.validateForm.patchValue({
         cargo: dataToEdit.cargo,
         duracion: dataToEdit.duracion,
-        area_trabajo: dataToEdit.area_trabajo,
+        area_trabajo: dataToEdit.areaTrabajo,
         institucionNombre: dataToEdit.institucionNombre,
         actividad: dataToEdit.actividad,
       });

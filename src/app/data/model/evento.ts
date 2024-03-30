@@ -6,8 +6,8 @@ export class Evento {
     'telefono': string;
     'email': string;
     'estado': boolean;
-    'hora_inicio': string;
-    'hora_fin': string;
+    'horaInicio': string;
+    'horaFin': string;
     'fecha': Date;    
     'lugar': string;
     'descripcion': string;

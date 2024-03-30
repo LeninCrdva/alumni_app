@@ -135,10 +135,10 @@ export class NuevoGraduadoModalComponent implements OnInit {
             this.nuevoGraduado.usuario = this.nuevoGraduadoForm.get('usuario')?.value;
             this.nuevoGraduado.email_personal = this.nuevoGraduadoForm.get('emailPersonal')?.value;
             this.nuevoGraduado.ciudad = this.nuevoGraduadoForm.get('ciudad')?.value;
-            this.nuevoGraduado.año_graduacion = this.nuevoGraduadoForm.get('fecha_graduacion')?.value;
-            this.nuevoGraduado.estadocivil = this.nuevoGraduadoForm.get('estadoCivil')?.value;
-            this.nuevoGraduado.url_pdf = res.url;
-            this.nuevoGraduado.ruta_pdf = res.key;
+            this.nuevoGraduado.anioGraduacion = this.nuevoGraduadoForm.get('fecha_graduacion')?.value;
+            this.nuevoGraduado.estadoCivil = this.nuevoGraduadoForm.get('estadoCivil')?.value;
+            this.nuevoGraduado.urlPdf = res.url;
+            this.nuevoGraduado.rutaPdf = res.key;
             this.graduadoService.createGraduado2(this.nuevoGraduado).subscribe(
               (res) => {
 

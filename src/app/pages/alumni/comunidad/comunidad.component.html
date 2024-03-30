@@ -64,7 +64,7 @@
                                         <span class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="fechaGraduacion"
                                         placeholder="Ingrese la fecha de graduación" id="fechaGraduacion"
-                                        [value]="selectedGraduado?.['año_graduacion']" disabled>
+                                        [value]="selectedGraduado?.['anioGraduacion']" disabled>
                                 </div>
                             </div>
                         </div>
@@ -86,11 +86,11 @@
                                             class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="estadoCivil"
                                         placeholder="Ingrese el estado civil" id="estadoCivil"
-                                        [value]="selectedGraduado?.url_pdf" disabled>
+                                        [value]="selectedGraduado?.urlPdf" disabled>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <a href="{{ selectedGraduado?.url_pdf }}" target="_blank">Ver Título</a>
+                                <a href="{{ selectedGraduado?.urlPdf }}" target="_blank">Ver Título</a>
                             </div>
 
                         </div>
@@ -135,15 +135,15 @@
                         <tr *ngFor="let graduadoItem of graduadosList;">
                             <th scope="row">{{ graduadoItem.id }}</th>
                             <!-- <td>{{ graduadoItem.usuario.persona.primer_nombre + graduadoItem.usuario.persona.segundo_nombre }}</td> -->
-                            <td>{{ graduadoItem.usuario.persona.primer_nombre }} {{
-                                graduadoItem.usuario.persona.segundo_nombre}}</td>
+                            <td>{{ graduadoItem.usuario.persona.primerNombre }} {{
+                                graduadoItem.usuario.persona.segundoNombre}}</td>
                             <td>{{ graduadoItem.usuario.persona.telefono }}</td>
-                            <td>{{ graduadoItem.usuario.persona.apellido_paterno }} {{
-                                graduadoItem.usuario.persona.apellido_materno}}</td>
-                            <td>{{ graduadoItem['año_graduacion'] }} </td>
+                            <td>{{ graduadoItem.usuario.persona.apellidoPaterno }} {{
+                                graduadoItem.usuario.persona.apellidoMaterno}}</td>
+                            <td>{{ graduadoItem['anioGraduacion'] }} </td>
                             <td>{{ graduadoItem.ciudad.nombre }} - {{graduadoItem.ciudad.provincia.nombre}} -
                                 {{graduadoItem.ciudad.provincia.pais}}</td>
-                            <td>{{ graduadoItem.estadocivil }}</td>
+                            <td>{{ graduadoItem.estadoCivil }}</td>
                             <td class="text-center table-actions align-middle justify-content-center">
                                 <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
                                     data-bs-target="#m_modal_4" type="button"

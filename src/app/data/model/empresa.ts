@@ -6,14 +6,14 @@ export class Empresa {
     id?: number;
     'empresario': String;
     'ciudad': Ciudad;
-    'sectorempresarial': sectorempresarial;
+    'sectorEmpresarial': sectorempresarial;
     'ruc': string;
     'nombre': string;
     'tipoEmpresa': string;
     'razonSocial': string;
     'area': string;
     'ubicacion': string;
-    'sitioweb': string;
+    'sitioWeb': string;
     'estado'?:boolean;
 
 }

@@ -2,14 +2,14 @@ export class Titulo {
 
     constructor(
         public id: number,
-        public nombre_titulo: string,
+        public nombreTitulo: string,
         public tipo: string,
-        public num_registro: string,
-        public fecha_emision: Date,
-        public fecha_registro: Date,
+        public numRegistro: string,
+        public fechaEmision: Date,
+        public fechaRegistro: Date,
         public nivel: string,
         public institucion: string,
-        public nombrecarrera: string,
-        public idgraduado?: number
+        public nombreCarrera: string,
+        public idGraduado?: number
     ) { }
 }

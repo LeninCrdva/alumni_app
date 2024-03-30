@@ -12,7 +12,7 @@
                                 <img [src]="urlImage" alt="Imagen de usuario"
                                     class="avatar avatar-medium rounded-circle shadow mr-md-3" alt="">
                                 <div class="content mt-4 mt-sm-0">
-                                    <h4 class="mb-0"> {{user.persona.primer_nombre}} {{user.persona.apellido_paterno}}
+                                    <h4 class="mb-0"> {{user.persona.primerNombre}} {{user.persona.apellidoPaterno}}
                                         - {{graduate.usuario}}</h4>
                                     <!--<h6 class="text-muted">Desarrollo de software</h6>-->
                                     <p class="mb-0"><i data-feather="map-pin"
@@ -67,10 +67,10 @@
                             <i data-feather="briefcase" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
                                 <h6 class="mb-0">Fecha de Graduación:</h6>
-                                <p class="text-muted mb-0">{{ graduate['año_graduacion'] }}
+                                <p class="text-muted mb-0">{{ graduate['anioGraduacion'] }}
                                 </p>
                                 <h6 class="mt-2">Estado Civil:</h6>
-                                <p class="text-muted mb-0">{{ graduate.estadocivil }}
+                                <p class="text-muted mb-0">{{ graduate.estadoCivil }}
                                 </p>
                                 <h6 class="mt-2">Teléfono:</h6>
                                 <p class="text-muted mb-0">{{ user.persona?.telefono }}

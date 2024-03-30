@@ -22,7 +22,7 @@ export class ComunidadComponent {
   public idstring: string = '';
   public nombres: string = '';
   public apellidos: string = '';
-  graduado: Graduado1 = { id: 0, usuario: new Usuario(), ciudad: new Ciudad(), año_graduacion: new Date(), emailPersonal: '', estadocivil: '', ruta_pdf: '', url_pdf: '' };
+  graduado: Graduado1 = { id: 0, usuario: new Usuario(), ciudad: new Ciudad(), anioGraduacion: new Date(), emailPersonal: '', estadoCivil: '', rutaPdf: '', urlPdf: '' };
 
   graduadosList: Graduado1[] = [];
   dtoptions: DataTables.Settings = {};
@@ -50,7 +50,7 @@ export class ComunidadComponent {
 
   setupDtOptions() {
     this.dtoptions = {
-      pagingType: 'full_numbers',
+      pagingType: 'fullNumbers',
       searching: true,
       lengthChange: true,
       language: {
@@ -64,7 +64,7 @@ export class ComunidadComponent {
           next: 'Siguiente',
           previous: 'Anterior',
         },
-        lengthMenu: 'Mostrar _MENU_ registros por página',
+        lengthMenu: 'Mostrar MENU_ registros por página',
         zeroRecords: 'No se encontraron registros coincidentes'
       },
       lengthMenu: [10, 25, 50]
@@ -89,11 +89,11 @@ export class ComunidadComponent {
     const usuario = new Usuario();
     usuario.id = graduado.usuario.id;
     usuario.clave = graduado.usuario.clave;
-    usuario.nombre_usuario = graduado.usuario.nombre_usuario;
+    usuario.nombreUsuario = graduado.usuario.nombreUsuario;
     usuario.estado = graduado.usuario.estado;
-    usuario.url_imagen = graduado.usuario.url_imagen;
+    usuario.urlImagen = graduado.usuario.urlImagen;
     usuario.persona = this.mapPersona(graduado.usuario.persona);
-    usuario.ruta_imagen = graduado.usuario.ruta_imagen;
+    usuario.rutaImagen = graduado.usuario.rutaImagen;
     usuario.rol = this.mapRol(graduado.usuario.rol);
 
     const ciudad = new Ciudad();
@@ -105,11 +105,11 @@ export class ComunidadComponent {
     graduadoMapped.id = graduado.id;
     graduadoMapped.usuario = usuario;
     graduadoMapped.ciudad = ciudad;
-    graduadoMapped.año_graduacion = graduado.año_graduacion;
+    graduadoMapped.anioGraduacion = graduado.anioGraduacion;
     graduadoMapped.emailPersonal = graduado.emailPersonal;
-    graduadoMapped.estadocivil = graduado.estadocivil;
-    graduadoMapped.ruta_pdf = graduado.ruta_pdf;
-    graduadoMapped.url_pdf = graduado.url_pdf;
+    graduadoMapped.estadoCivil = graduado.estadoCivil;
+    graduadoMapped.rutaPdf = graduado.rutaPdf;
+    graduadoMapped.urlPdf = graduado.urlPdf;
 
     return graduadoMapped;
   }
@@ -118,12 +118,12 @@ export class ComunidadComponent {
     const personaMapped = new Persona();
     personaMapped.id = persona.id;
     personaMapped.cedula = persona.cedula;
-    personaMapped.primer_nombre = persona.primer_nombre;
-    personaMapped.segundo_nombre = persona.segundo_nombre;
+    personaMapped.primerNombre = persona.primerNombre;
+    personaMapped.segundoNombre = persona.segundoNombre;
     personaMapped.fechaNacimiento = persona.fechaNacimiento;
     personaMapped.telefono = persona.telefono;
-    personaMapped.apellido_paterno = persona.apellido_paterno;
-    personaMapped.apellido_materno = persona.apellido_materno;
+    personaMapped.apellidoPaterno = persona.apellidoPaterno;
+    personaMapped.apellidoMaterno = persona.apellidoMaterno;
 
     return personaMapped;
   }
@@ -147,8 +147,8 @@ export class ComunidadComponent {
   }
 
   loadUserDataByUsername() {
-    const storedRutaImagen = localStorage.getItem('ruta_imagen');
-    const storedUrlImagen = localStorage.getItem('url_imagen');
+    const storedRutaImagen = localStorage.getItem('rutaImagen');
+    const storedUrlImagen = localStorage.getItem('urlImagen');
     if (storedRutaImagen && storedUrlImagen) {
       this.rutaimagen = storedRutaImagen;
       this.urlImage = storedUrlImagen;

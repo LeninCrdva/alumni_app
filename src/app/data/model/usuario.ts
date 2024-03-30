@@ -4,11 +4,11 @@ import { Rol } from "./rol";
 export class Usuario {
     id?: number;
     'clave': string;
-    'nombre_usuario': string;
+    'nombreUsuario': string;
     'estado': boolean;
-    'url_imagen': string;
+    'urlImagen': string;
     'persona': Persona;
-    'ruta_imagen': string;
+    'rutaImagen': string;
     'rol': Rol;
 }
 
@@ -17,8 +17,8 @@ export class UsuarioFixed {
     'clave': string;
     'nombreUsuario': string;
     'estado': boolean;
-    'url_imagen': string;
+    'urlImagen': string;
     'persona': Persona;
-    'ruta_imagen': string;
+    'rutaImagen': string;
     'rol': Rol;
 }
