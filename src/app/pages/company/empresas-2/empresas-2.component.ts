@@ -12,6 +12,8 @@ import { Provincia } from '../../../data/model/provincia';
 import Swal from 'sweetalert2';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangeDetectorRef } from '@angular/core';
+import { ViewChild, ElementRef  } from '@angular/core';
+import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-empresas-2',
   templateUrl: './empresas-2.component.html',
@@ -25,6 +27,7 @@ export class Empresas2Component {
     this.editarClicked = true;
     this.idEdit = id || 0;  
     this.getEmpresaById(this.idEdit);
+    
  }
  
 
@@ -60,6 +63,7 @@ export class Empresas2Component {
         const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
         if (modalBackdrop) {
           modalBackdrop.parentNode?.removeChild(modalBackdrop);
+          
         }
       }
     }
@@ -107,7 +111,7 @@ export class Empresas2Component {
     this.getCiudadIDName();
     this.obtenerYAlmacenarUsuarioEmpresario();
     this.getSectoresEmpresariales();
-
+   
   }
   obtenerYAlmacenarUsuarioEmpresario(): void {
     this.serviceempresario.getEmpresario().subscribe(
@@ -120,9 +124,9 @@ export class Empresas2Component {
           
           if (storedEmpresariouser !== null) {       
             this.empresariouser = storedEmpresariouser.toUpperCase();
-            console.log('Valor almacenado en localStorage (mayúsculas):', this.empresariouser);
+            
           } else {
-            console.log('No hay valor almacenado en localStorage para la clave "empresariouser".');
+            console.log('No hay usuario');
           }
         }
         
@@ -131,9 +135,10 @@ export class Empresas2Component {
       error => console.error('Error al obtener el empresario:', error)
     );
   }
+
   
 
-
+  accionRealizada: boolean = false;
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
 
@@ -147,6 +152,10 @@ export class Empresas2Component {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
         this.bsModalRef.hide();
         this.closeModal2('m_modal_4');
+        
+        setTimeout(() => {
+          window.location.reload();
+      }, 1000);
         this.obtenerYAlmacenarUsuarioEmpresario();
       }
     });
@@ -172,19 +181,30 @@ export class Empresas2Component {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
-    if (this.empresanueva) { 
+
+    if (this.empresanueva) {
       this.empresanueva.empresario = this.empresariouser;
-      this.empresaService.createEmpresa(this.empresanueva).subscribe(
-        empresa => {
-          this.mostrarSweetAlert(true, 'La empresa se ha guardado exitosamente.');
-          this.empresanueva = this.createEmpresaVacia(); 
-          this.bsModalRef.hide(); 
-          this.onClose.emit('guardadoExitoso');
-        },
-        error => {
-          this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
-        }
-      );
+     
+      if (this.validarCampos()) {
+        this.empresaService.createEmpresa(this.empresanueva).subscribe(
+          empresa => {
+            this.mostrarSweetAlert(true, 'La empresa se ha guardado exitosamente.');
+            this.empresanueva = this.createEmpresaVacia(); 
+            this.bsModalRef.hide(); 
+            this.onClose.emit('guardadoExitoso');
+          },
+          error => {
+            this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
+          }
+        );
+       } else {
+
+        Swal.fire({
+          icon: 'error',
+          title: '¡Upps!',
+          text: 'Hay campos que debe corregir para poder completar la acción.',
+        });
+      }
     }
   }
 
@@ -195,10 +215,13 @@ export class Empresas2Component {
       return;
     }
 
+  
+
     if (this.idEdit <= 0) {
       console.error('Error: this.idEdit no es un valor válido.');
       return;
     }
+   
 
     if (!this.validateEmpresasPerFieldsEdicion()) {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
@@ -206,19 +229,32 @@ export class Empresas2Component {
     }
     this.editarClicked = true;
     this.empresacargar.empresario = this.empresariouser;
-    this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
-      empresaActualizada => {
-        this.mostrarSweetAlert(true, 'La empresa se ha actualizado exitosamente.');
-        this.empresacargar = this.createEmpresaVacia();
-        this.bsModalRef.hide();
-        this.onClose.emit('actualizacionExitosa'); 
-        this.obtenerYAlmacenarUsuarioEmpresario();
-
-      },
-      error => {
-        this.mostrarSweetAlert(false, 'La empresa no se ha actualizado');
-      }
-    );
+    if (this.validarCampos()) {
+      this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
+        empresaActualizada => {
+          this.mostrarSweetAlert(true, 'La empresa se ha actualizado exitosamente.');
+          this.empresacargar = this.createEmpresaVacia();
+      
+          this.bsModalRef.hide();
+          this.onClose.emit('actualizacionExitosa'); 
+          this.obtenerYAlmacenarUsuarioEmpresario();
+          this.editarClicked=false;
+  
+        },
+        error => {
+          this.mostrarSweetAlert(false, 'La empresa no se ha actualizado');
+        }
+      );
+    } else {
+      
+      Swal.fire({
+        icon: 'error',
+        title: '¡Upps!',
+        text: 'Hay campos que debe corregir para poder completar la acción.',
+      });
+    }
+    
+   
   }
 
   deleteEmpresa(id: number | undefined = 0) {
@@ -259,7 +295,9 @@ export class Empresas2Component {
   getCiudadIDName() {
     this.ciudadService.getCiudades().subscribe(
       ciudades => this.ciudades = ciudades,
+      
       error => console.error(error)
+      
     );
   }
 
@@ -279,10 +317,10 @@ export class Empresas2Component {
           if (this.editarClicked) {
             
             this.empresacargar.ciudad = ciudad;
-            console.log('Ciudad seleccionada:', this.empresacargar.ciudad);
+           
           } else {
             this.empresanueva.ciudad = ciudad;
-            console.log('Ciudad seleccionada:', this.empresanueva.ciudad);
+           
           }
         } else {
           console.log('No se puede obtener la ciudad');
@@ -300,10 +338,10 @@ export class Empresas2Component {
         
           if (this.editarClicked) {
             this.empresacargar.sectorEmpresarial = sector;
-            console.log('Sector seleccionado:', this.empresacargar.sectorEmpresarial);
+           
           } else {
             this.empresanueva.sectorEmpresarial = sector;
-            console.log('Sector seleccionado:', this.empresanueva.sectorEmpresarial);
+           
           }
         } else {
           console.log('No se puede obtener el sector');
@@ -318,11 +356,16 @@ export class Empresas2Component {
       console.error('Error: No hay usuario empresario definido.', this.empresariouser);
       return;
     }
-
+  
     this.empresaService.getEmpresasbyUser(this.empresariouser).subscribe(
       empresas => {
         if (Array.isArray(empresas) && empresas.length > 0) {
-          this.empresass = empresas;
+          this.empresass = empresas.sort((a, b) => {
+            if (a.id !== undefined && b.id !== undefined) {
+              return a.id - b.id;
+            }
+            return 0; 
+          });
           console.log('Empresas obtenidas exitosamente:', empresas);
         } else {
           console.error('Error: No se encontraron empresas para el usuario.');
@@ -338,13 +381,13 @@ export class Empresas2Component {
       }
     );
   }
-
+  
   getEmpresaById(id: number) {
     this.empresaService.getEmpresaById(id).subscribe(
         empresa => {
-            this.empresacargar = empresa;  
-            this.ID_Sector = empresa.sectorEmpresarial.id;
-            this.ID_Ciudad = empresa.ciudad.id; this
+            this.empresacargar = empresa;   
+            this.ID_Sector = empresa.sectorEmpresarial.id; 
+            this.ID_Ciudad = empresa.ciudad.id;
         },
         error => console.error('Error al obtener empresa:', error)
     );
@@ -365,7 +408,97 @@ export class Empresas2Component {
       ubicacion: '',
       sitioWeb: ''
     };
+  
   }
+  @ViewChild('nombreInput', { read: NgModel }) nombreInput!: NgModel;
+  @ViewChild('rucInput', { read: NgModel }) rucInput!: NgModel;
+  @ViewChild('TipoEmpresaInput', { read: NgModel }) TipoEmpresaInput!: NgModel;
+  @ViewChild('razonSocialInput', { read: NgModel }) razonSocialInput!: NgModel;
+  @ViewChild('areaInput', { read: NgModel }) areaInput!: NgModel;
+  @ViewChild('ubicacionInput', { read: NgModel }) ubicacionInput!: NgModel;
+  @ViewChild('sitioWebInput', { read: NgModel }) sitioWebInput!: NgModel;
+  @ViewChild('ciudadInput', { read: NgModel }) ciudadInput!: NgModel;
+  @ViewChild('sectorInput', { read: NgModel }) sectorInput!: NgModel;
+  validarCampos(): boolean {
+    const isNombreValido =
+      !(
+        this.nombreInput?.invalid &&
+        (this.nombreInput?.dirty || this.nombreInput?.touched)
+      );
 
+    //console.log("¿Nombre válido?", isNombreValido ? "Sí" : "No");
+
+    const isRucValido =
+      !(
+        this.rucInput?.invalid &&
+        (this.rucInput?.dirty || this.rucInput?.touched)
+      );
+
+    //console.log("¿RUC válido?", isRucValido ? "Sí" : "No");
+
+    const isTipoEmpresaValido =
+      !(
+        this.TipoEmpresaInput?.invalid &&
+        (this.TipoEmpresaInput?.dirty || this.TipoEmpresaInput?.touched)
+      );
+
+    //console.log("¿Tipo de Empresa válido?", isTipoEmpresaValido ? "Sí" : "No");
+
+    const isRazonSocialValida =
+      !(
+        this.razonSocialInput?.invalid &&
+        (this.razonSocialInput?.dirty || this.razonSocialInput?.touched)
+      );
+
+    //console.log("¿Razón Social válida?", isRazonSocialValida ? "Sí" : "No");
+
+    const isAreaValida =
+      !(
+        this.areaInput?.invalid &&
+        (this.areaInput?.dirty || this.areaInput?.touched)
+      );
+
+    //console.log("¿Área válida?", isAreaValida ? "Sí" : "No");
+
+    const isUbicacionValida =
+      !(
+        this.ubicacionInput?.invalid &&
+        (this.ubicacionInput?.dirty || this.ubicacionInput?.touched)
+      );
+
+    //console.log("¿Ubicación válida?", isUbicacionValida ? "Sí" : "No");
+
+    const isSitioWebValido =
+      !(
+        this.sitioWebInput?.invalid &&
+        (this.sitioWebInput?.dirty || this.sitioWebInput?.touched)
+      );
+
+    //console.log("¿Sitio Web válido?", isSitioWebValido ? "Sí" : "No");
+
+    const isCiudadValida =
+      !(
+        this.ciudadInput?.invalid &&
+        (this.ciudadInput?.dirty || this.ciudadInput?.touched)
+      );
+
+    //console.log("¿Ciudad válida?", isCiudadValida ? "Sí" : "No");
+
+    const isSectorValido =
+      !(
+        this.sectorInput?.invalid &&
+        (this.sectorInput?.dirty || this.sectorInput?.touched)
+      );
+
+    //console.log("¿Sector válido?", isSectorValido ? "Sí" : "No");
+
+    const isValid = isNombreValido && isRucValido && isTipoEmpresaValido && isRazonSocialValida && isAreaValida && isUbicacionValida && isSitioWebValido && isCiudadValida && isSectorValido;
+
+    console.log("¿Campos válidos?", isValid ? "Sí" : "No");
+
+    return isValid;
+}
+
+  
 }
 

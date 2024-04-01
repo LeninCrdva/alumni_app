@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ciudad } from '../model/ciudad';
 import { CiudadDTO } from '../model/DTO/ciudadDTO';
-
+import { map ,filter } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -45,6 +45,12 @@ export class CiudadService {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<CiudadDTO>(url, city, { headers: this.httpHeaders });
   }
-
-
+  filtrarCiudadPorNombre(nombre: string): Observable<Ciudad> {
+    return this.http.get<Ciudad[]>(this.urlEndPoint).pipe(
+      map(ciudades => ciudades.filter(ciudad => ciudad.nombre.toLowerCase() === nombre.toLowerCase())),
+      filter(ciudadesFiltradas => ciudadesFiltradas.length > 0), 
+      map(ciudadesFiltradas => ciudadesFiltradas[0]) 
+    );
+  }
+  
 }

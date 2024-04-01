@@ -3,7 +3,7 @@ import { Observable, catchError, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { sectorempresarial } from '../model/sectorEmpresarial';
-
+import { map } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
@@ -30,6 +30,12 @@ export class SectorEmpresarialService {
     updateSectorEmpresarial(id: number, sector: sectorempresarial): Observable<sectorempresarial> {
         const url = `${this.urlEndPoint}/${id}`;
         return this.http.put<sectorempresarial>(url, sector, { headers: this.httpHeaders });
+      }
+
+      filtrarSectoresPorNombre(nombre: string): Observable<sectorempresarial | undefined> {
+        return this.http.get<sectorempresarial[]>(this.urlEndPoint).pipe(
+          map(sectores => sectores.find(sector => sector.nombre.toLowerCase().includes(nombre.toLowerCase())))
+        );
       }
 
 }
