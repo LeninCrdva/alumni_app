@@ -40,7 +40,7 @@ export class Graduado3 {
     'usuario': string;
     'ciudad': string;
     'anioGraduacion': Date;
-    'email_personal': string;
+    'emailPersonal': string;
     'estadoCivil': string;
     'rutaPdf': string;
     'urlPdf': string;
@@ -50,7 +50,7 @@ export class Graduado4 {
     'usuario': string;
     'ciudad': string;
     'anioGraduacion': Date;
-    'email_personal': string;
+    'emailPersonal': string;
     'estadoCivil': string;
     'rutaPdf': string;
     'urlPdf': string;

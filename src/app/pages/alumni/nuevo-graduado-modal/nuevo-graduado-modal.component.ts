@@ -133,7 +133,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
             this.inforest = res;
 
             this.nuevoGraduado.usuario = this.nuevoGraduadoForm.get('usuario')?.value;
-            this.nuevoGraduado.email_personal = this.nuevoGraduadoForm.get('emailPersonal')?.value;
+            this.nuevoGraduado.emailPersonal = this.nuevoGraduadoForm.get('emailPersonal')?.value;
             this.nuevoGraduado.ciudad = this.nuevoGraduadoForm.get('ciudad')?.value;
             this.nuevoGraduado.anioGraduacion = this.nuevoGraduadoForm.get('fecha_graduacion')?.value;
             this.nuevoGraduado.estadoCivil = this.nuevoGraduadoForm.get('estadoCivil')?.value;
