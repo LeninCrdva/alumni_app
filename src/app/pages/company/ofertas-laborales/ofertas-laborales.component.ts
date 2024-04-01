@@ -55,7 +55,7 @@ export class OfertasLaboralesComponent {
   ofertaslaboralesCarga: any = {};
   ofertaslaboraleslist: ofertaLaboralDTO[] = [];
   empresas: Empresa[] = [];
-  fechaPublicacion: String = '';
+  fechaPublicacion?: Date;
   name: string | null = localStorage.getItem('name');
   graduados: Graduado[] = [];
   idOferta: number = 0;
@@ -256,9 +256,9 @@ export class OfertasLaboralesComponent {
     const day = currentDate.getDate().toString().padStart(2, '0'); // Agrega un cero si el día es de un solo dígito
     const year = currentDate.getFullYear();
 
-    const formattedDate = `${month}/${day}/${year}`;
+    const formattedDate = `${year}-${month}-${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
 
-    this.fechaPublicacion = formattedDate;
+    this.fechaPublicacion = new Date(formattedDate);
     if (this.editarClicked == true) {
       this.ofertaslaboralesCarga.fechaPublicacion = new Date(formattedDate);
       console.log('Fecha de publicacion', this.ofertaslaborales.fechaPublicacion);
