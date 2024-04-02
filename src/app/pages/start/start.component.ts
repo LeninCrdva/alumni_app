@@ -15,10 +15,10 @@ export class StartComponent implements OnInit {
   private readonly ADMINISTRADOR = 'ADMINISTRADOR';
   private readonly EMPRESARIO = 'EMPRESARIO';
   private readonly GRADUADO = 'GRADUADO';
-  
+
   mailRequest: MailRequest = new MailRequest();
 
-  constructor(private renderer: Renderer2, private el: ElementRef, private router: Router,private mailService: MailService) { }
+  constructor(private renderer: Renderer2, private el: ElementRef, private router: Router, private mailService: MailService) { }
 
   // Note: Animaciones
   options_Anim1: AnimationOptions = {
@@ -42,6 +42,7 @@ export class StartComponent implements OnInit {
       this.renderer.removeClass(header, 'abajo');
     }
 
+    this.handleScroll();
   }
 
   private handleScroll() {
@@ -100,7 +101,7 @@ export class StartComponent implements OnInit {
   onSubmit(): void {
     this.mailRequest.to = 'info.alumni.est@gmail.com';
     this.mailService.contactUs(this.mailRequest).subscribe(response => {
-     
+
       Swal.fire({
         icon: 'success',
         title: '¡Mensaje enviado!',
