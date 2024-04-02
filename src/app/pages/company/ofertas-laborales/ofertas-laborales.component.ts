@@ -252,26 +252,27 @@ export class OfertasLaboralesComponent {
 
   getFechaPublicacion() {
     const currentDate = new Date();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Agrega un cero si el mes es de un solo dígito
-    const day = currentDate.getDate().toString().padStart(2, '0'); // Agrega un cero si el día es de un solo dígito
+    
+    // Obtener componentes de la fecha y hora
     const year = currentDate.getFullYear();
-    const hours = currentDate.getHours().toString().padStart(2, '0'); // Agrega un cero si la hora es de un solo dígito
-    const minutes = currentDate.getMinutes().toString().padStart(2, '0'); // Agrega un cero si los minutos son de un solo dígito
-    const seconds = currentDate.getSeconds().toString().padStart(2, '0'); // Agrega un cero si los segundos son de un solo dígito
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const hours = currentDate.getHours().toString().padStart(2, '0');
+    const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+    const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    // Formatear la fecha y hora en el formato requerido
+    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
-    // Convertir la cadena formateada al formato Date para asignarla a this.fechaPublicacion
-    this.fechaPublicacion = new Date(formattedDate);
+    // Asignar la fecha formateada a this.fechaPublicacion
+    this.fechaPublicacion = currentDate;
 
-    // Formatear la fecha nuevamente en el formato "YYYY-MM-dd HH:mm:ss" para asignarla a this.ofertaslaboralesCarga.fechaPublicacion
-    const formattedDateForBackend = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-    if (this.editarClicked == true) {
-        this.ofertaslaboralesCarga.fechaPublicacion = formattedDateForBackend;
+    // Asignar la fecha formateada al objeto this.ofertaslaboralesCarga.fechaPublicacion
+    if (this.editarClicked) {
+        this.ofertaslaboralesCarga.fechaPublicacion = formattedDate;
         console.log('Fecha de publicacion', this.ofertaslaborales.fechaPublicacion);
     } else {
-        this.ofertaslaborales.fechaPublicacion = formattedDateForBackend;
+        this.ofertaslaborales.fechaPublicacion = formattedDate;
     }
 
     console.log(formattedDate);
@@ -441,7 +442,7 @@ export class OfertasLaboralesComponent {
         const base64String = reader.result as string;
         this.ofertaslaborales.foto_portada = base64String;
         console.log("Lo que manda:",this.ofertaslaborales);
-     //   this.createOfertaLaboralRequest();
+        this.createOfertaLaboralRequest();
     };
 
     reader.onerror = (error) => {
