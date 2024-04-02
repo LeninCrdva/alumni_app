@@ -32,9 +32,13 @@ export class OfertasDeTrabajoComponent implements OnInit {
 
   cargarOfertas(id: number): void {
     this.ofertasService.getOfertaLaboralWithPostulateByGraduateId(id).subscribe(
-      oferta => this.listOfertas = oferta
-    )
+      oferta => {
+        this.listOfertas = oferta;
+        console.log('Ofertas recibidas:', this.listOfertas);
+      }
+    );
   }
+  
 
   requestOffer(idOFerta: number): void {
     let isPres: boolean = true;

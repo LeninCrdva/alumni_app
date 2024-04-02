@@ -24,13 +24,13 @@ export class OfertasLaboralesComponent {
   onRegistrarClick(): void {
     this.editarClicked = false;
   }
-
+  enlaceHabilitado: boolean = true;
   onEditarClick(id: number | undefined = 0,tipo: string| undefined): void {
     this.editarClicked = true;
     this.getOfertaLaboralById(id);
     this.idEdit = id;
     // Lógica para abrir el modal dependiendo del tipo de oferta
-   
+    this.enlaceHabilitado = true;
     if (tipo) {
       this.selectedStyle=tipo;
         if (tipo === 'estilo1') {
@@ -47,6 +47,9 @@ export class OfertasLaboralesComponent {
     }
    
 
+}
+habilitarEnlace(): void {
+  this.enlaceHabilitado = true;
 }
 
 
@@ -226,12 +229,15 @@ export class OfertasLaboralesComponent {
       if (esExitoso || result.isConfirmed) {
         this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
         this.bsModalRef.hide();
+        this.resetModalState();
       }
     });
      if (this.selectedStyle === 'estilo1') {
       this.closeModal2('m_modal_4');
+      this.resetModalState();
     } else if (this.selectedStyle === 'estilo2') {
       this.closeModal2('m_modal_6');
+      this.resetModalState();
     }
   }
 
@@ -278,13 +284,7 @@ export class OfertasLaboralesComponent {
     console.log(formattedDate);
 }
 
-  /*
-  getFechaPublicacion1() {
-    const currentDate = new Date();
-    const formattedDate = this.datePipe.transform(currentDate, 'mm/dd/yyyy');
-    this.ofertaslaborales.fechaPublicacion = formattedDate || ''; // Asegúrate de manejar el caso en el que formattedDate sea nulo
-    console.log(formattedDate);
-  }*/
+
 
 
 
@@ -358,6 +358,10 @@ export class OfertasLaboralesComponent {
   }
   }
 
+  resetSelectedStyle() {
+    this.selectedStyle = 'estilo1';
+}
+
   
 
   deleteOfertaLaboral(id: number | undefined = 0) {
@@ -406,6 +410,9 @@ export class OfertasLaboralesComponent {
       this.loadCleanObject();
       this.getAllOfertasLaborales();
       this.getMisEmpresas();
+     
+      this.editarClicked = false;
+     
     }
   }
   closeModal2(modalId: string): void {
@@ -416,6 +423,7 @@ export class OfertasLaboralesComponent {
       const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
       if (modalBackdrop) {
         modalBackdrop.parentNode?.removeChild(modalBackdrop);
+       
       }
     }
   }
@@ -450,7 +458,7 @@ export class OfertasLaboralesComponent {
         this.mostrarSweetAlert(false, 'Error al cargar la foto de portada.');
     };
 } else {
-  console.log("Lo que manda:",this.ofertaslaborales);
+ 
     this.createOfertaLaboralRequest();
 }
 }
@@ -482,7 +490,9 @@ createOfertaLaboralRequest() {
   }
 
 }
-
+resetModalState() {
+  this.editarClicked = false;
+}
 updateOfertaLaboral() {
   console.log('Almeja', this.idEdit, this.ofertaslaboralesCarga);
   if (!this.validateOfertasCargaPerFields() && this.selectedStyle === 'estilo1') {
@@ -498,6 +508,8 @@ updateOfertaLaboral() {
           console.log(response);
           this.ofertaslaborales = response;
           this.mostrarSweetAlert(true, 'La oferta laboral se ha actualizado exitosamente.');
+          this.editarClicked = false;
+         
           this.closeModal();
         },
         (error) => {

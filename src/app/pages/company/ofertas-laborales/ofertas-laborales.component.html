@@ -302,7 +302,7 @@
 
 
                 <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
-                    id="close-button">Cancelar</button>
+                (click)="resetSelectedStyle()"   id="close-button">Cancelar</button>
             </div>
         </div>
     </div>
@@ -553,7 +553,7 @@
 
 
                 <button data-bs-dismiss="modal"  #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
-                    id="close-button">Cancelar</button>
+                    id="close-button" (click)="resetSelectedStyle()">Cancelar</button>
             </div>
         </div>
     </div>
@@ -601,18 +601,19 @@
                                     <td>{{oferta.tipo}}</td>
                                     <td class="text-center table-actions d-flex justify-content-center">
                                         <a (click)="onEditarClick(oferta.id,oferta.tipo)" data-bs-toggle="modal"
-                                            data-bs-target="#m_modal_4" class="table-action mg-r-10">
+                                            data-bs-target="#m_modal_4" class="table-action mg-r-10" style="cursor: pointer;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                         <a (click)="deleteOfertaLaboral(oferta.id)"
-                                            class="table-action ms-2 text-danger">
+                                            class="table-action ms-2 text-danger" style="cursor: pointer;">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                         <a (click)="listpostulantes(oferta.id)" data-bs-toggle="modal"
-                                            data-bs-target="#m_modal_5" class="table-action ms-2 text-muted">
+                                            data-bs-target="#m_modal_5" class="table-action ms-2 text-muted" style="cursor: pointer;">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
