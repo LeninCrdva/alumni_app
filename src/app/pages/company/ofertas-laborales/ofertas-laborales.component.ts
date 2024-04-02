@@ -11,7 +11,7 @@ import { Graduado } from '../../../data/model/graduado';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { Subject } from 'rxjs';
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
-
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-postulaciones-add-form',
@@ -255,18 +255,28 @@ export class OfertasLaboralesComponent {
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Agrega un cero si el mes es de un solo dígito
     const day = currentDate.getDate().toString().padStart(2, '0'); // Agrega un cero si el día es de un solo dígito
     const year = currentDate.getFullYear();
+    const hours = currentDate.getHours().toString().padStart(2, '0'); // Agrega un cero si la hora es de un solo dígito
+    const minutes = currentDate.getMinutes().toString().padStart(2, '0'); // Agrega un cero si los minutos son de un solo dígito
+    const seconds = currentDate.getSeconds().toString().padStart(2, '0'); // Agrega un cero si los segundos son de un solo dígito
 
-    const formattedDate = `${year}-${month}-${day} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
+    // Convertir la cadena formateada al formato Date para asignarla a this.fechaPublicacion
     this.fechaPublicacion = new Date(formattedDate);
+
+    // Formatear la fecha nuevamente en el formato "YYYY-MM-dd HH:mm:ss" para asignarla a this.ofertaslaboralesCarga.fechaPublicacion
+    const formattedDateForBackend = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
     if (this.editarClicked == true) {
-      this.ofertaslaboralesCarga.fechaPublicacion = new Date(formattedDate);
-      console.log('Fecha de publicacion', this.ofertaslaborales.fechaPublicacion);
+        this.ofertaslaboralesCarga.fechaPublicacion = formattedDateForBackend;
+        console.log('Fecha de publicacion', this.ofertaslaborales.fechaPublicacion);
     } else {
-      this.ofertaslaborales.fechaPublicacion = new Date(formattedDate);
+        this.ofertaslaborales.fechaPublicacion = formattedDateForBackend;
     }
+
     console.log(formattedDate);
-  }
+}
+
   /*
   getFechaPublicacion1() {
     const currentDate = new Date();
@@ -430,7 +440,8 @@ export class OfertasLaboralesComponent {
     reader.onload = () => {
         const base64String = reader.result as string;
         this.ofertaslaborales.foto_portada = base64String;
-        this.createOfertaLaboralRequest();
+        console.log("Lo que manda:",this.ofertaslaborales);
+     //   this.createOfertaLaboralRequest();
     };
 
     reader.onerror = (error) => {
@@ -438,27 +449,37 @@ export class OfertasLaboralesComponent {
         this.mostrarSweetAlert(false, 'Error al cargar la foto de portada.');
     };
 } else {
-   
+  console.log("Lo que manda:",this.ofertaslaborales);
     this.createOfertaLaboralRequest();
 }
 }
 
 createOfertaLaboralRequest() {
  
-  this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
+  if (this.validarCampos()) {
+    this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
       (response) => {
-          this.emptrds = this.ofertaslaborales.empresa;
-          console.log(response);
-          this.ofertaslaborales = response;
-          this.mostrarSweetAlert(true, 'La oferta laboral se ha creado exitosamente.');
-          this.closeModal();
+        this.emptrds = this.ofertaslaborales.empresa;
+        console.log(response);
+        this.ofertaslaborales = response;
+        this.mostrarSweetAlert(true, 'La oferta laboral se ha creado exitosamente.');
+        this.closeModal();
       },
       (error) => {
-          console.error(error);
-          this.mostrarSweetAlert(false, 'La oferta laboral no se ha creado.');
-          this.bsModalRef.hide();
+        console.error(error);
+        this.mostrarSweetAlert(false, 'La oferta laboral no se ha creado.');
+        this.bsModalRef.hide();
       }
-  );
+    );
+  } else {
+
+    Swal.fire({
+      icon: 'error',
+      title: '¡Upps!',
+      text: 'Hay campos que debe corregir para poder completar la acción.',
+    });
+  }
+
 }
 
 updateOfertaLaboral() {
@@ -470,19 +491,28 @@ updateOfertaLaboral() {
 
   const file = this.imageHandlerService.archivos[0];
   if (!file) {
-    this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.ofertaslaboralesCarga).subscribe(
-      (response) => {
-        console.log(response);
-        this.ofertaslaborales = response;
-        this.mostrarSweetAlert(true, 'La oferta laboral se ha actualizado exitosamente.');
-        this.closeModal();
-      },
-      (error) => {
-        console.error(error);
-        this.mostrarSweetAlert(false, 'La Oferta Laboral no se ha podido actualizar.');
-        this.closeModal();
-      }
-    );
+    if (this.validarCampos()) {
+      this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.ofertaslaboralesCarga).subscribe(
+        (response) => {
+          console.log(response);
+          this.ofertaslaborales = response;
+          this.mostrarSweetAlert(true, 'La oferta laboral se ha actualizado exitosamente.');
+          this.closeModal();
+        },
+        (error) => {
+          console.error(error);
+          this.mostrarSweetAlert(false, 'La Oferta Laboral no se ha podido actualizar.');
+          this.closeModal();
+        }
+      );
+    } else {
+
+      Swal.fire({
+        icon: 'error',
+        title: '¡Upps!',
+        text: 'Hay campos que debe corregir para poder completar la acción.',
+      });
+    }
   } else {
     // Se ha seleccionado un archivo, se procede a actualizar la foto de portada
     const reader = new FileReader();
@@ -525,5 +555,136 @@ updateOfertaLaboral() {
       },
       error => console.error(error)
     )
+  }
+  @ViewChild('estiloInput', { read: NgModel }) estiloInput!: NgModel;
+  @ViewChild('cargoInput', { read: NgModel }) cargoInput!: NgModel;
+  @ViewChild('nombreempresaInput', { read: NgModel }) nombreempresaInput!: NgModel;
+  @ViewChild('tiempoInput', { read: NgModel }) tiempoInput!: NgModel;
+  @ViewChild('fechacierreInput', { read: NgModel }) fechacierreInput!: NgModel;
+  @ViewChild('fechaaperturaInput', { read: NgModel }) fechaaperturaInput!: NgModel;
+  @ViewChild('areaInput', { read: NgModel }) areaInput!: NgModel;
+  @ViewChild('salarioInput', { read: NgModel }) salarioInput!: NgModel;
+  @ViewChild('experienciaInput', { read: NgModel }) experienciaInput!: NgModel;
+  //Estilo2
+  @ViewChild('cargo2Input', { read: NgModel }) cargo2Input!: NgModel;
+  @ViewChild('area2Input', { read: NgModel }) area2Input!: NgModel;
+  @ViewChild('fechacierre2Input', { read: NgModel }) fechacierre2Input!: NgModel;
+  validarCampos(): boolean {
+    const isEstiloValido =
+      !(
+        this.estiloInput?.invalid &&
+        (this.estiloInput?.dirty || this.estiloInput?.touched)
+      );
+
+
+    //console.log("Estilo válido?", isEstiloValido ? "Sí" : "No");
+
+    if (this.selectedStyle === 'estilo1') {
+      const isCargoValido =
+        !(
+          this.cargoInput?.invalid &&
+          (this.cargoInput?.dirty || this.cargoInput?.touched)
+        );
+
+      //console.log("Cargo válido?", isCargoValido ? "Sí" : "No");
+
+      const isNombreEmpresaValido =
+        !(
+          this.nombreempresaInput?.invalid &&
+          (this.nombreempresaInput?.dirty || this.nombreempresaInput?.touched)
+        );
+
+      //console.log("¿Nombre de Empresa válido?", isNombreEmpresaValido ? "Sí" : "No");
+
+      const isTiempoValido =
+        !(
+          this.tiempoInput?.invalid &&
+          (this.tiempoInput?.dirty || this.tiempoInput?.touched)
+        );
+
+      //console.log("¿Tiempo válido?", isTiempoValido ? "Sí" : "No");
+
+      const isFechaCierreValida =
+        !(
+          this.fechacierreInput?.invalid &&
+          (this.fechacierreInput?.dirty || this.fechacierreInput?.touched)
+        );
+
+      //console.log("¿Fecha de Cierre válida?", isFechaCierreValida ? "Sí" : "No");
+
+      const isFechaAperturaValida =
+        !(
+          this.fechaaperturaInput?.invalid &&
+          (this.fechaaperturaInput?.dirty || this.fechaaperturaInput?.touched)
+        );
+
+      //console.log("¿Fecha de Apertura válida?", isFechaAperturaValida ? "Sí" : "No");
+
+      const isAreaValida =
+        !(
+          this.areaInput?.invalid &&
+          (this.areaInput?.dirty || this.areaInput?.touched)
+        );
+
+      //console.log("¿Área válida?", isAreaValida ? "Sí" : "No");
+
+      const isSalarioValido =
+        !(
+          this.salarioInput?.invalid &&
+          (this.salarioInput?.dirty || this.salarioInput?.touched)
+        );
+
+      //console.log("¿Salario válido?", isSalarioValido ? "Sí" : "No");
+
+      const isExperienciaValida =
+        !(
+          this.experienciaInput?.invalid &&
+          (this.experienciaInput?.dirty || this.experienciaInput?.touched)
+        );
+
+      //console.log("¿Experiencia válida?", isExperienciaValida ? "Sí" : "No");
+
+      const isValid = isEstiloValido && isCargoValido && isNombreEmpresaValido && isTiempoValido && isFechaCierreValida && isFechaAperturaValida && isAreaValida && isSalarioValido && isExperienciaValida;
+
+      //console.log("¿Campos válidos?", isValid ? "Sí" : "No");
+
+      return isValid;
+    }
+    if (this.selectedStyle === 'estilo2') {
+      const isCargo2Valido =
+        !(
+          this.cargo2Input?.invalid &&
+          (this.cargo2Input?.dirty || this.cargo2Input?.touched)
+        );
+
+      //console.log("Cargo 2 válido?", isCargo2Valido ? "Sí" : "No");
+
+      const isArea2Valida =
+        !(
+          this.area2Input?.invalid &&
+          (this.area2Input?.dirty || this.area2Input?.touched)
+        );
+
+      //console.log("¿Área 2 válida?", isArea2Valida ? "Sí" : "No");
+
+      const isFechaCierreValida =
+        !(
+          this.fechacierre2Input?.invalid &&
+          (this.fechacierre2Input?.dirty || this.fechacierre2Input?.touched)
+        );
+
+      //console.log("¿Fecha de Cierre válida2?", isFechaCierreValida ? "Sí" : "No");
+
+
+      const isValid = isEstiloValido && isCargo2Valido && isArea2Valida && isFechaCierreValida
+      //console.log("¿Campos válidos?", isValid ? "Sí" : "No");
+
+      return isValid;
+    }
+
+
+    console.error('Estilo no reconocido:', this.selectedStyle);
+    return false;
+
   }
 }
