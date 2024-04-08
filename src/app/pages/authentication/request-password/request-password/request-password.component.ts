@@ -4,6 +4,7 @@ import { MailRequest } from '../../../../data/model/Mail/MailRequest';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MailService } from '../../../../data/service/mail.service';
 import Swal from 'sweetalert2';
+import { AlertsService } from '../../../../data/Alerts.service';
 @Component({
   selector: 'app-request-password',
   templateUrl: './request-password.component.html',
@@ -19,7 +20,8 @@ export class RequestPasswordComponent {
 
   constructor(
     private fb: FormBuilder,
-    private mailService: MailService
+    private mailService: MailService,
+    private alertService: AlertsService
   ) {
     this.formMail = this.fb.group({
       email: ['', Validators.required]
@@ -40,20 +42,18 @@ export class RequestPasswordComponent {
       }
 
       this.mailService.sendResetPassword(this.mailRequest).subscribe((response) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Correo enviado',
-          text: 'Se ha enviado un correo a su dirección de correo electrónico para restablecer su contraseña'
-        })
+        this.alertService.mostrarSweetAlert(true, 'Se ha enviado un correo a su dirección de correo electrónico para restablecer su contraseña');
         this.formMail.reset();
       },
-      (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Correo no enviado',
-          text: 'Esta dirección de correo electrónico no está registrada en el sistema. Por favor, verifique que la dirección de correo electrónico sea correcta o contacte al administrador del sistema.'
-        })
-      }
+        (error) => {
+          if (error.status === 404) {
+            this.alertService.mostrarSweetAlert(false, 'Esta dirección de correo electrónico no está registrada en el sistema. Por favor, verifique que la dirección de correo electrónico sea correcta o contacte al administrador del sistema.');
+          }
+
+          if (error.status === 409) {
+            this.alertService.mostrarSweetAlert(false, 'Usted ya cuenta con un correo de recuperación activo.');
+          }
+        }
       )
     }
   }
