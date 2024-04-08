@@ -22,6 +22,7 @@ export class OfertasLaboralesComponent {
   editarClicked = false;
   idEdit: number = 0;
   onRegistrarClick(): void {
+    this.getFechaPublicacion();
     this.editarClicked = false;
   }
   enlaceHabilitado: boolean = true;
@@ -86,7 +87,6 @@ habilitarEnlace(): void {
    this.getMisEmpresas();
     //this.getAllOfertasLaborales();
     this.loadCleanObject();
-    this.getFechaPublicacion();
     this.ofertaslaborales.estado = false;
     
   }
@@ -166,8 +166,6 @@ habilitarEnlace(): void {
       estado: false,
       nombreEmpresa: '',
       tiempo: '',
-      correoGraduado: [] as string[],
-
     };
 
     this.ofertaslaboralesCarga = {
@@ -182,8 +180,6 @@ habilitarEnlace(): void {
       estado: false,
       nombreEmpresa: '',
       tiempo: '',
-      correoGraduado: [] as string[],
-
     };
   }
   listpostulantes(idoferta: number | undefined) {
@@ -276,12 +272,9 @@ habilitarEnlace(): void {
     // Asignar la fecha formateada al objeto this.ofertaslaboralesCarga.fechaPublicacion
     if (this.editarClicked) {
         this.ofertaslaboralesCarga.fechaPublicacion = formattedDate;
-        console.log('Fecha de publicacion', this.ofertaslaborales.fechaPublicacion);
     } else {
         this.ofertaslaborales.fechaPublicacion = formattedDate;
     }
-
-    console.log(formattedDate);
 }
 
 
@@ -360,9 +353,7 @@ habilitarEnlace(): void {
 
   resetSelectedStyle() {
     this.selectedStyle = 'estilo1';
-}
-
-  
+  }
 
   deleteOfertaLaboral(id: number | undefined = 0) {
     // Mostrar SweetAlert de confirmación
@@ -409,7 +400,6 @@ habilitarEnlace(): void {
       cancelButton.click();
       this.loadCleanObject();
       this.getAllOfertasLaborales();
-      this.getMisEmpresas();
      
       this.editarClicked = false;
      
@@ -434,7 +424,6 @@ habilitarEnlace(): void {
     }
 
     this.ofertaslaborales.tipo = this.selectedStyle;
-    const file = this.imageHandlerService.archivos[0];
     if (this.selectedStyle === 'estilo2' && (!this.imageHandlerService.archivos || this.imageHandlerService.archivos.length === 0)) {
       this.mostrarSweetAlert(false, 'Por favor, sube una foto de portada.');
       return;
@@ -448,7 +437,7 @@ habilitarEnlace(): void {
 
     reader.onload = () => {
         const base64String = reader.result as string;
-        this.ofertaslaborales.foto_portada = base64String;
+        this.ofertaslaborales.fotoPortada = base64String;
         console.log("Lo que manda:",this.ofertaslaborales);
         this.createOfertaLaboralRequest();
     };
@@ -533,7 +522,7 @@ updateOfertaLaboral() {
 
     reader.onload = () => {
       const base64String = reader.result as string;
-      this.ofertaslaboralesCarga.foto_portada = base64String;
+      this.ofertaslaboralesCarga.fotoPortada = base64String;
 
      
       this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.ofertaslaboralesCarga).subscribe(
@@ -563,7 +552,7 @@ updateOfertaLaboral() {
       ofertas => {
         this.ofertaslaboralesCarga = ofertas;
         if (this.editarClicked) {
-          this.imageHandlerService.previsualizacion = this.ofertaslaboralesCarga.foto_portada;
+          this.imageHandlerService.previsualizacion = this.ofertaslaboralesCarga.fotoPortada;
         }
       },
       error => console.error(error)

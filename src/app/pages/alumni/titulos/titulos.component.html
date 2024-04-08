@@ -28,7 +28,7 @@
                                 <i class="fa-solid fa-signature"></i>
                             </a>
                             <input type="text" class="form-control" id="nombre_titulo"
-                                placeholder="Ingrese el nombre del titulo." formControlName="nombre_titulo" required>
+                                placeholder="Ingrese el nombre del titulo." formControlName="nombreTitulo" required>
                             <div class="oaerror danger  invalid-feedback">
                                 <strong>Dato Faltante</strong> - Ingrese el nombre de su Titulo.
                             </div>
@@ -46,7 +46,7 @@
                             <ng-multiselect-dropdown style="width: 20rem;" [placeholder]="'-- Seleccione una opción --'"
                                 [settings]="filterService.dropdownSettings['careersList']"
                                 [data]="filterService.dropdownLists['careersList']"
-                                [(ngModel)]="filterService.selectedItems['careersList']" formControlName="nombrecarrera">
+                                [(ngModel)]="filterService.selectedItems['careersList']" formControlName="nombreCarrera">
                             </ng-multiselect-dropdown>
                             <div class="oaerror danger" *ngIf="validateForm.get('nombrecarrera')?.invalid">
                                 <strong>Dato Faltante</strong> - Seleccione el nombre de la carrera.
@@ -75,7 +75,7 @@
                                 <i class="fa-solid fa-hashtag"></i>
                             </span>
                             <input type="number" class="form-control" id="num_registro"
-                                placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="num_registro" required>
+                                placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="numRegistro" required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del titulo.
                             </div>
@@ -89,7 +89,7 @@
                                 <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fecha_emision"
-                                placeholder="Ingrese el número de registro del titulo." formControlName="fecha_emision"
+                                placeholder="Ingrese el número de registro del titulo." formControlName="fechaEmision"
                                 required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del titulo.
@@ -104,7 +104,7 @@
                                 <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fecha_registro"
-                                placeholder="Ingrese la fecha de registro." formControlName="fecha_registro" required>
+                                placeholder="Ingrese la fecha de registro." formControlName="fechaRegistro" required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de registro titulo.
                             </div>

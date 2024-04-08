@@ -12,6 +12,6 @@ export class ofertaLaboral {
     'estado': boolean;
     'empresa': Empresa;
     'tipo': string;
-    'foto_portada': string;
+    'fotoPortada': string;
     'tiempo'?: string;
 }

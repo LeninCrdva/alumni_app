@@ -52,10 +52,10 @@
                             <td>{{ postulacion.ofertaLaboral?.fechaApertura ? postulacion.ofertaLaboral?.fechaApertura : 'No definido' }}</td>
                             <td>{{ postulacion.ofertaLaboral?.experiencia ? postulacion.ofertaLaboral?.experiencia : 'No definido' }}</td>
                             <td>{{postulacion.ofertaLaboral?.empresa?.ciudad?.nombre}}</td>
-                            <td class="text-danger fw-bold">{{postulacion.estado}}</td>
+                            <td class="text-danger fw-bold">{{ postulacion.estado === 'CANCELADA_POR_GRADUADO' ? 'CANCELADA':postulacion.estado }}</td>
                             <td>
-                                <i class="fas fa-image" *ngIf="!loading && postulacion.ofertaLaboral?.foto_portada"
-                                    (click)="openModal(postulacion.ofertaLaboral?.foto_portada)"
+                                <i class="fas fa-image" *ngIf="!loading && postulacion.ofertaLaboral?.fotoPortada"
+                                    (click)="openModal(postulacion.ofertaLaboral?.fotoPortada)"
                                     style="cursor: pointer;"></i>
                             </td>
                             <td class="text-center">

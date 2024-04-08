@@ -73,14 +73,14 @@ export class ComunidadComponent {
 
 
   loadData() {
-    this.graduadoService.getGraduadosWithoutDTO().subscribe(
-      result => {
+    const userId = localStorage.getItem('user_id');
+    this.graduadoService.getGraduadosNotIn(userId ? parseInt(userId) : 0).subscribe(
+      (result) => {
 
         this.graduadosList = result;
         console.log("Graduados obtenidos:", this.graduadosList);
 
       },
-      (error: any) => console.error(error),
       () => this.dtTrigger.next(null)
     );
   }

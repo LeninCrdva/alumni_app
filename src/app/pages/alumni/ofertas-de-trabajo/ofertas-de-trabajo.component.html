@@ -45,27 +45,27 @@
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-12">
                             <div class="text-center">
-                                <img [src]="oferta.foto_portada ? oferta.foto_portada : '../../../../assets/imgs/Alumni_Logo.png'" class="avatar avatar-small" alt="">
-
+                                <a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]" class="text-dark">
+                                    <img [src]="oferta.fotoPortada ? oferta.fotoPortada : '../../../../assets/imgs/Alumni_Logo.png'" class="avatar avatar-small" alt="">
+                                </a>
                             </div>
                         </div>
 
                         <div class="col-lg-8 col-md-12 mt-4 mt-lg-0">
                             <div class="content text-center text-lg-left ml-lg-4">
                                 <h4 class="title text-lg-left">
-                                    <a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]"
-                                        class="text-dark">{{oferta.cargo}}</a>
+                                    <a [routerLink]="['/system/alumni/oferta-detalle', oferta.id]" class="text-dark">{{oferta.cargo}}</a>
                                 </h4>
                                 <ul class="list-unstyled mb-0">
-                                    <li class="list-inline-item mr-3"><i data-feather="briefcase"
-                                            class="fea icon-sm mr-1"></i><span class="text-muted">
-                                            Fecha de publicacion: {{oferta.fechaPublicacion}}
-                                        </span></li>
+                                    <li class="list-inline-item mr-3">
+                                        <i data-feather="briefcase" class="fea icon-sm mr-1"></i>
+                                        <span class="text-muted">Fecha de publicación: {{ oferta.fechaPublicacion | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                                    </li>
                                 </ul>
                                 <div class="tagcloud text-center mt-2 text-lg-left">
                                     <a class="rounded">| {{oferta.nombreEmpresa}} |</a>
                                     <a class="rounded"> {{oferta.areaConocimiento}} |</a>
-                                    <a class="rounded"> $ {{oferta.salario}} |</a>
+                                    <a class="rounded"> {{oferta.salario ? '$' + oferta.salario: 'Por definir'}} |</a>
                                 </div>
                             </div>
                         </div>

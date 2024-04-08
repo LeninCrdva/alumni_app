@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { PostulacionDTO } from '../../../data/model/DTO/postulacionDTO';
 import { EstadoPostulacion } from '../../../data/model/enum/enums';
 import { PostulacionService } from '../../../data/service/postulacion.service';
+import { AlertsService } from '../../../data/Alerts.service';
+import { error } from 'jquery';
 
 @Component({
   selector: 'app-oferta-detalle',
@@ -21,7 +23,7 @@ export class OfertaDetalleComponent implements OnInit {
   graduadoDTO: GraduadoDTO = new GraduadoDTO();
   diferenceDate: Date = new Date();
 
-  constructor(private ofertaService: OfertalaboralService, private postulacionesService: PostulacionService, private router: Router, private activeRoute: ActivatedRoute) { }
+  constructor(private ofertaService: OfertalaboralService, private postulacionesService: PostulacionService, private router: Router, private activeRoute: ActivatedRoute, private alertService: AlertsService) { }
 
   ngOnInit(): void {
     this.detallarOferta();
@@ -38,7 +40,7 @@ export class OfertaDetalleComponent implements OnInit {
 
   obtenerTiempoTranscurrido(): string {
     const hoy: Date = new Date();
-    const fechaPublicacion: Date = new Date(this.ofertaDetail.fechaPublicacion + 'T00:00:00');
+    const fechaPublicacion: Date = new Date(this.ofertaDetail.fechaPublicacion);
 
     const diferenciaMilisegundos: number = hoy.getTime() - fechaPublicacion.getTime();
     const diferenciaDias: number = Math.floor(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
@@ -67,13 +69,22 @@ export class OfertaDetalleComponent implements OnInit {
     this.postulacionesService.createPostulacion(postulacionCreate).subscribe(
       post => {
         if (post) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Genial',
-            text: 'Has realizado la postulación correctamente',
-          });
+
+          this.alertService.mostrarAlertaMomentanea('Postulación realizada correctamente', true);
 
           this.router.navigate(['system/alumni/postulaciones']);
+        }
+      }, error => {
+        const errorMessages: { [key: string]: string } = {
+          'No se puede postular sin tener al menos un título registrado.': 'No se puede postular sin tener al menos un título registrado.',
+          'No se puede postular sin tener al menos una referencia personal registrada.': 'No se puede postular sin tener al menos una referencia personal registrada.',
+          'No se puede postular sin tener al menos una referencia profesional registrada.': 'No se puede postular sin tener al menos una referencia profesional registrada.'
+        };
+
+        const errorMessage = errorMessages[error.error.message];
+        
+        if (errorMessage) {
+          this.alertService.mostrarSweetAlert(false, errorMessage);
         }
       }
     );

@@ -136,7 +136,11 @@ export class GraduadoService {
   getGraduadosWithoutDTO(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/all`);
   }
+  getGraduadosNotIn(id:number): Observable<Graduado[]> {
+    return this.http.get<Graduado[]>(`${this.urlEndPoint}/otros-graduados/${id}`);
+  }
   getGraduadoSinExperiencia(): Observable<Graduado1[]> {
     return this.http.get<Graduado1[]>(`${this.urlEndPoint}/sin-experiencia`)
   }
+
 }

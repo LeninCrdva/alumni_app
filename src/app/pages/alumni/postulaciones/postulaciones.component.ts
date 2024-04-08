@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { Subject } from 'rxjs';
-import { MailService } from '../../../data/service/mail.service';
 import { MailRequest } from '../../../data/model/Mail/MailRequest';
 import { PostulacionService } from '../../../data/service/postulacion.service';
 import { Postulacion } from '../../../data/model/postulacion';
@@ -11,6 +10,7 @@ import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
 import { DataTablesService } from '../../../data/DataTables.service';
 import { FiltersService } from '../../../data/Filters.service';
+import { AlertsService } from '../../../data/Alerts.service';
 @Component({
   selector: 'app-postulaciones',
   templateUrl: './postulaciones.component.html',
@@ -39,7 +39,7 @@ export class PostulacionesComponent implements OnInit {
   searchTerm: string = '';
 
   constructor(
-    private mailService: MailService,
+    private alertService: AlertsService,
     private mypPostulacionService: PostulacionService,
     public dtService: DataTablesService,
     public filterService: FiltersService
@@ -64,13 +64,7 @@ export class PostulacionesComponent implements OnInit {
   openModal(imageUrl: string | undefined) {
     this.loading = true;
 
-    Swal.fire({
-      title: 'Cargando...',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
+    this.alertService.mostrarAlertaCargando("Cargando imagen...");
 
     setTimeout(() => {
       this.loading = false;
@@ -111,13 +105,25 @@ export class PostulacionesComponent implements OnInit {
       estado: EstadoPostulacion.CANCELADA_POR_GRADUADO.toString()
     }
 
-    this.mypPostulacionService.updateStatePostulacion(postulacion.id ? postulacion.id : 0, miPostulacion).subscribe(() => {
-      Swal.fire({
-        title: "¡Eliminado!",
-        text: "Se ha cancelado la postulación",
-        icon: "success"
-      });
-      this.detallarOferta();
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Desea cancelar la postulación?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.mypPostulacionService.updateStatePostulacion(postulacion.id ? postulacion.id : 0, miPostulacion).subscribe(() => {
+
+          this.alertService.mostrarAlertaMomentanea("Se ha cancelado la postulación", true);
+
+          this.detallarOferta();
+        });
+      }
     });
   }
 

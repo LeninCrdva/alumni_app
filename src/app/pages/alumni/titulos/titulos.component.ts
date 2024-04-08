@@ -10,7 +10,7 @@ import { Titulo } from '../../../data/model/titulo';
 import { TituloService } from '../../../data/service/titulo.service';
 import { CarreraService } from '../../../data/service/carrera.service';
 import { Carrera } from '../../../data/model/carrera';
-import { Graduado3 } from '../../../data/model/graduado';
+
 @Component({
   selector: 'app-titulos',
   templateUrl: './titulos.component.html',
@@ -45,7 +45,10 @@ export class TitulosComponent {
   editarClicked = false;
 
   validateForm: FormGroup;
+
   protected name: string | null = localStorage.getItem('name');
+
+  numeroUndefinido: number = 0;
 
   // =====================================================
   //*                   CONSTURCTOR
@@ -62,14 +65,14 @@ export class TitulosComponent {
     private usuarioGraduado: GraduadoService
   ) {
     this.validateForm = this.fb.group({
-      nombre_titulo: ['', Validators.required],
+      nombreTitulo: ['', Validators.required],
       tipo: ['', Validators.required],
-      num_registro: ['', Validators.required],
-      fecha_emision: ['', Validators.required],
-      fecha_registro: ['', Validators.required],
+      numRegistro: ['', Validators.required],
+      fechaEmision: ['', Validators.required],
+      fechaRegistro: ['', Validators.required],
       nivel: ['', Validators.required],
       institucion: ['', Validators.required],
-      nombrecarrera: ['', Validators.required]
+      nombreCarrera: ['', Validators.required]
     });
   }
 
@@ -84,17 +87,17 @@ export class TitulosComponent {
     this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar titulos...');
 
     // Para inicializar los dropdowns de los filtros de la tabla.
+    this.obtenerIDGraduado();
     this.filterService.initializeDropdowns('filterTable', columnTitles);
     this.obtenerCarreras();
-    this.obtenerIDGraduado();
     this.loadData();
-   
   }
  
   
   ngAfterViewInit(): void {
     this.filterService.setDtElement(this.dtElement);
   }
+
   loadData() {
     this.tituloService.get().subscribe(
       result => {
@@ -168,23 +171,23 @@ export class TitulosComponent {
     // Buscar en la lista de carreras para encontrar el id correspondiente al nombre seleccionado
     // const carreraSeleccionada = this.carrerasList.find(carrera => carrera.nombre === this.validateForm.value.nombrecarrera[0].item_text);
     return {
-      nombre_titulo: this.validateForm.value.nombre_titulo,
+      nombreTitulo: this.validateForm.value.nombreTitulo,
       tipo: this.validateForm.value.tipo,
-      num_registro: this.validateForm.value.num_registro.toString(),
-      fecha_emision: this.validateForm.value.fecha_emision,
-      fecha_registro: this.validateForm.value.fecha_registro,
+      numRegistro: this.validateForm.value.numRegistro.toString(),
+      fechaEmision: this.validateForm.value.fechaEmision,
+      fechaRegistro: this.validateForm.value.fechaRegistro,
       nivel: this.validateForm.value.nivel,
       institucion: this.validateForm.value.institucion,
-      nombrecarrera: this.validateForm.value.nombrecarrera[0].item_text,
-      idgraduado: this.numeroUndefinido
+      nombreCarrera: this.validateForm.value.nombreCarrera[0].item_text,
+      idGraduado: this.numeroUndefinido
     };
   }
 
 
   createNewData() {
     this.alertService.mostrarAlertaCargando('Guardando...');
-    console.log("DATOS: " + this.obtenerDatosFormulario());
-    this.tituloService.create(this.obtenerDatosFormulario()).subscribe(
+    const titulo: Titulo = this.obtenerDatosFormulario();
+    this.tituloService.create(titulo).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
         this.loadData();
@@ -198,8 +201,8 @@ export class TitulosComponent {
 
   onUpdateClick() {
     this.alertService.mostrarAlertaCargando('Actualizando...');
-    console.log("DATOS: " + this.obtenerDatosFormulario());
-    this.tituloService.update(this.idEdit, this.obtenerDatosFormulario()).subscribe(
+    const titulo: Titulo = this.obtenerDatosFormulario();
+    this.tituloService.update(this.idEdit, titulo).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);
         this.loadData();
@@ -224,23 +227,12 @@ export class TitulosComponent {
       }
     );
   }
-  public numeroUndefinido?: number;
+  
   obtenerIDGraduado(): void {
-    console.log("usuario:", this.name);
-
     this.usuarioGraduado.getGraduadoByUsuario(this.name).subscribe(
-        (graduado: Graduado3 | null) => {
-            console.log("Id de graduado:", graduado?.id);
-            if (graduado && graduado.id) {
-                this.numeroUndefinido = graduado.id;
-            }
-            console.log("Id de graduado retorna:", this.numeroUndefinido);
-        },
-        (error: any) => {
-            console.error(error);
-        }
+      (graduado) => this.numeroUndefinido = graduado?.id || 0
     );
-}
+  }
   
   
   obtenerCarreras() {

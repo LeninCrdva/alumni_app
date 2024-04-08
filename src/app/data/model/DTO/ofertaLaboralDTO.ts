@@ -11,6 +11,6 @@ export class ofertaLaboralDTO {
     'nombreEmpresa': string;
     'tipo'?: string;
     'tiempo'?: string;
-    'foto_portada'?: string;
+    'fotoPortada'?: string;
     [key: string]: any;
 }

@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
-import { GraduadoService } from '../../../data/service/graduado.service';
 import Swal from 'sweetalert2';
-import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
-import { MailService } from '../../../data/service/mail.service';
 import { MailRequest } from '../../../data/model/Mail/MailRequest';
 import { PostulacionService } from '../../../data/service/postulacion.service';
 import { PostulacionDTO } from '../../../data/model/DTO/postulacionDTO';
 import { EstadoPostulacion } from '../../../data/model/enum/enums';
 import { Router } from '@angular/router';
 import { ofertaLaboralDTO } from '../../../data/model/DTO/ofertaLaboralDTO';
+import { AlertsService } from '../../../data/Alerts.service';
 
 @Component({
   selector: 'app-ofertas-de-trabajo',
@@ -24,7 +22,7 @@ export class OfertasDeTrabajoComponent implements OnInit {
   value: string = 'seleccionar'
   userId = localStorage.getItem('user_id');
 
-  constructor(private ofertasService: OfertalaboralService, private mailService: MailService, private postulacionService: PostulacionService, private router: Router) { }
+  constructor(private ofertasService: OfertalaboralService, private alertService: AlertsService, private postulacionService: PostulacionService, private router: Router) { }
 
   ngOnInit(): void {
     this.cargarOfertas(this.userId ? parseInt(this.userId) : 0);
@@ -34,7 +32,6 @@ export class OfertasDeTrabajoComponent implements OnInit {
     this.ofertasService.getOfertaLaboralWithPostulateByGraduateId(id).subscribe(
       oferta => {
         this.listOfertas = oferta;
-        console.log('Ofertas recibidas:', this.listOfertas);
       }
     );
   }
@@ -54,13 +51,23 @@ export class OfertasDeTrabajoComponent implements OnInit {
     this.postulacionService.createPostulacion(postulacionCreate).subscribe(
       post => {
         if (post) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Genial',
-            text: 'Has realizado la postulación correctamente',
-          });
 
-          window.location.reload();
+          this.alertService.mostrarAlertaMomentanea('Postulación realizada con éxito');
+
+          this.cargarOfertas(this.userId ? parseInt(this.userId) : 0);
+        }
+      }, error => {
+        const errorMessages: { [key: string]: string } = {
+          'No se puede postular sin tener al menos un título registrado.': 'No se puede postular sin tener al menos un título registrado.',
+          'No se puede postular sin tener al menos una referencia personal registrada.': 'No se puede postular sin tener al menos una referencia personal registrada.',
+          'No se puede postular sin tener al menos una referencia profesional registrada.': 'No se puede postular sin tener al menos una referencia profesional registrada.'
+        };
+
+
+        const errorMessage = errorMessages[error.error.message];
+        
+        if (errorMessage) {
+          this.alertService.mostrarSweetAlert(false, errorMessage);
         }
       }
     );

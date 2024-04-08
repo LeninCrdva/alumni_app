@@ -149,7 +149,7 @@ export class ExperienciaComponent {
     return {
       cargo: this.validateForm.value['cargo'],
       duracion: this.validateForm.value['duracion'],
-      area_trabajo: this.validateForm.value['area_trabajo'],
+      areaTrabajo: this.validateForm.value['area_trabajo'],
       institucionNombre: this.validateForm.value['institucionNombre'],
       actividad: this.validateForm.value['actividad'],
       cedulaGraduado: this.obtenerCedula()
@@ -157,7 +157,6 @@ export class ExperienciaComponent {
   }
 
   createNewData() {
-    this.alertService.mostrarAlertaCargando('Guardando...');
     this.experienciaService.create(this.obtenerDatosFormulario()).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
@@ -172,7 +171,6 @@ export class ExperienciaComponent {
   }
 
   onUpdateClick() {
-    this.alertService.mostrarAlertaCargando('Actualizando...');
     this.experienciaService.update(this.idEdit, this.obtenerDatosFormulario()).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);

@@ -14,27 +14,25 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 
-            <div class="bg-primary modal-header text-white">
-                <h5 [innerText]="editarClicked ? 'Modificar Trabajos' : 'Crear Trabajos'"></h5>
+            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+                <h5 [innerText]="editarClicked ? 'Modificar Trabajos' : 'Crear Trabajos'">
+                </h5>
             </div>
-            
-            
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label class="form-control-label active" for="estilo">Estilo: <span
-                            class="tx-danger">*</span></label>
-                            <select class="form-control" [(ngModel)]="selectedStyle" 
-                            (ngModelChange)="changeStyle()"   #estiloInput="ngModel">
+            <div class="modal-body">
+                <div class="row mg-b-25 my-3" data-parsley-validate>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label active" for="estilo">Estilo: <span
+                                    class="tx-danger">*</span></label>
+                            <select class="form-control" [(ngModel)]="selectedStyle" (ngModelChange)="changeStyle()">
                                 <option value="" disabled>-- Seleccione una opción --</option>
-                                <option value="estilo1" [selected]="editarClicked && selectedStyle === 'estilo1'">Estilo 1</option>
-                                <option value="estilo2" [selected]="editarClicked &&selectedStyle === 'estilo2'">Estilo 2</option>
+                                <option value="estilo1" [selected]="editarClicked && selectedStyle === 'estilo1'">Estilo
+                                    1</option>
+                                <option value="estilo2" [selected]="editarClicked &&selectedStyle === 'estilo2'">Estilo
+                                    2</option>
                             </select>
-                            <div *ngIf="estiloInput.invalid && estiloInput.errors && (estiloInput.dirty || estiloInput.touched)" class="text-danger">
-                                <div *ngIf="estiloInput.errors['required']">
-                                    Por favor, seleccione un estilo .
-                                </div>
-                            </div>
-                            
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -46,28 +44,21 @@
                                 <div class="form-group">
                                     <label class="form-control-label active" for="cargo">CARGO: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-user-tie"></i>
-                                                </a>
-                                            <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
+                                    <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
                                         id="cargo"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.cargo : ofertaslaborales.cargo"
                                         (ngModelChange)="editarClicked ? ofertaslaboralesCarga.cargo = $event : ofertaslaborales.cargo = $event"
-                                        required  pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s,:;.]+$"
-                                        #cargoInput="ngModel">
-                                    </div>
-                                        <div *ngIf="cargoInput.invalid && cargoInput.errors && (cargoInput.dirty || cargoInput.touched)" class="text-danger">
-                                            <div *ngIf="cargoInput.errors['required']">
-                                                El cargo es requerida.
-                                            </div>
-                                            <div *ngIf="cargoInput.errors['pattern']">
-                                                El cargo solo debe contener letras, espacios y los siguientes caracteres especiales: , : ; .
-                                            </div>
-                                        </div>
+                                        required>
                                 </div>
                             </div>
-                          
+
+
+
+
+
+
+
+
 
 
 
@@ -75,54 +66,37 @@
                                 <div class="form-group">
                                     <label class="form-control-label active" for="duracion">EMPRESA: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-city "></i>
-                                                </a>
                                     <select class="form-control" name="nombreEmpresa"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.nombreEmpresa : ofertaslaborales.nombreEmpresa"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.nombreEmpresa = $event : ofertaslaborales.nombreEmpresa = $event"
-                                        #nombreempresaInput="ngModel">
-                                        <option value=""disabled selected>-- Seleccione una opción --</option>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.nombreEmpresa = $event : ofertaslaborales.nombreEmpresa = $event">
+                                        <option value="" disabled selected>-- Seleccione una opción --</option>
                                         <option [value]="empresa.nombre" *ngFor="let empresa of empresas">
                                             {{empresa.nombre}}</option>
                                     </select>
                                 </div>
-                                <div *ngIf="nombreempresaInput.invalid && nombreempresaInput.errors && (nombreempresaInput.dirty || nombreempresaInput.touched)" class="text-danger">
-                                    <div *ngIf="nombreempresaInput.errors['required']">
-                                        Por favor, seleccione una empresa.
-                                    </div>
-                                </div>
-                                </div>
-                               
+
                                 <div class="form-group">
-                                    <label class="form-control-label active">TIEMPO: <span class="tx-danger">*</span></label>
-                                    <div class="input-group has-validation">
-                                        <a class="input-group-text bg-blue">
-                                            <i class="fas fa-clock"></i>
-                                        </a>
+                                    <label class="form-control-label active">TIEMPO: <span
+                                            class="tx-danger">*</span></label>
                                     <select class="form-control" name="tiempo"
-                                            [(ngModel)]="editarClicked ? ofertaslaboralesCarga.tiempo : ofertaslaborales.tiempo"
-                                            (ngModelChange)="editarClicked ? ofertaslaboralesCarga.tiempo = $event : ofertaslaborales.tiempo = $event"
-                                            #tiempoInput="ngModel">
-                                        <option value=""disabled selected>-- Seleccione una opción --</option>
-                                        <option value="COMPLETO" [selected]="ofertaslaborales.tiempo === 'COMPLETO'">Completo</option>
-                                        <option value="PARCIAL" [selected]="ofertaslaborales.tiempo === 'PARCIAL'">Parcial</option>
-                                        <option value="FIN DE SEMANA" [selected]="ofertaslaborales.tiempo === 'FIN DE SEMANA'">Fin de semana</option>
+                                        [(ngModel)]="editarClicked ? ofertaslaboralesCarga.tiempo : ofertaslaborales.tiempo"
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.tiempo = $event : ofertaslaborales.tiempo = $event">
+                                        <option value="" disabled selected>-- Seleccione una opción --</option>
+                                        <option value="COMPLETO" [selected]="ofertaslaborales.tiempo === 'COMPLETO'">
+                                            Completo</option>
+                                        <option value="PARCIAL" [selected]="ofertaslaborales.tiempo === 'PARCIAL'">
+                                            Parcial</option>
+                                        <option value="FIN DE SEMANA"
+                                            [selected]="ofertaslaborales.tiempo === 'FIN DE SEMANA'">Fin de semana
+                                        </option>
                                     </select>
                                 </div>
-                                <div *ngIf="tiempoInput.invalid && tiempoInput.errors && (tiempoInput.dirty || tiempoInput.touched)" class="text-danger">
-                                    <div *ngIf="tiempoInput.errors['required']">
-                                        Por favor, seleccione un tiempo.
-                                    </div>
-                                </div>
-                                </div>
-                               
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
+
                             </div>
                         </div>
 
@@ -131,48 +105,18 @@
                                 <div class="form-group">
                                     <label class="form-control-label active">FECHA CIERRE: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </a>
                                     <input class="form-control" type="datetime-local" name="fechaCierre"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaCierre : ofertaslaborales.fechaCierre"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event"
-                                        required   [min]="ofertaslaborales.fechaApertura"   #fechacierreInput="ngModel">
-                                    </div>
-                                        <div *ngIf="fechacierreInput.invalid && fechacierreInput.errors && (fechacierreInput.dirty || fechacierreInput.touched)" class="text-danger">
-                                            <div *ngIf="fechacierreInput.errors['required']">
-                                                La fecha de cierre es requerida.
-                                            </div>
-                                            <div *ngIf="fechacierreInput.errors?.['min'] && (!fechacierreInput.errors?.['required'] || !ofertaslaborales.fechaApertura)">
-                                                Primero debe seleccionar una fecha de apertura.
-                                            </div>
-                                                                                        
-                                            <div *ngIf="fechacierreInput.errors['min']">
-                                                La fecha de cierre no puede ser anterior a la fecha de apertura.
-                                            </div>
-                                        </div>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event">
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <div class="form-group">
                                     <label class="form-control-label active">FECHA APERTURA: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </a>
-                                    <input class="form-control"  type="datetime-local" name="fechaApertura" 
+                                    <input class="form-control" type="datetime-local" name="fechaApertura"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaApertura : ofertaslaborales.fechaApertura"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaApertura = $event : ofertaslaborales.fechaApertura = $event"
-                                        required  #fechaaperturaInput="ngModel">
-                                    </div>
-                                    <div *ngIf="fechaaperturaInput.invalid && fechaaperturaInput.errors && (fechaaperturaInput.dirty || fechaaperturaInput.touched)" class="text-danger">
-                                        <div *ngIf="fechaaperturaInput.errors['required']">
-                                            La fecha de apertura es requerida.
-                                        </div>
-                                        
-                                    </div>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaApertura = $event : ofertaslaborales.fechaApertura = $event">
                                 </div>
                             </div>
                         </div>
@@ -180,17 +124,11 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    
                                     <label class="form-control-label active">FECHA PUBLICACION: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="fechaPublicacion"
-                                                [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" readonly>
-                                        
-                                    </div>
+                                    <input class="form-control wd-250" type="text" name="fechaPublicacion"
+                                        [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" readonly>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -200,14 +138,7 @@
                                     <textarea class="form-control" name="areaConocimiento" rows="4"
                                         placeholder="Ingrese el area de conocimiento para su oferta de trabajo"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.areaConocimiento : ofertaslaborales.areaConocimiento"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.areaConocimiento = $event : ofertaslaborales.areaConocimiento = $event"
-                                        #areaInput="ngModel"></textarea>
-                                        <div *ngIf="areaInput.invalid && areaInput.errors && (areaInput.dirty || areaInput.touched)" class="text-danger">
-                                            <div *ngIf="areaInput.errors['required']">
-                                                El area es requerida.
-                                            </div>
-                                            
-                                        </div>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.areaConocimiento = $event : ofertaslaborales.areaConocimiento = $event"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -217,67 +148,39 @@
                                 <div class="form-group">
                                     <label class="form-control-label active">ESTADO: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i *ngIf="ofertaslaboralesCarga.estado; else falseIcon" class="fas fa-check-circle text-success"></i>
-                                                    <ng-template #falseIcon>
-                                                        <i class="fas fa-times-circle text-danger"></i>
-                                                    </ng-template>
-                                                </a>
                                     <input class="form-control wd-250" type="text" name="estado"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.estado : ofertaslaborales.estado"
                                         readonly>
-                                            </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active" for="salario">SALARIO: <span class="tx-danger">*</span></label>
-                                    <div class="input-group has-validation">
-                                        <a class="input-group-text bg-blue">
-                                            <i class="fas fa-money-bill-wave"></i>
-                                        </a>
-                                    <input class="form-control" type="number" name="salario" placeholder="Ingrese la Salario" id="salario"
+                                    <label class="form-control-label active" for="salario">SALARIO: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control" type="number" name="salario"
+                                        placeholder="Ingrese la Salario" id="salario"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.salario : ofertaslaborales.salario"
                                         (ngModelChange)="editarClicked ? ofertaslaboralesCarga.salario = $event : ofertaslaborales.salario = $event"
-                                        required #salarioInput="ngModel" [min]="1" />
-                                        </div>
-                                        <div *ngIf="salarioInput.invalid && salarioInput.errors && (salarioInput.dirty || salarioInput.touched)" class="text-danger">
-                                            <div *ngIf="salarioInput.errors['required']">
-                                                El salario es requerida.
-                                            </div>
-                                                                                        
-                                            <div *ngIf="salarioInput.errors['min']">
-                                                El salario debe de ser mayor a 0.
-                                            </div>
-                                        </div>
+                                        required>
                                 </div>
-                                
                             </div>
                         </div>
                         <div class="col-lg-6 mb-3">
                             <div class="form-group">
                                 <label class="form-control-label active">EXPERIENCIA: <span
                                         class="tx-danger">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <a class="input-group-text bg-blue">
-                                                <i class="fas fa-exclamation-circle"></i>
-                                            </a>
-                                        <select class="form-control" name="experiencia"
-                                        [(ngModel)]="editarClicked ? ofertaslaboralesCarga.experiencia : ofertaslaborales.experiencia"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.experiencia = $event : ofertaslaborales.experiencia = $event"
-                                        #experienciaInput="ngModel" >
-                                        <option value="" disabled>-- Seleccione una opción --</option>
-                                        <option value="SIN EXPERIENCIA" [selected]="ofertaslaborales.experiencia === 'Sin Experiencia'">Sin Experiencia</option>
-                                        <option value="CON EXPERIENCIA" [selected]="ofertaslaborales.experiencia === 'Con Experiencia'">Con Experiencia</option>
-                                    </select>
-                                        </div>
-                                    <div *ngIf="experienciaInput.invalid && experienciaInput.errors && (experienciaInput.dirty || experienciaInput.touched)" class="text-danger">
-                                        <div *ngIf="experienciaInput.errors['required']">
-                                            Debe seleccionar una opción diferente a "-- Seleccione una opción --".
-                                        </div>
-                                    </div>
-                                    
+                                <select class="form-control" name="experiencia"
+                                    [(ngModel)]="editarClicked ? ofertaslaboralesCarga.experiencia : ofertaslaborales.experiencia"
+                                    (ngModelChange)="editarClicked ? ofertaslaboralesCarga.experiencia = $event : ofertaslaborales.experiencia = $event">
+                                    <option value="" disabled>-- Seleccione una opción --</option>
+                                    <option value="SIN EXPERIENCIA"
+                                        [selected]="ofertaslaborales.experiencia === 'Sin Experiencia'">Sin Experiencia
+                                    </option>
+                                    <option value="CON EXPERIENCIA"
+                                        [selected]="ofertaslaborales.experiencia === 'Con Experiencia'">Con Experiencia
+                                    </option>
+                                </select>
+
                             </div>
                         </div>
                     </div>
@@ -289,20 +192,18 @@
 
                 <!-- Botón para registrar -->
                 <button (click)="createOfertaLaboral()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                class="btn btn-oblong btn-primary" *ngIf="!editarClicked">
-                Registrar Trabajo
-            </button>
-            
-            <!-- Botón para editar -->
-            <button (click)="updateOfertaLaboral()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                Editar Trabajo
-            </button>
-            
+                    class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                    Registrar Trabajo
+                </button>
+
+                <!-- Botón para editar -->
+                <button (click)="updateOfertaLaboral()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                    class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                    Editar Trabajo
+                </button>
 
 
-                <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
-                (click)="resetSelectedStyle()"   id="close-button">Cancelar</button>
+                <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block" (click)="resetSelectedStyle()" id="close-button">Cancelar</button>
             </div>
         </div>
     </div>
@@ -312,23 +213,26 @@
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-           
+
             <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
                 <h5 [innerText]="editarClicked ? 'Modificar Trabajos' : 'Crear Trabajos'">
                 </h5>
             </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label class="form-control-label active" for="estilo">Estilo: <span
-                            class="tx-danger">*</span></label>
-                    <select class="form-control" [(ngModel)]="selectedStyle"
-                        (ngModelChange)="changeStyle()">
-                        <option value="" [selected]="selectedStyle === ''" disabled>-- Seleccione una
-                            opción --</option>
-                        <option value="estilo1" [selected]="selectedStyle === 'estilo1'">Estilo 1
-                        </option>
-                        <option value="estilo2">Estilo 2</option>
-                    </select>
+            <div class="modal-body">
+                <div class="row mg-b-25 my-3" data-parsley-validate>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label active" for="estilo">Estilo: <span
+                                    class="tx-danger">*</span></label>
+                            <select class="form-control" [(ngModel)]="selectedStyle" (ngModelChange)="changeStyle()">
+                                <option value="" [selected]="selectedStyle === ''" disabled>-- Seleccione una
+                                    opción --</option>
+                                <option value="estilo1" [selected]="selectedStyle === 'estilo1'">Estilo 1
+                                </option>
+                                <option value="estilo2">Estilo 2</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -341,74 +245,38 @@
                                 <div class="form-group">
                                     <label class="form-control-label active" for="duracion">EMPRESA: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-city "></i>
-                                                </a>
                                     <select class="form-control" name="nombreEmpresa"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.nombreEmpresa : ofertaslaborales.nombreEmpresa"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.nombreEmpresa = $event : ofertaslaborales.nombreEmpresa = $event"
-                                        #nombreempresaInput="ngModel">
-                                        <option value=""disabled selected>-- Seleccione una opción --</option>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.nombreEmpresa = $event : ofertaslaborales.nombreEmpresa = $event">
+                                        <option value="">-- Seleccione una opción --</option>
                                         <option [value]="empresa.nombre" *ngFor="let empresa of empresas">
                                             {{empresa.nombre}}</option>
                                     </select>
                                 </div>
-                                <div *ngIf="nombreempresaInput.invalid && nombreempresaInput.errors && (nombreempresaInput.dirty || nombreempresaInput.touched)" class="text-danger">
-                                    <div *ngIf="nombreempresaInput.errors['required']">
-                                        Por favor, seleccione una empresa.
-                                    </div>
-                                </div>
-                                </div>
-
                                 <div class="form-group">
-                                    <label class="form-control-label active">TIEMPO: <span class="tx-danger">*</span></label>
-                                    <div class="input-group has-validation">
-                                        <a class="input-group-text bg-blue">
-                                            <i class="fas fa-clock"></i>
-                                        </a>
+                                    <label class="form-control-label active">TIEMPO: <span
+                                            class="tx-danger">*</span></label>
                                     <select class="form-control" name="tiempo"
-                                            [(ngModel)]="editarClicked ? ofertaslaboralesCarga.tiempo : ofertaslaborales.tiempo"
-                                            (ngModelChange)="editarClicked ? ofertaslaboralesCarga.tiempo = $event : ofertaslaborales.tiempo = $event"
-                                            #tiempoInput="ngModel">
-                                        <option value=""disabled selected>-- Seleccione una opción --</option>
-                                        <option value="COMPLETO" [selected]="ofertaslaborales.tiempo === 'COMPLETO'">Completo</option>
-                                        <option value="PARCIAL" [selected]="ofertaslaborales.tiempo === 'PARCIAL'">Parcial</option>
-                                        <option value="FIN DE SEMANA" [selected]="ofertaslaborales.tiempo === 'FIN DE SEMANA'">Fin de semana</option>
+                                        [(ngModel)]="editarClicked ? ofertaslaboralesCarga.tiempo : ofertaslaborales.tiempo"
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.tiempo = $event : ofertaslaborales.tiempo = $event">
+                                        <option value="" disabled selected>-- Seleccione una opción --</option>
+                                        <option value="COMPLETO" [selected]="ofertaslaborales.tiempo === 'COMPLETO'">
+                                            Completo</option>
+                                        <option value="PARCIAL" [selected]="ofertaslaborales.tiempo === 'PARCIAL'">
+                                            Parcial</option>
+                                        <option value="FIN DE SEMANA"
+                                            [selected]="ofertaslaborales.tiempo === 'FIN DE SEMANA'">Fin de semana
+                                        </option>
                                     </select>
-                                </div>
-                                <div *ngIf="tiempoInput.invalid && tiempoInput.errors && (tiempoInput.dirty || tiempoInput.touched)" class="text-danger">
-                                    <div *ngIf="tiempoInput.errors['required']">
-                                        Por favor, seleccione un tiempo.
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <div class="form-group">
                                     <label class="form-control-label active">FECHA CIERRE: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="far fa-calendar-alt"></i>
-                                                </a>
                                     <input class="form-control" type="datetime-local" name="fechaCierre"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaCierre : ofertaslaborales.fechaCierre"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event"
-                                        required   [min]="ofertaslaborales.fechaApertura"   #fechacierre2Input="ngModel">
-                                    </div>
-                                        <div *ngIf="fechacierre2Input.invalid && fechacierre2Input.errors && (fechacierre2Input.dirty || fechacierre2Input.touched)" class="text-danger">
-                                            <div *ngIf="fechacierre2Input.errors['required']">
-                                                La fecha de cierre es requerida.
-                                            </div>
-                                            <div *ngIf="fechacierre2Input.errors?.['min'] && (!fechacierre2Input.errors?.['required'] || !ofertaslaborales.fechaApertura)">
-                                                Primero debe seleccionar una fecha de apertura.
-                                            </div>
-                                                                                        
-                                            <div *ngIf="fechacierre2Input.errors['min']">
-                                                La fecha de cierre no puede ser anterior a la fecha de apertura.
-                                            </div>
-                                        </div>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event">
                                 </div>
                             </div>
                         </div>
@@ -419,30 +287,23 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label active">AREA CONOCIMINETO: <span
+                                    <label class="form-control-label active">AREA CONOCIMIENTO: <span
                                             class="tx-danger">*</span></label>
                                     <textarea class="form-control" name="areaConocimiento" rows="4"
                                         placeholder="Ingrese el area de conocimiento para su oferta de trabajo"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.areaConocimiento : ofertaslaborales.areaConocimiento"
-                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.areaConocimiento = $event : ofertaslaborales.areaConocimiento = $event"
-                                        #area2Input="ngModel"></textarea>
-                                        <div *ngIf="area2Input.invalid && area2Input.errors && (area2Input.dirty || area2Input.touched)" class="text-danger">
-                                            <div *ngIf="area2Input.errors['required']">
-                                                El area es requerida.
-                                            </div>
-                                            
-                                        </div>
+                                        (ngModelChange)="editarClicked ? ofertaslaboralesCarga.areaConocimiento = $event : ofertaslaborales.areaConocimiento = $event"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label active">FECHA PUBLICACION: <span
                                             class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="fechaPublicacion"
-                                            [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" readonly>
+                                    <input class="form-control wd-250" type="text" name="fechaPublicacion"
+                                        [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" readonly>
 
                                 </div>
                             </div>
-                            
-                         
+
+
                         </div>
 
                         <div class="row mg-b-25 my-3">
@@ -450,45 +311,23 @@
                                 <div class="form-group">
                                     <label class="form-control-label active">ESTADO: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i *ngIf="ofertaslaboralesCarga.estado; else falseIcon" class="fas fa-check-circle text-success"></i>
-                                                    <ng-template #falseIcon>
-                                                        <i class="fas fa-times-circle text-danger"></i>
-                                                    </ng-template>
-                                                </a>
                                     <input class="form-control wd-250" type="text" name="estado"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.estado : ofertaslaborales.estado"
                                         readonly>
-                                            </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label active" for="cargo">CARGO: <span
                                             class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-user-tie"></i>
-                                                </a>
-                                            <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
+                                    <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
                                         id="cargo"
                                         [(ngModel)]="editarClicked ? ofertaslaboralesCarga.cargo : ofertaslaborales.cargo"
                                         (ngModelChange)="editarClicked ? ofertaslaboralesCarga.cargo = $event : ofertaslaborales.cargo = $event"
-                                        required  pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s,:;.]+$"
-                                        #cargo2Input="ngModel">
-                                    </div>
-                                        <div *ngIf="cargo2Input.invalid && cargo2Input.errors && (cargo2Input.dirty || cargo2Input.touched)" class="text-danger">
-                                            <div *ngIf="cargo2Input.errors['required']">
-                                                El cargo es requerida.
-                                            </div>
-                                            <div *ngIf="cargo2Input.errors['pattern']">
-                                                El cargo solo debe contener letras, espacios y los siguientes caracteres especiales: , : ; .
-                                            </div>
-                                        </div>
+                                        required>
                                 </div>
                             </div>
-                            
+
 
                         </div>
                         <div class="row mb-3" data-parsley-validate>
@@ -500,23 +339,23 @@
                                         <h4 class="card-header-title">
                                             <div class="preview-img" *ngIf="imageHandlerService.previsualizacion ">
                                                 <!-- Código para previsualizar una imagen nueva -->
-                                                <button class="clear-image form-control border-0 cancel-button" type="button"
-                                                    (click)="imageHandlerService.clearImage()">
+                                                <button class="clear-image form-control border-0 cancel-button"
+                                                    type="button" (click)="imageHandlerService.clearImage()">
                                                     Eliminar Imagen
                                                 </button>
                                                 <div class="image-container text-center" style="margin: 2rem;">
                                                     <img [src]="imageHandlerService.previsualizacion" alt=""
                                                         style="width: 30rem; height: 300px; object-fit: cover; border-radius: 1rem;" />
                                                 </div>
-                                                
+
                                             </div>
-                                              
-                                            
-                                           
+
+
+
                                         </h4>
                                     </div>
-                                    
-                                    
+
+
                                     <div class="card-body collapse show" id="collapse8">
                                         <input type="file" class="form-control" aria-label="file example" required
                                             (change)="imageHandlerService.capturarFile($event)"
@@ -524,7 +363,8 @@
                                         <div class="invalid-feedback">La foto de portada es necesaria.</div>
                                     </div>
                                 </div>
-                                <div class="oaerror danger" *ngIf="!imageHandlerService.previsualizacion && !editarClicked">
+                                <div class="oaerror danger"
+                                    *ngIf="imageHandlerService.previsualizacion && editarClicked">
                                     <strong>Error</strong> - La foto para la portada es obligatoria.
                                 </div>
                             </div>
@@ -552,8 +392,8 @@
 
 
 
-                <button data-bs-dismiss="modal"  #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
-                    id="close-button" (click)="resetSelectedStyle()">Cancelar</button>
+                <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
+                    (click)="resetSelectedStyle()" id="close-button">Cancelar</button>
             </div>
         </div>
     </div>
@@ -568,7 +408,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
                     Registrar Trabajo
                 </button>
             </div>
@@ -613,7 +453,6 @@
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
-                                    
                                 </tr>
                             </tbody>
                         </table>
