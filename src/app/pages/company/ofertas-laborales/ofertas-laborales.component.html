@@ -9,12 +9,12 @@
 
 
 <!-- Modal -->
-<div class="modal" #m_modal_4 id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+<div class="modal fade" #m_modal_4 id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 
-            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+            <div class="modal-header text-white bg-primary">
                 <h5 [innerText]="editarClicked ? 'Modificar Trabajos' : 'Crear Trabajos'">
                 </h5>
             </div>
@@ -391,12 +391,26 @@
     <div class="card-body collapse show">
 
         <div class="d-flex">
-            <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success me-2">
+            <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
                 <i class="fas fa-sync"></i>
             </button>
+            
+            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
+                class="btn btn-dark ms-2">
+                <i class="fa-solid fa-filter"></i>
+            </button>
+            
+            <ng-multiselect-dropdown style="width: 30rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                [data]="filterService.dropdownLists['filterTable']"
+                [(ngModel)]="filterService.selectedItems['filterTable']" (onSelect)="filterService.onItemSelect($event)"
+                (onSelectAll)="filterService.onSelectAll('filterTable')"
+                (onDeSelect)="filterService.onItemDeSelect($event)"
+                (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+            </ng-multiselect-dropdown>
 
             <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                class="btn btn-oblong btn-primary mg-b-10 ms-2" style="margin-right:10px; width: 20rem; height: 2.5rem;">
                 Registrar Trabajo
             </button>
         </div>

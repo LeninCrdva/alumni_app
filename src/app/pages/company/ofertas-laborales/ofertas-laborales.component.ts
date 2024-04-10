@@ -2,11 +2,9 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
 import { Empresa } from '../../../data/model/empresa';
 import { EmpresaService } from '../../../data/service/empresa.service';
-import { error } from 'jquery';
 import { ofertaLaboralDTO } from '../../../data/model/DTO/ofertaLaboralDTO';
-import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
-import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Graduado } from '../../../data/model/graduado';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { Subject } from 'rxjs';
@@ -78,7 +76,7 @@ export class OfertasLaboralesComponent {
   ngAfterViewInit(): void {
     this.filterService.setDtElement(this.dtElement);
   }
-  
+
   /*
   ngOnInit(): void {
     this.getMisEmpresas();
@@ -88,7 +86,7 @@ export class OfertasLaboralesComponent {
     this.ofertaslaborales.estado = false;
   } 
   */
-  
+
   changeStyle() {
     if (this.selectedStyle === 'estilo1') {
       ($('#m_modal_4') as any).modal('show');
@@ -97,9 +95,7 @@ export class OfertasLaboralesComponent {
       ($('#m_modal_4') as any).modal('hide');
       ($('#m_modal_6') as any).modal('show');
     }
-
   }
-
 
   loadData() {
     this.ofertalaburoService.OfertasLaborales(this.name || "").subscribe(
@@ -203,9 +199,7 @@ export class OfertasLaboralesComponent {
       } else if (tipo === 'estilo2') {
         ($('#m_modal_4') as any).modal('hide');
         ($('#m_modal_6') as any).modal('show');
-
       }
-
     } else {
       console.error('Oferta no encontrada');
     }
@@ -247,6 +241,7 @@ export class OfertasLaboralesComponent {
 
     return true;
   }
+
   validateOfertasCargaPerFields(): boolean {
     if (!this.ofertaslaboralesCarga.salario || !this.ofertaslaboralesCarga.fechaCierre || !this.ofertaslaboralesCarga.cargo || !this.ofertaslaboralesCarga.experiencia || !this.ofertaslaboralesCarga.fechaApertura || !this.ofertaslaboralesCarga.areaConocimiento || !this.ofertaslaboralesCarga.nombreEmpresa) {
       return false;
@@ -324,6 +319,7 @@ export class OfertasLaboralesComponent {
       }
     );
   }
+
   descontratarGraduado(id: number | undefined = 0) {
     this.ofertalaburoService.deleteGraduadoContratado(id).subscribe(
       (response) => {
@@ -338,7 +334,6 @@ export class OfertasLaboralesComponent {
       }
     );
   }
-
 
   filtroPostulados() {
     console.log(this.filtropostulados)
@@ -404,6 +399,7 @@ export class OfertasLaboralesComponent {
 
     }
   }
+  
   closeModal2(modalId: string): void {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -416,6 +412,7 @@ export class OfertasLaboralesComponent {
       }
     }
   }
+
   createOfertaLaboral() {
     if (!this.validateOfertasPerFields() && this.selectedStyle === 'estilo1') {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos, son obligatorios.');
@@ -452,7 +449,6 @@ export class OfertasLaboralesComponent {
   }
 
   createOfertaLaboralRequest() {
-
     if (this.validarCampos()) {
       this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
         (response) => {
@@ -476,11 +472,12 @@ export class OfertasLaboralesComponent {
         text: 'Hay campos que debe corregir para poder completar la acción.',
       });
     }
-
   }
+
   resetModalState() {
     this.editarClicked = false;
   }
+
   updateOfertaLaboral() {
     console.log('Almeja', this.idEdit, this.ofertaslaboralesCarga);
     if (!this.validateOfertasCargaPerFields() && this.selectedStyle === 'estilo1') {
@@ -570,6 +567,7 @@ export class OfertasLaboralesComponent {
   @ViewChild('cargo2Input', { read: NgModel }) cargo2Input!: NgModel;
   @ViewChild('area2Input', { read: NgModel }) area2Input!: NgModel;
   @ViewChild('fechacierre2Input', { read: NgModel }) fechacierre2Input!: NgModel;
+  
   validarCampos(): boolean {
     const isEstiloValido =
       !(
@@ -683,9 +681,7 @@ export class OfertasLaboralesComponent {
       return isValid;
     }
 
-
     console.error('Estilo no reconocido:', this.selectedStyle);
     return false;
-
   }
 }

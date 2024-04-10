@@ -8,6 +8,7 @@ import { CrudEmpresasComponent } from './crud-empresas/crud-empresas.component';
 import { Empresas2Component } from './empresas-2/empresas-2.component';
 import { DataTablesModule } from 'angular-datatables';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { PerfilFormComponent } from './perfil-form/perfil-form.component';
         CompanyRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        DataTablesModule
+        DataTablesModule,
+        NgMultiSelectDropDownModule.forRoot()
     ]
 })
 
