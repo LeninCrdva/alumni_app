@@ -166,7 +166,7 @@
 </div>
 
 <!-- Modal2 -->
-<div class="modal" #m_modal_6 id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_6"
+<div class="modal fade" #m_modal_6 id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_6"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -431,8 +431,7 @@
                                     <td>{{oferta.estado}}</td>
                                     <td>{{oferta.tipo}}</td>
                                     <td class="text-center table-actions d-flex justify-content-center">
-                                        <a (click)="onEditarClick(oferta.id,oferta.tipo)" data-bs-toggle="modal"
-                                            data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                        <a (click)="onEditarClick(oferta.id,oferta.tipo)" class="table-action mg-r-10"
                                             style="cursor: pointer;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
