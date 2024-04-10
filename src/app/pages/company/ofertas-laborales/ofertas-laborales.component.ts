@@ -67,10 +67,6 @@ export class OfertasLaboralesComponent {
     // Para inicializar los dropdowns de los filtros de la tabla.
     this.filterService.initializeDropdowns('filterTable', columnTitles,);
     this.loadData();
-    this.getMisEmpresas();
-    //this.getAllOfertasLaborales();
-    this.loadCleanObject();
-    this.ofertaslaborales.estado = false;
   }
 
   ngAfterViewInit(): void {
@@ -110,6 +106,11 @@ export class OfertasLaboralesComponent {
         } else {
           this.dtService.rerender(this.dtElement, this.dtTrigger);
         }
+        
+        this.getMisEmpresas();
+        //this.getAllOfertasLaborales();
+        this.loadCleanObject();
+        this.ofertaslaborales.estado = false;
       },
       (error: any) => console.error(error)
     );
