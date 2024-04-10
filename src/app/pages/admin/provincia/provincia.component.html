@@ -10,7 +10,7 @@
 <div class="card">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
-        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+        <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
             aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -19,7 +19,7 @@
                         <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Crear nueva Provincia'"></h5>
                     </div>-->
                     <div [class.bg-primary]="true" class="modal-header text-white">
-                        <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Crear nueva Provincia'"></h5>
+                        <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Registrar nueva Provincia'"></h5>
                     </div>
 
                     <div class="modal-body">
@@ -54,7 +54,7 @@
                     <div class="modal-footer">
                         <button (click)="editModeProvince ? UpdateProv(): createProvince()" type="submit"
                             data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
-                            {{!editModeProvince ? 'Guardar Cambios' : 'Crear'}}
+                            {{!editModeProvince ? 'Registrar Provincia' : 'Editar Provincia'}}
                         </button>
                         <button data-bs-dismiss="modal" id="close-button"
                             class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
@@ -65,7 +65,7 @@
 
         <!--/ Modal -->
 
-        <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+        <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
             aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -73,7 +73,7 @@
                         <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
                     </div>-->
                     <div [class.bg-primary]="true" class="modal-header text-white">
-                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
+                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Registrar nueva Ciudad'"></h5>
                     </div>
 
 
@@ -114,7 +114,7 @@
                     <div class="modal-footer">
                         <button (click)="!editModeCity ? createCity() : UpdateCity()" type="submit"
                             data-bs-toggle="modal" data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
-                            {{editModeCity ? "Edit" : "Guardar"}}
+                            {{editModeCity ? "Editar Ciudad" : "Registrar Ciudad"}}
                         </button>
                         <button data-bs-dismiss="modal" id="close-button"
                             class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
@@ -135,10 +135,10 @@
                     style="margin-right:10px; width: 17rem; height: 2.5rem;">
                     Registrar Ciudad</button>
                 <div class="input-group">
-                    
+
                     <input type="text" class="form-control me-3" id="searchInput" placeholder="Buscar..."
                         style="border-color: blue;" (input)="onSearch($event)">
-                        
+
                     <select class="form-control" style="border-radius: 1rem;" id="selectInput">
                         <option value="1">Ciudad</option>
                         <option value="2">Provincia</option>

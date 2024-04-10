@@ -18,15 +18,15 @@ export class LoaderPeticionesInterceptor implements HttpInterceptor {
   private _activeRequest = 0;
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // Swal.fire({
-    //   title: "Cargando...",
-    //   html: 'Por favor, espera...',
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    //   timer: 2000
-    // });
+    Swal.fire({
+      title: "Cargando...",
+      html: 'Por favor, espera...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      timer: 2000
+    });
 
     const token = getToken(LocalStorageKeys.TOKEN);
 
