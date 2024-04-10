@@ -17,16 +17,21 @@ export class ImageHandlerServiceFoto {
         this.archivos = [];
         const inputElement = document.querySelector('input[type="file"]');
         if (inputElement) {
-            (inputElement as HTMLInputElement).value = ''; 
+            (inputElement as HTMLInputElement).value = '';
         }
     }
 
-    capturarFile(event: any, ): void {
+    capturarFile(event: any,): void {
         const archivoCapturado = event.target.files[0];
         this.extraerBase64(archivoCapturado).then((imagen: any) => {
             this.previsualizacion = imagen.base;
         });
-        this.archivos.push(archivoCapturado);
+        // Reemplazar el primer elemento del array archivos
+        if (this.archivos.length > 0) {
+            this.archivos[0] = archivoCapturado;
+        } else {
+            this.archivos.push(archivoCapturado);
+        }
     }
 
     extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
