@@ -342,7 +342,7 @@
                     </select>
                 </label>
 
-                <div class="card-body pd-0 collapse show mt-3" id="collapse1">
+                <div class="card-body pd-0 collapse show mt-3">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="table-light">
@@ -394,12 +394,12 @@
             <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
                 <i class="fas fa-sync"></i>
             </button>
-            
+
             <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
                 class="btn btn-dark ms-2">
                 <i class="fa-solid fa-filter"></i>
             </button>
-            
+
             <ng-multiselect-dropdown style="width: 30rem;" *ngIf="filterService.editFilterTabs['filterTable']"
                 [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
                 [data]="filterService.dropdownLists['filterTable']"
@@ -410,47 +410,44 @@
             </ng-multiselect-dropdown>
 
             <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                class="btn btn-oblong btn-primary mg-b-10 ms-2" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                class="btn btn-oblong btn-primary mg-b-10 ms-2"
+                style="margin-right:10px; width: 20rem; height: 2.5rem;">
                 Registrar Trabajo
             </button>
         </div>
 
-
-        <div class="card-body pd-0 collapse show" id="collapse1">
+        <!-- =====================================================
+            *            CONTENIDO DE LA TABLA
+         ======================================================= -->
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
             <div class="table-responsive">
-                <div class="collapse show animate__animated animate__bounceInUp animate__fast">
-                    <div class="table-responsive">
-
-                        <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
-                            class="table table-bordered custom-table">
-                            <tbody>
-                                <tr *ngFor="let oferta of ofertaslaboraleslist">
-                                    <th scope="row">{{oferta.id}}</th>
-                                    <td>{{oferta.fechaCierre}} </td>
-                                    <td>{{ oferta.nombreEmpresa}}</td>
-                                    <td>{{oferta.estado}}</td>
-                                    <td>{{oferta.tipo}}</td>
-                                    <td class="text-center table-actions d-flex justify-content-center">
-                                        <a (click)="onEditarClick(oferta.id,oferta.tipo)" class="table-action mg-r-10"
-                                            style="cursor: pointer;">
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
-                                        <a (click)="deleteOfertaLaboral(oferta.id)"
-                                            class="table-action ms-2 text-danger" style="cursor: pointer;">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <a (click)="listpostulantes(oferta.id)" data-bs-toggle="modal"
-                                            data-bs-target="#m_modal_5" class="table-action ms-2 text-muted"
-                                            style="cursor: pointer;">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
+                    <tbody>
+                        <tr *ngFor="let oferta of ofertaslaboraleslist">
+                            <th scope="row">{{oferta.id}}</th>
+                            <td>{{oferta.fechaCierre}} </td>
+                            <td>{{ oferta.nombreEmpresa}}</td>
+                            <td>{{oferta.estado}}</td>
+                            <td>{{oferta.tipo}}</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a (click)="onEditarClick(oferta.id,oferta.tipo)" class="table-action mg-r-10"
+                                    style="cursor: pointer;">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a (click)="deleteOfertaLaboral(oferta.id)" class="table-action ms-2 text-danger"
+                                    style="cursor: pointer;">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                <a (click)="listpostulantes(oferta.id)" data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_5" class="table-action ms-2 text-muted"
+                                    style="cursor: pointer;">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
