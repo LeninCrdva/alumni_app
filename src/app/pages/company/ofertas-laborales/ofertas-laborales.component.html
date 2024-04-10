@@ -1,5 +1,5 @@
 <section class="page-title bg-overlay-black parallax"
-    style="background-image: url(../../../../assets/imgs/headers/empresas.jpg);">
+    style="background-image: url(../../../../assets/imgs/headers/Postulaciones.jpg);">
     <div class="row">
         <div class="col-lg-12">
             <h1>Ofertar Trabajo</h1>
@@ -79,19 +79,19 @@
                         </div>
 
                         <div class="form-group col-lg-6">
-                            <label class="form-control-label active">FECHA CIERRE: <span
-                                    class="tx-danger">*</span></label>
-                            <input class="form-control" type="datetime-local" name="fechaCierre"
-                                [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaCierre : ofertaslaborales.fechaCierre"
-                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event">
-                        </div>
-
-                        <div class="form-group col-lg-6">
                             <label class="form-control-label active">FECHA APERTURA: <span
                                     class="tx-danger">*</span></label>
                             <input class="form-control" type="datetime-local" name="fechaApertura"
                                 [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaApertura : ofertaslaborales.fechaApertura"
                                 (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaApertura = $event : ofertaslaborales.fechaApertura = $event">
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label class="form-control-label active">FECHA CIERRE: <span
+                                    class="tx-danger">*</span></label>
+                            <input class="form-control" type="datetime-local" name="fechaCierre"
+                                [(ngModel)]="editarClicked ? ofertaslaboralesCarga.fechaCierre : ofertaslaborales.fechaCierre"
+                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.fechaCierre = $event : ofertaslaborales.fechaCierre = $event">
                         </div>
 
                         <div class="form-group col-lg-12">
@@ -101,6 +101,22 @@
                                 placeholder="Ingrese el area de conocimiento para su oferta de trabajo"
                                 [(ngModel)]="editarClicked ? ofertaslaboralesCarga.areaConocimiento : ofertaslaborales.areaConocimiento"
                                 (ngModelChange)="editarClicked ? ofertaslaboralesCarga.areaConocimiento = $event : ofertaslaborales.areaConocimiento = $event"></textarea>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label class="form-control-label active">EXPERIENCIA: <span
+                                    class="tx-danger">*</span></label>
+                            <select class="form-control" name="experiencia"
+                                [(ngModel)]="editarClicked ? ofertaslaboralesCarga.experiencia : ofertaslaborales.experiencia"
+                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.experiencia = $event : ofertaslaborales.experiencia = $event">
+                                <option value="" disabled>-- Seleccione una opción --</option>
+                                <option value="SIN EXPERIENCIA"
+                                    [selected]="ofertaslaborales.experiencia === 'Sin Experiencia'">Sin Experiencia
+                                </option>
+                                <option value="CON EXPERIENCIA"
+                                    [selected]="ofertaslaborales.experiencia === 'Con Experiencia'">Con Experiencia
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-6">
@@ -121,22 +137,6 @@
                                 [(ngModel)]="editarClicked ? ofertaslaboralesCarga.salario : ofertaslaborales.salario"
                                 (ngModelChange)="editarClicked ? ofertaslaboralesCarga.salario = $event : ofertaslaborales.salario = $event"
                                 required>
-                        </div>
-
-                        <div class="form-group col-lg-12">
-                            <label class="form-control-label active">EXPERIENCIA: <span
-                                    class="tx-danger">*</span></label>
-                            <select class="form-control" name="experiencia"
-                                [(ngModel)]="editarClicked ? ofertaslaboralesCarga.experiencia : ofertaslaborales.experiencia"
-                                (ngModelChange)="editarClicked ? ofertaslaboralesCarga.experiencia = $event : ofertaslaborales.experiencia = $event">
-                                <option value="" disabled>-- Seleccione una opción --</option>
-                                <option value="SIN EXPERIENCIA"
-                                    [selected]="ofertaslaborales.experiencia === 'Sin Experiencia'">Sin Experiencia
-                                </option>
-                                <option value="CON EXPERIENCIA"
-                                    [selected]="ofertaslaborales.experiencia === 'Con Experiencia'">Con Experiencia
-                                </option>
-                            </select>
                         </div>
                     </div>
 
@@ -218,7 +218,7 @@
                             </option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group col-lg-6">
                         <label class="form-control-label active">FECHA PUBLICACION: <span
                                 class="tx-danger">*</span></label>
@@ -317,38 +317,98 @@
     </div>
 </div>
 
+<!-- MODAL INFORMACIÓN DE LO POSTULANTES-->
+<div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_5"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked" class="modal-header text-white">
+                <h5 [innerText]="editarClicked ? 'Modificar Trabajos' : 'Listado De Postulantes'">
+                </h5>
+            </div>
+
+            <div class="modal-body">
+
+                <button *ngIf="filtropostulados == 1" (click)="sendSelectedIDs()" class="btn btn-oblong btn-success">
+                    Contratar personal
+                </button>
+
+                <label for="" style="margin-left: 10px;">
+                    <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                        class="form-select form-select-sm" [(ngModel)]="filtropostulados"
+                        (ngModelChange)="filtroPostulados()">
+                        <option [value]="1">Todos</option>
+                        <option [value]="2">Contratados</option>
+                    </select>
+                </label>
+
+                <div class="card-body pd-0 collapse show mt-3" id="collapse1">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Cedula</th>
+                                    <th>Email</th>
+                                    <th>Acciones</th>
+                                    <th *ngIf="filtropostulados == 1">Seleccionar</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let graduado of graduados; let i = index">
+                                    <td>{{graduado.id}}</td>
+                                    <td>{{graduado.usuario.persona.primerNombre}}</td>
+                                    <td>{{graduado.usuario.persona.cedula}}</td>
+                                    <td>{{graduado.emailPersonal}}</td>
+                                    <td class="text-center table-actions d-flex justify-content-center">
+                                        <a class="table-action ms-2 text-danger"
+                                            [routerLink]="['/system/company/graduado-perfil']"
+                                            (click)="setIDGraduado(graduado.id)">
+                                            <i class="fa fa-info-circle"></i>
+                                        </a>
+                                        <a class="table-action ms-2 text-danger" *ngIf="filtropostulados == 2"
+                                            (click)="descontratarGraduado(graduado.id)">
+                                            <i class="fa fa-trash-alt" *ngIf="filtropostulados == 2"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center" *ngIf="filtropostulados == 1">
+                                        <input type="checkbox" [(ngModel)]="selectedRows[i]" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-body collapse show">
 
-        <!--/ Modal1 -->
-        <div class="col-md-12 col-lg-12">
-            <div class="d-flex">
-                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
-                    Registrar Trabajo
-                </button>
-            </div>
+        <div class="d-flex">
+            <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success me-2">
+                <i class="fas fa-sync"></i>
+            </button>
+
+            <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+                class="btn btn-oblong btn-primary mg-b-10" style="margin-right:10px; width: 20rem; height: 2.5rem;">
+                Registrar Trabajo
+            </button>
         </div>
 
 
         <div class="card-body pd-0 collapse show" id="collapse1">
             <div class="table-responsive">
-                <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
+                <div class="collapse show animate__animated animate__bounceInUp animate__fast">
                     <div class="table-responsive">
 
                         <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                             class="table table-bordered custom-table">
-                            <thead class="bg-dark text-white">
-                                <tr>
-                                    <th>#</th>
-                                    <th>FECHA CIERRE</th>
-                                    <th>INSTITUCION</th>
-                                    <th>ESTADO</th>
-                                    <th>ESTILO</th>
-                                    <th class="text-center w-100px">Acciones</th>
-                                </tr>
-                            </thead>
                             <tbody>
                                 <tr *ngFor="let oferta of ofertaslaboraleslist">
                                     <th scope="row">{{oferta.id}}</th>
@@ -379,78 +439,6 @@
                 </div>
 
             </div>
-        </div> <!--/ Modal 1 -->
-
-
-        <!-- MODAL 2-->
-        <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_5"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
-                        class="modal-header text-white">
-                        <h5 [innerText]="editarClicked ? 'Modificar Trabajos' : 'Listado Postulados'">
-                        </h5>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <button *ngIf="filtropostulados == 1" (click)="sendSelectedIDs()"
-                            class="btn btn-oblong btn-success">
-                            Contratar personal
-                        </button>
-
-                        <label for="" style="margin-left: 10px;">
-                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
-                                class="form-select form-select-sm" [(ngModel)]="filtropostulados"
-                                (ngModelChange)="filtroPostulados()">
-                                <option [value]="1">Todos</option>
-                                <option [value]="2">Contratados</option>
-                            </select>
-                        </label>
-
-                        <div class="card-body pd-0 collapse show" id="collapse1">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nombre</th>
-                                            <th>Cedula</th>
-                                            <th>Email</th>
-                                            <th>Acciones</th>
-                                            <th *ngIf="filtropostulados == 1">Seleccionar</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let graduado of graduados; let i = index">
-                                            <td>{{graduado.id}}</td>
-                                            <td>{{graduado.usuario.persona.primerNombre}}</td>
-                                            <td>{{graduado.usuario.persona.cedula}}</td>
-                                            <td>{{graduado.emailPersonal}}</td>
-                                            <td class="text-center table-actions d-flex justify-content-center">
-                                                <a class="table-action ms-2 text-danger"
-                                                    [routerLink]="['/system/company/graduado-perfil']"
-                                                    (click)="setIDGraduado(graduado.id)">
-                                                    <i class="fa fa-info-circle"></i>
-                                                </a>
-                                                <a class="table-action ms-2 text-danger" *ngIf="filtropostulados == 2"
-                                                    (click)="descontratarGraduado(graduado.id)">
-                                                    <i class="fa fa-trash-alt" *ngIf="filtropostulados == 2"></i>
-                                                </a>
-                                            </td>
-                                            <td class="text-center" *ngIf="filtropostulados == 1">
-                                                <input type="checkbox" [(ngModel)]="selectedRows[i]" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
-        <!--/ Modal 2 -->
+    </div>
+</div>

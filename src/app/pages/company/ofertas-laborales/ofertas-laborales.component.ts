@@ -12,6 +12,9 @@ import { GraduadoService } from '../../../data/service/graduado.service';
 import { Subject } from 'rxjs';
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
 import { NgModel } from '@angular/forms';
+import { DataTablesService } from '../../../data/DataTables.service';
+import { DataTableDirective } from 'angular-datatables';
+import { FiltersService } from '../../../data/Filters.service';
 
 @Component({
   selector: 'app-postulaciones-add-form',
@@ -21,41 +24,7 @@ import { NgModel } from '@angular/forms';
 export class OfertasLaboralesComponent {
   editarClicked = false;
   idEdit: number = 0;
-  onRegistrarClick(): void {
-    this.getFechaPublicacion();
-    this.editarClicked = false;
-  }
-  
   enlaceHabilitado: boolean = true;
-  onEditarClick(id: number | undefined = 0, tipo: string | undefined): void {
-    this.editarClicked = true;
-    this.getOfertaLaboralById(id);
-    this.idEdit = id;
-    // Lógica para abrir el modal dependiendo del tipo de oferta
-    this.enlaceHabilitado = true;
-    if (tipo) {
-      this.selectedStyle = tipo;
-      if (tipo === 'estilo1') {
-        ($('#m_modal_4') as any).modal('show');
-        ($('#m_modal_6') as any).modal('hide');
-      } else if (tipo === 'estilo2') {
-        ($('#m_modal_4') as any).modal('hide');
-        ($('#m_modal_6') as any).modal('show');
-
-      }
-
-    } else {
-      console.error('Oferta no encontrada');
-    }
-
-
-  }
-  habilitarEnlace(): void {
-    this.enlaceHabilitado = true;
-  }
-
-
-
   ofertaslaborales: any = {};
   ofertaslaboralesCarga: any = {};
   ofertaslaboraleslist: ofertaLaboralDTO[] = [];
@@ -67,30 +36,49 @@ export class OfertasLaboralesComponent {
   selectedIDs: (number | undefined)[] = [];
   filtropostulados: number = 1;
   idgraduados: Graduado[] = []
-  dtoptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
   public emptrds: string = '';
   selectedStyle: string = "estilo1";
   editarClickedStyle: boolean = false;
   @Output() onClose: EventEmitter<string> = new EventEmitter();
   @ViewChild('myModalClose') modalClose: any;
 
+  // =====================================================
+  //*               DATA TABLE Y FILTROS
+  // =======================================================
 
-  constructor(public bsModalRef: BsModalRef
-    , private ofertalaburoService: OfertalaboralService,
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  initializeTable: boolean = true;
+  dtoptions: DataTables.Settings = {};
+
+  constructor(
+    public bsModalRef: BsModalRef,
+    private ofertalaburoService: OfertalaboralService,
+    public dtService: DataTablesService,
     public imageHandlerService: ImageHandlerServiceFoto,
-    private empresaService: EmpresaService, private graduadoService: GraduadoService) {
+    private empresaService: EmpresaService,
+    public filterService: FiltersService,
+    private graduadoService: GraduadoService
+  ) {
   }
 
   ngOnInit(): void {
+    const columnTitles = ['#', 'Fecha Cierre', 'Institucion', 'Estado', 'Estilo'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar experiencia...');
+    // Para inicializar los dropdowns de los filtros de la tabla.
+    this.filterService.initializeDropdowns('filterTable', columnTitles,);
     this.loadData();
-    this.setupDtOptions();
     this.getMisEmpresas();
     //this.getAllOfertasLaborales();
     this.loadCleanObject();
     this.ofertaslaborales.estado = false;
-
   }
+
+  ngAfterViewInit(): void {
+    this.filterService.setDtElement(this.dtElement);
+  }
+  
   /*
   ngOnInit(): void {
     this.getMisEmpresas();
@@ -100,29 +88,7 @@ export class OfertasLaboralesComponent {
     this.ofertaslaborales.estado = false;
   } 
   */
-
-  setupDtOptions() {
-    this.dtoptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      lengthChange: true,
-      language: {
-        search: 'Buscar:',
-        searchPlaceholder: 'Buscar trabajo...',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        paginate: {
-          first: 'Primera',
-          last: 'Última',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        },
-        lengthMenu: 'Mostrar _MENU_ registros por página',
-        zeroRecords: 'No se encontraron registros coincidentes'
-      },
-      lengthMenu: [10, 25, 50]
-    };
-  }
+  
   changeStyle() {
     if (this.selectedStyle === 'estilo1') {
       ($('#m_modal_4') as any).modal('show');
@@ -138,22 +104,28 @@ export class OfertasLaboralesComponent {
   loadData() {
     this.ofertalaburoService.OfertasLaborales(this.name || "").subscribe(
       ofertas => {
-        console.log('ofertas', ofertas);
+        this.ofertaslaboraleslist = [];
         // Filtrar las referencias personales por cédula
         this.ofertaslaboraleslist = ofertas;
-        this.dtTrigger.next(null);
+
+        if (this.initializeTable) {
+          this.dtTrigger.next(null);
+          this.initializeTable = false;
+        } else {
+          this.dtService.rerender(this.dtElement, this.dtTrigger);
+        }
       },
       (error: any) => console.error(error)
     );
   }
 
   getAllOfertasLaborales() {
-
     this.ofertalaburoService.OfertasLaborales(this.name || "").subscribe(
       ofertas => this.ofertaslaboraleslist = ofertas,
       error => console.error(error)
     )
   }
+
   loadCleanObject(): void {
     this.ofertaslaborales = {
       id: 0,
@@ -183,6 +155,12 @@ export class OfertasLaboralesComponent {
       tiempo: '',
     };
   }
+
+  onRegistrarClick(): void {
+    this.getFechaPublicacion();
+    this.editarClicked = false;
+  }
+
   listpostulantes(idoferta: number | undefined) {
     this.ofertalaburoService.getGraduadosByOfertaLaboral(idoferta || 0).subscribe(
       graduadoss => {
@@ -190,10 +168,7 @@ export class OfertasLaboralesComponent {
         this.graduados = graduadoss;
         console.log('postulantes lista', this.graduados);
         console.log(' lista', idoferta);
-
-
       }
-
     )
   }
 
@@ -213,6 +188,33 @@ export class OfertasLaboralesComponent {
       }
     );
   }
+
+  onEditarClick(id: number | undefined = 0, tipo: string | undefined): void {
+    this.editarClicked = true;
+    this.getOfertaLaboralById(id);
+    this.idEdit = id;
+    // Lógica para abrir el modal dependiendo del tipo de oferta
+    this.enlaceHabilitado = true;
+    if (tipo) {
+      this.selectedStyle = tipo;
+      if (tipo === 'estilo1') {
+        ($('#m_modal_4') as any).modal('show');
+        ($('#m_modal_6') as any).modal('hide');
+      } else if (tipo === 'estilo2') {
+        ($('#m_modal_4') as any).modal('hide');
+        ($('#m_modal_6') as any).modal('show');
+
+      }
+
+    } else {
+      console.error('Oferta no encontrada');
+    }
+  }
+
+  habilitarEnlace(): void {
+    this.enlaceHabilitado = true;
+  }
+
 
   mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
     const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
@@ -277,7 +279,6 @@ export class OfertasLaboralesComponent {
       this.ofertaslaborales.fechaPublicacion = formattedDate;
     }
   }
-
 
   getMisEmpresas(): void {
     this.empresaService.getEmpresasbyUser(this.name || "").subscribe((empresas) => {
