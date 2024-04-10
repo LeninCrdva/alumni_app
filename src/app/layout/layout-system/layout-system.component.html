@@ -115,22 +115,22 @@
                 </a>
                 <a [class.active]="activeMenuItem === 'Gestión Carreras'" [routerLink]="['admin/carrera']"
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión Carreras')"
-                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Gestión Carreras
+                    href="javascript:void(0)"><i class='fa-solid fa-medal icon'></i>Gestión Carreras
                 </a>
                 <a [class.active]="activeMenuItem === 'Gestión Periodos'" [routerLink]="['admin/periodo']"
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión Periodos')"
-                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Gestión Periodos
+                    href="javascript:void(0)"><i class='fa-regular fa-clock icon'></i>Gestión Periodos
                 </a>
                 <a [class.active]="activeMenuItem === 'Ciudades y Provincia'" [routerLink]="['admin/provincia']"
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ciudades y Provincia')"
-                    href="javascript:void(0)"><i class='bx bxs-user icon'></i>Ciudades y Provincia
+                    href="javascript:void(0)"><i class='fa-solid fa-tree-city icon'></i>Ciudades y Provincia
                 </a>
             </li>
 
             <li class="divider" data-text="Analitica y Reportes">Analítica y Reportes</li>
 
             <li>
-                <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Reportes<i
+                <a href="javascript:void(0)"><i class='fa-solid fa-database icon'></i>Reportes<i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
                     <li><a [routerLink]="['/system/admin/reportes']" routerLinkActive="router-link-active">Mis reportes
@@ -178,7 +178,7 @@
             </li>
             <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
             <li>
-                <a href="javascript:void(0)"><i class='bx bxs-inbox icon'></i> Postulaciones <i
+                <a href="javascript:void(0)"><i class='fa-solid fa-briefcase icon'></i> Postulaciones <i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
                     <li><a [routerLink]="['/system/company/postulaciones_form']">Ofertar Trabajo</a></li>

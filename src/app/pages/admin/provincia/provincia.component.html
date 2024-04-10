@@ -1,5 +1,5 @@
 <section class="page-title bg-overlay-black parallax"
-    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    style="background-image: url(../../../../assets/imgs/bg/Isuta_bg.jpg);">
     <div class="row">
         <div class="col-lg-12">
             <h1>Provincias y ciudades</h1>
@@ -14,7 +14,7 @@
             aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                   <!--- <div [class.bg-success]="!editModeProvince" [class.bg-primary]="editModeProvince"
+                    <!--- <div [class.bg-success]="!editModeProvince" [class.bg-primary]="editModeProvince"
                         class="modal-header text-white">
                         <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Crear nueva Provincia'"></h5>
                     </div>-->
@@ -36,7 +36,7 @@
                                                 El nombre de la provincia es obligatorio.
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group mt-2">
                                             <label class="form-control-label active">País: <span
                                                     class="tx-danger">*</span></label>
                                             <input type="text" placeholder="Ecuador" formControlName="pais">
@@ -56,7 +56,7 @@
                             data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
                             {{!editModeProvince ? 'Guardar Cambios' : 'Crear'}}
                         </button>
-                        <button data-bs-dismiss="modal"  id="close-button"
+                        <button data-bs-dismiss="modal" id="close-button"
                             class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
                     </div>
                 </div>
@@ -69,13 +69,13 @@
             aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                   <!--- <div [class.bg-success]="!editarClicked" class="modal-header text-white bg-primary">
+                    <!--- <div [class.bg-success]="!editarClicked" class="modal-header text-white bg-primary">
                         <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
                     </div>-->
                     <div [class.bg-primary]="true" class="modal-header text-white">
                         <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
                     </div>
-                    
+
 
                     <div class="modal-body">
                         <form [formGroup]="registerCityForm">
@@ -96,7 +96,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group mt-2">
                                             <label class="form-control-label active">Ciudad: <span
                                                     class="tx-danger">*</span></label>
                                             <input type="text" placeholder="Cuenca" formControlName="nombreCiudad">
@@ -126,20 +126,24 @@
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-oblong btn-primary mg-b-10 mt-2" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    class="btn btn-oblong btn-primary mg-b-10 mt-2"
+                    style="margin-right:10px; width: 17rem; height: 2.5rem;">
                     Registrar Provincia</button>
 
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_5" type="button"
-                    class="btn btn-oblong btn-primary mg-b-10 mt-2" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    class="btn btn-oblong btn-primary mg-b-10 mt-2"
+                    style="margin-right:10px; width: 17rem; height: 2.5rem;">
                     Registrar Ciudad</button>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="searchInput" placeholder="Buscar..."
-                            style="border-color: blue;" (input)="onSearch($event)">
-                          <select class="form-control" id="selectInput">
-                              <option value="1">Ciudad</option>
-                              <option value="2">Provincia</option>
-                          </select>
-                    </div>
+                <div class="input-group">
+                    
+                    <input type="text" class="form-control me-3" id="searchInput" placeholder="Buscar..."
+                        style="border-color: blue;" (input)="onSearch($event)">
+                        
+                    <select class="form-control" style="border-radius: 1rem;" id="selectInput">
+                        <option value="1">Ciudad</option>
+                        <option value="2">Provincia</option>
+                    </select>
+                </div>
             </div>
         </div>
 

@@ -1,4 +1,5 @@
-input[type=text],input[type=date],
+input[type=text],
+input[type=date],
 select {
   width: 100%;
   padding: 12px 20px;
@@ -53,7 +54,7 @@ input:checked+.slider {
 }
 
 input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #f32121;
 }
 
 input:checked+.slider:before {
