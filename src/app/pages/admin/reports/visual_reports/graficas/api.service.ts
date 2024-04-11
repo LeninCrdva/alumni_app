@@ -22,4 +22,10 @@ import { Observable } from 'rxjs';
     getSexCount(): Observable<any>{
       return this.http.get<any>(`${this.baseUrl}/graduados/count-sex`)
     }
+    getCarreras(): Observable<any>{
+      return this.http.get<any>(`${this.baseUrl}/carreras`)
+    }
+    obtenerGraduadosPorSexo(nombreCarrera: string): Observable<any> {
+      return this.http.get<any>(`${this.baseUrl}/titulos/graduados-por-sexo?nombreCarrera=${nombreCarrera}`);
+    }
   }

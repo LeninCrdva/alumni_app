@@ -88,7 +88,7 @@ export class AreaChartComponent implements OnInit {
               style: {
                 colors: ['#1ed760']
               },
-              enabled: false,
+              enabled: true,
             },
             stroke: {
               curve: 'smooth',

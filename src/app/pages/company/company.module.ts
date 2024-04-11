@@ -9,7 +9,10 @@ import { Empresas2Component } from './empresas-2/empresas-2.component';
 import { DataTablesModule } from 'angular-datatables';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-
+import { ReportsComponent } from './reports/reports.component';
+import { PieChartComponent } from './reports/pie-chart/pie-chart.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { BarChartComponent } from './reports/bar-chart/bar-chart.component';
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -17,6 +20,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
         CrudEmpresasComponent,
         Empresas2Component,
         PerfilFormComponent,
+        ReportsComponent,
+        PieChartComponent,
+        BarChartComponent,
        // NuevoEmpresarioModalComponent
     ],
     imports: [
@@ -25,6 +31,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
         FormsModule,
         ReactiveFormsModule,
         DataTablesModule,
+        NgApexchartsModule,
         NgMultiSelectDropDownModule.forRoot()
     ]
 })
