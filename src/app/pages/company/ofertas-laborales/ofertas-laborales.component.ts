@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
 import { Empresa } from '../../../data/model/empresa';
 import { EmpresaService } from '../../../data/service/empresa.service';
@@ -6,13 +6,15 @@ import { ofertaLaboralDTO } from '../../../data/model/DTO/ofertaLaboralDTO';
 import Swal from 'sweetalert2';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Graduado } from '../../../data/model/graduado';
-import { GraduadoService } from '../../../data/service/graduado.service';
 import { Subject } from 'rxjs';
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
-import { NgModel } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertsService } from '../../../data/Alerts.service';
 import { DataTablesService } from '../../../data/DataTables.service';
-import { DataTableDirective } from 'angular-datatables';
 import { FiltersService } from '../../../data/Filters.service';
+import { DataTableDirective } from 'angular-datatables';
+import { PostulacionService } from '../../../data/service/postulacion.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-postulaciones-add-form',
@@ -20,25 +22,6 @@ import { FiltersService } from '../../../data/Filters.service';
   styleUrls: ['./ofertas-laborales.component.css']
 })
 export class OfertasLaboralesComponent {
-  editarClicked = false;
-  idEdit: number = 0;
-  enlaceHabilitado: boolean = true;
-  ofertaslaborales: any = {};
-  ofertaslaboralesCarga: any = {};
-  ofertaslaboraleslist: ofertaLaboralDTO[] = [];
-  empresas: Empresa[] = [];
-  fechaPublicacion?: Date;
-  name: string | null = localStorage.getItem('name');
-  graduados: Graduado[] = [];
-  idOferta: number = 0;
-  selectedIDs: (number | undefined)[] = [];
-  filtropostulados: number = 1;
-  idgraduados: Graduado[] = []
-  public emptrds: string = '';
-  selectedStyle: string = "estilo1";
-  editarClickedStyle: boolean = false;
-  @Output() onClose: EventEmitter<string> = new EventEmitter();
-  @ViewChild('myModalClose') modalClose: any;
 
   // =====================================================
   //*               DATA TABLE Y FILTROS
@@ -50,54 +33,89 @@ export class OfertasLaboralesComponent {
   initializeTable: boolean = true;
   dtoptions: DataTables.Settings = {};
 
+  // =====================================================
+  //*                   VALIDACIONES
+  // =======================================================
+
+  @ViewChild('myModalClose') modalClose: any;
+
+  // =====================================================
+  //*                   LISTAS Y OBJETOS
+  // =======================================================
+
+  activeGraduados: Graduado[] = [];
+  allGraduados: Graduado[] = [];
+  empresas: Empresa[] = [];
+  fechaPublicacion: Date = new Date();
+  filtropostulados: number = 1;
+  idOferta: number = 0;
+  inactiveGraduados: Graduado[] = [];
+  name: string | null = localStorage.getItem('name');
+  ofertaslaboralesCarga: any = {};
+  ofertaslaboraleslist: ofertaLaboralDTO[] = [];
+  selectedIDs: number[] = [];
+  selectedRows: boolean[] = [];
+  
+  // =====================================================
+  //*                   VARIABLES
+  // =======================================================
+  
+  activeSelectPostulant: boolean = false;
+  editarClicked = false;
+  estado: boolean = true;
+  existenPostulantes: boolean = true;
+  fechaActual = new Date();
+  idEdit: number = 0;
+  showSecondStyle: boolean = false;
+  showThirdStyle: boolean = false;
+  validateForm: FormGroup;
+
   constructor(
-    public bsModalRef: BsModalRef,
-    private ofertalaburoService: OfertalaboralService,
-    public dtService: DataTablesService,
     public imageHandlerService: ImageHandlerServiceFoto,
-    private empresaService: EmpresaService,
+    public bsModalRef: BsModalRef,
     public filterService: FiltersService,
-    private graduadoService: GraduadoService
+    public dtService: DataTablesService,
+    private fb: FormBuilder,
+    private ofertalaburoService: OfertalaboralService,
+    private empresaService: EmpresaService,
+    private alertService: AlertsService,
+    private renderer: Renderer2,
+    private postulacionService: PostulacionService
   ) {
+    this.validateForm = this.fb.group({
+      salario: ['', [Validators.required]],
+      fechaCierre: ['', [Validators.required]],
+      fechaPublicacion: ['', [Validators.required]],
+      cargo: ['', [Validators.required]],
+      experiencia: ['', [Validators.required]],
+      fechaApertura: ['', [Validators.required]],
+      areaConocimiento: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
+      nombreEmpresa: ['', [Validators.required]],
+      tipo: ['', [Validators.required]],
+      tiempo: ['', [Validators.required]],
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
   ngOnInit(): void {
-    const columnTitles = ['#', 'Fecha Cierre', 'Institucion', 'Estado', 'Estilo'];
-    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar experiencia...');
-    // Para inicializar los dropdowns de los filtros de la tabla.
+    const columnTitles = ['#', 'Salario', 'Fecha de Publicación', 'Estado', 'Nombre de Empresa', 'Tipo'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar oferta...');
     this.filterService.initializeDropdowns('filterTable', columnTitles,);
     this.loadData();
+    this.getMisEmpresas();
   }
 
   ngAfterViewInit(): void {
     this.filterService.setDtElement(this.dtElement);
   }
 
-  /*
-  ngOnInit(): void {
-    this.getMisEmpresas();
-    //this.getAllOfertasLaborales();
-    this.loadCleanObject();
-    this.getFechaPublicacion();
-    this.ofertaslaborales.estado = false;
-  } 
-  */
-
-  changeStyle() {
-    if (this.selectedStyle === 'estilo1') {
-      ($('#m_modal_4') as any).modal('show');
-      ($('#m_modal_6') as any).modal('hide');
-    } else if (this.selectedStyle === 'estilo2') {
-      ($('#m_modal_4') as any).modal('hide');
-      ($('#m_modal_6') as any).modal('show');
-    }
-  }
-
   loadData() {
     this.ofertalaburoService.OfertasLaborales(this.name || "").subscribe(
       ofertas => {
-        this.ofertaslaboraleslist = [];
-        // Filtrar las referencias personales por cédula
         this.ofertaslaboraleslist = ofertas;
 
         if (this.initializeTable) {
@@ -106,149 +124,333 @@ export class OfertasLaboralesComponent {
         } else {
           this.dtService.rerender(this.dtElement, this.dtTrigger);
         }
-        
-        this.getMisEmpresas();
-        //this.getAllOfertasLaborales();
-        this.loadCleanObject();
-        this.ofertaslaborales.estado = false;
       },
       (error: any) => console.error(error)
     );
   }
 
-  getAllOfertasLaborales() {
-    this.ofertalaburoService.OfertasLaborales(this.name || "").subscribe(
-      ofertas => this.ofertaslaboraleslist = ofertas,
-      error => console.error(error)
-    )
+  selectStyle(): void {
+    const estilo = this.validateForm.get('tipo')?.value;
+
+    if (estilo === 'estilo1') {
+      this.showSecondStyle = false;
+      this.showThirdStyle = false;
+    } else if (estilo === 'estilo2') {
+      this.showSecondStyle = true;
+      this.showThirdStyle = false;
+    } else if (estilo === 'estilo3') {
+      this.showSecondStyle = false;
+      this.showThirdStyle = true;
+    }
   }
 
-  loadCleanObject(): void {
-    this.ofertaslaborales = {
-      id: 0,
-      salario: 0,
-      fechaCierre: '',
-      fechaPublicacion: '',
-      cargo: '',
-      experiencia: '',
-      fechaApertura: '',
-      areaConocimiento: '',
-      estado: false,
-      nombreEmpresa: '',
-      tiempo: '',
-    };
+  initForm() {
+    this.getFechaPublicacion();
 
-    this.ofertaslaboralesCarga = {
-      id: 0,
-      salario: 0,
-      fechaCierre: '',
-      fechaPublicacion: '',
-      cargo: '',
-      experiencia: '',
-      fechaApertura: '',
-      areaConocimiento: '',
-      estado: false,
-      nombreEmpresa: '',
-      tiempo: '',
-    };
+    this.validateForm = this.fb.group({
+      salario: ['', [Validators.required]],
+      fechaCierre: ['', [Validators.required]],
+      cargo: ['', [Validators.required]],
+      experiencia: ['', [Validators.required]],
+      fechaApertura: ['', [Validators.required]],
+      areaConocimiento: ['', [Validators.required]],
+      nombreEmpresa: ['', [Validators.required]],
+      tiempo: ['', [Validators.required]],
+      tipo: 'estilo1',
+      estado: 'EN CONVOCATORIA',
+      fechaPublicacion: [this.fechaPublicacion, Validators.required],
+    })
   }
 
   onRegistrarClick(): void {
-    this.getFechaPublicacion();
+    this.validateForm.reset();
+
+    this.alertService.resetInputsValidations(this.renderer);
+
+    this.initForm();
+
+    this.imageHandlerService.clearImage();
+
     this.editarClicked = false;
+
+    this.showSecondStyle = false;
+
+    this.showThirdStyle = false;
   }
 
-  listpostulantes(idoferta: number | undefined) {
-    this.ofertalaburoService.getGraduadosByOfertaLaboral(idoferta || 0).subscribe(
-      graduadoss => {
-        this.idOferta = idoferta || 0;
-        this.graduados = graduadoss;
-        console.log('postulantes lista', this.graduados);
-        console.log(' lista', idoferta);
-      }
-    )
+  onEditarClick(id: number | undefined = 0): void {
+    this.editarClicked = true;
+
+    this.validateForm.reset();
+
+    this.initForm();
+
+    this.imageHandlerService.clearImage();
+
+    const dataToEdit = this.ofertaslaboraleslist.find(item => item.id === id);
+
+    if (dataToEdit) {
+
+      this.imageHandlerService.getPrevisualizacion(dataToEdit.fotoPortada);
+
+      this.fechaPublicacion = new Date(dataToEdit.fechaPublicacion);
+
+      this.validateForm.patchValue({
+        salario: dataToEdit.salario,
+        fechaCierre: dataToEdit.fechaCierre,
+        cargo: dataToEdit.cargo,
+        experiencia: dataToEdit.experiencia,
+        fechaApertura: dataToEdit.fechaApertura,
+        areaConocimiento: dataToEdit.areaConocimiento,
+        nombreEmpresa: dataToEdit.nombreEmpresa,
+        tipo: dataToEdit.tipo,
+        tiempo: dataToEdit.tiempo,
+        fotoPortada: dataToEdit.fotoPortada,
+        estado: dataToEdit.estado,
+      });
+
+      this.selectStyle();
+    } else {
+      console.error(`Elemento con id ${id} no encontrado en la lista.`);
+    }
+
+    this.alertService.resetInputsValidations(this.renderer);
+
+    this.idEdit = id;
   }
 
-  listContratados() {
-    this.graduados = [];
-    this.ofertalaburoService.getGraduadosContradatosByOfertaLaboral(this.idOferta).subscribe(
-      contratados => {
-        this.idgraduados = contratados.map(contratado => contratado.graduados);
-        for (const graduado of this.idgraduados) {
-          this.graduadoService.getGraduadoById(graduado).subscribe(
-            graduado => {
-              this.graduados.push(graduado);
-              console.log('contratados lista', this.graduados);
+  onSubmit() {
+
+    if (this.showSecondStyle) {
+      this.initSecondStyleForm();
+    } else if (this.showThirdStyle) {
+      this.initThirdStyleForm();
+    } else {
+      this.initFirstStyleForm();
+    }
+
+    if (!this.validateForm.valid) {
+      this.alertService.showInputsValidations(this.renderer);
+      return;
+    }
+
+    if (this.editarClicked) {
+      this.updateOfertaLaboral();
+    } else {
+      this.createOfertaLaboral();
+    }
+  }
+
+  initFirstStyleForm() {
+    this.validateForm = this.fb.group({
+      salario: [this.validateForm.value['salario'], Validators.required],
+      fechaCierre: [
+        this.validateForm.value['fechaCierre'],
+        [
+          Validators.required,
+          (control: FormControl) => {
+            const fechaPublicacion = this.validateForm.value['fechaPublicacion'];
+            const fechaApertura = this.validateForm.value['fechaApertura'];
+            const fechaCierre = control.value;
+
+            if (fechaCierre < fechaPublicacion) {
+              return { fechaCierreMenorPublicacion: true };
             }
-          );
-        }
+
+            if (fechaCierre < fechaApertura) {
+              return { fechaCierreMenorApertura: true };
+            }
+
+            return null;
+          },
+        ],
+      ],
+      fechaPublicacion: [formatDate(this.validateForm.value['fechaPublicacion'], 'yyyy-MM-ddTHH:mm:ss', 'en-US'), Validators.required],
+      cargo: [this.validateForm.value['cargo'], Validators.required],
+      experiencia: [this.validateForm.value['experiencia'], Validators.required],
+      fechaApertura: [
+        this.validateForm.value['fechaApertura'],
+        [
+          Validators.required,
+          (control: FormControl) => {
+            const fechaPublicacion = this.validateForm.value['fechaPublicacion'];
+            const fechaApertura = control.value;
+            const fechaCierre = this.validateForm.value['fechaCierre'];
+
+            if (fechaApertura < fechaPublicacion) {
+              return { fechaAperturaMenorPublicacion: true };
+            }
+
+            if (fechaApertura > fechaCierre) {
+              return { fechaAperturaMayorCierre: true };
+            }
+
+            return null;
+          },
+        ],
+      ],
+      areaConocimiento: [this.validateForm.value['areaConocimiento'], Validators.required],
+      estado: [this.validateForm.value['estado'], Validators.required],
+      nombreEmpresa: [this.validateForm.value['nombreEmpresa'], Validators.required],
+      tipo: [this.validateForm.value['tipo'], Validators.required],
+      tiempo: [this.validateForm.value['tiempo'], Validators.required],
+    });
+  }
+
+  initSecondStyleForm() {
+    this.validateForm = this.fb.group({
+      cargo: [this.validateForm.value['cargo'], Validators.required],
+      nombreEmpresa: [this.validateForm.value['nombreEmpresa'], Validators.required],
+      fechaPublicacion: [formatDate(this.validateForm.value['fechaPublicacion'], 'yyyy-MM-ddTHH:mm:ss', 'en-US'), Validators.required],
+      tiempo: [this.validateForm.value['tiempo'], Validators.required],
+      fechaCierre: [this.validateForm.value['fechaCierre'], Validators.required],
+      areaConocimiento: [this.validateForm.value['areaConocimiento'], Validators.required],
+      estado: [this.validateForm.value['estado'], Validators.required],
+      tipo: [this.validateForm.value['tipo'], Validators.required],
+      fotoPortada: [this.imageHandlerService.previsualizacion, Validators.required],
+    })
+  }
+
+  initThirdStyleForm() {
+    this.validateForm = this.fb.group({
+      nombreEmpresa: [this.validateForm.value['nombreEmpresa'], Validators.required],
+      fechaPublicacion: [formatDate(this.validateForm.value['fechaPublicacion'], 'yyyy-MM-ddTHH:mm:ss', 'en-US'), Validators.required],
+      estado: [this.validateForm.value['estado'], Validators.required],
+      tipo: [this.validateForm.value['tipo'], Validators.required],
+      fotoPortada: [this.imageHandlerService.previsualizacion, Validators.required],
+    })
+  }
+
+  obtenerDatosFormulario(): ofertaLaboralDTO {
+    let oferta: ofertaLaboralDTO = new ofertaLaboralDTO();
+
+    if (this.validateForm.value['tipo'] === 'estilo1') {
+      oferta = this.obtenerDatosFormularioEstilo1();
+    } else if (this.validateForm.value['tipo'] === 'estilo2') {
+      oferta = this.obtenerDatosFormularioEstilo2();
+    } else {
+      oferta = this.obtenerDatosFormularioEstilo3();
+    }
+
+    return oferta ? oferta : new ofertaLaboralDTO();
+  }
+
+  obtenerDatosFormularioEstilo1(): ofertaLaboralDTO {
+    let oferta: ofertaLaboralDTO = new ofertaLaboralDTO();
+
+    oferta.cargo = this.validateForm.value['cargo'];
+    oferta.nombreEmpresa = this.validateForm.value['nombreEmpresa'];
+    oferta.fechaPublicacion = this.validateForm.value['fechaPublicacion'];
+    oferta.fechaApertura = this.validateForm.value['fechaApertura'];
+    oferta.fechaCierre = this.validateForm.value['fechaCierre'];
+    oferta.tiempo = this.validateForm.value['tiempo'];
+    oferta.areaConocimiento = this.validateForm.value['areaConocimiento'];
+    oferta.salario = this.validateForm.value['salario'];
+    oferta.tipo = this.validateForm.value['tipo'];
+    oferta.experiencia = this.validateForm.value['experiencia'];
+
+    return oferta;
+  }
+
+  obtenerDatosFormularioEstilo2(): ofertaLaboralDTO {
+    let oferta: ofertaLaboralDTO = new ofertaLaboralDTO();
+    oferta.cargo = this.validateForm.value['cargo'];
+    oferta.nombreEmpresa = this.validateForm.value['nombreEmpresa'];
+    oferta.fechaPublicacion = this.validateForm.value['fechaPublicacion'];
+    oferta.fechaApertura = this.validateForm.value['fechaApertura'];
+    oferta.fechaCierre = this.validateForm.value['fechaCierre'];
+    oferta.areaConocimiento = this.validateForm.value['areaConocimiento'];
+    oferta.tiempo = this.validateForm.value['tiempo'];
+    oferta.tipo = this.validateForm.value['tipo'];
+    oferta.fotoPortada = this.imageHandlerService.previsualizacion;
+
+    return oferta;
+  }
+
+  obtenerDatosFormularioEstilo3(): ofertaLaboralDTO {
+    let oferta: ofertaLaboralDTO = new ofertaLaboralDTO();
+
+    oferta.fechaPublicacion = this.validateForm.value['fechaPublicacion'];
+    oferta.nombreEmpresa = this.validateForm.value['nombreEmpresa'];
+    oferta.tipo = this.validateForm.value['tipo'];
+    oferta.fotoPortada = this.imageHandlerService.previsualizacion;
+
+    return oferta;
+  }
+
+  capturarImagen(event: any) {
+    this.imageHandlerService.capturarFile(event);
+    this.imageHandlerService.previsualizacion;
+  }
+
+  createOfertaLaboral() {
+    this.ofertalaburoService.createOfertaLaboral(this.obtenerDatosFormulario()).subscribe(
+      result => {
+        this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
+
+        this.loadData();
+      },
+      error => {
+        this.alertService.mostrarSweetAlert(false, 'Error al crear.');
+        console.error('Error al crear:', error);
+      }
+    );
+  }
+  
+  updateOfertaLaboral() {
+    console.log('Almeja', this.idEdit, this.ofertaslaboralesCarga);
+    this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.obtenerDatosFormulario()).subscribe(
+      result => {
+        this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);
+        this.loadData();
+      },
+      error => {
+        this.alertService.mostrarSweetAlert(false, 'Error al actualizar.');
+        console.error('Error al actualizar:', error);
       }
     );
   }
 
-  onEditarClick(id: number | undefined = 0, tipo: string | undefined): void {
-    this.editarClicked = true;
-    this.getOfertaLaboralById(id);
-    this.idEdit = id;
-    // Lógica para abrir el modal dependiendo del tipo de oferta
-    this.enlaceHabilitado = true;
-    if (tipo) {
-      this.selectedStyle = tipo;
-      if (tipo === 'estilo1') {
-        ($('#m_modal_4') as any).modal('show');
-        ($('#m_modal_6') as any).modal('hide');
-      } else if (tipo === 'estilo2') {
-        ($('#m_modal_4') as any).modal('hide');
-        ($('#m_modal_6') as any).modal('show');
+  
+
+  listPostulantesActivos(idoferta: number | undefined) {
+    this.selectedRows = [];
+    this.ofertalaburoService.getGraduadosWithActivePostulationByOfertaLaboral(idoferta || 0).subscribe(
+      graduados => {
+        this.idOferta = idoferta || 0;
+        this.allGraduados = graduados;
+
+        this.existenPostulantes = this.allGraduados.length > 0;
+
+        this.activeSelectPostulant = this.ofertaslaboraleslist.find(oferta => oferta.id === idoferta)?.estado === 'EN_SELECCION';
       }
-    } else {
-      console.error('Oferta no encontrada');
-    }
+    )
   }
 
-  habilitarEnlace(): void {
-    this.enlaceHabilitado = true;
-  }
+  listPostulantesInactivos(idoferta: number | undefined) {
+    this.selectedRows = [];
+    this.ofertalaburoService.getGraduadosWithCancelPostulationByOfertaLaboral(idoferta || 0).subscribe(
+      graduados => {
+        this.idOferta = idoferta || 0;
+        this.allGraduados = graduados;
 
-
-  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
-    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
-
-    Swal.fire({
-      icon: esExitoso ? 'success' : 'error',
-      title: titulo,
-      text: mensaje,
-      allowOutsideClick: !esExitoso,
-    }).then((result) => {
-      if (esExitoso || result.isConfirmed) {
-        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        this.bsModalRef.hide();
-        this.resetModalState();
+        this.existenPostulantes = this.allGraduados.length > 0;
+        this.activeSelectPostulant = false;
       }
-    });
-    if (this.selectedStyle === 'estilo1') {
-      this.closeModal2('m_modal_4');
-      this.resetModalState();
-    } else if (this.selectedStyle === 'estilo2') {
-      this.closeModal2('m_modal_6');
-      this.resetModalState();
-    }
+    )
   }
 
-  validateOfertasPerFields(): boolean {
-    if (!this.ofertaslaborales.salario || !this.ofertaslaborales.fechaCierre || !this.ofertaslaborales.cargo || !this.ofertaslaborales.experiencia || !this.ofertaslaborales.fechaApertura || !this.ofertaslaborales.areaConocimiento || !this.ofertaslaborales.nombreEmpresa) {
-      return false;
-    }
+  listPostulantesSeleccionados(idoferta: number | undefined) {
+    this.selectedRows = [];
+    this.ofertalaburoService.getGraduadosSeleccionadosByOfertaLaboral(idoferta || 0).subscribe(
+      graduados => {
+        this.idOferta = idoferta || 0;
+        this.allGraduados = graduados;
 
-    return true;
-  }
-
-  validateOfertasCargaPerFields(): boolean {
-    if (!this.ofertaslaboralesCarga.salario || !this.ofertaslaboralesCarga.fechaCierre || !this.ofertaslaboralesCarga.cargo || !this.ofertaslaboralesCarga.experiencia || !this.ofertaslaboralesCarga.fechaApertura || !this.ofertaslaboralesCarga.areaConocimiento || !this.ofertaslaboralesCarga.nombreEmpresa) {
-      return false;
-    }
-
-    return true;
+        this.existenPostulantes = this.allGraduados.length > 0;
+        this.activeSelectPostulant = false;
+      }
+    )
   }
 
   getFechaPublicacion() {
@@ -265,14 +467,10 @@ export class OfertasLaboralesComponent {
     // Formatear la fecha y hora en el formato requerido
     const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
-    // Asignar la fecha formateada a this.fechaPublicacion
-    this.fechaPublicacion = currentDate;
-
-    // Asignar la fecha formateada al objeto this.ofertaslaboralesCarga.fechaPublicacion
     if (this.editarClicked) {
-      this.ofertaslaboralesCarga.fechaPublicacion = formattedDate;
+      this.fechaPublicacion = new Date(formattedDate);
     } else {
-      this.ofertaslaborales.fechaPublicacion = formattedDate;
+      this.fechaPublicacion = new Date(formattedDate);
     }
   }
 
@@ -285,72 +483,50 @@ export class OfertasLaboralesComponent {
       }
     });
   }
+  
+  showEditDeleteButtons(oferta: ofertaLaboralDTO): boolean {
+
+    return new Date(oferta.fechaCierre) > this.fechaActual;
+  }
 
   setIDGraduado(id: number | undefined = 0) {
     localStorage.setItem('idGraduado', id.toString());
   }
-
-  selectedRows: boolean[] = [];
-
+  
   sendSelectedIDs() {
-    this.selectedIDs = this.graduados
+    this.selectedIDs = this.allGraduados
       .filter((graduado, index) => this.selectedRows[index])
-      .map(graduado => graduado.id);
+      .map(graduado => graduado.id)
+      .filter(id => id !== undefined) as number[];
+  }
 
-    // Now you have an array of 'number' IDs
+  seleccionarPostulantes() {
+    this.sendSelectedIDs();
     console.log(this.selectedIDs);
-    if (this.filtropostulados == 1) {
-      this.contratarGraduado();
-    } else if (this.filtropostulados == 2) {
-      this.descontratarGraduado();
-    }
-  }
-
-  contratarGraduado() {
-    this.ofertalaburoService.selectContratados(this.idOferta, this.selectedIDs).subscribe(
-      (response) => {
-        // Manejar la respuesta exitosa aquí
-        console.log('Respuesta exitosa:', response);
-        // Puedes realizar otras operaciones con la respuesta si es necesario
+    this.postulacionService.selectPostulants(this.idOferta, this.selectedIDs).subscribe(
+      () => {
+        this.alertService.mostrarSweetAlert(true, 'Postulante/es seleccionados correctamente.');
+        this.listPostulantesActivos(this.idOferta);
       },
-      (error) => {
-        // Manejar el error aquí
-        console.error('Error en la solicitud:', error);
-        // Puedes realizar otras operaciones para manejar el error si es necesario
-      }
-    );
-  }
-
-  descontratarGraduado(id: number | undefined = 0) {
-    this.ofertalaburoService.deleteGraduadoContratado(id).subscribe(
-      (response) => {
-        // Manejar la respuesta exitosa aquí
-        console.log('Respuesta exitosa:', response);
-        // Puedes realizar otras operaciones con la respuesta si es necesario
-      },
-      (error) => {
-        // Manejar el error aquí
-        console.error('Error en la solicitud:', error);
-        // Puedes realizar otras operaciones para manejar el error si es necesario
+      error => {
+        this.alertService.mostrarSweetAlert(false, 'Error al seleccionar postulantes.');
+        console.error('Error al seleccionar postulantes:', error);
       }
     );
   }
 
   filtroPostulados() {
-    console.log(this.filtropostulados)
 
     if (this.filtropostulados == 1) {
-      this.listpostulantes(this.idOferta);
+      this.listPostulantesActivos(this.idOferta);
     } else if (this.filtropostulados == 2) {
-      this.listContratados();
+      this.listPostulantesInactivos(this.idOferta);
+    } else if (this.filtropostulados == 3) {
+      this.listPostulantesSeleccionados(this.idOferta);
     }
   }
 
-  resetSelectedStyle() {
-    this.selectedStyle = 'estilo1';
-  }
-
-  deleteOfertaLaboral(id: number | undefined = 0) {
+  deleteOfertaLaboral(id: number | undefined = 0, estado: string = 'CANCELADA') {
     // Mostrar SweetAlert de confirmación
     Swal.fire({
       title: '¿Estás seguro?',
@@ -363,326 +539,17 @@ export class OfertasLaboralesComponent {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Si el usuario confirma, eliminar la empresa
-        this.ofertalaburoService.deleteOfertabyID(id).subscribe(
+        this.ofertalaburoService.cancelarOReactivarOfertaLaboral(id, estado).subscribe(
           () => {
-            this.closeModal();
-            // Mostrar SweetAlert de éxito
-            Swal.fire({
-              icon: 'success',
-              title: 'Eliminado exitosamente',
-              text: 'La empresa ha sido eliminada correctamente.',
-            });
-            // Puedes agregar más acciones después de eliminar, si es necesario
+            this.alertService.mostrarSweetAlert(true, 'La oferta laboral se ha cancelado y notificado a los postulantes.');
+            this.loadData();
           },
           error => {
-            // Mostrar SweetAlert de error
-            Swal.fire({
-              icon: 'error',
-              title: 'Error al eliminar',
-              text: 'Hubo un error al intentar eliminar la empresa.',
-            });
+            this.alertService.mostrarSweetAlert(false, 'No se pudo cancelar la oferta laboral..');
             console.error('Error al eliminar empresa:', error);
           }
         );
       }
     });
-  }
-
-  closeModal() {
-    const cancelButton = document.getElementById('close-button') as HTMLElement;
-    if (cancelButton) {
-      cancelButton.click();
-      this.loadCleanObject();
-      this.getAllOfertasLaborales();
-
-      this.editarClicked = false;
-
-    }
-  }
-  
-  closeModal2(modalId: string): void {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-      if (modalBackdrop) {
-        modalBackdrop.parentNode?.removeChild(modalBackdrop);
-
-      }
-    }
-  }
-
-  createOfertaLaboral() {
-    if (!this.validateOfertasPerFields() && this.selectedStyle === 'estilo1') {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos, son obligatorios.');
-      return;
-    }
-
-    this.ofertaslaborales.tipo = this.selectedStyle;
-    if (this.selectedStyle === 'estilo2' && (!this.imageHandlerService.archivos || this.imageHandlerService.archivos.length === 0)) {
-      this.mostrarSweetAlert(false, 'Por favor, sube una foto de portada.');
-      return;
-    }
-
-    if (this.selectedStyle === 'estilo2' && this.imageHandlerService.archivos && this.imageHandlerService.archivos.length > 0) {
-      const file = this.imageHandlerService.archivos[0];
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        const base64String = reader.result as string;
-        this.ofertaslaborales.fotoPortada = base64String;
-        console.log("Lo que manda:", this.ofertaslaborales);
-        this.createOfertaLaboralRequest();
-      };
-
-      reader.onerror = (error) => {
-        console.error(error);
-        this.mostrarSweetAlert(false, 'Error al cargar la foto de portada.');
-      };
-    } else {
-
-      this.createOfertaLaboralRequest();
-    }
-  }
-
-  createOfertaLaboralRequest() {
-    if (this.validarCampos()) {
-      this.ofertalaburoService.createOfertaLaboral(this.ofertaslaborales).subscribe(
-        (response) => {
-          this.emptrds = this.ofertaslaborales.empresa;
-          console.log(response);
-          this.ofertaslaborales = response;
-          this.mostrarSweetAlert(true, 'La oferta laboral se ha creado exitosamente.');
-          this.closeModal();
-        },
-        (error) => {
-          console.error(error);
-          this.mostrarSweetAlert(false, 'La oferta laboral no se ha creado.');
-          this.bsModalRef.hide();
-        }
-      );
-    } else {
-
-      Swal.fire({
-        icon: 'error',
-        title: '¡Upps!',
-        text: 'Hay campos que debe corregir para poder completar la acción.',
-      });
-    }
-  }
-
-  resetModalState() {
-    this.editarClicked = false;
-  }
-
-  updateOfertaLaboral() {
-    console.log('Almeja', this.idEdit, this.ofertaslaboralesCarga);
-    if (!this.validateOfertasCargaPerFields() && this.selectedStyle === 'estilo1') {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
-      return;
-    }
-
-    const file = this.imageHandlerService.archivos[0];
-    if (!file) {
-      if (this.validarCampos()) {
-        this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.ofertaslaboralesCarga).subscribe(
-          (response) => {
-            console.log(response);
-            this.ofertaslaborales = response;
-            this.mostrarSweetAlert(true, 'La oferta laboral se ha actualizado exitosamente.');
-            this.editarClicked = false;
-
-            this.closeModal();
-          },
-          (error) => {
-            console.error(error);
-            this.mostrarSweetAlert(false, 'La Oferta Laboral no se ha podido actualizar.');
-            this.closeModal();
-          }
-        );
-      } else {
-
-        Swal.fire({
-          icon: 'error',
-          title: '¡Upps!',
-          text: 'Hay campos que debe corregir para poder completar la acción.',
-        });
-      }
-    } else {
-      // Se ha seleccionado un archivo, se procede a actualizar la foto de portada
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        const base64String = reader.result as string;
-        this.ofertaslaboralesCarga.fotoPortada = base64String;
-
-
-        this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.ofertaslaboralesCarga).subscribe(
-          (response) => {
-            console.log(response);
-            this.ofertaslaborales = response;
-            this.mostrarSweetAlert(true, 'La oferta laboral se ha actualizado exitosamente.');
-            this.closeModal();
-          },
-          (error) => {
-            console.error(error);
-            this.mostrarSweetAlert(false, 'La Oferta Laboral no se ha podido actualizar.');
-            this.closeModal();
-          }
-        );
-      };
-
-      reader.onerror = (error) => {
-        console.error(error);
-        this.mostrarSweetAlert(false, 'Error al cargar la foto de portada.');
-      };
-    }
-  }
-
-  getOfertaLaboralById(id: number) {
-    this.ofertalaburoService.getOfertaLaboralByIdToDTO(id).subscribe(
-      ofertas => {
-        this.ofertaslaboralesCarga = ofertas;
-        if (this.editarClicked) {
-          this.imageHandlerService.previsualizacion = this.ofertaslaboralesCarga.fotoPortada;
-        }
-      },
-      error => console.error(error)
-    )
-  }
-  @ViewChild('estiloInput', { read: NgModel }) estiloInput!: NgModel;
-  @ViewChild('cargoInput', { read: NgModel }) cargoInput!: NgModel;
-  @ViewChild('nombreempresaInput', { read: NgModel }) nombreempresaInput!: NgModel;
-  @ViewChild('tiempoInput', { read: NgModel }) tiempoInput!: NgModel;
-  @ViewChild('fechacierreInput', { read: NgModel }) fechacierreInput!: NgModel;
-  @ViewChild('fechaaperturaInput', { read: NgModel }) fechaaperturaInput!: NgModel;
-  @ViewChild('areaInput', { read: NgModel }) areaInput!: NgModel;
-  @ViewChild('salarioInput', { read: NgModel }) salarioInput!: NgModel;
-  @ViewChild('experienciaInput', { read: NgModel }) experienciaInput!: NgModel;
-  //Estilo2
-  @ViewChild('cargo2Input', { read: NgModel }) cargo2Input!: NgModel;
-  @ViewChild('area2Input', { read: NgModel }) area2Input!: NgModel;
-  @ViewChild('fechacierre2Input', { read: NgModel }) fechacierre2Input!: NgModel;
-  
-  validarCampos(): boolean {
-    const isEstiloValido =
-      !(
-        this.estiloInput?.invalid &&
-        (this.estiloInput?.dirty || this.estiloInput?.touched)
-      );
-
-
-    //console.log("Estilo válido?", isEstiloValido ? "Sí" : "No");
-
-    if (this.selectedStyle === 'estilo1') {
-      const isCargoValido =
-        !(
-          this.cargoInput?.invalid &&
-          (this.cargoInput?.dirty || this.cargoInput?.touched)
-        );
-
-      //console.log("Cargo válido?", isCargoValido ? "Sí" : "No");
-
-      const isNombreEmpresaValido =
-        !(
-          this.nombreempresaInput?.invalid &&
-          (this.nombreempresaInput?.dirty || this.nombreempresaInput?.touched)
-        );
-
-      //console.log("¿Nombre de Empresa válido?", isNombreEmpresaValido ? "Sí" : "No");
-
-      const isTiempoValido =
-        !(
-          this.tiempoInput?.invalid &&
-          (this.tiempoInput?.dirty || this.tiempoInput?.touched)
-        );
-
-      //console.log("¿Tiempo válido?", isTiempoValido ? "Sí" : "No");
-
-      const isFechaCierreValida =
-        !(
-          this.fechacierreInput?.invalid &&
-          (this.fechacierreInput?.dirty || this.fechacierreInput?.touched)
-        );
-
-      //console.log("¿Fecha de Cierre válida?", isFechaCierreValida ? "Sí" : "No");
-
-      const isFechaAperturaValida =
-        !(
-          this.fechaaperturaInput?.invalid &&
-          (this.fechaaperturaInput?.dirty || this.fechaaperturaInput?.touched)
-        );
-
-      //console.log("¿Fecha de Apertura válida?", isFechaAperturaValida ? "Sí" : "No");
-
-      const isAreaValida =
-        !(
-          this.areaInput?.invalid &&
-          (this.areaInput?.dirty || this.areaInput?.touched)
-        );
-
-      //console.log("¿Área válida?", isAreaValida ? "Sí" : "No");
-
-      const isSalarioValido =
-        !(
-          this.salarioInput?.invalid &&
-          (this.salarioInput?.dirty || this.salarioInput?.touched)
-        );
-
-      //console.log("¿Salario válido?", isSalarioValido ? "Sí" : "No");
-
-      const isExperienciaValida =
-        !(
-          this.experienciaInput?.invalid &&
-          (this.experienciaInput?.dirty || this.experienciaInput?.touched)
-        );
-
-      //console.log("¿Experiencia válida?", isExperienciaValida ? "Sí" : "No");
-
-      const isValid = isEstiloValido && isCargoValido && isNombreEmpresaValido && isTiempoValido && isFechaCierreValida && isFechaAperturaValida && isAreaValida && isSalarioValido && isExperienciaValida;
-
-      //console.log("¿Campos válidos?", isValid ? "Sí" : "No");
-
-      return isValid;
-    }
-    if (this.selectedStyle === 'estilo2') {
-      const isCargo2Valido =
-        !(
-          this.cargo2Input?.invalid &&
-          (this.cargo2Input?.dirty || this.cargo2Input?.touched)
-        );
-
-      //console.log("Cargo 2 válido?", isCargo2Valido ? "Sí" : "No");
-
-      const isArea2Valida =
-        !(
-          this.area2Input?.invalid &&
-          (this.area2Input?.dirty || this.area2Input?.touched)
-        );
-
-      //console.log("¿Área 2 válida?", isArea2Valida ? "Sí" : "No");
-
-      const isFechaCierreValida =
-        !(
-          this.fechacierre2Input?.invalid &&
-          (this.fechacierre2Input?.dirty || this.fechacierre2Input?.touched)
-        );
-
-      //console.log("¿Fecha de Cierre válida2?", isFechaCierreValida ? "Sí" : "No");
-
-
-      const isValid = isEstiloValido && isCargo2Valido && isArea2Valida && isFechaCierreValida
-      //console.log("¿Campos válidos?", isValid ? "Sí" : "No");
-
-      return isValid;
-    }
-
-    console.error('Estilo no reconocido:', this.selectedStyle);
-    return false;
   }
 }

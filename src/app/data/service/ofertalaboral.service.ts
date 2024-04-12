@@ -19,8 +19,16 @@ export class OfertalaboralService {
   constructor(private http: HttpClient) { }
 
   getGraduadosByOfertaLaboral(id: number): Observable<Graduado[]>{
-
     return this.http.get<Graduado[]>(`${this.urlEndPoint}/graduados/${id}`)
+  }
+  getGraduadosWithActivePostulationByOfertaLaboral(id: number): Observable<Graduado[]>{
+    return this.http.get<Graduado[]>(`${this.urlEndPoint}/graduados-postulantes-activos/${id}`)
+  }
+  getGraduadosWithCancelPostulationByOfertaLaboral(id: number): Observable<Graduado[]>{
+    return this.http.get<Graduado[]>(`${this.urlEndPoint}/graduados-postulantes-inactivos/${id}`)
+  }
+  getGraduadosSeleccionadosByOfertaLaboral(id: number): Observable<Graduado[]>{
+    return this.http.get<Graduado[]>(`${this.urlEndPoint}/graduados-postulantes-seleccionados/${id}`)
   }
   getGraduadosContradatosByOfertaLaboral(id: number): Observable<contratacion[]>{
 
@@ -44,7 +52,7 @@ export class OfertalaboralService {
     return this.http.get<ofertaLaboralDTO[]>(`${this.urlEndPoint}/empresario/${name}`);
   }
 
-  createOfertaLaboral(oferta: ofertaLaboral): Observable<ofertaLaboral> {
+  createOfertaLaboral(oferta: ofertaLaboralDTO): Observable<ofertaLaboral> {
     return this.http.post<ofertaLaboral>(this.urlEndPoint, oferta, { headers: this.httpHeaders })
   }
 
@@ -63,7 +71,6 @@ export class OfertalaboralService {
   updateOfertaLaboral(id: number, ofertaLaboralDTO: ofertaLaboralDTO): Observable<any> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put(url, ofertaLaboralDTO);
-      
   }
 
   selectContratados(id: number,data: Array<any>): Observable<any> {
@@ -72,6 +79,11 @@ export class OfertalaboralService {
     return this.http.post(url, data);
   }
 
+  cancelarOReactivarOfertaLaboral(id: number, estado: string): Observable<any> {
+    const url = `${this.urlEndPoint}/cancelar-oferta/${id}?estado=${estado}`;
+
+    return this.http.put(url, id);
+  }
 
   deleteOfertabyID  (id: number): Observable<any> {
     return this.http.delete(`${this.urlEndPoint}/${id}`);

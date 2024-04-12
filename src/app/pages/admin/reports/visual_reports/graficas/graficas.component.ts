@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
-import { ApiService } from './api.service';
 import { forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ApiService } from '../../../../../data/service/api.service';
 
 @Component({
   selector: 'app-graficas',
@@ -13,7 +13,7 @@ export class GraficasComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('chart') chartComponents!: QueryList<any>;
 
-  constructor(private apiService: ApiService,) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     Swal.fire({

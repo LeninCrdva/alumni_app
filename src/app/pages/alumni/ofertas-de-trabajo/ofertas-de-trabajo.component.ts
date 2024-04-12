@@ -60,7 +60,8 @@ export class OfertasDeTrabajoComponent implements OnInit {
         const errorMessages: { [key: string]: string } = {
           'No se puede postular sin tener al menos un título registrado.': 'No se puede postular sin tener al menos un título registrado.',
           'No se puede postular sin tener al menos una referencia personal registrada.': 'No se puede postular sin tener al menos una referencia personal registrada.',
-          'No se puede postular sin tener al menos una referencia profesional registrada.': 'No se puede postular sin tener al menos una referencia profesional registrada.'
+          'No se puede postular sin tener al menos una referencia profesional registrada.': 'No se puede postular sin tener al menos una referencia profesional registrada.',
+          'No se puede postular a una oferta laboral ya finalizada.': 'No se puede postular a una oferta laboral ya finalizada.'
         };
 
 

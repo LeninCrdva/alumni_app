@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
+import { AlertsService } from '../Alerts.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ImageHandlerServiceFoto {
-    constructor(private sanitizer: DomSanitizer) { }
+    constructor(private sanitizer: DomSanitizer, private alertService: AlertsService) { }
 
     previsualizacion: string = '';
     archivos: any[] = [];
@@ -23,6 +24,15 @@ export class ImageHandlerServiceFoto {
 
     capturarFile(event: any,): void {
         const archivoCapturado = event.target.files[0];
+
+        if (archivoCapturado.size > 3000000 && archivoCapturado) {
+            this.clearImage();
+
+            this.alertService.mostrarSweetAlert(false, 'El peso del archivo excede los 3Mb, por favor seleccione una imagen de menor tamaño');
+
+            return;
+        }
+
         this.extraerBase64(archivoCapturado).then((imagen: any) => {
             this.previsualizacion = imagen.base;
         });
@@ -56,4 +66,8 @@ export class ImageHandlerServiceFoto {
             reject(e);
         }
     });
+
+    getPrevisualizacion(img: string | any = '') {
+        return this.previsualizacion = img ? img : '';
+    }
 }

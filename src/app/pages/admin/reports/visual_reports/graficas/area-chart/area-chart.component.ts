@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
 import {
   ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke,
   ApexDataLabels, ApexYAxis, ApexTitleSubtitle,
   ApexLegend, ApexFill, ApexPlotOptions
 } from 'ng-apexcharts';
+import { ApiService } from '../../../../../../data/service/api.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -29,7 +29,7 @@ export type ChartOptions = {
 export class AreaChartComponent implements OnInit {
   public chartOptions!: ChartOptions;
 
-  public response: any = {};
+  public response: any [] = [];
   public fechas: string[] = [];
   public cantidades: number[] = [];
 
@@ -39,11 +39,16 @@ export class AreaChartComponent implements OnInit {
     this.apiservice.getPostulacionesPorDia().subscribe(
       (data) => {
         this.response = data || {}; // Manejo de datos nulos
-        this.fechas = Object.keys(this.response);
-        this.cantidades = Object.values(this.response);
 
-        console.log('Fechas:', this.fechas);
-        console.log('Cantidades:', this.cantidades);
+        data.forEach((item: { [s: string]: unknown; } | ArrayLike<unknown>) => {
+          // Obtener las claves (fechas) y los valores (cantidades) de cada objeto
+          const keys = Object.keys(item);
+          const values = Object.values(item);
+
+          // Agregar las fechas y cantidades al array fechas y cantidades respectivamente
+          this.fechas.push(...keys);
+          this.cantidades.push(...values.map(value => Number(value))); // Cast values to numbers
+        });
 
         if (this.fechas.length > 0 && this.cantidades.length > 0) {
           // Crear un array de objetos { x, y } para cada fecha y cantidad

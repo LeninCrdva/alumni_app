@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -14,7 +15,7 @@ import {
   ApexYAxis,
   ApexStroke
 } from "ng-apexcharts";
-import { ApiService } from '../../../alumni/reports/visual_reports/graficas/api.service';
+import { ApiService } from '../../../../data/service/api.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;

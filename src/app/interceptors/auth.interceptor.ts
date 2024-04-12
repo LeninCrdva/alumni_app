@@ -3,30 +3,24 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { LocalStorageKeys, clearLocalStorage, getToken, getTokenTimeOut } from './local-storage-manager';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AlertsService } from '../data/Alerts.service';
 
 @Injectable()
 export class LoaderPeticionesInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private alertService: AlertsService) { }
 
   private _activeRequest = 0;
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    Swal.fire({
-      title: "Cargando...",
-      html: 'Por favor, espera...',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      timer: 2000
-    });
+    this.alertService.mostrarAlertaCargando("Procesando solicitud...");
 
     const token = getToken(LocalStorageKeys.TOKEN);
 
@@ -40,7 +34,21 @@ export class LoaderPeticionesInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      tap((event) => {
+        if (event instanceof HttpResponse) {
+          if (event.status >= 200 && event.status < 300) {
+            this.alertService.detenerAlertaCargando();
+          } else {
+            this.alertService.mostrarAlertaMomentanea("Se ha producido un error", false);
+          }
+        }
+      }),
+      catchError((error) => {
+        this.alertService.mostrarAlertaMomentanea("Se ha producido un error", false);
+        return throwError(error);
+      })
+    );    
   }
 
   private handleTokenTimeout(): Observable<HttpEvent<unknown>> {

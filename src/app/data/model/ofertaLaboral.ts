@@ -9,7 +9,7 @@ export class ofertaLaboral {
     'experiencia': string;
     'fechaApertura': Date;
     'areaConocimiento': string;    
-    'estado': boolean;
+    'estado': string;
     'empresa': Empresa;
     'tipo': string;
     'fotoPortada': string;

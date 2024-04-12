@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../../../../../data/service/api.service';
 import {
   ApexChart,
   ApexDataLabels,

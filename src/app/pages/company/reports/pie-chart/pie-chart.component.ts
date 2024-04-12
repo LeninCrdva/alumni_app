@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../../../data/service/api.service';
 import {
   ApexChart,
   ApexDataLabels,
@@ -8,7 +9,6 @@ import {
   ApexResponsive,
   ApexFill
 } from 'ng-apexcharts';
-import { ApiService } from '../../../alumni/reports/visual_reports/graficas/api.service';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;

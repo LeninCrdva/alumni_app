@@ -7,7 +7,7 @@ export class ofertaLaboralDTO {
     'experiencia': string;
     'fechaApertura': Date;
     'areaConocimiento': string;    
-    'estado': boolean;
+    'estado': string;
     'nombreEmpresa': string;
     'tipo'?: string;
     'tiempo'?: string;

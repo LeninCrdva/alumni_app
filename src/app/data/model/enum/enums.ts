@@ -6,3 +6,12 @@ export enum EstadoPostulacion {
     RECHAZADO,
     ACEPTADO
 }
+
+export enum EstadoOfertaLaboral {
+    EN_CONVOCATORIA,
+    EN_EVALUACION,
+    EN_SELECCION,
+    FINALIZADA,
+    CANCELADA,
+    REACTIVADA
+}

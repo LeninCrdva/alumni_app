@@ -145,6 +145,27 @@ ul.page-breadcrumb li a:hover {
 /** =============== FIN DE ESTILOS DE ALERTAS ===============*/
 
 /*=============== CUSTOM DELETE BUTTON  ===============*/
+
+.btn-label-secondary {
+    background-color: rgba(0, 0, 0, .1);
+    color: #000 !important
+}
+
+.btn-label-secondary:hover {
+    background-color: #000;
+    color: #fff !important
+}
+
+.btn-label-info {
+    background-color: rgba(0, 123, 255, .1);
+    color: #007bff !important
+}
+
+.btn-label-info:hover {
+    background-color: #007bff;
+    color: #fff !important
+}
+
 .btn.btn-label-danger {
     background-color: rgba(253, 57, 122, .1);
     color: #fd397a !important

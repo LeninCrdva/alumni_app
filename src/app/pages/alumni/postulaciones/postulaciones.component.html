@@ -49,20 +49,21 @@
                             <td class="text-center">
                                 {{ postulacion.ofertaLaboral?.salario !== 0 ? '$' + postulacion.ofertaLaboral?.salario : 'Hablarlo con la empresa' }}
                             </td>
-                            <td>{{ postulacion.ofertaLaboral?.fechaApertura ? postulacion.ofertaLaboral?.fechaApertura : 'No definido' }}</td>
+                            <td>{{ postulacion.ofertaLaboral?.fechaApertura ? (postulacion.ofertaLaboral?.fechaApertura | date: 'yyyy-MMMM-dd HH:mm') : 'No definido' }}</td>
                             <td>{{ postulacion.ofertaLaboral?.experiencia ? postulacion.ofertaLaboral?.experiencia : 'No definido' }}</td>
                             <td>{{postulacion.ofertaLaboral?.empresa?.ciudad?.nombre}}</td>
                             <td class="text-danger fw-bold">{{ postulacion.estado === 'CANCELADA_POR_GRADUADO' ? 'CANCELADA':postulacion.estado }}</td>
-                            <td>
-                                <i class="fas fa-image" *ngIf="!loading && postulacion.ofertaLaboral?.fotoPortada"
-                                    (click)="openModal(postulacion.ofertaLaboral?.fotoPortada)"
-                                    style="cursor: pointer;"></i>
+                            <td class="text-center">
+                                <button *ngIf="!loading && postulacion.ofertaLaboral?.fotoPortada" (click)="openModal(postulacion.ofertaLaboral?.fotoPortada)"
+                                    class="btn btn-label-info btn-sm mg-y-5 ms-2">
+                                    <i class="fas fa-image" style="cursor: pointer;"></i> Ver foto
+                            </button>
                             </td>
                             <td class="text-center">
                                 <button *ngIf="postulacion.estado === 'APLICANDO'"
                                     class="btn btn-label-danger btn-sm mg-y-5 ms-2" aria-hidden="true"
                                     (click)="cancelOffer(postulacion)">
-                                    <i class="fa fa-trash"></i> Eliminar postulacion
+                                    <i class="fa fa-trash"></i> Cancelar postulacion
                                 </button>
                                 <button *ngIf="postulacion.estado === 'CANCELADA_POR_GRADUADO'"
                                     class="btn btn-label-primary btn-sm mg-y-5" aria-hidden="true"

@@ -54,6 +54,11 @@ export class PostulacionService {
     return this.http.put<PostulacionDTO>(url, postulacion, { headers: this.httpHeaders });
   }
 
+  selectPostulants(id: number, postulants: number[]): Observable<any> {
+    const url = `${this.urlEndPoint}/actualizar-estado-por-empresario/${id}`;
+    return this.http.put<any>(url, postulants, { headers: this.httpHeaders });
+  }
+
   deletePostulacion(id: number): Observable<Postulacion> {
     return this.http.delete<Postulacion>(`${this.urlEndPoint}/delete/${id}`, { headers: this.httpHeaders });
   }
