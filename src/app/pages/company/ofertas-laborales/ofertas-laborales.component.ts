@@ -182,7 +182,7 @@ export class OfertasLaboralesComponent {
     this.editarClicked = true;
 
     this.validateForm.reset();
-
+    this.selectedOption='no';
     this.initForm();
 
     this.imageHandlerService.clearImage();
@@ -499,7 +499,13 @@ export class OfertasLaboralesComponent {
       .map(graduado => graduado.id)
       .filter(id => id !== undefined) as number[];
   }
-
+  selectedOption: string = 'no';
+  updateFechaPublicacion(): void {
+    if (this.editarClicked && this.selectedOption === 'si') {
+      this.getFechaPublicacion();
+        console.log('Actualizar fecha de publicación...');
+    }
+}
   seleccionarPostulantes() {
     this.sendSelectedIDs();
     console.log(this.selectedIDs);

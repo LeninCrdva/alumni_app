@@ -23,6 +23,10 @@ import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/b
 import { GraficasComponent } from './reports/visual_reports/graficas/graficas.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { EncuestasresponseComponent } from './encuestasresponse/encuestasresponse.component';
+
+import { EncuestasaresponderformComponent } from './encuestasaresponderform/encuestasaresponderform.component';
+
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -40,7 +44,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
         OfertaDetalleComponent,
         PostulacionesComponent,
         BarChartComponent,
-        GraficasComponent
+        GraficasComponent,
+        EncuestasresponseComponent,
+        EncuestasaresponderformComponent
         
     ],
     imports: [

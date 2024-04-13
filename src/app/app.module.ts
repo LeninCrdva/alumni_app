@@ -19,6 +19,7 @@ import { PerfilGraduadoComponent } from './pages/company/perfil-graduado/perfil-
 import { WhatsAppBtnComponent } from './components/whats-app-btn/whats-app-btn.component';
 import { LoaderPeticionesInterceptor } from './interceptors/auth.interceptor';
 
+
 export function playerFactory() {
   return player;
 }
@@ -33,7 +34,9 @@ export function playerFactory() {
     NuevoEmpresarioModalComponent,
     NotFoundComponent,
     PerfilGraduadoComponent,
-    WhatsAppBtnComponent
+    WhatsAppBtnComponent,
+  
+   
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

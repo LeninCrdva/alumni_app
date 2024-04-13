@@ -16,7 +16,12 @@ import { CarreraComponent } from './carrera/carrera.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
-
+import { SurveyDetailsModalComponent } from './survey-details-modal/survey-details-modal.component';
+import { RequestencuestaComponent } from './requestencuesta/requestencuesta.component';
+import { EncuestascardComponent } from './encuestascard/encuestascard.component';
+import { WebBuilderComponent } from './web-builder/web-builder.component';
+import { CreateDataWebComponent } from './web-builder/create-data/create-data-web.component';
+import { GestionProgramasComponent } from './gestion-programas/gestion-programas.component';
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
@@ -36,7 +41,12 @@ const routes: Routes = [
     { path: 'update-perfil', component: PerfilFormComponent },
     { path: 'encuestas', component: EncuestasComponent },
     { path: 'empresas', component: EmpresasComponent },
-    { path: 'ofertas-laborales', component: OfertasLaboralesComponent }
+    { path: 'ofertas-laborales', component: OfertasLaboralesComponent },
+    { path: 'encuestascard', component: EncuestascardComponent },
+    { path: 'respuestas', component: RequestencuestaComponent },
+    { path: 'gestion-programas', component: GestionProgramasComponent },
+    { path: 'gestion-web-builder', component: WebBuilderComponent },
+    { path: 'gestion-web-builder/crud/:id', component: CreateDataWebComponent },
 ];
 
 @NgModule({

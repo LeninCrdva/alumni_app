@@ -14,7 +14,7 @@ import { ExperienciaComponent } from './experiencia/experiencia.component';
 import { CapacitacionesComponent } from './capacitaciones/capacitaciones.component';
 import { ReferenciasLaboralesComponent } from './referencias-laborales/referencias-laborales.component';
 import { NuevoGraduadoModalComponent } from './nuevo-graduado-modal/nuevo-graduado-modal.component';
-
+import { EncuestasresponseComponent } from './encuestasresponse/encuestasresponse.component';
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
@@ -36,6 +36,9 @@ const routes: Routes = [
     // NOTE: COMUNIDAD
     { path: 'comunidad', component: ComunidadComponent },
     { path: 'nuevoxd', component: NuevoGraduadoModalComponent },
+     // NOTE: Encuestas
+     { path: 'encuestas', component: EncuestasresponseComponent },
+
 ];
 
 @NgModule({

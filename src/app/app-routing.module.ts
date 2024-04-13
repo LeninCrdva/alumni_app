@@ -15,9 +15,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
   },
   {
+    path: 'web-builder',
+    redirectTo: 'web-builder/contructor',
+    pathMatch: 'full'
+  },
+  {
     path: 'inicio', component: LayoutBaseComponent,
     children: [
-      { path: '', loadChildren: () => import('./pages/start/start.module').then((m) => m.StartModule) }
+      { path: '', loadChildren: () => import('./pages/start/start.module').then((m) => m.StartModule) },
     ]
   },
   {

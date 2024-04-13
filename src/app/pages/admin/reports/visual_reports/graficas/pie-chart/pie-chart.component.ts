@@ -27,6 +27,7 @@ export type ChartOptions = {
   styleUrl: './pie-chart.component.css'
 })
 export class PieChartComponent implements OnInit {
+  
 
   public chartOptions!: ChartOptions;
 
@@ -43,8 +44,8 @@ export class PieChartComponent implements OnInit {
         this.opci = Object.keys(this.response);
         this.cantidad = Object.values(this.response);
 
-        console.log('opc: :', this.opci);
-        console.log('Cantidad:', this.cantidad);
+       // console.log('opc: :', this.opci);
+        //console.log('Cantidad:', this.cantidad);
 
         if (this.opci.length > 0 && this.cantidad.length > 0) {
           const dataPoints = this.opci.map((opci, index) => ({

@@ -39,7 +39,7 @@
             </div>
       
             <div class="col-auto">
-              <button class="btn btn-sm btn-outline-success" (click)="addQuestion()" type="button" [disabled]="form.invalid">Agregar Pregunta +</button>
+              <button class="btn btn-sm btn-outline-primary" (click)="addQuestion()" type="button" [disabled]="form.invalid">Agregar Pregunta +</button>
             </div>
           </div>
       
@@ -76,6 +76,7 @@
                       <option [value]="3">Calificación 1/10</option>
                       <option [value]="4">Calificación 1/5</option>
                       <option [value]="5">Si / No</option>
+                      <option [value]="6">Opción Múltiple Unico</option>
                     </select>
             
                     <ng-container *ngIf="form.get('questions').controls[qI].get('type').touched && form.get('questions').controls[qI].get('type').errors">
@@ -86,7 +87,7 @@
                   </div>
                 </div>
       
-                <ng-container formArrayName="options" *ngIf="form.get('questions').controls[qI].get('type').value == 2">
+                <ng-container formArrayName="options" *ngIf="form.get('questions').controls[qI].get('type').value === '2' || form.get('questions').controls[qI].get('type').value === '6'">
                   <div class="row mt-4">
                     <div class="col">
                       <h6>Opciones</h6>
@@ -121,10 +122,12 @@
       
           <div class="row mt-4">
             <div class="col-12 text-end">
-              <button class="btn btn-success" type="submit">Crear</button>
+              <button class="btn btn-primary" type="submit">Crear</button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+
+  

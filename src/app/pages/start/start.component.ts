@@ -48,22 +48,29 @@ export class StartComponent implements OnInit {
   private handleScroll() {
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('header nav a');
-
+  
+    if (sections.length === 0 || navLinks.length === 0) {
+      return;
+    }
+  
     sections.forEach(sec => {
       const top = window.scrollY;
       const offset = sec.offsetTop - 150;
       const height = sec.offsetHeight;
       const id = sec.getAttribute('id');
-
+  
       if (top >= offset && top < offset + height) {
         navLinks.forEach(links => {
           this.renderer.removeClass(links, 'active');
-          const activeLink = this.el.nativeElement.querySelector(`header nav a[href*=${id}]`);
-          this.renderer.addClass(activeLink, 'active');
         });
+        const activeLink = this.el.nativeElement.querySelector(`header nav a[href*=${id}]`);
+        if (activeLink) {
+          this.renderer.addClass(activeLink, 'active');
+        }
       }
     });
   }
+  
 
   loginAsAdmin(): void {
     localStorage.setItem('userRole', this.ADMINISTRADOR);

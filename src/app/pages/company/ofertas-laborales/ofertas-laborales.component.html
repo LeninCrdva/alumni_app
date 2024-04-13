@@ -77,11 +77,15 @@
                             <input class="form-control wd-250" type="datetime-local" name="fechaPublicacion"
                                 formControlName="fechaPublicacion"
                                 [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" required readonly>
+                                <input class="form-control wd-250" type="datetime-local" name="fechaPublicacion"
+                                [value]="(editarClicked && selectedOption === 'no') ? ofertaslaboralesCarga.fechaPublicacion : (editarClicked ? (ofertaslaboralesCarga.fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss') : (fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'))"
+                                readonly> 
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - La fecha de publicación es obligatoria.
                             </div>
                         </div>
                     </div>
+                    
                     <div *ngIf="!this.showThirdStyle" class="form-group col-lg-6">
                         <label class="form-label active">TIEMPO:</label>
                         <div class="input-group has-validation">
@@ -169,13 +173,19 @@
                             <a class="input-group-text">
                                 <i class="fa-solid fa-dollar-sign"></i>
                             </a>
-                            <input class="form-control" type="number" name="salario" placeholder="Ingrese la Salario"
-                                id="salario" formControlName="salario" required>
+                            <input class="form-control" 
+                                   type="number" 
+                                   name="salario" 
+                                   placeholder="Ingrese el Salario"
+                                   id="salario" 
+                                   formControlName="salario" 
+                                   required
+                                   min="1">
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - El salario es obligatorio.
                             </div>
                         </div>
-                    </div>
+                    </div>                    
 
                     <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6 mb-3">
                         <label class="form-label active">EXPERIENCIA:</label>

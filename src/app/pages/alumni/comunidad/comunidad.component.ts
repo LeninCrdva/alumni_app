@@ -42,10 +42,13 @@ export class ComunidadComponent {
     this.selectedGraduado = graduado;
   }
   contactarPorWhatsapp(numeroTelefono: string): void {
+    const numeroCorregido = numeroTelefono.substring(1);
+    const numeroConCodigoPais = `593${numeroCorregido}`;
     const mensaje = "Hola, estoy interesado en contactarte.";
-    const enlaceWhatsapp = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
+    const enlaceWhatsapp = `https://wa.me/${numeroConCodigoPais}?text=${encodeURIComponent(mensaje)}`;
     window.open(enlaceWhatsapp, "_blank");
-  }
+}
+
 
 
   setupDtOptions() {
@@ -78,7 +81,7 @@ export class ComunidadComponent {
       (result) => {
 
         this.graduadosList = result;
-        console.log("Graduados obtenidos:", this.graduadosList);
+        //console.log("Graduados obtenidos:", this.graduadosList);
 
       },
       () => this.dtTrigger.next(null)

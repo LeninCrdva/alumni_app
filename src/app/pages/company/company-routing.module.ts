@@ -9,7 +9,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PerfilGraduadoComponent } from './perfil-graduado/perfil-graduado.component';
-
+import { ReportsComponent } from './reports/reports.component';
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'postulaciones_form', component: OfertasLaboralesComponent },
@@ -18,6 +18,7 @@ const routes: Routes = [
     { path: 'perfil', component: PerfilUsuarioComponent },
     { path: 'update-perfil', component: PerfilFormComponent },
     { path: 'graduado-perfil', component: PerfilGraduadoComponent },
+    { path: 'reports', component: ReportsComponent },
 
 ];
 

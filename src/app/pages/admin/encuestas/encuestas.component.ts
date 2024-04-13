@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { SurveyService } from '../../../data/service/SurveyService';
+import { Survey } from '../../../data/model/Survey';
+import { QuestionType ,Question} from '../../../data/model/Question';
 @Component({
   selector: 'app-encuestas',
   templateUrl: './encuestas.component.html',
@@ -8,10 +10,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EncuestasComponent {
    
-  form: FormGroup | any
+  form: FormGroup | any;
+  
 
   constructor (
-    private fb: FormBuilder
+    private fb: FormBuilder, private surveyService: SurveyService
   ) {}
 
   ngOnInit() {
@@ -27,18 +30,76 @@ export class EncuestasComponent {
   }
 
   async create() {
-    this.form.markAllAsTouched()
-
+    this.form.markAllAsTouched();
+  
     if (this.form.invalid) {
-      return alert('Ingresa los datos como se indica.')
+      return alert('Ingresa los datos como se indica.');
     }
+  
+    const formData = this.form.value;
+   console.log("Preguntas:",formData.questions);
+   const questions: Question[] = formData.questions.map((questionData: any) => {
+    let type: QuestionType;
 
-    alert('Encuesta creada exitosamente.')
+    switch (questionData.type) {
+      case 1:
+        type = QuestionType.ABIERTA;
+        break;
+      case '2':
+        type = QuestionType.OPCION_MULTIPLE;
+        break;
+      case '3':
+        type = QuestionType.CALIFICACION_1_10;
+        break;
+      case '4':
+        type = QuestionType.CALIFICACION_1_5;
+        break;
+      case '5':
+        type = QuestionType.SI_NO;
+        break;
+        case '6':
+          type = QuestionType.OPCION_MULTIPLEUNICO;
+          break;
+      default:
+        throw new Error(`Tipo de pregunta inválido: ${questionData.type}`);
+    }
+   
+     
+     const options: string[] = questionData.options.map((option: any) => option.title);
 
-    console.log('Data', this.form.value)
+    
 
-    this.setForm()
+    return new Question(questionData.title, type, options || []);
+  });
+  console.log("Preguntas trasnformadas:",questions);
+    const newSurvey: Survey = {
+      title: formData.title,
+      description: formData.description,
+      questions:questions,
+      estado: false
+    };
+  
+  
+    console.log('Survey:', newSurvey.questions);
+  
+    try {
+      const response = await this.surveyService.saveOrUpdateSurvey(newSurvey).toPromise();
+  
+      if (response) {
+        console.log('Respuesta del servicio:', response);
+        alert('Encuesta creada exitosamente.');
+      } else {
+        alert('Error: Respuesta del servicio no válida.');
+      }
+  
+      // Reiniciar el formulario después de la creación exitosa
+      this.setForm();
+    } catch (error) {
+      console.error('Error al crear la encuesta:', error);
+      alert('Error al crear la encuesta. Por favor, inténtalo de nuevo.');
+    }
   }
+  
 
   addQuestion() {
     const questions: FormArray = this.form.get('questions') as FormArray
@@ -153,6 +214,14 @@ export class EncuestasComponent {
           question.get('options')?.setValidators([Validators.required])
           question.get('options')?.updateValueAndValidity()
           break
+          case '6':
+            options.push(this.fb.group({
+              title: [null, [Validators.required]]
+            }))
+  
+            question.get('options')?.setValidators([Validators.required])
+            question.get('options')?.updateValueAndValidity()
+            break
 
         default:
           question.get('options')?.clearValidators()

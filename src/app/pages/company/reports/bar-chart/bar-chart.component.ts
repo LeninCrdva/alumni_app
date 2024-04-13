@@ -54,8 +54,8 @@ export class BarChartComponent implements OnInit {
         this.fechas = Object.keys(this.response);
         this.cantidades = Object.values(this.response);
 
-        console.log('Fechas:', this.fechas);
-        console.log('Cantidades:', this.cantidades);
+       // console.log('Fechas:', this.fechas);
+        //console.log('Cantidades:', this.cantidades);
 
         if (this.fechas.length > 0 && this.cantidades.length > 0) {
           // Crear un array de objetos { x, y } para cada fecha y cantidad

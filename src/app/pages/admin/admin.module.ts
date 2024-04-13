@@ -24,6 +24,13 @@ import { PieChart2Component } from './reports/visual_reports/graficas/pie-chart2
 import { EmpresasComponent } from './empresas/empresas.component';
 import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
 import { DataTablesModule } from 'angular-datatables';
+import { SurveyDetailsModalComponent } from './survey-details-modal/survey-details-modal.component';
+import { RequestencuestaComponent } from './requestencuesta/requestencuesta.component';
+import { EncuestascardComponent } from './encuestascard/encuestascard.component';
+import { WebBuilderComponent } from './web-builder/web-builder.component';
+import { CreateDataWebComponent } from './web-builder/create-data/create-data-web.component';
+import { GestionProgramasComponent } from './gestion-programas/gestion-programas.component';
+import { TextEditorComponent } from './text-editor/text-editor.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -43,7 +50,15 @@ import { DataTablesModule } from 'angular-datatables';
     EncuestasComponent,
     PieChart2Component,
     EmpresasComponent,
-    OfertasLaboralesComponent
+    OfertasLaboralesComponent,
+    EncuestascardComponent,
+    SurveyDetailsModalComponent,
+    RequestencuestaComponent,
+    WebBuilderComponent,
+    CreateDataWebComponent,
+    GestionProgramasComponent,
+    TextEditorComponent
+
   ],
   imports: [
     CommonModule,

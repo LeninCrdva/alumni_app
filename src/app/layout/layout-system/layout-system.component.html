@@ -80,6 +80,14 @@
                         class='fa-solid fa-graduation-cap icon'></i>Comunidad
                 </a>
             </li>
+            <li class="divider" data-text="Encuestas Tecazuay">Encuestas Tecazuay</li>
+            <li>
+                <a [class.active]="activeMenuItem === 'Encuestas'"
+                    [routerLink]="['/system/alumni/encuestas']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Encuestas')" href="javascript:void(0)"><i
+                        class='fa-solid fas fa-poll icon'></i>Encuestas
+                </a>
+            </li>
         </ul>
 
 
@@ -125,6 +133,26 @@
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ciudades y Provincia')"
                     href="javascript:void(0)"><i class='fa-solid fa-tree-city icon'></i>Ciudades y Provincia
                 </a>
+                <a [class.active]="activeMenuItem === 'Encuestas'" [routerLink]="['admin/encuestas']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Encuestas')" href="javascript:void(0)"><i
+                        class='fa-solid fas fa-poll icon'></i>Encuestas
+                </a>
+                <a [class.active]="activeMenuItem === 'Empresas'" [routerLink]="['admin/empresas']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Empresas')" href="javascript:void(0)"><i
+                        class='fa-solid fas fa-building icon'></i>Empresas
+                </a>
+                <a [class.active]="activeMenuItem === 'OfertasLaborales'" [routerLink]="['admin/ofertas-laborales']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('OfertasLaborales')" href="javascript:void(0)"><i
+                        class='fa-solid fas fa-briefcase icon'></i>Ofertas Laborales
+                </a>
+            <a [class.active]="activeMenuItem === 'Ver Encuestas creadas'" [routerLink]="['admin/encuestascard']"
+                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ver Encuestas creadas')"
+                href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
+            </a>
+            <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'" [routerLink]="['admin/respuestas']"
+                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas de Encuestas')"
+                href="javascript:void(0)"> <i class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
+            </a>
             </li>
 
             <li class="divider" data-text="Analitica y Reportes">Analítica y Reportes</li>
@@ -142,6 +170,21 @@
                     <li><a [routerLink]="['/system/admin/empresa-document']"
                             routerLinkActive="router-link-active">Informe Empresa</a>
                     </li>
+                </ul>
+            </li>
+
+            <li class="divider" data-text="Eventos">Eventos</li>
+
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fas fa-calendar-alt icon'></i>Eventos<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['/system/admin/gestion-web-builder']" routerLinkActive="router-link-active">Constructor Evento
+                            </a>
+                    </li>
+                    <li><a [routerLink]="['/system/admin/gestion-programas']" routerLinkActive="router-link-active">Programa</a>
+                    </li>
+                    
                 </ul>
             </li>
         </ul>

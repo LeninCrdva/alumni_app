@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { StartRoutingModule } from './start-routing.module';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
-
+import { ContentBuilderComponent } from './content-builder/content-builder.component';
+import { ProgramasPresentationComponent } from './programas-presentation/programas-presentation.component';
 // Note: Para las imagenes animadas
 export function playerFactory() {
   return player;
@@ -13,7 +14,9 @@ export function playerFactory() {
 
 @NgModule({
   declarations: [
-    StartComponent
+    StartComponent,
+    ContentBuilderComponent,
+    ProgramasPresentationComponent
   ],
   imports: [
     CommonModule,
