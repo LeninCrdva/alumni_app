@@ -11,214 +11,544 @@
         <img src="./assets/imgs/ALumni_Logo_Dark_Large.png" class="img-fluid" />
       </div>
       <div class="align-self-center w-100 px-lg-5 py-lg-4 p-4 scroll-register">
-        <h1 class="font-weight-bold mb-4" style="color: var(--alumni-color); font-weight: bold;">Crear Cuenta</h1>
-        <form class="mb-5" [formGroup]="registerForm" (ngSubmit)="register()">
+        <h2 class="font-weight-bold mb-4" style="color: var(--alumni-color); font-weight: bold;">Crear Cuenta</h2>
 
-
-          <div class="d-flex">
-            <div class="flex-grow-1">
-              <div class="form-group mr-3">
-                <input type="text" class="form-input" placeholder=" " formControlName="primerNombre" id="InputNombreM1">
-                <label for="InputNombreM1" class="form-label">Ingresa tu primer Nombre</label>
-                <i class="ri-user-smile-line form-icon"></i>
-              </div>
-
-              <div class="text-danger mb-4"
-                *ngIf="(isSubmit && registerForm.get('primerNombre')?.invalid) || registerForm.get('primerNombre')?.hasError('required') && registerForm.get('primerNombre')?.touched">
-                El primer nombre es obligatorio.
-              </div>
+        <div class="stepwizard mb-5">
+          <div class="stepwizard-row setup-panel">
+            <div class="stepwizard-step">
+              <a href="#step-1" type="button" class="btn btn-primary btn-circle disabled border-0">1</a>
             </div>
-
-            <div class="mx-2 flex-grow-1">
-              <div class="form-group">
-                <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre" id="InputNombreP">
-                <label for="InputNombreP" class="form-label">Ingresa tu segundo Nombre</label>
-                <i class="ri-user-smile-line form-icon"></i>
-              </div>
-
-              <div class="text-danger mb-4"
-                *ngIf="(isSubmit && registerForm.get('segundoNombre')?.invalid) || registerForm.get('segundoNombre')?.hasError('required') && registerForm.get('segundoNombre')?.touched">
-                El segundo nombre es obligatorio.
-              </div>
+            <div class="stepwizard-step">
+              <a href="#step-2" type="button" class="btn btn-default btn-circle disabled border-0">2</a>
+            </div>
+            <div *ngIf="roleName === 'GRADUADO'" class="stepwizard-step">
+              <a href="#step-3-graduate" type="button" class="btn btn-default btn-circle disabled border-0">3</a>
+            </div>
+            <div *ngIf="roleName === 'EMPRESARIO'" class="stepwizard-step">
+              <a href="#step-3-businessMan" type="button" class="btn btn-default btn-circle disabled border-0">3</a>
+            </div>
+            <div *ngIf="roleName === 'EMPRESARIO'" class="stepwizard-step">
+              <a href="#step-4-company" type="button" class="btn btn-default btn-circle disabled border-0">4</a>
             </div>
           </div>
+        </div>
 
-          <div class="d-flex">
-            <div class="flex-grow-1">
-              <div class="form-group mr-3">
-                <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
-                  id="InputApellidoM">
-                <label for="" class="form-label">Ingresa tu primer Apellido</label>
-                <i class="ri-user-smile-line form-icon"></i>
-              </div>
-              <div class="text-danger mb-4"
-                *ngIf="(isSubmit && registerForm.get('primerApellido')?.invalid) || registerForm.get('primerApellido')?.hasError('required') && registerForm.get('primerApellido')?.touched">
-                El primer apellido es obligatorio.
-              </div>
-            </div>
+        <div class="content-slide">
+          <form class="needs-validation" id="basicData" [formGroup]="registerForm">
 
-            <div class="mx-2 flex-grow-1">
-              <div class="form-group">
-                <input type="text" class="form-input" placeholder=" " formControlName="segundoApellido"
-                  id="InputApellidoP">
-                <label for="" class="form-label">Ingresa tu segundo Apellido</label>
-                <i class="ri-user-smile-line form-icon"></i>
-              </div>
-
-              <div class="text-danger mb-4"
-                *ngIf="(isSubmit && registerForm.get('segundoApellido')?.invalid) || registerForm.get('segundoApellido')?.hasError('required') && registerForm.get('segundoApellido')?.touched">
-                El segundo apellido es obligatorio.
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <div class="form-group flex-grow-1 mr-3">
-              <input type="text" class="form-input" placeholder=" " formControlName="cedula" id="InputCedula">
-              <label for="" class="form-label">Ingresa tu Cedula</label>
-              <i class="fa-solid fa-id-card form-icon"></i>
-            </div>
-
-            <div class="text-danger"
-              *ngIf="(isSubmit && registerForm.get('cedula')?.invalid) || registerForm.get('cedula')?.hasError('required') && registerForm.get('cedula')?.touched">
-              La cedula es obligatoria.
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label style="color: var(--alumni-color); margin-bottom: 0.8rem;">Sexo: </label>
-            <div style="display: flex; flex-direction: row;" class="form-group flex-grow-1 mr-3">
-              <div class="form-check form-check-inline" style="display: block;">
-                <input class="form-check-input" type="radio" id="radioMasculino" name="sexo"
-                  (change)="onSexoChange($event, 'MASCULINO')">
-                <label class="form-check-label" for="radioMasculino" style="order: 1;">
-                  Masculino
-                </label>
-              </div>
-              <div class="form-check form-check-inline" style="display: block;">
-                <input class="form-check-input" type="radio" id="radioFemenino" name="sexo"
-                  (change)="onSexoChange($event, 'FEMENINO')">
-                <label class="form-check-label" for="radioFemenino" style="order: 1;">
-                  Femenino
-                </label>
-              </div>
-              <div class="form-check form-check-inline" style="display: block;">
-                <input class="form-check-input" type="radio" id="radioOtro" name="sexo"
-                  (change)="onSexoChange($event, 'OTRO')">
-                <label class="form-check-label" for="radioOtro" style="order: 1;">
-                  Otro
-                </label>
-              </div>
-            </div>
-            <div class="text-danger" *ngIf="isSubmit && registerForm.get('sexo')?.errors?.['required']">
-              Por favor, seleccione un sexo.
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <div class="form-group flex-grow-1 mr-3">
-              <input type="text" class="form-input" placeholder=" " formControlName="telefono" id="InputTelefono">
-              <label for="" class="form-label">Ingresa tu Telefono</label>
-              <i class="fa-solid fa-phone-volume form-icon"></i>
-            </div>
-
-            <div class="text-danger"
-              *ngIf="(isSubmit && registerForm.get('telefono')?.invalid) || registerForm.get('telefono')?.hasError('required') && registerForm.get('telefono')?.touched">
-              El número de telefono es obligatorio.
-            </div>
-          </div>
-
-          <div class="mb-4">
-
-            <div class="form-group">
-              <input type="email" class="form-input" placeholder=" " id="InputNombreUsuario"
-                formControlName="nombreUsuario" aria-describedby="usernameError">
-              <label for="" class="form-label">Ingresa tu nombre de usuario</label>
-              <i class="ri-at-line form-icon"></i>
-            </div>
-
-            <div class="text-danger"
-              *ngIf="(isSubmit && registerForm.get('nombreUsuario')?.invalid) || registerForm.get('nombreUsuario')?.hasError('required') && registerForm.get('nombreUsuario')?.touched">
-              El nombre de usuario es obligatoria.
-            </div>
-          </div>
-
-          <div class="mb-4">
-
-            <div class="form-group">
-              <input type="password" class="form-input" placeholder=" " id="InputPassword1" formControlName="clave"
-                aria-describedby="passwordError">
-              <label for="" class="form-label">Ingresa tu contraseña</label>
-              <i class="ri-lock-line form-icon"></i>
-            </div>
-
-            <div class="text-danger"
-              *ngIf="(isSubmit && registerForm.get('clave')?.invalid) || registerForm.get('clave')?.hasError('required') && registerForm.get('clave')?.touched">
-              La contraseña es obligatoria.
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <div class="form-group flex-grow-1 mr-3">
-              <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
-          
-              <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento" class="form-control"
-                id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
-            </div>
-          
-            <div class="text-danger"
-              *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
-              La fecha de nacimiento es obligatoria.
-            </div>
-            <div class="text-danger"
-              *ngIf="registerForm.get('fechaNacimiento')?.hasError('fechaNacimientoInvalida') && registerForm.get('fechaNacimiento')?.touched">
-              La fecha de nacimiento debe ser posterior a 1950-01-01.
-            </div>
-          </div>
-          
-
-          <div class="mb-4">
-            <label style="color: var(--alumni-color)">Subir Foto de perfil</label>
-
-            <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-              <div class="card-header">
-
-                <!-- Muestra la visa previa dentro del primer seleccionador de archivos -->
-                <div class="preview-img" *ngIf="previsualizacion">
-
-
-                  <div class="image-container text-center mt-3">
-                    <!-- Ajusté el estilo del contenedor para centrar y hacer la imagen más grande -->
-                    <img id="preview" [src]="urlPhoto" alt="" style="width: 250px; height: 250px; object-fit: cover;" />
+            <!-- First Section -->
+            <div class="row setup-content" id="step-1">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <div class="form-group mr-3 has-validation ">
+                    <label for="InputNombreM1" class="form-label">Ingrese su Primer Nombre</label>
+                    <i class="ri-user-smile-line form-icon"></i>
+                    <input type="text" class="form-input" required placeholder=" " formControlName="primerNombre"
+                      id="InputNombreM1">
+                    <div class="invalid-feedback">
+                      <strong>Dato Faltante</strong> - El primer nombre es obligatorio.
+                    </div>
                   </div>
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('primerNombre')?.hasError('pattern') && registerForm.get('primerNombre')?.touched">
+                    <strong>Dato Erróneo</strong> - Solo letras y mínimo 2 caracteres.
+                  </div>
+                </div>
 
-                  <div>
-                    <button class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
-                      type="button" (click)="clearImage()">
-                      Cancelar
-                    </button>
+                <div class="mx-2 flex-grow-1">
+                  <div class="form-group has-validation">
+                    <input type="text" class="form-input" required placeholder=" " formControlName="segundoNombre"
+                      id="InputNombreP">
+                    <label for="InputNombreP" class="form-label">Ingrese su Segundo Nombre</label>
+                    <i class="ri-user-smile-line form-icon"></i>
+                    <div class="invalid-feedback">
+                      <strong>Dato Faltante</strong> - El segundo nombre es obligatorio.
+                    </div>
+                  </div>
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('segundoNombre')?.hasError('pattern') && registerForm.get('segundoNombre')?.touched">
+                    <strong>Dato Erróneo</strong> - Solo letras y mínimo 2 caracteres.
                   </div>
                 </div>
               </div>
-              <div class="card-body collapse show" id="collapse8">
-                <!-- Moví el input type="file" aquí -->
-                <input id="file" type="file" class="dropify" data-show-remove="false" (change)="onFileSelected($event)"
-                  accept=".jpg, .jpeg, .png" />
+
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <div class="form-group mr-3 has-validation">
+                    <input type="text" class="form-input" required placeholder=" " formControlName="primerApellido"
+                      id="InputApellidoM">
+                    <label for="" class="form-label">Ingrese su Primer Apellido</label>
+                    <i class="ri-user-smile-line form-icon"></i>
+                    <div class="invalid-feedback">
+                      <strong>Dato Faltante</strong> - El primer apellido es obligatorio.
+                    </div>
+                  </div>
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('primerApellido')?.hasError('pattern') && registerForm.get('primerApellido')?.touched">
+                    <strong>Dato Erróneo</strong> - Solo letras y mínimo 2 caracteres.
+                  </div>
+                </div>
+
+                <div class="mx-2 flex-grow-1">
+                  <div class="form-group has-validation">
+                    <input type="text" class="form-input" required placeholder=" " formControlName="segundoApellido"
+                      id="InputApellidoP">
+                    <label for="" class="form-label">Ingrese su Segundo Apellido</label>
+                    <i class="ri-user-smile-line form-icon"></i>
+                    <div class="invalid-feedback">
+                      <strong>Dato Faltante</strong> - El segundo apellido es obligatorio.
+                    </div>
+                  </div>
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('segundoApellido')?.hasError('pattern') && registerForm.get('segundoApellido')?.touched">
+                    <strong>Dato Erróneo</strong> - Solo letras y mínimo 2 caracteres.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-group flex-grow-1 has-validation">
+                  <input type="text" class="form-input" required placeholder=" " formControlName="cedula"
+                    id="InputCedula">
+                  <label for="InputCedula" class="form-label">Ingrese su Cédula</label>
+                  <i class="fa-solid fa-id-card form-icon"></i>
+                  <div class="invalid-feedback">
+                    <strong>Dato Faltante</strong> - La cédula es obligatoria.
+                  </div>
+                </div>
+
+                <div class="text-danger"
+                  *ngIf="registerForm.get('cedula')?.hasError('pattern') && registerForm.get('cedula')?.touched">
+                  <strong>Dato Erróneo</strong> - Solo números y 10 caracteres.
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <label style="color: var(--alumni-color); margin-bottom: 0.8rem;">Sexo: </label>
+                <div style="display: flex; flex-direction: row;" class="form-group flex-grow-1 mr-3">
+                  <div class="form-check form-check-inline" style="display: block;">
+                    <input class="form-check-input" type="radio" id="radioMasculino" name="sexo"
+                      (change)="onSexoChange($event, 'MASCULINO')">
+                    <label class="form-check-label" for="radioMasculino" style="order: 1;">
+                      Masculino
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="display: block;">
+                    <input class="form-check-input" type="radio" id="radioFemenino" name="sexo"
+                      (change)="onSexoChange($event, 'FEMENINO')">
+                    <label class="form-check-label" for="radioFemenino" style="order: 1;">
+                      Femenino
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="display: block;">
+                    <input class="form-check-input" type="radio" id="radioOtro" name="sexo"
+                      (change)="onSexoChange($event, 'OTRO')">
+                    <label class="form-check-label" for="radioOtro" style="order: 1;">
+                      Otro
+                    </label>
+                  </div>
+                </div>
+                <div class="text-danger" *ngIf="isSubmit && registerForm.get('sexo')?.errors?.['required']">
+                  Por favor, seleccione un sexo.
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-group flex-grow-1 mr-3 has-validation">
+                  <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+
+                  <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento" class="form-input"
+                    id="InputFechaNacimiento" min="1960-01-01" max="2005-01-01"
+                    placeholder="Ingresa tu fecha de nacimiento">
+                </div>
+
+                <div class="text-danger"
+                  *ngIf="registerForm.get('fechaNacimiento')?.hasError('required') && registerForm.get('fechaNacimiento')?.touched">
+                  <strong>Dato Faltante</strong> - La fecha de nacimiento es obligatoria.
+                </div>
+                <div class="text-danger"
+                  *ngIf="registerForm.get('fechaNacimiento')?.hasError('fechaNacimientoInvalida') && registerForm.get('fechaNacimiento')?.touched">
+                  <strong>Dato Erróneo</strong> - La fecha de nacimiento debe ser posterior a 1950-01-01 e inferior a
+                  2005-01-01.
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-group flex-grow-1 mr-3">
+                  <input type="text" class="form-input" required placeholder=" " formControlName="telefono"
+                    id="InputTelefono">
+                  <label for="" class="form-label">Ingrese su Número de Télefono</label>
+                  <i class="fa-solid fa-phone-volume form-icon"></i>
+                  <div class="invalid-feedback">
+                    <strong>Dato Faltante</strong> - El número de teléfono es obligatorio.
+                  </div>
+                </div>
+
+                <div class="text-danger"
+                  *ngIf="registerForm.get('telefono')?.hasError('pattern') && registerForm.get('telefono')?.touched">
+                  <strong>Dato Erróneo</strong> - Solo números y 10 caracteres.
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary nextBtn" (click)="onSubmit()"
+                  [disabled]="!registerForm.valid">Siguiente</button>
               </div>
             </div>
+          </form>
 
-            <!-- Mostrar mensaje de error para el campo inputFoto -->
+          <!-- Second Section -->
+          <form class="needs-validation" [formGroup]="subRegisterForm">
+            <div class="row setup-content" id="step-2">
+              <div class="mb-4">
+                <div class="form-group has-validation">
+                  <input type="email" class="form-input" required placeholder=" " id="InputNombreUsuario"
+                    formControlName="nombreUsuario" aria-describedby="usernameError">
+                  <label for="" class="form-label">Ingresa tu nombre de usuario</label>
+                  <i class="ri-at-line form-icon"></i>
+                  <div class="invalid-feedback">
+                    <strong>Dato Faltante</strong> - El nombre de usuario es obligatorio.
+                  </div>
+                </div>
+                <div class="text-danger"
+                  *ngIf="subRegisterForm.get('nombreUsuario')?.hasError('pattern') && subRegisterForm.get('nombreUsuario')?.touched">
+                  <strong>Dato Erróneo</strong> - Solo letras y números y de 2 a 10 caracteres.
+                </div>
+              </div>
 
-            <!-- Botón para subir la foto de perfil -->
-            <div class="text-danger" *ngIf="isSubmit && !previsualizacion">
-              La foto es obligatoria.
-              <!-- Agrega el botón necesario aquí -->
+              <div class="mb-4">
+                <div class="form-group has-validation">
+                  <input type="password" class="form-input" required placeholder=" " id="InputPassword1"
+                    formControlName="clave" aria-describedby="passwordError">
+                  <label for="" class="form-label">Ingresa tu contraseña</label>
+                  <i class="ri-lock-line form-icon"></i>
+                  <div class="invalid-feedback">
+                    <strong>Dato Faltante</strong> - La contraseña es obligatoria.
+                  </div>
+                </div>
+                <div class="text-danger"
+                  *ngIf="subRegisterForm.get('clave')?.hasError('pattern') && subRegisterForm.get('clave')?.touched">
+                  <strong>Dato Erróneo</strong>
+                  <li>Al menos 8 caracteres de longitud.</li>
+                  <li>Al menos una letra (mayúscula o minúscula).</li>
+                  <li>Al menos un número.</li>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label style="color: var(--alumni-color)">Subir Foto de perfil</label>
+                <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                  <div class="card-header">
+                    <!-- Muestra la visa previa dentro del primer seleccionador de archivos -->
+                    <div class="preview-img" *ngIf="previsualizacion">
+                      <div class="image-container text-center mt-3">
+                        <!-- Ajusté el estilo del contenedor para centrar y hacer la imagen más grande -->
+                        <img id="preview" [src]="urlPhoto" alt=""
+                          style="width: 250px; height: 250px; object-fit: cover;" />
+                      </div>
+                      <div>
+                        <button class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
+                          type="button" (click)="clearImage()">
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body collapse show" id="collapse8">
+                    <!-- Moví el input type="file" aquí -->
+                    <input id="file" type="file" class="dropify" data-show-remove="false"
+                      (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" />
+                  </div>
+                </div>
+                <!-- Mostrar mensaje de error para el campo inputFoto -->
+                <!-- Botón para subir la foto de perfil -->
+                <div class="text-danger" *ngIf="!previsualizacion">
+                  La foto es obligatoria.
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-primary prevBtn">Anterior</button>
+                <button class="btn btn-primary nextBtn ms-2" [disabled]="!subRegisterForm.valid">Siguiente</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Third Section Bussinessman-->
+          <div class="needs-validation" *ngIf="roleName === 'EMPRESARIO'">
+            <div>
+              <form class="" [formGroup]="formCase1">
+                <!-- Conditional Section -->
+                <div class="row setup-content" id="step-3-businessMan">
+                  <div class="d-flex">
+                    <div class="flex-grow-1">
+                      <div class="form-group mr-3 has-validation">
+                        <input name="descripcion" type="text" class="form-input" required placeholder=" "
+                          formControlName="descripcion">
+                        <label for="descripcion" class="form-label">Ingrese una Descripción</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                        <div class="invalid-feedback">
+                          <strong>Dato Faltante</strong> - La descripción es obligatoria.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mx-2 flex-grow-1">
+                      <div class="form-group has-validation">
+                        <input type="text" class="form-input" required placeholder=" " formControlName="puesto"
+                          id="puesto">
+                        <label for="puesto" class="form-label">¿Cuál es su puesto en la Empresa?</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                        <div class="invalid-feedback">
+                          <strong>Dato Faltante</strong> - El puesto es obligatoria.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex">
+                    <div class="flex-grow-1">
+                      <div class="form-group mr-3 has-validation">
+                        <input type="text" class="form-input" required placeholder=" " formControlName="email"
+                          id="email">
+                        <label for="email" class="form-label">Ingrese su Email</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                        <div class="invalid-feedback">
+                          <strong>Dato Faltante</strong> - El email es obligatorio.
+                        </div>
+                      </div>
+                      <div class="text-danger"
+                        *ngIf="formCase1.get('email')?.hasError('email') && formCase1.get('email')?.touched">
+                        <strong>Dato Erróneo</strong> - Email no válido.
+                      </div>
+                    </div>
+
+                    <div class="mx-2 flex-grow-1">
+                      <div class="form-group has-validation">
+                        <input type="number" max="100" class="form-input" required placeholder=" "
+                          formControlName="anios" id="anios">
+                        <label for="anios" class="form-label">Años</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                        <div class="invalid-feedback">
+                          <strong>Dato Faltante</strong> - Los años son obligatorios.
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
+                    <button class="btn btn-primary nextBtn  ms-2" [disabled]="!formCase1.valid">Siguiente</button>
+                  </div>
+                </div>
+              </form>
+
+              <div>
+                <form class="needs-validation" [formGroup]="formSubCase1">
+                  <div class="row setup-content" id="step-4-company">
+                    <div class="d-flex">
+                      <div class="flex-grow-1">
+                        <div class="form-group mr-3 has-validation">
+                          <input name="ruc" type="text" class="form-input" required placeholder=" "
+                            formControlName="ruc">
+                          <label for="ruc" class="form-label">Ingrese El RUC</label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - El RUC es obligatorio.
+                          </div>
+                        </div>
+
+                        <div class="text-danger"
+                          *ngIf="formSubCase1.get('ruc')?.hasError('pattern') && formSubCase1.get('ruc')?.touched">
+                          <strong>Dato Erróneo</strong> - Solo números y 13 caracteres.
+                        </div>
+                      </div>
+
+                      <div class="mx-2 flex-grow-1">
+                        <div class="form-group has-validation">
+                          <input type="text" class="form-input" required placeholder=" " formControlName="nombre"
+                            id="nombre">
+                          <label for="nombre" class="form-label">Ingrese El Nombre de su Empresa</label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - El nombre de la empresa es obligatorio.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex">
+                      <div class="mx-2 flex-grow-1">
+                        <div class="form-group mr-3 has-validation">
+                          <select class="form-input" required placeholder=" " formControlName="ciudad" id="ciudad">
+                            <option *ngFor="let city of ciudadesList" [ngValue]="city">{{city.nombre}}</option>
+                          </select>
+                          <label for="ciudad" class="form-label">Seleccione una Ciudad</label>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - La ciudad es obligatoria.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mx-2 flex-grow-1">
+                        <div class="form-group mr-3 has-validation">
+                          <select class="form-input" required placeholder=" " formControlName="sectorEmpresarial"
+                            id="sectorEmpresarial">
+                            <option *ngFor="let sector of businessSectorsList" [ngValue]="sector">{{sector.nombre}}
+                            </option>
+                          </select>
+                          <label for="sectorEmpresarial" class="form-label">Seleccione un Sector Empresarial</label>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - El sector empresarial es obligatorio.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex">
+                      <div class="flex-grow-1">
+                        <div class="form-group mr-3 has-validation">
+                          <input name="tipoEmpresa" type="text" class="form-input" required placeholder=" "
+                            formControlName="tipoEmpresa">
+                          <label for="tipoEmpresa" class="form-label">Ingrese El tipo de Empresa</label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - El tipo de empresa es obligatorio.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mx-2 flex-grow-1">
+                        <div class="form-group has-validation">
+                          <input type="text" class="form-input" required placeholder=" " formControlName="razonSocial"
+                            id="razonSocial">
+                          <label for="razonSocial" class="form-label">Ingrese la Razón Social de la Empresa</label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - La razón social es obligatoria.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex">
+                      <div class="flex-grow-1">
+                        <div class="form-group mr-3 has-validation">
+                          <input name="area" type="text" class="form-input" required placeholder=" "
+                            formControlName="area">
+                          <label for="area" class="form-label">Ingrese El Área </label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - El área es obligatoria.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mx-2 flex-grow-1">
+                        <div class="form-group has-validation">
+                          <input type="text" class="form-input" required placeholder=" " formControlName="ubicacion"
+                            id="ubicacion">
+                          <label for="ubicacion" class="form-label">¿Dónde se ubica su Empresa?</label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                          <div class="invalid-feedback">
+                            <strong>Dato Faltante</strong> - La ubicación es obligatoria.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex">
+                      <div class="flex-grow-1">
+                        <div class="form-group mr-3">
+                          <input name="area" type="text" class="form-input" placeholder=" "
+                            formControlName="sitioWeb">
+                          <label for="area" class="form-label">¿Tiene un Sitio Web?</label>
+                          <i class="ri-user-smile-line form-icon"></i>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
+                      <button class="btn btn-primary nextBtn  ms-2" (click)="register()"
+                        [disabled]="!formSubCase1.valid">Registrarse</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
 
+          <div *ngIf="roleName === 'GRADUADO'">
+            <form [formGroup]="formCase2">
+              <div class="row setup-content" id="step-3-graduate">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <div class="form-group mr-3 has-validation">
+                      <input name="emailPersonal" type="email" class="form-input" required placeholder=" "
+                        formControlName="emailPersonal">
+                      <label for="emailPersonal" class="form-label">Ingrese su Email Personal</label>
+                      <i class="ri-user-smile-line form-icon"></i>
+                    </div>
+                    <div class="text-danger"
+                      *ngIf="formCase2.get('emailPersonal')?.hasError('email') && formCase2.get('emailPersonal')?.touched">
+                      <strong>Dato Erróneo</strong> - Email no válido.
+                    </div>
+                  </div>
+                  <div class="mx-2 flex-grow-1">
+                    <div class="form-group mr-3 has-validation">
+                      <select class="form-input" required name="ciudad" id="ciudad" formControlName="ciudad">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let ciudad of ciudadesList" value="{{ciudad.nombre}}">{{ciudad.nombre}}</option>
+                      </select>
+                      <label for="ciudad" class="form-label">Seleccione una ciudad</label>
+                      <i class="ri-user-smile-line form-icon"></i>
+                    </div>
+                  </div>
+                </div>
 
-          <button type="submit" class="btn btn-primary w-100">Registrar</button>
-        </form>
+                <div class="d-flex">
+                  <div class="mx-2 flex-grow-1">
+                    <div class="form-group mr-3 has-validation">
+                      <select class="form-input" required id="estadoCivil" formControlName="estadoCivil">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a">Casado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                      </select>
+                      <label for="estadoCivil" class="form-label">Seleccione su estado civil</label>
+                      <i class="ri-user-smile-line form-icon"></i>
+                    </div>
+                    <div class="text-danger mb-4"
+                      *ngIf="(isSubmit && formCase2.get('estadoCivil')?.invalid) || formCase2.get('estadoCivil')?.hasError('required') && formCase2.get('estadoCivil')?.touched">
+                      El estado civil es obligatorio.
+                    </div>
+                  </div>
+
+                  <div class="mx-1 flex-grow-1">
+                    <div class="form-group has-validation">
+                      <input class="form-input" required type="date" formControlName="anioGraduacion" min="2000-01-01"
+                        id="anioGraduacion">
+                      <label for="anioGraduacion" style="color: var(--alumni-color)">Fecha de Graduación</label>
+                    </div>
+
+                    <div class="text-danger mb-4"
+                      *ngIf="formCase2.get('anioGraduacion')?.hasError('required') && formCase2.get('anioGraduacion')?.touched">
+                      La fecha de graduación es obligatoria.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
+                  <button class="btn btn-primary nextBtn  ms-2" (click)="register()"
+                    [disabled]="!formCase2.valid">Registrarse</button>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
 
         <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
           <p class="d-inline-block mb-0">¿Ya tienes una cuenta?</p> <a href=""

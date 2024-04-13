@@ -47,7 +47,7 @@ export class PerfilUsuarioComponent implements OnInit {
     const userIdStorage = localStorage.getItem('name');
     if (userIdStorage !== null) {
       this.userService.getUserByUsername(userIdStorage).subscribe(data => {
-        this.photoURL = data.url_imagen;
+        this.photoURL = data.urlImagen;
       });
     }
   }
@@ -55,16 +55,6 @@ export class PerfilUsuarioComponent implements OnInit {
   seleccionarAficionAleatoria(): void {
     const indiceAleatorio = Math.floor(Math.random() * this.aficiones.length);
     this.aficionSeleccionada = this.aficiones[indiceAleatorio];
-  }
-
-  contactarPorWhatsapp(): void {
-    const numeroTelefono = this.person.telefono;
-
-    const mensaje = "Hola, estoy interesado en contactarte.";
-
-    const enlaceWhatsapp = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
-
-    window.open(enlaceWhatsapp, "_blank");
   }
 
   loadDATAJson() {

@@ -15,3 +15,9 @@ export enum EstadoOfertaLaboral {
     CANCELADA,
     REACTIVADA
 }
+
+export enum AuditActionType {
+    INSERT,
+    UPDATE,
+    DELETE
+}

@@ -14,6 +14,8 @@ import { Ciudad } from '../../data/model/ciudad';
 import { PeriodoCarreraComponent } from './periodo-carrera/periodo-carrera.component';
 import { CarreraComponent } from './carrera/carrera.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
+import { EmpresasComponent } from './empresas/empresas.component';
+import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -21,18 +23,20 @@ const routes: Routes = [
     { path: 'perfil-admin', component: PerfilUsuarioComponent },
     { path: 'sector-empresarial', component: SectorEmpComponent },
     { path: 'reportes', component: GraficasComponent },
-    { path: 'sector-empresarial', component: SectorEmpComponent},
-    { path: 'reportes', component: GraficasComponent},
-    { path: 'provincia', component: ProvinciaComponent},
-    { path: 'carrera', component: CarreraComponent},
-    { path: 'ciudad', component: Ciudad},
-    { path: 'periodo', component: PeriodoCarreraComponent},
+    { path: 'sector-empresarial', component: SectorEmpComponent },
+    { path: 'reportes', component: GraficasComponent },
+    { path: 'provincia', component: ProvinciaComponent },
+    { path: 'carrera', component: CarreraComponent },
+    { path: 'ciudad', component: Ciudad },
+    { path: 'periodo', component: PeriodoCarreraComponent },
     { path: 'usuarios-list', component: UsuariosListsComponent },
     { path: 'usuarios-form', component: UsuariosFormComponent },
     { path: 'documentos', component: DocumentosComponent },
     { path: 'empresa-document', component: EmpresaReportComponent },
     { path: 'update-perfil', component: PerfilFormComponent },
     { path: 'encuestas', component: EncuestasComponent },
+    { path: 'empresas', component: EmpresasComponent },
+    { path: 'ofertas-laborales', component: OfertasLaboralesComponent }
 ];
 
 @NgModule({

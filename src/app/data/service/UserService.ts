@@ -59,8 +59,17 @@ export class UserService {
     return this.http.put<any>(`${this.apiUrl}/usuarios/${id}`, usuario);
   }
 
+  updateSomeDataUser(id: number, usuario: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/usuarios/some-data/${id}`, usuario);
+  }
+
   updateUserPhoto(id: number, route: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/usuarios/photo/${id}/${route}`, null);
+  }
+
+  updateState(id: number, state: boolean): Observable<any> {
+    const params = { state: state };
+    return this.http.put<any>(`${this.apiUrl}/usuarios/state-update/${id}`, null, { params });
   }
 
   getUserByUsername(username: string): Observable<any> {

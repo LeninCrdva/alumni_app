@@ -4,7 +4,7 @@ export class GraduadoDTO {
     'ciudad': string;
     'anioGraduacion': Date;
     'emailPersonal': string;
-    'estadocivil': string;
+    'estadoCivil': string;
     'rutaPdf': string;
     'urlPdf': string;
 }

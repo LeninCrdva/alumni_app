@@ -21,6 +21,9 @@ import { BarChartComponent } from './reports/visual_reports/graficas/bar-chart/b
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 import { PieChart2Component } from './reports/visual_reports/graficas/pie-chart2/pie-chart2.component';
+import { EmpresasComponent } from './empresas/empresas.component';
+import { OfertasLaboralesComponent } from './ofertas-laborales/ofertas-laborales.component';
+import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -38,13 +41,16 @@ import { PieChart2Component } from './reports/visual_reports/graficas/pie-chart2
     BarChartComponent,
     PerfilFormComponent,
     EncuestasComponent,
-    PieChart2Component
+    PieChart2Component,
+    EmpresasComponent,
+    OfertasLaboralesComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    DataTablesModule,
     NgApexchartsModule,
     NgMultiSelectDropDownModule.forRoot()
   ]

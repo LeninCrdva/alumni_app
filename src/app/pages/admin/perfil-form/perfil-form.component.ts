@@ -27,16 +27,16 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2, private el: ElementRef,
     private userService: UserService,
-    private formBuilder: FormBuilder,
+    formBuilder: FormBuilder,
     private personaService: PersonaService,
     private adminService: AdministradorService,
     private assetService: AssetService) {
 
     this.updateAdminDataForm = formBuilder.group({
-      primer_nombre: ['', Validators.required],
-      segundo_nombre: ['', Validators.required],
-      apellido_paterno: ['', Validators.required],
-      apellido_materno: ['', Validators.required],
+      primerNombre: ['', Validators.required],
+      segundoNombre: ['', Validators.required],
+      apellidoPaterno: ['', Validators.required],
+      apellidoMaterno: ['', Validators.required],
       cedula: ['', Validators.required],
       telefono: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
@@ -70,10 +70,10 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
 
   patchAdminData() {
     this.updateAdminDataForm.patchValue({
-      primer_nombre: this.adminInfo.persona.primer_nombre,
-      segundo_nombre: this.adminInfo.persona.segundo_nombre,
-      apellido_paterno: this.adminInfo.persona.apellido_paterno,
-      apellido_materno: this.adminInfo.persona.apellido_materno,
+      primer_nombre: this.adminInfo.persona.primerNombre,
+      segundo_nombre: this.adminInfo.persona.segundoNombre,
+      apellido_paterno: this.adminInfo.persona.apellidoPaterno,
+      apellido_materno: this.adminInfo.persona.apellidoMaterno,
       cedula: this.adminInfo.persona.cedula,
       telefono: this.adminInfo.persona.telefono,
       fechaNacimiento: this.adminInfo.persona.fechaNacimiento,
@@ -84,6 +84,8 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
   updateAdminData() {
     if (this.updateAdminDataForm.valid) {
       this.person = this.updateAdminDataForm.value;
+      console.log(this.updateAdminDataForm.value);
+      console.log(this.person);
       this.pureInfo.email = this.updateAdminDataForm.value.email;
       const id = this.adminInfo.persona.id;
       this.personaService.updatePerson(id, this.person).subscribe(() => {
@@ -106,13 +108,12 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
   }
 
   updatePhoto() {
-    const userIdStorage: number = parseInt(localStorage.getItem('userId') || '0');
+    const userIdStorage: number = parseInt(localStorage.getItem('user_id') || '0');
     this.userService.getUserDTOById(userIdStorage).subscribe((data) => {
       data.rutaImagen = this.urlPhoto;
       this.userService.updateUserPhoto(userIdStorage, data.rutaImagen).subscribe(() => {
         this.getAdminInfo();
       });
-
     });
   }
 

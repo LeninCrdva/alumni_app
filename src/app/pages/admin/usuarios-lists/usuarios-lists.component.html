@@ -1,8 +1,8 @@
 <section class="page-title bg-overlay-black parallax"
-  style="background-image: url(../../../../assets/imgs/headers/Usuarios.jpg);">
+  style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
   <div class="row">
     <div class="col-lg-12">
-      <h1>Gestión de Usuarios</h1>
+      <h1>Usuarios</h1>
     </div>
   </div>
 </section>
@@ -11,175 +11,386 @@
   <div class="card-body collapse show" id="collapse1">
     <!-- Modal -->
     <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-      aria-hidden="true">
+      aria-hidden="true" data-bs-backdrop="static">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header text-white bg-primary">
-            <h5 [innerText]="editMode ? 'Modificar Usuario' : 'Crear nuevo Usuario'"></h5>
+            <h5 [innerText]="titleHandler()"></h5>
           </div>
-
-
-
+          <!-- Modal Body -->
           <div class="modal-body">
-            <form [formGroup]="registerNewUserForm">
-              <div class="form-layout form-layout-1">
-                <div class="row mg-b-25">
-                  <div class="col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="form-control-label active">Primer Nombre: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Marco" formControlName="primerNombre">
-                      <div class="text-danger"
+            <div class="content-slide">
+              <form id="basicData" [formGroup]="registerNewUserForm">
+                <div class="row setup-content" id="step-1">
+                  <div class="d-flex">
+                    <div class="flex-grow-1">
+                      <div class="form-group mr-3">
+                        <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
+                          id="InputNombreM1">
+                        <label for="InputNombreM1" class="form-label">Ingrese su Primer Nombre</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                      </div>
+
+                      <div class="text-danger mb-4"
                         *ngIf="registerNewUserForm.get('primerNombre')?.hasError('required') && registerNewUserForm.get('primerNombre')?.touched">
                         El primer nombre es obligatorio.
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Segundo Nombre: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Aurelio" formControlName="segundoNombre">
                       <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('primerNombre')?.hasError('pattern') && registerNewUserForm.get('primerNombre')?.touched">
+                        Solo letras y mínimo 2 caracteres.
+                      </div>
+                    </div>
+
+                    <div class="mx-2 flex-grow-1">
+                      <div class="form-group">
+                        <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre"
+                          id="InputNombreP">
+                        <label for="InputNombreP" class="form-label">Ingrese su Segundo Nombre</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                      </div>
+
+                      <div class="text-danger mb-4"
                         *ngIf="registerNewUserForm.get('segundoNombre')?.hasError('required') && registerNewUserForm.get('segundoNombre')?.touched">
                         El segundo nombre es obligatorio.
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Primer Apellido: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Pérez" formControlName="primerApellido">
                       <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('segundoNombre')?.hasError('pattern') && registerNewUserForm.get('segundoNombre')?.touched">
+                        Solo letras y mínimo 2 caracteres.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex">
+                    <div class="flex-grow-1">
+                      <div class="form-group mr-3">
+                        <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
+                          id="InputApellidoM">
+                        <label for="" class="form-label">Ingrese su Primer Apellido</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                      </div>
+                      <div class="text-danger mb-4"
                         *ngIf="registerNewUserForm.get('primerApellido')?.hasError('required') && registerNewUserForm.get('primerApellido')?.touched">
                         El primer apellido es obligatorio.
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Segundo Apellido: <span
-                          class="tx-danger">*</span></label>
-                      <input type="text" placeholder="Gonzales" formControlName="segundoApellido">
                       <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('primerApellido')?.hasError('pattern') && registerNewUserForm.get('primerApellido')?.touched">
+                        Solo letras y mínimo 2 caracteres.
+                      </div>
+                    </div>
+
+                    <div class="mx-2 flex-grow-1">
+                      <div class="form-group">
+                        <input type="text" class="form-input" placeholder=" " formControlName="segundoApellido"
+                          id="InputApellidoP">
+                        <label for="" class="form-label">Ingrese su Segundo Apellido</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                      </div>
+
+                      <div class="text-danger mb-4"
                         *ngIf="registerNewUserForm.get('segundoApellido')?.hasError('required') && registerNewUserForm.get('segundoApellido')?.touched">
                         El segundo apellido es obligatorio.
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Cédula: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="01054495932" formControlName="cedula">
                       <div class="text-danger"
-                        *ngIf="registerNewUserForm.get('cedula')?.hasError('required') && registerNewUserForm.get('cedula')?.touched">
-                        La cédula es obligatoria.
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="form-control-label active">Fecha de Graduación: <span
-                          class="tx-danger">*</span></label>
-                      <input type="date" class="form-control" formControlName="año_graduacion">
-                      <div class="text-danger"
-                        *ngIf="registerNewUserForm.get('año_graduacion')?.hasError('required') && registerNewUserForm.get('año_graduacion')?.touched">
-                        Seleccione la fecha de graduación del usuario.
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Correo Personal: <span class="tx-danger">*</span></label>
-                      <input type="email" placeholder="personal@gmail.com" formControlName="email_personal">
-                      <div class="text-danger"
-                        *ngIf="registerNewUserForm.get('email_personal')?.hasError('required') && registerNewUserForm.get('email_personal')?.touched">
-                        El correo personal del usuario es obligatorio.
+                        *ngIf="registerNewUserForm.get('segundoApellido')?.hasError('pattern') && registerNewUserForm.get('segundoApellido')?.touched">
+                        Solo letras y mínimo 2 caracteres.
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-lg-6 mb-3">
-                    <div class="form-group">
-                      <label class="form-control-label active">Teléfono: <span class="tx-danger">*</span></label>
-                      <input type="text" placeholder="01234567289" formControlName="telefono">
-                      <div class="text-danger"
-                        *ngIf="registerNewUserForm.get('telefono')?.hasError('required') && registerNewUserForm.get('telefono')?.touched">
-                        El número de teléfono es obligatorio.
+                  <div class="mb-2">
+                    <div class="form-group flex-grow-1 ">
+                      <input type="text" class="form-input" placeholder=" " formControlName="cedula" id="InputCedula">
+                      <label for="" class="form-label">Ingrese su Cédula</label>
+                      <i class="fa-solid fa-id-card form-icon"></i>
+                    </div>
+
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('cedula')?.hasError('required') && registerNewUserForm.get('cedula')?.touched">
+                      La cédula es obligatoria.
+                    </div>
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('cedula')?.hasError('pattern') && registerNewUserForm.get('cedula')?.touched">
+                      La cédula debe tener 10 dígitos.
+                    </div>
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('cedula')?.hasError('duplicated') && registerNewUserForm.get('cedula')?.touched">
+                      La cédula ya se encuentra registrada.
+                    </div>
+                  </div>
+
+                  <div class="mb-2">
+                    <label style="color: var(--alumni-color); margin-bottom: 0.8rem;">Sexo: </label>
+                    <div style="display: flex; flex-direction: row;" class="form-group flex-grow-1 mr-3">
+                      <div class="form-check form-check-inline" style="display: block;">
+                        <input class="form-check-input" type="radio" id="radioMasculino" name="sexo"
+                          (change)="onSexoChange($event, 'MASCULINO')" value="MASCULINO">
+                        <label class="form-check-label" for="radioMasculino" style="order: 1;">
+                          Masculino
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline" style="display: block;">
+                        <input class="form-check-input" type="radio" id="radioFemenino" name="sexo"
+                          (change)="onSexoChange($event, 'FEMENINO')" value="FEMENINO">
+                        <label class="form-check-label" for="radioFemenino" style="order: 1;">
+                          Femenino
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline" style="display: block;">
+                        <input class="form-check-input" type="radio" id="radioOtro" name="sexo"
+                          (change)="onSexoChange($event, 'OTRO')" value="OTRO">
+                        <label class="form-check-label" for="radioOtro" style="order: 1;">
+                          Otro
+                        </label>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Fecha de Nacimiento: <span
-                          class="tx-danger">*</span></label>
-                      <input type="date" class="form-control" formControlName="fechaNacimiento">
-                      <div class="text-danger"
-                        *ngIf="registerNewUserForm.get('fechaNacimiento')?.hasError('required') && registerNewUserForm.get('fechaNacimiento')?.touched">
-                        Seleccione una fecha de nacimiento.
-                      </div>
+                    <div class="text-danger" *ngIf="registerNewUserForm.get('sexo')?.errors?.['required']">
+                      Por favor, seleccione un sexo.
                     </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Nombre de usuario: <span
-                          class="tx-danger">*</span></label>
-                      <input type="text" placeholder="User1" formControlName="nombreUsuario">
+                  </div>
+
+                  <div class="mb-4">
+                    <div class="form-group flex-grow-1 mr-3">
+                      <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+                      <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
+                        class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                    </div>
+
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('fechaNacimiento')?.hasError('required') && registerNewUserForm.get('fechaNacimiento')?.touched">
+                      La fecha de nacimiento es obligatoria.
+                    </div>
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('fechaNacimiento')?.hasError('fechaNacimientoInvalida') && registerNewUserForm.get('fechaNacimiento')?.touched">
+                      La fecha de nacimiento debe ser posterior a 1950-01-01 e inferior a 2005-01-01.
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <div class="form-group flex-grow-1 mr-3">
+                      <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                        id="InputTelefono">
+                      <label for="" class="form-label">Ingrese su Número de Télefono</label>
+                      <i class="fa-solid fa-phone-volume form-icon"></i>
+                    </div>
+
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('telefono')?.hasError('required') && registerNewUserForm.get('telefono')?.touched">
+                      El número de teléfono es obligatorio.
+                    </div>
+                    <div class="text-danger"
+                      *ngIf="registerNewUserForm.get('telefono')?.hasError('pattern') && registerNewUserForm.get('telefono')?.touched">
+                      El número de teléfono debe tener 10 dígitos.
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="row setup-content" id="step-2">
+                    <div class="mb-4">
+                      <div class="form-group">
+                        <input type="email" class="form-input" placeholder=" " id="InputNombreUsuario"
+                          formControlName="nombreUsuario" aria-describedby="usernameError">
+                        <label for="" class="form-label">Ingresa tu nombre de usuario</label>
+                        <i class="ri-at-line form-icon"></i>
+                      </div>
+
                       <div class="text-danger"
                         *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('required') && registerNewUserForm.get('nombreUsuario')?.touched">
-                        Ingrese un nombre de usuario.
+                        El nombre de usuario es obligatorio.
+                      </div>
+                      <!-- <div class="text-danger">
+                        {{ registerNewUserForm.get('nombreUsuario')?.hasError('pattern') ? 'El nombre de usuario debe
+                        tener al menos 6 caracteres.' : '' }}
+                      </div>
+                      <div class="text-danger">
+                        {{ registerNewUserForm.get('nombreUsuario')?.hasError('duplicated') ? 'El nombre de usuario ya
+                        se encuentra registrado' : '' && registerNewUserForm.get('nombreUsuario')?.touched }}
+                      </div> -->
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('pattern') && registerNewUserForm.get('nombreUsuario')?.touched">
+                        Solo letras y números y de 2 a 10 caracteres.
+                      </div>
+                      <div class="text-danger"
+                        *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('duplicated') && registerNewUserForm.get('nombreUsuario')?.touched">
+                        El nombre de usuario ya existe.
                       </div>
                     </div>
-                    <div *ngIf="editMode == false" class="form-group">
-                      <label class="form-control-label active">Contraseña: <span class="tx-danger">*</span></label>
-                      <input type="password" class="form-control" formControlName="clave">
+
+                    <div class="mb-4" *ngIf="!editMode">
+                      <div class="form-group">
+                        <input type="password" class="form-input" placeholder=" " id="InputPassword1"
+                          formControlName="clave" aria-describedby="passwordError">
+                        <label for="" class="form-label">Ingresa tu contraseña</label>
+                        <i class="ri-lock-line form-icon"></i>
+                      </div>
+
                       <div class="text-danger"
                         *ngIf="registerNewUserForm.get('clave')?.hasError('required') && registerNewUserForm.get('clave')?.touched">
-                        Ingrese una contraseña.
+                        La contraseña es obligatoria.
                       </div>
-                    </div>
-                    <div class="form-group" *ngIf="!editMode">
-                      <label class="form-control-label active">Foto: <span class="tx-danger">*</span></label>
-                      <input type="file" class="form-control" (change)="capturarFile($event)"
-                        accept=".png, .jpeg, .jpg">
-                    </div>
-                    <div class="form-group">
-                      <label class="form-control-label active">Rol: <span class="tx-danger">*</span></label>
-                      <select class="form-control" formControlName="nombreDelRol">
-                        <option *ngFor="let role of roleList" value="{{role.nombre}}">{{role.nombre}}</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="form-control-label active">Ciudad: <span class="tx-danger">*</span></label>
-                      <select class="form-control" formControlName="ciudadNombre">
-                        <option *ngFor="let city of citiesList" value="{{city.nombre}}">{{city.nombre}}</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="form-control-label active">Estado civil: <span class="tx-danger">*</span></label>
-                      <select class="form-control" formControlName="estadoCivil">
-                        <option value="CASADO">CASADO</option>
-                        <option value="SOLTERO">SOLTERO</option>
-                        <option value="DIVORCIADO">DIVORCIADO</option>
-                        <option value="OTRO">OTRO</option>
-                      </select>
                       <div class="text-danger"
-                        *ngIf="registerNewUserForm.get('estadoCivil')?.hasError('required') && registerNewUserForm.get('estadoCivil')?.touched">
-                        Seleccione el estado civil del usuario.
+                        *ngIf="registerNewUserForm.get('clave')?.hasError('pattern') && registerNewUserForm.get('clave')?.touched">
+                        La contraseña debe cumplir con:
+                        <li>Al menos 8 caracteres de longitud.</li>
+                        <li>Al menos una letra (mayúscula o minúscula).</li>
+                        <li>Al menos un número.</li>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </form>
 
-              <div class="preview-img" *ngIf="previsualizacion">
-                <button class="clear-image" type="button" (click)="clearImage()"
-                  class="form-control bg-dark-x border-0">
-                  Cancelar
-                </button>
-                <div class="image-container">
-                  <img [src]="previsualizacion" alt="" width="100" height="100" />
+              <div *ngIf="roleName === 'EMPRESARIO'">
+                <div>
+                  <form [formGroup]="formCase1">
+                    <!-- Conditional Section -->
+                    <div class="row setup-content" id="step-3-businessMan">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <div class="form-group mr-3">
+                            <input name="descripcion" type="text" class="form-input" placeholder=" "
+                              formControlName="descripcion">
+                            <label for="descripcion" class="form-label">Ingrese una Descripción</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase1.get('descripcion')?.hasError('required') && formCase1.get('descripcion')?.touched">
+                            La descripción es obligatoria.
+                          </div>
+                        </div>
+
+                        <div class="mx-2 flex-grow-1">
+                          <div class="form-group">
+                            <input type="text" class="form-input" placeholder=" " formControlName="puesto" id="puesto">
+                            <label for="puesto" class="form-label">¿Cuál es su puesto en la Empresa?</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase1.get('puesto')?.hasError('required') && formCase1.get('puesto')?.touched">
+                            El puesto es obligatorio.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <div class="form-group mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="email" id="email">
+                            <label for="email" class="form-label">Ingrese su Email</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+                          <div class="text-danger"
+                            *ngIf="formCase1.get('email')?.hasError('required') && formCase1.get('email')?.touched">
+                            El email es obligatorio.
+                          </div>
+                          <div class="text-danger"
+                            *ngIf="formCase1.get('email')?.hasError('email') && formCase1.get('email')?.touched">
+                            El email no es válido.
+                          </div>
+                        </div>
+
+                        <div class="mx-2 flex-grow-1">
+                          <div class="form-group">
+                            <input type="number" class="form-input" placeholder=" " formControlName="anios" id="anios">
+                            <label for="anios" class="form-label">Años</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase1.get('anios')?.hasError('required') && formCase1.get('anios')?.touched">
+                            Los años son obligatorios.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
 
-              <div class="wrapper-button" *ngIf="previsualizacion">
+              <div *ngIf="roleName === 'GRADUADO'">
+                <div>
+                  <form [formGroup]="formCase2">
+                    <div class="row setup-content" id="step-3-graduate">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <div class="form-group mr-3">
+                            <input name="emailPersonal" type="email" class="form-input" placeholder=" "
+                              formControlName="emailPersonal">
+                            <label for="emailPersonal" class="form-label">Ingrese su Email Personal</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase2.get('emailPersonal')?.hasError('required') && formCase2.get('emailPersonal')?.touched">
+                            El email personal es obligatorio.
+                          </div>
+                          <div class="text-danger"
+                            *ngIf="formCase2.get('emailPersonal')?.hasError('email') && formCase2.get('emailPersonal')?.touched">
+                            El email no es válido.
+                          </div>
+                        </div>
+                        <div class="mx-2 flex-grow-1">
+                          <div class="form-group mr-3">
+                            <select class="form-input" name="ciudad" id="ciudad" formControlName="ciudad">
+                              <option value="" disabled selected>Seleccionar</option>
+                              <option *ngFor="let ciudad of ciudadesList" value="{{ciudad.nombre}}">{{ciudad.nombre}}
+                              </option>
+                            </select>
+                            <label for="ciudad" class="form-label">Seleccione una ciudad</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase2.get('ciudad')?.hasError('required') && formCase2.get('ciudad')?.touched">
+                            La ciudad es obligatoria.
+                          </div>
+                        </div>
+                      </div>
 
+                      <div class="d-flex">
+                        <div class="mx-2 flex-grow-1">
+                          <div class="form-group mr-3">
+                            <select class="form-input" id="estadoCivil" formControlName="estadoCivil">
+                              <option value="" disabled selected>Seleccionar</option>
+                              <option value="Soltero/a">Soltero/a</option>
+                              <option value="Casado/a">Casado/a</option>
+                              <option value="Viudo/a">Viudo/a</option>
+                            </select>
+                            <label for="estadoCivil" class="form-label">Seleccione su estado civil</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                          </div>
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase2.get('estadoCivil')?.hasError('required') && formCase2.get('estadoCivil')?.touched">
+                            El estado civil es obligatorio.
+                          </div>
+                        </div>
+
+                        <div class="mx-1 flex-grow-1">
+                          <div class="form-group">
+                            <input class="form-input" type="date" formControlName="anioGraduacion" id="anioGraduacion">
+                            <label for="anioGraduacion" style="color: var(--alumni-color)">Fecha de Graduación</label>
+                          </div>
+
+                          <div class="text-danger mb-4"
+                            *ngIf="formCase2.get('anioGraduacion')?.hasError('required') && formCase2.get('anioGraduacion')?.touched">
+                            La fecha de graduación es obligatoria.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </form>
+            </div>
           </div>
+
           <div class="modal-footer">
-            <button (click)="!editMode ? register() : UpdateAllData()" type="submit" data-bs-toggle="modal"
+            <button (click)="!editMode ? register() : updateUserData()" type="submit"
               class="btn btn-oblong btn-primary">
               {{ editMode ? 'Actualizar' : 'Enviar Formulario' }}
             </button>
 
-
-            <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+            <button data-bs-dismiss="modal" (click)="closeModal()" id="close-button"
+              class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
           </div>
         </div>
       </div>
@@ -188,59 +399,123 @@
 
     <div class="col-md-12 col-lg-12">
       <div class="d-flex">
-        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-          class="btn btn-oblong btn-primary mg-b-10 mt-2" style="margin-right:10px; width: 17rem; height: 3rem;">
+        <button (click)="showSelectedOption()" class="btn btn-oblong btn-primary mg-b-10"
+          style="margin-right:10px; width: 17rem; height: 2.5rem;">
           Registrar Usuario
         </button>
+        <button id="open-modal-action" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+          [hidden]="true"></button>
+        <!-- <ng-multiselect-dropdown style="width: 20rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+          [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+          [data]="filterService.dropdownLists['filterTable']" [(ngModel)]="filterService.selectedItems['filterTable']"
+          (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll('filterTable')"
+          (onDeSelect)="filterService.onItemDeSelect($event)"
+          (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+        </ng-multiselect-dropdown> -->
 
-        <div class="input-group">
-          <input type="text" class="form-control me-2" id="searchInput" placeholder="Buscar..."
-            style="border-color: blue;" (input)="onSearch($event)">
-          <select class="form-control" id="selectInput">
-            <option value="1">Nombre</option>
-            <option value="2">Cedula</option>
-          </select>
-        </div>
       </div>
     </div>
 
-
     <div class="card-body pd-0 collapse show" id="collapse1">
       <div class="table-responsive">
-        <table class="table">
-          <thead class="table-light">
-            <tr>
-              <th>#</th>
-              <th>NOMBRE USUARIO</th>
-              <th>CÉDULA</th>
-              <th>ROL</th>
-              <th class="text-center w-100px">Acciones</th>
-              <th class="text-center w-100px">Activo</th>
-            </tr>
-          </thead>
+
+        <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
           <tbody>
-            <tr *ngFor="let usuarioDTO of usersList;">
-              <th scope="row">{{usuarioDTO?.id}}</th>
-              <td>{{usuarioDTO?.nombreUsuario}}</td>
-              <td>{{usuarioDTO?.cedula}}</td>
-              <td>{{usuarioDTO?.rol}}</td>
-
-              <td class="text-center table-actions d-flex justify-content-center">
-                <a (click)="catchUserDTOInContext(usuarioDTO)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                  class="table-action mg-r-10" href="#">
-                  <i class="fa-regular fa-pen-to-square"></i>
-                </a>
-              </td>
-
+            <tr *ngFor="let user of usersList;">
+              <th scope="row">{{ user.id }}</th>
+              <td>{{ user.nombreUsuario }}</td>
+              <td>{{ user.cedula }}</td>
+              <td>{{ user.rol }}</td>
               <td class="text-center justify-content-center">
                 <label class="switch">
-                  <input type="checkbox" [checked]="usuarioDTO.estado" (change)="toggleSwitch(usuarioDTO)">
+                  <input type="checkbox" [checked]="user.estado" (change)="toggleSwitch(user)">
                   <span class="slider round"></span>
                 </label>
+              </td>
+              <td class="text-center">
+                <a data-bs-toggle="modal" data-bs-target="#user_data_modal" class="table-action mg-r-10"
+                  (click)="showUserData(user.cedula, user.id)">
+                  <i class="fa-regular fa-eye"></i>
+                </a>
+                <a [attr.data-bs-toggle]="user.estado ? 'modal' : null"
+                  [attr.data-bs-target]="user.estado ? '#m_modal_4' : null" class="mg-r-10 ms-1 text-secondary"
+                  (click)="handleClick(user.cedula, user.id, user.estado, user.rol)">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="modal fade" id="user_data_modal" tabindex="-1" role="dialog" aria-labelledby="user_data_modal"
+    aria-hidden="true">
+
+    <div class="modal-dialog" role="document" data-bs-backdrop="static">
+
+      <div class="modal-content">
+        <div [class.bg-primary]="true" class="modal-header text-white">
+          <h5>Datos del Usuario</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-layout form-layout-1">
+            <div class="row mg-b-25">
+              <div class="col-lg-10 mx-auto">
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Nombres y Apellidos</h6>
+                        <p>
+                          {{person.primerNombre}}
+                          {{person.segundoNombre}}
+                          {{person.apellidoPaterno}}
+                          {{person.apellidoMaterno}}
+                        </p>
+                      </div>
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Cédula</h6>
+                        <p>{{person.cedula}}</p>
+                      </div>
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Teléfono</h6>
+                        <p>{{person.telefono}}</p>
+                      </div>
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Fecha de Nacimiento</h6>
+                        <p>{{person.fechaNacimiento}}</p>
+                      </div>
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Sexo</h6>
+                        <p>{{person.sexo}}</p>
+                      </div>
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Nombre de Usuario</h6>
+                        <p>{{userDTO.nombreUsuario}}</p>
+                      </div>
+                      <div class="form-group">
+                        <h6 class="form-control-label active">Rol</h6>
+                        <p>{{userDTO.rol}}</p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button data-bs-dismiss="modal" id="close-button"
+                  class="btn btn-oblong btn-primary btn-block">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

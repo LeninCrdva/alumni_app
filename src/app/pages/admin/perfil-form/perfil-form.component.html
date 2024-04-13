@@ -28,14 +28,14 @@
 
                     <div class="mb-4">
                         <div class="form-group mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="primer_nombre"
+                            <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
                                 id="InputNombreM1">
                             <label for="InputNombreM1" class="form-label">Ingresa tu primer Nombre</label>
                             <i class="ri-user-smile-line form-icon"></i>
                         </div>
 
                         <div class="text-danger mb-4"
-                            *ngIf="updateAdminDataForm.get('primer_nombre')?.hasError('required') && updateAdminDataForm.get('primer_nombre')?.touched">
+                            *ngIf="updateAdminDataForm.get('primerNombre')?.hasError('required') && updateAdminDataForm.get('primerNombre')?.touched">
                             El primer nombre es obligatorio.
                         </div>
                     </div>
@@ -43,14 +43,14 @@
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group">
-                                <input type="text" class="form-input" placeholder=" " formControlName="segundo_nombre"
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre"
                                     id="InputNombreP">
                                 <label for="InputNombreP" class="form-label">Ingresa tu segundo Nombre</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
 
                             <div class="text-danger mb-4"
-                                *ngIf="updateAdminDataForm.get('segundo_nombre')?.hasError('required') && updateAdminDataForm.get('segundo_nombre')?.touched">
+                                *ngIf="updateAdminDataForm.get('segundoNombre')?.hasError('required') && updateAdminDataForm.get('segundoNombre')?.touched">
                                 El segundo nombre es obligatorio.
                             </div>
                         </div>
@@ -59,13 +59,13 @@
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group mr-3">
-                                <input type="text" class="form-input" placeholder=" " formControlName="apellido_paterno"
+                                <input type="text" class="form-input" placeholder=" " formControlName="apellidoPaterno"
                                     id="InputApellidoM">
                                 <label for="" class="form-label">Ingresa tu primer Apellido</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
                             <div class="text-danger mb-4"
-                                *ngIf="updateAdminDataForm.get('apellido_paterno')?.hasError('required') && updateAdminDataForm.get('apellido_paterno')?.touched">
+                                *ngIf="updateAdminDataForm.get('apellidoPaterno')?.hasError('required') && updateAdminDataForm.get('apellidoPaterno')?.touched">
                                 El primer apellido es obligatorio.
                             </div>
                         </div>
@@ -74,14 +74,14 @@
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group">
-                                <input type="text" class="form-input" placeholder=" " formControlName="apellido_materno"
+                                <input type="text" class="form-input" placeholder=" " formControlName="apellidoMaterno"
                                     id="InputApellidoP">
                                 <label for="" class="form-label">Ingresa tu segundo Apellido</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
 
                             <div class="text-danger mb-4"
-                                *ngIf="updateAdminDataForm.get('apellido_materno')?.hasError('required') && updateAdminDataForm.get('apellido_materno')?.touched">
+                                *ngIf="updateAdminDataForm.get('apellidoMaterno')?.hasError('required') && updateAdminDataForm.get('apellidoMaterno')?.touched">
                                 El segundo apellido es obligatorio.
                             </div>
                         </div>
@@ -152,8 +152,8 @@
                                     <div class="preview-img">
 
                                         <div class="image-container text-center" style="margin-top: 3rem;"
-                                            *ngIf="adminInfo?.url_imagen">
-                                            <img [src]="adminInfo.url_imagen" alt=""
+                                            *ngIf="adminInfo?.urlImagen">
+                                            <img [src]="adminInfo.urlImagen" alt=""
                                                 style="width: 220px; height: 220px; object-fit: cover;" />
                                         </div>
                                     </div>

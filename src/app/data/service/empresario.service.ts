@@ -8,6 +8,7 @@ import { Empresario2 } from '../model/empresario';
 import { map } from 'rxjs/operators';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { EmpresarioDTO } from '../model/DTO/EmpresarioDTO';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +30,10 @@ export class EmpresarioService {
 
   getEmpresarioById(id: any): Observable<Empresario> {
     return this.http.get<Empresario>(`${this.urlEndPoint}/${id}`)
+  }
+
+  getBusinessManByUserId(id: any): Observable<EmpresarioDTO> {
+    return this.http.get<EmpresarioDTO>(`${this.urlEndPoint}/user-data/${id}`)
   }
   
   getEmpresarios2(): Observable<Empresario2[]> {
@@ -75,6 +80,11 @@ export class EmpresarioService {
   updateEmpresario(id: number, empresario: Empresario): Observable<Empresario> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Empresario>(url, empresario, { headers: this.httpHeaders });
+  }
+
+  updateEmpresarioDTO(id: number, empresarioDTO: EmpresarioDTO): Observable<EmpresarioDTO> {
+    const url = `${this.urlEndPoint}/${id}`;
+    return this.http.put<EmpresarioDTO>(url, empresarioDTO);
   }
 
   deleteEmpresario(id: number): Observable<Empresario> {
