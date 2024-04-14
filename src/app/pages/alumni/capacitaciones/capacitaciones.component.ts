@@ -169,16 +169,18 @@ export class CapacitacionesComponent {
       tipoCertificado: this.validateForm.value.tipoCertificado,
       numHoras: this.validateForm.value.numHoras,
       fechaInicio: this.validateForm.value.fechaInicio,
-      fechaFin: this.validateForm.value.fechaFin
+      fechaFin: this.validateForm.value.fechaFin,
+      cedula: this.obtenerCedula()
     };
   }
 
   createNewData() {
     this.alertService.mostrarAlertaCargando('Guardando...');
+   
     this.capacitacionesService.create(this.obtenerDatosFormulario()).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
-
+      
         this.loadData();
       },
       error => {
