@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Usuario } from '../model/usuario';
 import { UserDTO } from '../model/DTO/UserDTO';
+import { MAIN_ROUTE } from './MAIN_ROUTE';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = MAIN_ROUTE.API_ENDPOINT;
 
   urlCreateUsuario = this.apiUrl + '/usuarios';
 

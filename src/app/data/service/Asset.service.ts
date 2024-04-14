@@ -3,7 +3,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-const FILES_API = 'http://localhost:8080/assets/';
+import { MAIN_ROUTE } from './MAIN_ROUTE';
+const FILES_API = MAIN_ROUTE.API_ENDPOINT+'/assets/';
+
 @Injectable({
   providedIn: 'root'
 })

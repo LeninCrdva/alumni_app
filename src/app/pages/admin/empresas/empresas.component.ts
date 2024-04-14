@@ -26,7 +26,7 @@ export class EmpresasComponent implements OnInit {
     this.companyService.getEmpresas().subscribe(data => {
       this.companyList = data;
       this.filterCompanyList = data;
-      console.log(data)
+     // console.log(data)
     });
   }
 
@@ -47,7 +47,7 @@ export class EmpresasComponent implements OnInit {
   showCompanyDetails(id: any): void {
     this.companyService.getCompanyById(id).subscribe(data => {
       this.company = data;
-      console.log(this.company);
+     // console.log(this.company);
     });
   }
 
