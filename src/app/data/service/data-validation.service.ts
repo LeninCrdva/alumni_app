@@ -13,7 +13,7 @@ export class DataValidationService {
   constructor(private http: HttpClient) { }
 
   validateGraduateEmail(email: string): Observable<boolean> {
-    const url = `${this.urlEndPoint}/graduados/${email}`;
+    const url = `${this.urlEndPoint}/graduados/exists/email/${email}`;
     return this.http.get<boolean>(url);
   }
 
