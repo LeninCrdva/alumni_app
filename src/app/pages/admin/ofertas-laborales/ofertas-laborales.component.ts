@@ -8,6 +8,7 @@ import { DataTablesService } from '../../../data/DataTables.service';
 import { AlertsService } from '../../../data/Alerts.service';
 import { ofertaLaboral } from '../../../data/model/ofertaLaboral';
 import { ofertaLaboralDTO } from '../../../data/model/DTO/ofertaLaboralDTO';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -21,7 +22,7 @@ export class OfertasLaboralesComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   initializeTable: boolean = true;
   dtoptions: DataTables.Settings = {};
-
+  stateForm: FormGroup;
   ofertasLaboralesList: ofertaLaboralDTO[] = [];
   ofertaLaboralDTO: ofertaLaboralDTO = new ofertaLaboralDTO();
 
@@ -33,8 +34,14 @@ export class OfertasLaboralesComponent implements OnInit {
     private ofertaService: OfertalaboralService,
     private alertService: AlertsService,
     public dtService: DataTablesService,
-    public filterService: FiltersService
-  ) { }
+    public filterService: FiltersService,
+    formBuilder: FormBuilder,
+  ) {
+
+    this.stateForm = formBuilder.group({
+      state: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -45,10 +52,6 @@ export class OfertasLaboralesComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-  }
-
-  ngAfterViewInit(): void {
-   
   }
 
   loadData() {
@@ -67,9 +70,44 @@ export class OfertasLaboralesComponent implements OnInit {
     );
   }
 
+  updateStateOfertaLaboral(id: any) {
+    this.ofertaService.getOfertaLaboralById(id).subscribe(() => {
+      let estado = this.stateForm.get('state')?.value;
+      if (estado) {
+        this.showAlertOption(id, estado);
+      }
+    });
+  }
+
+  showAlertOption(id: any, state: string) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas cambiar el estado de la oferta laboral al estado: ' + state + '?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ofertaService.cancelarOReactivarOfertaLaboral(id, state).subscribe(() => {
+          this.loadData();
+        });
+      }
+    });
+  }
+
   viewOfertaLaboral(id: any) {
     this.ofertaService.getOfertaLaboralByIdToDTO(id).subscribe((result) => {
       this.ofertaLaboralDTO = result;
+      this.patchStateForm(this.ofertaLaboralDTO.estado);
+    });
+  }
+
+  patchStateForm(estado: string) {
+    this.stateForm.patchValue({
+      state: estado
     });
   }
 

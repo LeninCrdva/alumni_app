@@ -111,6 +111,11 @@ export class GraduadoService {
     return this.http.get<GraduadoDTO>(`${this.urlEndPoint}/usuario/${id}`)
   }
 
+  updateGraduateWithoutTitle(id: any, graduado: GraduadoDTO): Observable<GraduadoDTO> {
+    const url = `${this.urlEndPoint}/without-title/${id}`;
+    return this.http.put<GraduadoDTO>(url, graduado,);
+  }
+
   getGraduadosWithOutOferta(): Observable<Graduado[]> {
     return this.http.get<Graduado[]>(`${this.urlEndPoint}/without-oferta`);
   }
