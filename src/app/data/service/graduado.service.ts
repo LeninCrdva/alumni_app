@@ -38,6 +38,10 @@ export class GraduadoService {
   getGraduadoById(id: any): Observable<Graduado> {
     return this.http.get<Graduado>(`${this.urlEndPoint}/${id}`)
   }
+
+  getGraduadoWithPdfId(id: any): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/with-pdf/${id}`)
+  }
   //llenado de informacion 
   getGraduados2(): Observable<Graduado3[]> {
     return this.http.get<Graduado3[]>(this.urlEndPoint);

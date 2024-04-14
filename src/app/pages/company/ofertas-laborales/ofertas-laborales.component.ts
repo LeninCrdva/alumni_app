@@ -55,11 +55,11 @@ export class OfertasLaboralesComponent {
   ofertaslaboraleslist: ofertaLaboralDTO[] = [];
   selectedIDs: number[] = [];
   selectedRows: boolean[] = [];
-  
+
   // =====================================================
   //*                   VARIABLES
   // =======================================================
-  
+
   activeSelectPostulant: boolean = false;
   editarClicked = false;
   estado: boolean = true;
@@ -157,7 +157,7 @@ export class OfertasLaboralesComponent {
       nombreEmpresa: ['', [Validators.required]],
       tiempo: ['', [Validators.required]],
       tipo: 'estilo1',
-      estado: 'EN CONVOCATORIA',
+      estado: 'EN REVISION',
       fechaPublicacion: [this.fechaPublicacion, Validators.required],
     })
   }
@@ -182,7 +182,7 @@ export class OfertasLaboralesComponent {
     this.editarClicked = true;
 
     this.validateForm.reset();
-    this.selectedOption='no';
+    this.selectedOption = 'no';
     this.initForm();
 
     this.imageHandlerService.clearImage();
@@ -392,26 +392,23 @@ export class OfertasLaboralesComponent {
       },
       error => {
         this.alertService.mostrarSweetAlert(false, 'Error al crear.');
-        console.error('Error al crear:', error);
       }
     );
   }
-  
+
   updateOfertaLaboral() {
-    console.log('Almeja', this.idEdit, this.ofertaslaboralesCarga);
     this.ofertalaburoService.updateOfertaLaboral(this.idEdit, this.obtenerDatosFormulario()).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Actualizado correctamente.', this.modalClose);
         this.loadData();
       },
       error => {
-        this.alertService.mostrarSweetAlert(false, 'Error al actualizar.');
-        console.error('Error al actualizar:', error);
+        this.alertService.mostrarSweetAlert(false, `Error al actualizar: ${error.error.message})`);
       }
     );
   }
 
-  
+
 
   listPostulantesActivos(idoferta: number | undefined) {
     this.selectedRows = [];
@@ -483,7 +480,7 @@ export class OfertasLaboralesComponent {
       }
     });
   }
-  
+
   showEditDeleteButtons(oferta: ofertaLaboralDTO): boolean {
 
     return new Date(oferta.fechaCierre) > this.fechaActual;
@@ -492,7 +489,7 @@ export class OfertasLaboralesComponent {
   setIDGraduado(id: number | undefined = 0) {
     localStorage.setItem('idGraduado', id.toString());
   }
-  
+
   sendSelectedIDs() {
     this.selectedIDs = this.allGraduados
       .filter((graduado, index) => this.selectedRows[index])
@@ -503,12 +500,10 @@ export class OfertasLaboralesComponent {
   updateFechaPublicacion(): void {
     if (this.editarClicked && this.selectedOption === 'si') {
       this.getFechaPublicacion();
-        console.log('Actualizar fecha de publicación...');
     }
-}
+  }
   seleccionarPostulantes() {
     this.sendSelectedIDs();
-    console.log(this.selectedIDs);
     this.postulacionService.selectPostulants(this.idOferta, this.selectedIDs).subscribe(
       () => {
         this.alertService.mostrarSweetAlert(true, 'Postulante/es seleccionados correctamente.');
