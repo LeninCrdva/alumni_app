@@ -5,14 +5,10 @@ import { AuthService } from '../../../data/service/AuthService';
 import { AssetService } from '../../../data/service/Asset.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AnimationOptions } from 'ngx-lottie';
 import { RegisterDTO } from '../../../data/model/DTO/RegisterDTO';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
-import { firstValueFrom, lastValueFrom, switchMap } from 'rxjs';
-import { NuevoGraduadoModalComponent } from '../../alumni/nuevo-graduado-modal/nuevo-graduado-modal.component';
-import { NuevoEmpresarioModalComponent } from '../../company/nuevo-empresario-modal/nuevo-empresario-modal.component';
-import { NuevoAdministradorModalComponent } from '../../admin/nuevo-administrador-modal/nuevo-administrador-modal.component';
+import {  lastValueFrom } from 'rxjs';
 import { fechaNacimientoValidator } from './fechaNacimientoValidator';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { Ciudad } from '../../../data/model/ciudad';
@@ -175,55 +171,9 @@ export class RegisterComponent implements OnInit {
       $('div.setup-panel div a.btn-primary').trigger('click');
     });
   }
-
-
-  onSubmit() {
-    let isFormValid = true;
-  
-    // Validate registerForm
-    if (!this.registerForm.valid) {
-      this.showInputsValidations();
-      isFormValid = false;
-    } else {
-      this.resetInputsValidations();
-    }
-  
-    // Validate subRegisterForm
-    if (isFormValid && !this.subRegisterForm.valid) {
-      this.showInputsValidations();
-      isFormValid = false;
-    } else {
-      this.resetInputsValidations();
-    }
-  
-    // Validate formCase1 or formCase2 based on roleName
-    if (isFormValid) {
-      if (this.roleName === 'EMPRESARIO') {
-        if (!this.formCase1.valid || !this.formSubCase1.valid) {
-          this.showInputsValidations();
-          isFormValid = false;
-        } else {
-          this.resetInputsValidations();
-        }
-      } else if (this.roleName === 'GRADUADO') {
-        if (!this.formCase2.valid) {
-          this.showInputsValidations();
-          isFormValid = false;
-        } else {
-          this.resetInputsValidations();
-        }
-      }
-    }
-  
-    // Submit the form if all validations passed
-    if (isFormValid) {
-      // Submit the form
-    }
-  }
   
   showInputsValidations() {
     this.alertService.showInputsValidations(this.renderer);
-    console.log('Formulario de registro inválido');
   }
   
   resetInputsValidations() {
@@ -431,46 +381,4 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
-
-  // openNuevoAdministradorModal(): void {
-  //   const config = {
-  //     ignoreBackdropClick: true,
-  //     keyboard: false,
-  //   };
-  //   this.bsModalRef = this.modalService.show(NuevoAdministradorModalComponent, config);
-
-  //   this.bsModalRef.content.onClose.subscribe((result: string) => {
-  //     if (result === 'guardadoExitoso') {
-  //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
-  //     }
-  //   });
-  // }
-
-  // openNuevoEmpresarioModal(): void {
-  //   const config = {
-  //     ignoreBackdropClick: true,
-  //     keyboard: false,
-  //   };
-  //   this.bsModalRef = this.modalService.show(NuevoEmpresarioModalComponent, config);
-
-  //   this.bsModalRef.content.onClose.subscribe((result: string) => {
-  //     if (result === 'guardadoExitoso') {
-  //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
-  //     }
-  //   });
-  // }
-
-  // // openNuevoGraduadoModal(): void {
-  // //   const config = {
-  // //     ignoreBackdropClick: true,
-  // //     keyboard: false,
-  // //   };
-  // //   this.bsModalRef = this.modalService.show(NuevoGraduadoModalComponent, config);
-
-  // //   this.bsModalRef.content.onClose.subscribe((result: string) => {
-  // //     if (result === 'guardadoExitoso') {
-  // //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
-  // //     }
-  // //   });
-  // // }
 }
