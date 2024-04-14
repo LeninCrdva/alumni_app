@@ -23,4 +23,8 @@ export class ValidatorsUtil {
     static patternRucValidator(): RegExp {
         return /^[0-9]{13}$/;
     }
+
+    static patternWebsiteValidator(): RegExp {
+        return /^(http|https):\/\/[^ "]+$/;
+    }
 }
