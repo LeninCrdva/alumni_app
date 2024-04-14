@@ -190,8 +190,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-                <button class="btn btn-primary nextBtn"
-                  [disabled]="!registerForm.valid">Siguiente</button>
+                <button class="btn btn-primary nextBtn" [disabled]="!registerForm.valid">Siguiente</button>
               </div>
             </div>
           </form>
@@ -239,15 +238,15 @@
                 <div class="card mg-b-20 form-group flex-grow-1 mr-3">
                   <div class="card-header">
                     <!-- Muestra la visa previa dentro del primer seleccionador de archivos -->
-                    <div class="preview-img" *ngIf="previsualizacion">
+                    <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
                       <div class="image-container text-center mt-3">
                         <!-- Ajusté el estilo del contenedor para centrar y hacer la imagen más grande -->
-                        <img id="preview" [src]="urlPhoto" alt=""
+                        <img id="preview" [src]="imageHandlerService.previsualizacion" alt=""
                           style="width: 250px; height: 250px; object-fit: cover;" />
                       </div>
                       <div>
                         <button class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
-                          type="button" (click)="clearImage()">
+                          type="button" (click)="imageHandlerService.clearImage()">
                           Cancelar
                         </button>
                       </div>
@@ -261,13 +260,14 @@
                 </div>
                 <!-- Mostrar mensaje de error para el campo inputFoto -->
                 <!-- Botón para subir la foto de perfil -->
-                <div class="text-danger" *ngIf="!previsualizacion">
+                <div class="text-danger" *ngIf="!imageHandlerService.previsualizacion">
                   La foto es obligatoria.
                 </div>
               </div>
               <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-primary prevBtn">Anterior</button>
-                <button class="btn btn-primary nextBtn ms-2" [disabled]="!subRegisterForm.valid">Siguiente</button>
+                <button class="btn btn-primary nextBtn ms-2"
+                  [disabled]="!subRegisterForm.valid || !imageHandlerService.previsualizacion">Siguiente</button>
               </div>
             </div>
           </form>
@@ -458,8 +458,7 @@
                     <div class="d-flex">
                       <div class="flex-grow-1">
                         <div class="form-group mr-3">
-                          <input name="area" type="text" class="form-input" placeholder=" "
-                            formControlName="sitioWeb">
+                          <input name="area" type="text" class="form-input" placeholder=" " formControlName="sitioWeb">
                           <label for="area" class="form-label">¿Tiene un Sitio Web?</label>
                           <i class="ri-user-smile-line form-icon"></i>
                         </div>
@@ -534,13 +533,39 @@
                       *ngIf="formCase2.get('anioGraduacion')?.hasError('required') && formCase2.get('anioGraduacion')?.touched">
                       La fecha de graduación es obligatoria.
                     </div>
+                  </div>     
+                </div>
+
+                <div class="mb-4">
+                  <label style="color: var(--alumni-color)">Subir Título</label>
+                  <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                    <div class="card-header">
+                      <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
+                        <div class="embed-responsive-19by9">
+                          <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf" width="100%" height="500px">
+                        </div>
+                        <div>
+                          <button class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
+                            type="button" (click)="pdfHandlerService.clearPdf()">
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body collapse show" id="collapse8">
+                      <input id="pdfFile" type="file" class="dropify" data-show-remove="false"
+                        (change)="onPdfSelected($event)" accept=".pdf" />
+                    </div>
+                  </div>
+                  <div class="text-danger" *ngIf="!pdfHandlerService.pdfUrl">
+                    El PDF es obligatorio.
                   </div>
                 </div>
 
                 <div class="d-flex justify-content-end">
                   <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
                   <button class="btn btn-primary nextBtn  ms-2" (click)="register()"
-                    [disabled]="!formCase2.valid">Registrarse</button>
+                    [disabled]="!formCase2.valid || !pdfHandlerService.pdfUrl">Registrarse</button>
                 </div>
               </div>
 

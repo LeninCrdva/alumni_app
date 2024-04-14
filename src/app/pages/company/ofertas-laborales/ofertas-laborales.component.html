@@ -77,9 +77,6 @@
                             <input class="form-control wd-250" type="datetime-local" name="fechaPublicacion"
                                 formControlName="fechaPublicacion"
                                 [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" required readonly>
-                                <input class="form-control wd-250" type="datetime-local" name="fechaPublicacion"
-                                [value]="(editarClicked && selectedOption === 'no') ? ofertaslaboralesCarga.fechaPublicacion : (editarClicked ? (ofertaslaboralesCarga.fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss') : (fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'))"
-                                readonly> 
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - La fecha de publicación es obligatoria.
                             </div>

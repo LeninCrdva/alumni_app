@@ -1,6 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../../data/service/AuthService';
 import { AssetService } from '../../../data/service/Asset.service';
 import Swal from 'sweetalert2';
@@ -8,7 +7,7 @@ import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { RegisterDTO } from '../../../data/model/DTO/RegisterDTO';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
-import {  lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { fechaNacimientoValidator } from './fechaNacimientoValidator';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { Ciudad } from '../../../data/model/ciudad';
@@ -19,6 +18,8 @@ import { EmpresarioDTO } from '../../../data/model/DTO/EmpresarioDTO';
 import { EmpresaDTO } from '../../../data/model/DTO/EmpresaDTO';
 import { AlertsService } from '../../../data/Alerts.service';
 import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
+import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
+import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -50,6 +51,8 @@ export class RegisterComponent implements OnInit {
   businessSectorsList: sectorempresarial[] = [];
 
   constructor(
+    public pdfHandlerService: PdfHandlerService,
+    public imageHandlerService: ImageHandlerServiceFoto,
     private fb: FormBuilder,
     private assetService: AssetService,
     private authService: AuthService,
@@ -62,7 +65,7 @@ export class RegisterComponent implements OnInit {
     this.roleName = localStorage.getItem('userRole') ?? '';
 
     this.registerForm = this.fb.group({
-      primerNombre: ['',[ Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      primerNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
@@ -171,11 +174,11 @@ export class RegisterComponent implements OnInit {
       $('div.setup-panel div a.btn-primary').trigger('click');
     });
   }
-  
+
   showInputsValidations() {
     this.alertService.showInputsValidations(this.renderer);
   }
-  
+
   resetInputsValidations() {
     this.alertService.resetInputsValidations(this.renderer);
   }
@@ -215,34 +218,18 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  //-----------------------Imagen--------------------------------------------------//
+  //-----------------------Imagen o Archivos--------------------------------------------------//
   rutaImagen: any;
-  selectedFile: File | null = null;
-  previsualizacion: boolean = false;
-  imagenPrevisualizada: string | ArrayBuffer | null = '';
+  rutaPdf: any;
 
   onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.previsualizacion = true;
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.urlPhoto = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-      this.selectedFile = file;
-    } else {
-      this.previsualizacion = false;
-      this.urlPhoto = '';
-      this.selectedFile = null;
-    }
+    this.imageHandlerService.capturarFile(event);
+    this.imageHandlerService.previsualizacion;
   }
 
-  clearImage(): void {
-    this.previsualizacion = false;
-    this.urlPhoto = '';
-    const fileInput = document.getElementById("file") as HTMLInputElement;
-    fileInput.value = '';
+  onPdfSelected(event: any): void {
+    this.pdfHandlerService.handlePdfFile(event);
+    this.pdfHandlerService.pdfUrl;
   }
 
   deleteFile(rutakey: string) {
@@ -251,14 +238,21 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  async uploadAndSetRutaImagen(file: File) {
+  async uploadAndSetRutaImagen(file: File, type: string = 'image') {
     try {
       const observable = this.assetService.upload(file);
       const data: HttpEvent<any> | undefined = await lastValueFrom(observable);
 
-      if (data instanceof HttpResponse) {
-        const key = data.body?.key;
-        this.rutaImagen = key;
+      if (type === 'image') {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaImagen = key;
+        }
+      } else {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaPdf = key;
+        }
       }
     } catch (error) {
       console.error('Error al subir la imagen:', error);
@@ -270,8 +264,9 @@ export class RegisterComponent implements OnInit {
 
       const formData = this.registerForm.value;
       const subFormData = this.subRegisterForm.value;
-      if (this.selectedFile) {
-        await this.uploadAndSetRutaImagen(this.selectedFile);
+      if (this.imageHandlerService.archivos) {
+        await this.uploadAndSetRutaImagen(this.imageHandlerService.archivos[0]);
+        await this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
       }
       this.registerDto = {
         cedula: formData.cedula,
@@ -290,7 +285,7 @@ export class RegisterComponent implements OnInit {
         urlImagen: '',
       };
       this.authService.signup(this.registerDto, this.registerBusinessMan(this.registerDto.nombreUsuario),
-        this.registerCompany(this.registerDto.nombreUsuario), this.registerGraduate(this.registerDto.nombreUsuario)).subscribe(() => {
+        this.registerCompany(this.registerDto.nombreUsuario), this.registerGraduate(this.registerDto.nombreUsuario, this.rutaPdf)).subscribe(() => {
           this.router.navigate(['account/login']);
           this.showAlert(this.registerDto);
         }
@@ -305,7 +300,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  registerGraduate(user: string): GraduadoDTO | undefined {
+  registerGraduate(user: string, rutaPdf: any): GraduadoDTO | undefined {
     if (this.formCase2.valid) {
       const formData = this.formCase2.value;
       let graduate: GraduadoDTO = {
@@ -314,7 +309,7 @@ export class RegisterComponent implements OnInit {
         anioGraduacion: formData.anioGraduacion,
         emailPersonal: formData.emailPersonal,
         estadoCivil: formData.estadoCivil,
-        rutaPdf: '',
+        rutaPdf: rutaPdf,
         urlPdf: ''
       };
       return graduate;
