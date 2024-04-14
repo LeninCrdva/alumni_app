@@ -1,3 +1,4 @@
+//  Autor: Angel Cárdenas
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TextEditorComponent } from '../../text-editor/text-editor.component';
@@ -164,11 +165,11 @@ export class CreateDataWebComponent {
 
     if (this.validateForm.dirty || this.imageHandlerService.archivos.length > 0 || this.hasContentChanged()) {
       const formData = new FormData();
-      
+
       Object.keys(this.validateForm.value).forEach(key => {
         formData.append(key, this.validateForm.value[key]);
       });
-      
+
       if (this.imageHandlerService.archivos.length > 0) {
         const imagen = this.imageHandlerService.archivos[0];
         formData.append('foto_portada', imagen);
@@ -177,7 +178,7 @@ export class CreateDataWebComponent {
       const xmlContent = this.textEditorComponent.getContent();
       const blob = new Blob([xmlContent], { type: 'application/xml' });
       formData.append('xml_file', blob, 'contenido.xml');
-      
+
       this.originalContent = xmlContent;
 
       // Note: Animación de guardando
@@ -233,10 +234,8 @@ export class CreateDataWebComponent {
     }
   }
 
-
   visualizarPagina() {
     const url = `/#/inicio/component/${this.idEdit}`;
     window.open(url, '_blank');
   }
-
 }

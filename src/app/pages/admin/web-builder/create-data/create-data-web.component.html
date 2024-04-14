@@ -1,7 +1,7 @@
 <div class="animate__animated animate__fadeIn">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <button  (click)="Regresarclik()" routerLinkActive="router-link-active" type="button"
-            #btnRegresar class="btn btn-oblong btn-outline-dark">
+        <button (click)="Regresarclik()" routerLinkActive="router-link-active" type="button" #btnRegresar
+            class="btn btn-oblong btn-outline-dark">
             Regresar
         </button>
 
@@ -12,7 +12,7 @@
             </button>
 
             <button (click)='visualizarPagina()' *ngIf="editarClicked" type="button" class="btn btn-outline-dark me-2">
-                <i class="fa-solid fa-eye"></i> Ver Página
+                <i class="fa-solid fa-eye"></i> Ver Evento
             </button>
 
             <div (click)="onSubmit()" type="submit" class="btn button text-center">

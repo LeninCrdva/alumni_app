@@ -2,7 +2,7 @@
 .card {
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-image: linear-gradient(to right bottom, #e2f0ff, #ffd9d9);
+  background-image: linear-gradient(to right bottom, #e2f0ff, #ffd9d99b);
 }
 
 .card:hover {
