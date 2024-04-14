@@ -1,8 +1,8 @@
 <section class="page-title bg-overlay-black parallax"
-    style="background-image: url(../../../../assets/imgs/headers/Programas.webp); padding: 120px 0;">
+    style="background-image: url(../../../../assets/imgs/headers/Comunidad.jpg); padding: 120px 0;">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Gestión Programas </h1>
+            <h1>Creación de Programas </h1>
         </div>
     </div>
 </section>
@@ -13,7 +13,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header text-white" [class.bg-warning]="!editarClicked" [class.bg-primary]="editarClicked">
-                <h5 [innerText]="editarClicked ? 'Modificar Programa Misional' : 'Agregar Programa Misional'">
+                <h5 [innerText]="editarClicked ? 'Modificar Programa' : 'Agregar Programa'">
                 </h5>
             </div>
             <div class="modal-body">
@@ -44,7 +44,7 @@
                                         <i class="fas fa-marker"></i>
                                     </span>
                                     <textarea class="form-control" style="height: 65px;" id="subTitulo" name="subTitulo"
-                                        placeholder="Ingrese el subtítulo del programa misional"
+                                        placeholder="Ingrese el subtítulo del Programa"
                                         formControlName="subTitulo" required></textarea>
                                     <div class="oaerror danger invalid-feedback">
                                         <strong>Error</strong> - El subtítulo es obligatorio.
@@ -62,7 +62,7 @@
                                         <i class="fa-solid fa-book-medical"></i>
                                     </span>
                                     <textarea class="form-control" style="height: 90px;" id="resumen" name="resumen"
-                                        placeholder="Ingrese el resumen del programa misional" formControlName="resumen"
+                                        placeholder="Ingrese el resumen del Programa" formControlName="resumen"
                                         required></textarea>
                                     <div class="oaerror danger invalid-feedback">
                                         <strong>Error</strong> - El resumen es obligatorio.
@@ -142,7 +142,7 @@
             <div class="modal-footer">
                 <button (click)="onSubmit()" type="submit" class="btn btn-oblong" [class.btn-warning]="!editarClicked"
                     [class.btn-primary]="editarClicked">
-                    {{ editarClicked ? 'Actualizar Programa Misional' : 'Registrar Programa Misional' }}
+                    {{ editarClicked ? 'Actualizar Programa' : 'Registrar Programa' }}
                 </button>
 
                 <button type="button" #myModalClose data-bs-dismiss="modal"
@@ -176,7 +176,7 @@
 
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
                     class="btn btn-warning ms-2" style="width: 20rem;">
-                    Agregar Programa Misional
+                    Agregar Programa
                 </button>
             </div>
         </div>
