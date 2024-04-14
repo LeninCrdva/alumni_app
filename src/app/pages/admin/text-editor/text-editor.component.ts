@@ -3,6 +3,7 @@ import { ImageHandlerServicebyte } from '../../../data/service/ImageHandlerServi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsServicexml } from '../../../data/service/AlertsServicexml';
 
+// Autor: Angel Cárdenas
 interface KeyActionMap {
   [key: string]: () => void | boolean; // Esto permite cualquier clave de tipo string que retorne una función que devuelve void o boolean
 }
@@ -66,22 +67,6 @@ export class TextEditorComponent {
       margin_top: [''],
       margin_bottom: [''],
     });
-
-    window.addEventListener('beforeunload', this.confirmLeavePage.bind(this));
-  }
-
-  // Método para mostrar el mensaje de confirmación para evitar que la pagina se recargre
-  confirmLeavePage(event: BeforeUnloadEvent): void {
-
-    const currentContent = this.getContent();
-    if (this.originalContent !== currentContent) {
-      event.returnValue = "Tienes cambios no guardados. ¿Seguro que quieres salir?";
-      return event.returnValue;
-    }
-  }
-
-  ngOnDestroy(): void {
-    window.removeEventListener('beforeunload', this.confirmLeavePage.bind(this));
   }
 
   @HostListener('window:keydown', ['$event'])
