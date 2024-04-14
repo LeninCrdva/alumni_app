@@ -28,7 +28,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 📖 **Acerca del Proyecto**
-Alumni es una aplicación web desarrollada como proyecto final para la materia de Tendencias de Programación. La plataforma fue creada para simplificar y dar vida al proceso de registro de graduados del prestigioso instituto TecAzuay, ubicado en Cuenca, Ecuador. La aplicación incluye tres tipos de perfiles: Alumni, Empresario y Admin.
+Alumni es una aplicación web que fue desarrollada para simplificar y dar vida al proceso de registro de graduados del prestigioso instituto TecAzuay, ubicado en Cuenca, Ecuador. La aplicación incluye tres tipos de perfiles: Alumni, Empresario y Admin.
 
 - **Alumni:** Puede registrar información personal, ubicación, títulos académicos, experiencias laborales, referencias personales y postulaciones.
   
@@ -38,55 +38,18 @@ Alumni es una aplicación web desarrollada como proyecto final para la materia d
 
 ***
 
-## 📖 **Capturas del Proyecto**
-<details>
-<summary>Capturas de Pantalla y detalle de las mismas</summary>
+## 🏩 **CARACTERISTICAS:**
 
-## Pantalla de Inicio
-
-  **Path:** [http://localhost:4200/#/inicio](http://localhost:4200/#/inicio)
-    <img src="Screenshots/Cap_1.png" alt="cap1">
-    <img src="Screenshots/Cap_2.png" alt="cap2">
-    <img src="Screenshots/Cap_3.png" alt="cap3">
-    <img src="Screenshots/Cap_4.png" alt="cap4">
-
-  **DESCRIPCIÓN**
-  <br>
-  En esta ventana se explica el propósito de la aplicación. Se trata de una página web destinada al registro de graduados del instituto TecAzuay en Cuenca, Ecuador. Los perfiles incluyen Alumni, Empresario y Admin, cada uno con funciones específicas.
-  
-## Pantalla de Login
-
-- **Path:** [http://localhost:4200/#/account/login](http://localhost:4200/#/account/login)
-
-<img src="Screenshots/Cap_5.png" alt="cap5">
-
-## Pantalla de Registro
-
-- **Path:** [http://localhost:4200/#/account/register](http://localhost:4200/#/account/register)
-
-<img src="Screenshots/Cap_6.png" alt="cap6">
-
-## Pantalla Dashboard
-
-- **Paths:** 
-  - [http://localhost:4200/#/system/alumni](http://localhost:4200/#/system/alumni)
-  - [http://localhost:4200/#/system/admin](http://localhost:4200/#/system/admin)
-  - [http://localhost:4200/#/system/company](http://localhost:4200/#/system/company)
-  
- **Descripción**
- <br>
- Esta pantalla mostrará accesos rápidos a diferentes funciones según el usuario y presentará informes.
-
-### Todas las demas interfaces varian segun el tipo de usuario
-</details>
-
-## 😺 **CARACTERISTICAS:**
-
-- Carga de datos rapida.
-- Base de datos en nube.
 - Diseño amigable y moderno.
-- Pantalla de carga, login y todos los cruds funcionales.
+- Conexión con una Base de datos en nube.
+- Pantalla de bienvenida o introductoria, login, recuperar contraseña, sistema de administración, sistema para el alumni, sistema para empresarios (Ofertantes de trabajo).
 - Varias animaciones y diseño responsive.
+- Creador de encuestas.
+- Creador blogs o eventos mediante editor html.
+- Uso de Spring Security en el backend.
+- Implementación adecuada del manejo de errores.
+- Reportes visuales mediante gráficas.
+- Integración correcta con la aplicación móvil para dispositivos Android.
 
 ##  📦 **LIBRERIAS USADAS:**
 ***
@@ -122,31 +85,3 @@ npm i ng-multiselect-dropdown
 - Manual Tecnico: https://docs.google.com/document/d/10LfByBkY2k-zxwIZMGnnBX_g98fl37UC/edit
 - Manual de Usuario: https://docs.google.com/document/d/1qelVT0N4qPwSSFaiX006uvTIne4j_NuUeB3Sv4Xoi60/edit
 - Especificación de Requerimientos de Software (SRS): https://docs.google.com/document/d/1gLYFvM3IbPJQbbtCNMdxIZjGMUSiYCcN/edit?usp=sharing&ouid=116714966189841526689&rtpof=true&sd=true
-## 👨‍💼Integrantes Del Proyecto🧑‍🦰
-
-<div align="center">
-
-### FRONTEND
-
-| [<img src="Screenshots/Integrantes/Angel_Foto.png" width=150><br><sub>Angel Cárdenas</sub>](https://github.com/AngelCarde64) | [<img src="Screenshots/Integrantes/Jose_Foto.png" width=190><br><sub>Jose Farez</sub>](https://github.com/Lokyre) |
-| :-------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
-
-</div>
-<div align="center">
-
-### DOCUMENTACIÓN Y BACKEND
-
-| [<img src="Screenshots/Integrantes/Vicente_Foto.jpg" width=185><br><sub>Vicente Guaman</sub>](https://github.com/SantiagoGuaman) | [<img src="Screenshots/Integrantes/Alejandro_Foto.jpeg" width=138><br><sub>Miguel Haro</sub>](https://github.com/Miguel13fdf) | [<img src="Screenshots/Integrantes/Evelyn_Foto.png" width=185><br><sub>Evelyn Chichande</sub>](https://github.com/eveelyyn-c) |
-| :------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
-
-| [<img src="Screenshots/Integrantes/Luis_Foto.jpg" width=300><br><sub>Luis Duchi</sub>](https://github.com/lduchi) | [<img src="Screenshots/Integrantes/Henry_Foto.jpeg" width=155><br><sub>Henry Duchi</sub>](https://github.com/Henduchi11) | [<img src="Screenshots/Integrantes/Lenin_Foto.jpg" width=200><br><sub>Lenin Córdova</sub>](https://github.com/LeninCrdva) |
-| :---------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-
-</div>
-
-
-
-## FAQs
-Una lista de preguntas frecuentes
-1. **Cual es el proposito de este proyecto?:**
-Este proyecto fue realizado para la materia de _Tendencias Actuales de Programación_ en el 5to Ciclo de la carrera de Desarrollo de Software.
