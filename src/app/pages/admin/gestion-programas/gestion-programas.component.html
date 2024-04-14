@@ -6,16 +6,14 @@
         </div>
     </div>
 </section>
-
-
 <!-- Modal -->
 <div class="modal fade" id="modalData" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header text-white" [class.bg-warning]="!editarClicked" [class.bg-primary]="editarClicked">
-                <h5 [innerText]="editarClicked ? 'Modificar Programa' : 'Agregar Programa'">
-                </h5>
-            </div>
+            <div class="modal-header text-white" [class.bg-navy]="!editarClicked" [class.bg-primary]="editarClicked">
+                <h5 [innerText]="editarClicked ? 'Modificar Programa' : 'Agregar Programa'"></h5>
+            </div>            
+            
             <div class="modal-body">
                 <form class="needs-validation" [formGroup]="validateForm">
                     <div class="row mb-3" data-parsley-validate>
@@ -44,7 +42,7 @@
                                         <i class="fas fa-marker"></i>
                                     </span>
                                     <textarea class="form-control" style="height: 65px;" id="subTitulo" name="subTitulo"
-                                        placeholder="Ingrese el subtítulo del Programa"
+                                        placeholder="Ingrese el subtítulo del programa misional"
                                         formControlName="subTitulo" required></textarea>
                                     <div class="oaerror danger invalid-feedback">
                                         <strong>Error</strong> - El subtítulo es obligatorio.
@@ -62,7 +60,7 @@
                                         <i class="fa-solid fa-book-medical"></i>
                                     </span>
                                     <textarea class="form-control" style="height: 90px;" id="resumen" name="resumen"
-                                        placeholder="Ingrese el resumen del Programa" formControlName="resumen"
+                                        placeholder="Ingrese el resumen del programa misional" formControlName="resumen"
                                         required></textarea>
                                     <div class="oaerror danger invalid-feedback">
                                         <strong>Error</strong> - El resumen es obligatorio.
@@ -140,10 +138,12 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button (click)="onSubmit()" type="submit" class="btn btn-oblong" [class.btn-warning]="!editarClicked"
-                    [class.btn-primary]="editarClicked">
-                    {{ editarClicked ? 'Actualizar Programa' : 'Registrar Programa' }}
-                </button>
+                <button (click)="onSubmit()" type="submit" class="btn btn-oblong" 
+                [class.btn-warning]="!editarClicked" [class.btn-primary]="editarClicked"
+                [class.bg-navy]="!editarClicked">
+            {{ editarClicked ? 'Actualizar Programa Misional' : 'Registrar Programa Misional' }}
+        </button>
+        
 
                 <button type="button" #myModalClose data-bs-dismiss="modal"
                     class="btn btn-oblong btn-outline-danger btn-block">
@@ -175,9 +175,10 @@
                 </ng-multiselect-dropdown>
 
                 <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
-                    class="btn btn-warning ms-2" style="width: 20rem;">
-                    Agregar Programa
-                </button>
+                class="btn btn-primary ms-2" style="width: 20rem;">
+            Agregar Programa
+        </button>
+        
             </div>
         </div>
 

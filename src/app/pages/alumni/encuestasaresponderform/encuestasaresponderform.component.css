@@ -1,3 +1,10 @@
+.btn-close-white {
+  color: #ffffff; 
+}
+.texto-negrita {
+  font-weight: bold;
+}
+
 /* Estilos para el modal */
 .modal-header {
     background-color: #007bff; /* Azul primario de Bootstrap */

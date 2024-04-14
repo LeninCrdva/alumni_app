@@ -1,18 +1,19 @@
+
 <div class="modal-header">
     <h4 class="modal-title">{{ survey.title }}</h4>
     
-    <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
+    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="bsModalRef.hide()"></button>
   </div>
   
   <div class="modal-body">
     <ng-container *ngIf="survey">
          <!-- Pregunta abierta: Escriba su correo electrónico -->
     <div class="mb-3">
-        <p>Escriba su correo electrónico:</p>
+        <p class="texto-negrita">Escriba su correo electrónico:</p>
         <input type="email" class="form-control" placeholder="Correo electrónico" [(ngModel)]="userEmail">
       </div>
       <div class="mb-3">
-        <p>Seleccione su carrera:</p>
+        <p class="texto-negrita">Seleccione su carrera:</p>
         <div *ngFor="let carrera of carreras">
           <div class="form-check">
             <input
@@ -30,8 +31,8 @@
       <ng-container *ngFor="let question of survey.questions">
         <div class="mb-3">
         
-          <p>{{ question.text }}</p>
-  
+          <p class="texto-negrita">{{ question.text }}</p>
+
           <ng-container *ngIf="isQuestionOpcionMultiple(question)">
             <!-- Pregunta de opción múltiple con checkboxes -->
             <div *ngFor="let option of question.options; let i = index">

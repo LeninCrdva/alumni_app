@@ -2,3 +2,7 @@
     font-weight: bold;
     font-size: 15px;
 }
+.bg-navy {
+    background-color: #001f3f; 
+    color: #fff;
+}
