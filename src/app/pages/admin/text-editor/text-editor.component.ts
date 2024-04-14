@@ -212,27 +212,6 @@ export class TextEditorComponent {
     document.execCommand(command, defaultUi, value);
   }
 
-  cargarPlantilla(event: Event): void {
-    const selectedTemplate = (event.target as HTMLSelectElement).value;
-
-    let templateContent = '';
-    switch (selectedTemplate) {
-      case 'boton':
-        templateContent = `<a href = "#" target = "_blank" class="btn btn-outline-danger"> Texto del botón </a>`;
-        break;
-    }
-
-    this.validateInputs.patchValue({
-      HTMLCode: templateContent
-    });
-  }
-
-  openCodePlantila() {
-    this.validateInputs.patchValue({
-      HTMLCode: ''
-    });
-  }
-
   downloadContent(): void {
     try {
       const content = this.textInput.nativeElement.innerHTML;
@@ -628,16 +607,6 @@ export class TextEditorComponent {
       }
       this.isFullScreen = false;
     }
-  }
-
-  insertCustomCode(): void {
-    if (this.showCodeActive) {
-      this.toggleShowCode();
-    }
-
-    this.textInput.nativeElement.innerHTML += this.validateInputs.value.HTMLCode;
-
-    this.codeModal.nativeElement.click();
   }
 
   clearContent(): void {

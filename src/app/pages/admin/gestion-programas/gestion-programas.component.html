@@ -42,7 +42,7 @@
                                         <i class="fas fa-marker"></i>
                                     </span>
                                     <textarea class="form-control" style="height: 65px;" id="subTitulo" name="subTitulo"
-                                        placeholder="Ingrese el subtítulo del programa misional"
+                                        placeholder="Ingrese el subtítulo del Programa"
                                         formControlName="subTitulo" required></textarea>
                                     <div class="oaerror danger invalid-feedback">
                                         <strong>Error</strong> - El subtítulo es obligatorio.
@@ -60,7 +60,7 @@
                                         <i class="fa-solid fa-book-medical"></i>
                                     </span>
                                     <textarea class="form-control" style="height: 90px;" id="resumen" name="resumen"
-                                        placeholder="Ingrese el resumen del programa misional" formControlName="resumen"
+                                        placeholder="Ingrese el resumen del Programa" formControlName="resumen"
                                         required></textarea>
                                     <div class="oaerror danger invalid-feedback">
                                         <strong>Error</strong> - El resumen es obligatorio.
@@ -141,7 +141,7 @@
                 <button (click)="onSubmit()" type="submit" class="btn btn-oblong" 
                 [class.btn-warning]="!editarClicked" [class.btn-primary]="editarClicked"
                 [class.bg-navy]="!editarClicked">
-            {{ editarClicked ? 'Actualizar Programa Misional' : 'Registrar Programa Misional' }}
+            {{ editarClicked ? 'Actualizar Programa' : 'Registrar Programa' }}
         </button>
         
 

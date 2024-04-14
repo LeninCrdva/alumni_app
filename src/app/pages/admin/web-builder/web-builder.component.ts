@@ -41,7 +41,7 @@ export class WebBuilderComponent {
   }
 
   ngAfterViewInit(): void {
-    const columnTitles = ['#', 'Tipo'];
+    const columnTitles = ['#', 'Nombre Del Evento'];
     this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar pagina...');
     this.filterService.initializeDropdowns(columnTitles, this.dtElement);
 

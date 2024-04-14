@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+.cancel-button {
+    background-color: #0c6efd !important;
+    color: #ffffff;
+}
+
 .options {
     display: flex;
     flex-wrap: wrap;

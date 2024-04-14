@@ -172,55 +172,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal CODE -->
-    <div class="modal fade" id="codeModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-dark">
-                    <h5>SUBIR CÓDIGO HTML</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group col-lg-12 mb-3">
-                        <label for="tipoPlan" class="form-label">Seleccionar Plantilla:</label>
-                        <div class="input-group has-validation">
-                            <span class="input-group-text">
-                                <i class="fa-solid fa-bolt"></i>
-                            </span>
-                            <select class="form-select" id="templateSelect" (change)="cargarPlantilla($event)" required>
-                                <option value="" disabled selected>--- Seleccione una plantilla ---</option>
-                                <option value="boton">Botón</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <form [formGroup]="validateInputs">
-
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="HTMLCode" class="form-label">HTMLCode:</label>
-                                <div class="input-group has-validation">
-                                    <textarea class="form-control" style="height: 36rem;" id="HTMLCode" name="HTMLCode"
-                                        placeholder="Ingrese el código HTML" formControlName="HTMLCode"
-                                        required></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button (click)="insertCustomCode()" type="submit" class="btn btn-success">
-                        Subir Código HTML
-                    </button>
-                    <button #codeModal type="button" data-bs-dismiss="modal" class="btn btn-outline-danger btn-block">
-                        Cancelar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <!-- Modal INFO -->
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -358,20 +310,13 @@
             <i class="fas fa-download"></i>
         </button>
 
-        <button (click)="uploadFile()" class="option-button" data-placement="bottom" title="Subir plantilla">
+        <button (click)="uploadFile()" class="option-button" data-placement="bottom" title="Subir plantilla .XML o .HTML">
             <i class="fas fa-upload"></i>
         </button>
 
         <!-- Show Code -->
         <button (click)="toggleShowCode()" class="option-button" id="show-code" title="Mostrar el código">
             <i class="fas fa-code"></i>
-        </button>
-
-        <!-- Subir -->
-        <button (click)="openCodePlantila()" #openCodeModal data-bs-toggle="modal" data-bs-target="#codeModal"
-            class="option-button" title="Subir Plantilla">
-            <i class="fa-solid fa-book-tanakh fa-bounce"
-                style="--fa-animation-duration: 1.8s; color: rgb(63, 126, 0);"></i>
         </button>
 
         <button (click)="printContent()" class="option-button" title="Imprimir contenido">

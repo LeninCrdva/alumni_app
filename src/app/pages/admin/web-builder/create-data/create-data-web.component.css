@@ -2,6 +2,11 @@
     border-bottom: 3px solid #b00000;
 }
 
+.cancel-button {
+    background-color: #0c6efd !important;
+    color: #ffffff;
+}
+
 .button {
     position: relative;
     height: 50px;
