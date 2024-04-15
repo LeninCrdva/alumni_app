@@ -10,9 +10,10 @@ import { CiudadService } from '../../../data/service/ciudad.service';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { AssetService } from '../../../data/service/Asset.service';
-import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
+
 
 @Component({
   selector: 'app-perfil-form',
@@ -24,12 +25,11 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   graduadoInfo: GraduadoDTO = new GraduadoDTO();
   updatePersonForm: FormGroup;
   updateUbicacionForm: FormGroup;
+  ciudades: CiudadDTO[] = []
+  provincias: string[] = [];
   photoForm: FormGroup;
   rutaImagen: any;
   idUser: any;
-  ciudades: CiudadDTO[] = []
-  provincias: string[] = [];
-
   constructor(private renderer: Renderer2,
     private el: ElementRef,
     private userService: UserService,
@@ -39,7 +39,7 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
     private ciudadService: CiudadService,
     private graduateService: GraduadoService,
     private assetService: AssetService,
-    public imageHandlerService: ImageHandlerServiceFoto) {
+    public imageHandlerService: ImageHandlerServiceFoto)  {
     this.updatePersonForm = formBuilder.group({
       primerNombre: ['', Validators.required],
       segundoNombre: ['', Validators.required],
@@ -54,7 +54,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       ciudad: ['', Validators.required],
       provincia: ['', Validators.required]
     })
-
     this.photoForm = formBuilder.group({
       photo: ['', Validators.required]
     });
@@ -64,7 +63,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
     this.getAllInfoGraduate()
     this.getGraduadoDTOInfoAndCity()
   }
-
   onFileSelected(event: any): void {
     this.imageHandlerService.capturarFile(event);
     this.imageHandlerService.previsualizacion;
@@ -173,7 +171,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       }
     });
   }
-
   async updatePhoto() {
     if (this.imageHandlerService.archivos) {
       await this.uploadAndSetRutaImagen(this.imageHandlerService.archivos[0]);
@@ -195,7 +192,7 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   }
 
   initializeCityForm(): void {
-
+    
     this.updateUbicacionForm.patchValue({
       ciudad: this.graduadoInfo.ciudad
     });
@@ -228,17 +225,17 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   }
 
   onPhoneInput(event: any): void {
-    const newValue = event.target.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
-    this.updatePersonForm.controls['telefono'].setValue(newValue); // Actualizar el valor en el formulario
+    const newValue = event.target.value.replace(/\D/g, ''); 
+    this.updatePersonForm.controls['telefono'].setValue(newValue); 
   }
 
-  // Método para manejar el evento de pérdida de foco en el campo de teléfono
+ 
   onPhoneBlur(): void {
-    this.updatePersonForm.controls['telefono'].markAsTouched(); // Marcar el campo como "tocado"
+    this.updatePersonForm.controls['telefono'].markAsTouched(); 
   }
 
-  // Método para verificar si el campo de teléfono ha sido tocado
+ 
   isPhoneTouched(): boolean {
-    return this.updatePersonForm.controls['telefono'].touched; // Verificar si el campo ha sido tocado
+    return this.updatePersonForm.controls['telefono'].touched; 
   }
 }

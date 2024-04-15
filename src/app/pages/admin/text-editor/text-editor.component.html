@@ -345,6 +345,7 @@
             <option *ngFor="let font of fontList" [value]="font">{{font}}</option>
         </select>
         
+        
 
         <select [(ngModel)]="selectedFontSize" (change)="modifyFontSize()" class="adv-option-button">
             <option *ngFor="let size of fontSizeList" [value]="size">Tamaño {{size}}</option>
@@ -464,5 +465,6 @@
     </div>
 
     <!-- Text Editor -->
-    <div class="editorTextInput" #textInput contenteditable="true"></div>
+    <div  id="editor" class="editorTextInput" #textInput contenteditable="true" ></div>
+   
 </div>

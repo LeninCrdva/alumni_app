@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Survey } from '../../../data/model/Survey';
 import { Question,QuestionType } from '../../../data/model/Question';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-survey-details-modal',
   templateUrl: './survey-details-modal.component.html',
@@ -9,8 +11,29 @@ import { Question,QuestionType } from '../../../data/model/Question';
 })
 export class SurveyDetailsModalComponent {
   @Input() survey: Survey = new Survey('', '',false ,[]);
-
+  @ViewChild('elementToCapture') elementToCapture!: ElementRef<HTMLDivElement>;
   constructor(public bsModalRef: BsModalRef) {} 
+
+  downloadAsPDF(): void {
+    const element = document.getElementById('elementToCapture');
+  
+    if (element) {
+      html2canvas(element, {
+        scrollY: -window.scrollY, // Capturar todo el contenido incluido el desplazamiento vertical
+        scale: 1, // Ajustar la escala si es necesario
+      }).then((canvas) => {
+        const imgWidth = 210; // Ancho de la página A4 en mm (210mm para retrato)
+        const scaleFactor = imgWidth / canvas.width;
+        const imgHeight = canvas.height * scaleFactor;
+  
+        const doc = new jsPDF('p', 'mm', 'a4');
+        doc.addImage(canvas.toDataURL('image/jpeg', 1.0), 'JPEG', 0, 0, imgWidth, imgHeight);
+        doc.save('encuesta.pdf');
+      });
+    } else {
+      console.error('No se encontró el elemento para capturar.');
+    }
+  }
   getQuestionTypeLabel(question: Question): string {
     switch (question.type) {
       case QuestionType.ABIERTA:

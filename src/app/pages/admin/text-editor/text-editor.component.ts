@@ -43,6 +43,9 @@ export class TextEditorComponent {
   previsualizacion: string = '';
   archivos: any[] = [];
 
+
+  selectElement2: HTMLElement | null = null;
+
   @ViewChild('cerrarModal') cerrarModal!: ElementRef;
   @ViewChild('codeModal') codeModal!: ElementRef;
   @ViewChild('openCodeModal') openCodeModal!: ElementRef;
@@ -70,6 +73,7 @@ export class TextEditorComponent {
       margin_top: [''],
       margin_bottom: [''],
     });
+   
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -124,11 +128,24 @@ export class TextEditorComponent {
     this.originalContent = this.getContent();
 
     this.listenToImageClicks();
+
+    this.modifyDivElements();
   }
 
   getContent(): string {
     return this.textInput.nativeElement.innerHTML;
   }
+  modifyDivElements(): void {
+    const container = this.textInput.nativeElement;
+    const divElements = container.querySelectorAll('div.editorTextInput');
+  
+    divElements.forEach((element: HTMLElement) => {
+      element.style.fontFamily = 'Arial'; 
+      element.style.fontSize = '16px'; 
+   
+    });
+  }
+  
 
   listenToImageClicks(): void {
     this.renderer.listen(this.textInput.nativeElement, 'click', (event: MouseEvent) => {
@@ -195,11 +212,30 @@ export class TextEditorComponent {
     }
   }
 
-  modifyExtraValues(command: string, defaultUi: boolean, event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    document.execCommand(command, defaultUi, value);
+ // Método para cambiar el tipo de letra de elementos dentro de un contenedor específico
+changeFontFamily(containerSelector: string, fontFamily: string): void {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const elements = container.querySelectorAll('div'); 
+
+  elements.forEach((element) => {
+      (element as HTMLElement).style.fontFamily = fontFamily; 
+  });
+}
+
+// Llamada a la función para cambiar el tipo de letra
+modifyExtraValues(command: string, defaultUi: boolean, event: Event): void {
+  const value = (event.target as HTMLSelectElement).value;
+
+  if (command === 'fontName') {
+      this.changeFontFamily('.editorTextInput', value);
+  } else {
+      document.execCommand(command, defaultUi, value);
   }
-  
+}
+
+
 
   downloadContent(): void {
     try {
@@ -602,3 +638,4 @@ export class TextEditorComponent {
     this.textInput.nativeElement.innerHTML = '';
   }
 }
+

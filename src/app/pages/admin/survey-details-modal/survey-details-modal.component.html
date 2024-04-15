@@ -1,3 +1,4 @@
+<div #elementToCapture id="elementToCapture">
 <div class="modal-header">
   <h4 class="modal-title">{{ survey.title }}</h4>
   
@@ -59,7 +60,9 @@
     </ng-container>
   </ng-container>
 </div>
+</div>
 
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Cerrar</button>
+ <!-- <button type="button" class="btn btn-primary" (click)="downloadAsPDF()">Descargar como PDF</button>-->
 </div>

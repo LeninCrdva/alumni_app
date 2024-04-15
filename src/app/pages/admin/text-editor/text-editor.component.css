@@ -26,13 +26,13 @@
     border: none;
     background-color: #fff;
     outline: none;
-    color: #020929;
+    color: #12205f;
     cursor: pointer;
 }
 
 .adv-option-button {
     padding: 7px;
-    border: 1px solid #020929;
+    border: 1px solid #192764;
     border-radius: 8px;
 }
 
@@ -94,7 +94,7 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .editing {
-    background-color: #2d2a2e;
+    background-color: #272527;
     color: #fff;
 }
 
