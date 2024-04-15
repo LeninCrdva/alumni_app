@@ -9,6 +9,10 @@ import { CiudadDTO } from '../../../data/model/DTO/ciudadDTO';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
 import { GraduadoService } from '../../../data/service/graduado.service';
+import { AssetService } from '../../../data/service/Asset.service';
+import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-form',
@@ -20,11 +24,22 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   graduadoInfo: GraduadoDTO = new GraduadoDTO();
   updatePersonForm: FormGroup;
   updateUbicacionForm: FormGroup;
+  photoForm: FormGroup;
+  rutaImagen: any;
+  idUser: any;
   ciudades: CiudadDTO[] = []
   provincias: string[] = [];
 
-  constructor(private renderer: Renderer2, private el: ElementRef, private userService: UserService,
-    private formBuilder: FormBuilder, private personaService: PersonaService, private router: Router, private ciudadService: CiudadService, private graduateService: GraduadoService) {
+  constructor(private renderer: Renderer2,
+    private el: ElementRef,
+    private userService: UserService,
+    formBuilder: FormBuilder,
+    private personaService: PersonaService,
+    private router: Router,
+    private ciudadService: CiudadService,
+    private graduateService: GraduadoService,
+    private assetService: AssetService,
+    public imageHandlerService: ImageHandlerServiceFoto) {
     this.updatePersonForm = formBuilder.group({
       primerNombre: ['', Validators.required],
       segundoNombre: ['', Validators.required],
@@ -39,11 +54,40 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       ciudad: ['', Validators.required],
       provincia: ['', Validators.required]
     })
+
+    this.photoForm = formBuilder.group({
+      photo: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
     this.getAllInfoGraduate()
     this.getGraduadoDTOInfoAndCity()
+  }
+
+  onFileSelected(event: any): void {
+    this.imageHandlerService.capturarFile(event);
+    this.imageHandlerService.previsualizacion;
+  }
+
+
+  deleteFile(rutakey: string) {
+    this.assetService.delete(rutakey).subscribe(r => {
+    })
+  }
+
+  async uploadAndSetRutaImagen(file: File, type: string = 'image') {
+    try {
+      const observable = this.assetService.upload(file);
+      const data: HttpEvent<any> | undefined = await lastValueFrom(observable);
+      if (type === 'image') {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaImagen = key;
+        }
+      }
+    } catch (error) {
+    }
   }
 
   ngAfterViewInit() {
@@ -72,11 +116,13 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
   getAllInfoGraduate(): void {
     const userIdStorage = localStorage.getItem('name')
-
+    this.idUser = localStorage.getItem('user_id');
     if (userIdStorage) {
       this.userService.getUserByUsername(userIdStorage).subscribe(
         user => {
           this.usuarioInfo = user;
+          this.rutaImagen = user.urlImagen;
+          this.imageHandlerService.getPrevisualizacion(this.rutaImagen);
           this.initializePersonForm()
         }
       )
@@ -114,7 +160,7 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
         this.personaService.updatePerson(idUser, this.usuarioInfo.persona).subscribe(
           persona => {
             this.usuarioInfo.persona = persona;
-            this.graduateService.updateGraduadoDTO(idGraduado, this.graduadoInfo).subscribe(data => {
+            this.graduateService.updateGraduadoDTO(idGraduado, this.graduadoInfo).subscribe(async (data) => {
               Swal.fire({
                 title: '¡Información actualizada!',
                 text: 'Tu información se ha actualizado correctamente',
@@ -126,6 +172,14 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
         )
       }
     });
+  }
+
+  async updatePhoto() {
+    if (this.imageHandlerService.archivos) {
+      await this.uploadAndSetRutaImagen(this.imageHandlerService.archivos[0]);
+      this.userService.updateUserPhoto(this.idUser, this.rutaImagen).subscribe();
+      this.router.navigate(['system/alumni/perfil']);
+    }
   }
 
   initializePersonForm(): void {
@@ -141,7 +195,7 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   }
 
   initializeCityForm(): void {
-    
+
     this.updateUbicacionForm.patchValue({
       ciudad: this.graduadoInfo.ciudad
     });

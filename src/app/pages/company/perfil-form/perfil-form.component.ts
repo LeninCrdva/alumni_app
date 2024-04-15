@@ -7,6 +7,10 @@ import { PersonaService } from '../../../data/service/PersonService';
 import { Router } from '@angular/router';
 import { EmpresarioService } from '../../../data/service/empresario.service';
 import Swal from 'sweetalert2';
+import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
+import { AssetService } from '../../../data/service/Asset.service';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-form',
@@ -16,12 +20,23 @@ import Swal from 'sweetalert2';
 export class PerfilFormComponent implements AfterViewInit, OnInit {
   usuarioInfo: Usuario = new Usuario();
   empresarioInfo: Empresario = new Empresario();
-  updatePersonForm: FormGroup;
+  updateEmpresarioForm: FormGroup;
+  photoForm: FormGroup;
+  idUser: any;
+  rutaImagen: any;
   provincias: string[] = [];
 
-  constructor(private renderer: Renderer2, private el: ElementRef, private userService: UserService,
-    private formBuilder: FormBuilder, private personaService: PersonaService, private router: Router, private empresarioService: EmpresarioService) {
-    this.updatePersonForm = formBuilder.group({
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private userService: UserService,
+    formBuilder: FormBuilder,
+    private personaService: PersonaService,
+    private router: Router,
+    private empresarioService: EmpresarioService,
+    private assetService: AssetService,
+    public imageHandlerService: ImageHandlerServiceFoto) {
+    this.updateEmpresarioForm = formBuilder.group({
       primerNombre: ['', Validators.required],
       segundoNombre: ['', Validators.required],
       primerApellido: ['', Validators.required],
@@ -30,7 +45,9 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       telefono: ['', Validators.required],
       fechaNacimiento: ['', Validators.required]
     })
-
+    this.photoForm = formBuilder.group({
+      photo: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -62,19 +79,46 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
     });
   }
 
+  onFileSelected(event: any): void {
+    this.imageHandlerService.capturarFile(event);
+    this.imageHandlerService.previsualizacion;
+  }
+
+
+  deleteFile(rutakey: string) {
+    this.assetService.delete(rutakey).subscribe(r => {
+    })
+  }
+
+  async uploadAndSetRutaImagen(file: File, type: string = 'image') {
+    try {
+      const observable = this.assetService.upload(file);
+      const data: HttpEvent<any> | undefined = await lastValueFrom(observable);
+      if (type === 'image') {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaImagen = key;
+        }
+      }
+    } catch (error) {
+    }
+  }
+
   getAllInfoGraduate(): void {
     const userIdStorage = localStorage.getItem('name')
-
+    this.idUser = localStorage.getItem('user_id');
     if (userIdStorage) {
       this.userService.getUserByUsername(userIdStorage).subscribe(
-        user => { this.usuarioInfo = user; this.initializeForm() 
-        console.log(user)
+        user => {
+          this.rutaImagen = user.urlImagen;
+          this.imageHandlerService.getPrevisualizacion(this.rutaImagen);
+          this.usuarioInfo = user; this.initializeForm()
         }
       )
     }
   }
 
-  updateInfoGraduate() {
+  updateInfoEmpresario() {
     Swal.fire({
       title: "¿Realmente deseas cambiar tus datos personales?",
       text: "Esta acción es irreversible",
@@ -84,10 +128,9 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       cancelButtonColor: "#d33",
       confirmButtonText: "¡Sí, actualizar información!"
     }).then((result) => {
-      if (result.isConfirmed && this.updatePersonForm.valid) {
-        const formDataPerson = this.updatePersonForm.value;
+      if (result.isConfirmed && this.updateEmpresarioForm.valid) {
+        const formDataPerson = this.updateEmpresarioForm.value;
         const idUser = this.usuarioInfo.persona.id
-        //const idEmpresario = this.empresarioInfo.id || 0;
 
         this.usuarioInfo.persona = {
           cedula: formDataPerson.cedula,
@@ -99,20 +142,15 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
           apellidoMaterno: formDataPerson.segundoApellido
         }
 
-
-        this.personaService.updatePerson(idUser, this.usuarioInfo.persona).subscribe(
-          
-          persona => {
-            console.log(this.usuarioInfo.persona),
+        this.personaService.updatePerson(idUser, this.usuarioInfo.persona).subscribe(async (persona) => {
             this.usuarioInfo.persona = persona;
-            //this.empresarioService.updateEmpresario(idEmpresario, this.empresarioInfo).subscribe(data => {
-              Swal.fire({
-                title: '¡Información actualizada!',
-                text: 'Tu información se ha actualizado correctamente',
-                icon: "success"
-              });
-              this.router.navigate(['system/company/perfil']);
-           // })
+           
+            Swal.fire({
+              title: '¡Información actualizada!',
+              text: 'Tu información se ha actualizado correctamente',
+              icon: "success"
+            });
+            this.router.navigate(['system/company/perfil']);
           }
         )
       }
@@ -120,7 +158,7 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   }
 
   initializeForm(): void {
-    this.updatePersonForm.patchValue({
+    this.updateEmpresarioForm.patchValue({
       primerNombre: this.usuarioInfo.persona?.primerNombre,
       segundoNombre: this.usuarioInfo.persona?.segundoNombre,
       primerApellido: this.usuarioInfo.persona?.apellidoPaterno,
@@ -129,15 +167,23 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       telefono: this.usuarioInfo.persona?.telefono,
       fechaNacimiento: this.usuarioInfo.persona?.fechaNacimiento,
     });
+  }
 
+  async updatePhoto() {
+    if (this.imageHandlerService.archivos) {
+      await this.uploadAndSetRutaImagen(this.imageHandlerService.archivos[0]);
+      this.userService.updateUserPhoto(this.idUser, this.rutaImagen).subscribe();
+      this.router.navigate(['system/company/perfil']);
+    }
   }
 
   getAllCitiesAndGraduate(): void {
     const userId = localStorage.getItem('user_id');
 
     if (userId) {
-      this.empresarioService.getEmpresarioById(userId).subscribe(data => { this.empresarioInfo = data 
-      console.log(data)})
+      this.empresarioService.getEmpresarioById(userId).subscribe(data => {
+        this.empresarioInfo = data
+      })
 
     }
   }

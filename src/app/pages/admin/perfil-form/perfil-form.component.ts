@@ -9,6 +9,10 @@ import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServi
 import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
 import { fechaNacimientoValidator } from '../../authentication/register/fechaNacimientoValidator';
 import { DataValidationService } from '../../../data/service/data-validation.service';
+import { AssetService } from '../../../data/service/Asset.service';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,9 +23,11 @@ import { DataValidationService } from '../../../data/service/data-validation.ser
 export class PerfilFormComponent implements OnInit, AfterViewInit {
 
   updateAdminDataForm: FormGroup;
+  photoForm: FormGroup;
   adminInfo: any;
   pureInfo: any;
-  urlPhoto: any;
+  idUser: any;
+  rutaImagen: any;
   person: Persona = new Persona();
 
   constructor(private renderer: Renderer2, private el: ElementRef,
@@ -30,7 +36,9 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
     private personaService: PersonaService,
     private adminService: AdministradorService,
     public imageHandlerService: ImageHandlerServiceFoto,
-    private dataValidationService: DataValidationService
+    private dataValidationService: DataValidationService,
+    private assetService: AssetService,
+    private router: Router,
   ) {
 
     this.updateAdminDataForm = formBuilder.group({
@@ -43,32 +51,52 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
       fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
       email: ['', [Validators.required, Validators.email]],
     });
+
+    this.photoForm = formBuilder.group({
+      photo: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
     this.getAdminInfo();
   }
 
-  errorMessages = {
-    "cedula": '',
-    'email': '',
-    'telefono': '',
-  }
-
   getAdminInfo() {
     const userIdStorage = localStorage.getItem('name');
+    this.idUser = localStorage.getItem('user_id');
     if (userIdStorage !== null) {
       this.userService.getUserByUsername(userIdStorage).subscribe(data => {
         this.adminInfo = data;
-        this.urlPhoto = this.adminInfo.urlImagen;
-        this.imageHandlerService.getPrevisualizacion(this.urlPhoto);
+        this.rutaImagen = this.adminInfo.urlImagen;
+        this.imageHandlerService.getPrevisualizacion(this.rutaImagen);
         this.getadminInfoById();
       });
     }
   }
-  capturarImagen(event: any) {
+
+  onFileSelected(event: any): void {
     this.imageHandlerService.capturarFile(event);
     this.imageHandlerService.previsualizacion;
+  }
+
+
+  deleteFile(rutakey: string) {
+    this.assetService.delete(rutakey).subscribe(r => {
+    })
+  }
+
+  async uploadAndSetRutaImagen(file: File, type: string = 'image') {
+    try {
+      const observable = this.assetService.upload(file);
+      const data: HttpEvent<any> | undefined = await lastValueFrom(observable);
+      if (type === 'image') {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaImagen = key;
+        }
+      }
+    } catch (error) {
+    }
   }
 
   getadminInfoById() {
@@ -97,7 +125,7 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
       this.pureInfo.email = this.updateAdminDataForm.value.email;
       const id = this.adminInfo.persona.id;
       this.personaService.updatePerson(id, this.person).subscribe(() => {
-        this.adminService.updateAdministrador(this.pureInfo.id, this.pureInfo).subscribe(() => {
+        this.adminService.updateAdministrador(this.pureInfo.id, this.pureInfo).subscribe(async () => {
           Swal.fire({
             title: 'Datos actualizados',
             icon: 'success',
@@ -105,12 +133,21 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
             confirmButtonText: 'Aceptar',
             timer: 1500
           })
+          this.router.navigate(['system/admin/perfil-admin']);
         });
       });
     } else {
       Object.values(this.updateAdminDataForm.controls).forEach(control => {
         control.markAsTouched();
       });
+    }
+  }
+
+  async updatePhoto() {
+    if (this.imageHandlerService.archivos) {
+      await this.uploadAndSetRutaImagen(this.imageHandlerService.archivos[0]);
+      this.userService.updateUserPhoto(this.idUser, this.rutaImagen).subscribe();
+      this.router.navigate(['system/admin/perfil-admin']);
     }
   }
 
