@@ -47,6 +47,10 @@ export class OfertalaboralService {
   getOfertasLaboralesByEmpresario(name: string): Observable<ofertaLaboralDTO[]> {
     return this.http.get<ofertaLaboralDTO[]>(`${this.urlEndPoint}/usuario/${name}`);
   }
+
+  getOfertaLaboral(id: number): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/with-pdf/${id}`);
+  }
   
   getOfertasLaboralesByNameEmpresario(name: string): Observable<ofertaLaboralDTO[]> {
     return this.http.get<ofertaLaboralDTO[]>(`${this.urlEndPoint}/empresario/${name}`);
