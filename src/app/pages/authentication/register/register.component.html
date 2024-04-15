@@ -109,7 +109,7 @@
               <div class="mb-4">
                 <div class="form-group flex-grow-1 has-validation">
                   <input type="text" class="form-input" required placeholder=" " formControlName="cedula"
-                    id="InputCedula">
+                    (blur)="validateUniqueIdentityCard()" id="InputCedula">
                   <label for="InputCedula" class="form-label">Ingrese su Cédula</label>
                   <i class="fa-solid fa-id-card form-icon"></i>
                   <div class="invalid-feedback">
@@ -120,6 +120,9 @@
                 <div class="text-danger"
                   *ngIf="registerForm.get('cedula')?.hasError('pattern') && registerForm.get('cedula')?.touched">
                   <strong>Dato Erróneo</strong> - Solo números y 10 caracteres.
+                </div>
+                <div class="text-danger" *ngIf="duplicatedFields['identityCard']">
+                  <strong>Error</strong> - La cédula ya está registrada.
                 </div>
               </div>
 
@@ -176,7 +179,7 @@
               <div class="mb-4">
                 <div class="form-group flex-grow-1 mr-3">
                   <input type="text" class="form-input" required placeholder=" " formControlName="telefono"
-                    id="InputTelefono">
+                    (blur)="validatePhone()" id="InputTelefono">
                   <label for="" class="form-label">Ingrese su Número de Télefono</label>
                   <i class="fa-solid fa-phone-volume form-icon"></i>
                   <div class="invalid-feedback">
@@ -188,9 +191,12 @@
                   *ngIf="registerForm.get('telefono')?.hasError('pattern') && registerForm.get('telefono')?.touched">
                   <strong>Dato Erróneo</strong> - Solo números y 10 caracteres.
                 </div>
+                <div class="text-danger" *ngIf="duplicatedFields['phone']">
+                  <strong>Error</strong> - El número de teléfono ya está registrado.
+                </div>
               </div>
               <div class="d-flex justify-content-end">
-                <button class="btn btn-primary nextBtn" [disabled]="!registerForm.valid">Siguiente</button>
+                <button class="btn btn-primary nextBtn" [disabled]="!registerForm.valid || isButtonDisabled()">Siguiente</button>
               </div>
             </div>
           </form>
@@ -200,8 +206,8 @@
             <div class="row setup-content" id="step-2">
               <div class="mb-4">
                 <div class="form-group has-validation">
-                  <input type="email" class="form-input" required placeholder=" " id="InputNombreUsuario"
-                    formControlName="nombreUsuario" aria-describedby="usernameError">
+                  <input type="text" class="form-input" required placeholder=" " id="InputNombreUsuario"
+                    (blur)="validateUsername()" formControlName="nombreUsuario" aria-describedby="usernameError">
                   <label for="" class="form-label">Ingresa tu nombre de usuario</label>
                   <i class="ri-at-line form-icon"></i>
                   <div class="invalid-feedback">
@@ -211,6 +217,9 @@
                 <div class="text-danger"
                   *ngIf="subRegisterForm.get('nombreUsuario')?.hasError('pattern') && subRegisterForm.get('nombreUsuario')?.touched">
                   <strong>Dato Erróneo</strong> - Solo letras y números y de 2 a 10 caracteres.
+                </div>
+                <div class="text-danger" *ngIf="duplicatedFields['username']">
+                  <strong>Error</strong> - El nombre de usuario ya está registrado.
                 </div>
               </div>
 
@@ -267,12 +276,12 @@
               <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-primary prevBtn">Anterior</button>
                 <button class="btn btn-primary nextBtn ms-2"
-                  [disabled]="!subRegisterForm.valid || !imageHandlerService.previsualizacion">Siguiente</button>
+                  [disabled]="!subRegisterForm.valid || !imageHandlerService.previsualizacion || isButtonDisabled()">Siguiente</button>
               </div>
             </div>
           </form>
 
-          <!-- Third Section Bussinessman-->
+          <!-- Third Section Businessman-->
           <div class="needs-validation" *ngIf="roleName === 'EMPRESARIO'">
             <div>
               <form class="" [formGroup]="formCase1">
@@ -308,7 +317,7 @@
                     <div class="flex-grow-1">
                       <div class="form-group mr-3 has-validation">
                         <input type="text" class="form-input" required placeholder=" " formControlName="email"
-                          id="email">
+                          (blur)="validateBusinessManEmail()" id="email">
                         <label for="email" class="form-label">Ingrese su Email</label>
                         <i class="ri-user-smile-line form-icon"></i>
                         <div class="invalid-feedback">
@@ -318,6 +327,9 @@
                       <div class="text-danger"
                         *ngIf="formCase1.get('email')?.hasError('email') && formCase1.get('email')?.touched">
                         <strong>Dato Erróneo</strong> - Email no válido.
+                      </div>
+                      <div class="text-danger" *ngIf="duplicatedFields['businessManEmail']">
+                        <strong>Error</strong> - Email ya registrado.
                       </div>
                     </div>
 
@@ -336,7 +348,7 @@
                   </div>
                   <div class="d-flex justify-content-end">
                     <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
-                    <button class="btn btn-primary nextBtn  ms-2" [disabled]="!formCase1.valid">Siguiente</button>
+                    <button class="btn btn-primary nextBtn  ms-2" [disabled]="!formCase1.valid || isButtonDisabled()">Siguiente</button>
                   </div>
                 </div>
               </form>
@@ -348,7 +360,7 @@
                       <div class="flex-grow-1">
                         <div class="form-group mr-3 has-validation">
                           <input name="ruc" type="text" class="form-input" required placeholder=" "
-                            formControlName="ruc">
+                            (blur)="validateCompanyRuc()" formControlName="ruc">
                           <label for="ruc" class="form-label">Ingrese El RUC</label>
                           <i class="ri-user-smile-line form-icon"></i>
                           <div class="invalid-feedback">
@@ -360,18 +372,24 @@
                           *ngIf="formSubCase1.get('ruc')?.hasError('pattern') && formSubCase1.get('ruc')?.touched">
                           <strong>Dato Erróneo</strong> - Solo números y 13 caracteres.
                         </div>
+                        <div class="text-danger" *ngIf="duplicatedFields['companyRuc']">
+                          <strong>Error</strong> - El RUC ya está registrado.
+                        </div>
                       </div>
 
                       <div class="mx-2 flex-grow-1">
                         <div class="form-group has-validation">
                           <input type="text" class="form-input" required placeholder=" " formControlName="nombre"
-                            id="nombre">
+                            id="nombre" (blur)="validateCompanyName()">
                           <label for="nombre" class="form-label">Ingrese El Nombre de su Empresa</label>
                           <i class="ri-user-smile-line form-icon"></i>
                           <div class="invalid-feedback">
                             <strong>Dato Faltante</strong> - El nombre de la empresa es obligatorio.
                           </div>
                         </div>
+                      </div>
+                      <div class="text-danger" *ngIf="duplicatedFields['companyName']">
+                        <strong>Error</strong> - El Nombre de la Empresa ya está registrado.
                       </div>
                     </div>
 
@@ -468,7 +486,7 @@
                     <div class="d-flex justify-content-end">
                       <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
                       <button class="btn btn-primary nextBtn  ms-2" (click)="register()"
-                        [disabled]="!formSubCase1.valid">Registrarse</button>
+                        [disabled]="!formSubCase1.valid || isButtonDisabled()">Registrarse</button>
                     </div>
                   </div>
                 </form>
@@ -483,13 +501,16 @@
                   <div class="flex-grow-1">
                     <div class="form-group mr-3 has-validation">
                       <input name="emailPersonal" type="email" class="form-input" required placeholder=" "
-                        formControlName="emailPersonal">
+                        formControlName="emailPersonal" (blur)="validateGraduateEmail()">
                       <label for="emailPersonal" class="form-label">Ingrese su Email Personal</label>
                       <i class="ri-user-smile-line form-icon"></i>
                     </div>
                     <div class="text-danger"
                       *ngIf="formCase2.get('emailPersonal')?.hasError('email') && formCase2.get('emailPersonal')?.touched">
                       <strong>Dato Erróneo</strong> - Email no válido.
+                    </div>
+                    <div class="text-danger" *ngIf="duplicatedFields['graduateEmail']">
+                      <strong>Error</strong> - Email ya registrado.
                     </div>
                   </div>
                   <div class="mx-2 flex-grow-1">
@@ -533,7 +554,7 @@
                       *ngIf="formCase2.get('anioGraduacion')?.hasError('required') && formCase2.get('anioGraduacion')?.touched">
                       La fecha de graduación es obligatoria.
                     </div>
-                  </div>     
+                  </div>
                 </div>
 
                 <div class="mb-4">
@@ -565,7 +586,7 @@
                 <div class="d-flex justify-content-end">
                   <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
                   <button class="btn btn-primary nextBtn  ms-2" (click)="register()"
-                    [disabled]="!formCase2.valid || !pdfHandlerService.pdfUrl">Registrarse</button>
+                    [disabled]="!formCase2.valid || !pdfHandlerService.pdfUrl || isButtonDisabled()">Registrarse</button>
                 </div>
               </div>
 

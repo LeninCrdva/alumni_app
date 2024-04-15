@@ -22,6 +22,11 @@ export class DataValidationService {
     return this.http.get<boolean>(url);
   }
 
+  validateAdminEmail(email: string): Observable<boolean> {
+    const url = `${this.urlEndPoint}/administradores/exists/email/${email}`;
+    return this.http.get<boolean>(url);
+  }
+
   validateCompanyRuc(ruc: string): Observable<boolean> {
     const url = `${this.urlEndPoint}/empresas/exists/ruc/${ruc}`;
     return this.http.get<boolean>(url);

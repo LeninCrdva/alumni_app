@@ -44,6 +44,11 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/signup`, requestBody);
   }
 
+  signupAdmin(registroDTO: any): Observable<any> {
+    
+    return this.http.post(`${this.baseUrl}/signup/admin`, registroDTO);
+  }
+
   resetPassword(recoveryDto: RecoveryDTO): Observable<RecoveryDTO> {
     const url = `${this.baseUrl}/login/recovery-password`;
     return this.http.put<RecoveryDTO>(url, recoveryDto, { headers: this.httpHeaders })

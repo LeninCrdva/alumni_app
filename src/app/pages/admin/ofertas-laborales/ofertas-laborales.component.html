@@ -57,8 +57,8 @@
                             <td>{{ ofert.cargo ? ofert.cargo : 'ADJUNTO EN LA IMAGEN' }}</td>
                             <td>{{ ofert.experiencia ? ofert.experiencia : 'ADJUNTO EN LA IMAGEN' }}</td>
                             <td>{{ ofert.salario > 0 ? '$' + ofert.salario : 'ADJUNTO EN LA IMAGEN' }}</td>
-                            <td>{{ ofert.fechaCierre }}</td>
-                            <td>{{ ofert.fechaPublicacion }}</td>
+                            <td>{{ ofert.fechaCierre | date: 'dd/MM/yyyy HH:mm' }}</td>
+                            <td>{{ ofert.fechaPublicacion | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td> {{ ofert.estado }}</td>
                             <td>{{ ofert.nombreEmpresa }}</td>
                             <td class="text-center">
@@ -154,7 +154,7 @@
                                                 <div class="flex-grow-1">
                                                     <div class="form-group mr-3">
                                                         <input type="text" class="form-input"
-                                                            [value]="ofertaLaboralDTO.nombreEmpresa">
+                                                            [value]="ofertaLaboralDTO.nombreEmpresa" readonly>
                                                         <label for="" class="form-label">Empresa</label>
                                                         <i class="ri-user-smile-line form-icon"></i>
 

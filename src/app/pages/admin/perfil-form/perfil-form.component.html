@@ -38,6 +38,10 @@
                             *ngIf="updateAdminDataForm.get('primerNombre')?.hasError('required') && updateAdminDataForm.get('primerNombre')?.touched">
                             El primer nombre es obligatorio.
                         </div>
+                        <div class="text-danger"
+                            *ngIf="updateAdminDataForm.get('primerNombre')?.hasError('pattern') && updateAdminDataForm.get('primerNombre')?.touched">
+                            Solo letras y mínimo 2 caracteres.
+                        </div>
                     </div>
 
                     <div class="mb-4">
@@ -53,6 +57,10 @@
                                 *ngIf="updateAdminDataForm.get('segundoNombre')?.hasError('required') && updateAdminDataForm.get('segundoNombre')?.touched">
                                 El segundo nombre es obligatorio.
                             </div>
+                            <div class="text-danger"
+                                *ngIf="updateAdminDataForm.get('segundoNombre')?.hasError('pattern') && updateAdminDataForm.get('segundoNombre')?.touched">
+                                Solo letras y mínimo 2 caracteres.
+                            </div>
                         </div>
                     </div>
 
@@ -67,6 +75,10 @@
                             <div class="text-danger mb-4"
                                 *ngIf="updateAdminDataForm.get('apellidoPaterno')?.hasError('required') && updateAdminDataForm.get('apellidoPaterno')?.touched">
                                 El primer apellido es obligatorio.
+                            </div>
+                            <div class="text-danger"
+                                *ngIf="updateAdminDataForm.get('apellidoPaterno')?.hasError('pattern') && updateAdminDataForm.get('apellidoPaterno')?.touched">
+                                Solo letras y mínimo 2 caracteres.
                             </div>
                         </div>
                     </div>
@@ -84,13 +96,17 @@
                                 *ngIf="updateAdminDataForm.get('apellidoMaterno')?.hasError('required') && updateAdminDataForm.get('apellidoMaterno')?.touched">
                                 El segundo apellido es obligatorio.
                             </div>
+                            <div class="text-danger"
+                                *ngIf="updateAdminDataForm.get('apellidoMaterno')?.hasError('pattern') && updateAdminDataForm.get('apellidoMaterno')?.touched">
+                                Solo letras y mínimo 2 caracteres.
+                            </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <div class="flex-grow-1">
                             <div class="form-group">
-                                <input type="text" class="form-input" placeholder=" " formControlName="email"
+                                <input type="text" class="form-input" placeholder=" " formControlName="email" (blur)="validateAdminEmail()"
                                     id="InputApellidoP">
                                 <label for="" class="form-label">Ingrese su Email</label>
                                 <i class="ri-user-smile-line form-icon"></i>
@@ -100,14 +116,21 @@
                                 *ngIf="updateAdminDataForm.get('email')?.hasError('required') && updateAdminDataForm.get('email')?.touched">
                                 El email es obligatorio.
                             </div>
+                            <div class="text-danger"
+                                *ngIf="updateAdminDataForm.get('email')?.hasError('email') && updateAdminDataForm.get('email')?.touched">
+                                El email no es válido.
+                            </div>
+                            <div class="text-danger" *ngIf="duplicatedFields['adminEmail']">
+                                El correo ya se encuentra registrado.
+                              </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="cedula"
+                            <input type="text" class="form-input" placeholder=" " formControlName="cedula" (blur)="validateUniqueIdentityCard()"
                                 id="InputCedula">
-                            <label for="" class="form-label">Ingresa tu Cedula</label>
+                            <label for="" class="form-label">Ingresa tu Cédula</label>
                             <i class="fa-solid fa-id-card form-icon"></i>
                         </div>
 
@@ -115,13 +138,20 @@
                             *ngIf="updateAdminDataForm.get('cedula')?.hasError('required') && updateAdminDataForm.get('cedula')?.touched">
                             La cédula es obligatoria.
                         </div>
+                        <div class="text-danger"
+                            *ngIf="updateAdminDataForm.get('cedula')?.hasError('pattern') && updateAdminDataForm.get('cedula')?.touched">
+                            La cédula debe contener 10 dígitos.
+                        </div>
+                        <div class="text-danger" *ngIf="duplicatedFields['identityCard']">
+                            El número de cédula ya se encuentra registrado.
+                          </div>
                     </div>
 
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                            <input type="text" class="form-input" placeholder=" " formControlName="telefono" (blur)="validatePhone()"
                                 id="InputTelefono">
-                            <label for="" class="form-label">Ingresa tu Telefono</label>
+                            <label for="" class="form-label">Ingresa tú Telefono</label>
                             <i class="fa-solid fa-phone-volume form-icon"></i>
                         </div>
 
@@ -129,6 +159,13 @@
                             *ngIf="updateAdminDataForm.get('telefono')?.hasError('required') && updateAdminDataForm.get('telefono')?.touched">
                             El número de teléfono es obligatorio.
                         </div>
+                        <div class="text-danger"
+                            *ngIf="updateAdminDataForm.get('telefono')?.hasError('pattern') && updateAdminDataForm.get('telefono')?.touched">
+                            El número de teléfono debe tener 10 dígitos.
+                        </div>
+                        <div class="text-danger" *ngIf="duplicatedFields['phone']">
+                            El número de teléfono ya se encuentra registrado.
+                          </div>
                     </div>
 
                     <div class="mb-4">
@@ -143,135 +180,20 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label style="color: var(--alumni-color)">Subir Foto de perfil</label>
-
-                        <div class="card mg-b-20">
-                            <div class="card-header">
-                                <h4 class="card-header-title">
-                                    <div class="preview-img">
-
-                                        <div class="image-container text-center" style="margin-top: 3rem;"
-                                            *ngIf="adminInfo?.urlImagen">
-                                            <img [src]="adminInfo.urlImagen" alt=""
-                                                style="width: 220px; height: 220px; object-fit: cover;" />
-                                        </div>
-                                    </div>
-                                </h4>
-                                <div class="card-header-btn">
-                                    <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
-                                        aria-expanded="true">
-                                        <i class="ion-ios-arrow-down"></i>
-                                    </a>
+                    <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                        <div class="card-header">
+                            <div class="preview-img"
+                                *ngIf="imageHandlerService.previsualizacion || (imageHandlerService.previsualizacion)">
+                                <div class="image-container text-center" style="margin: 2rem;">
+                                    <img [src]="imageHandlerService.previsualizacion" alt=""
+                                        style="max-width: 40%; object-fit: cover; border-radius: 1rem;" />
                                 </div>
                             </div>
-                            <div class="card-body collapse show" id="collapse8">
-                                <input type="file" class="dropify" data-show-remove="false" accept=".jpg, .jpeg, .png"
-                                    (change)="uploadPhoto($event)" />
-                            </div>
-                        </div>
-
-                        <!-- <div class="wrapper-button" *ngIf="previsualizacion"> -->
-                        <div class="wrapper-button">
-                            <!-- Agrega el botón necesario aquí -->
                         </div>
                     </div>
                 </form>
-
-                <!-- <button class="btn btn-oblong btn-primary btn-block mg-b-10">Siguiente Paso</button>
-                <br> -->
-                <button class="btn btn-oblong btn-primary btn-block mg-b-10"
-                    (click)="updateAdminData()">Guardar</button>
-            </li>
-            <!-- <li id="ubicación">
-                <h1>Ubicación</h1>
-                <p>Para mantenernos conectados y al tanto de tus logros, te animamos a actualizar tu ubicación actual en
-                    nuestra plataforma Alumni. Este simple paso nos permitirá seguir tu trayectoria profesional, conocer
-                    tus éxitos y
-                    facilitar la conexión con otros exalumnos que puedan estar en tu área.</p>
-                <form [formGroup]="updateUbicacionForm">
-                    <div class="mb-4 my-4">
-                        <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="ciudad"
-                                id="InputCedula">
-                            <label for="" class="form-label">Ingresa tu ubicación</label>
-                            <i class="fa-solid fa-id-card form-icon"></i>
-                        </div>
-
-                        <div class="text-danger">
-                            La ubicación es obligatoria.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" class="form-input" placeholder=" " formControlName="provincia"
-                                id="InputTelefono">
-                            <label for="" class="form-label">Ingresa tu Telefono</label>
-                            <i class="fa-solid fa-phone-volume form-icon"></i>
-                        </div>
-
-                        <div class="text-danger">
-                            El número de telefono es obligatorio.
-                        </div>
-                    </div>
-
-                </form>
-            </li> -->
-            <!-- <li id="titulo">
-                <h1>Titulo</h1>
-                <p>Para asegurarnos de mantener actualizada nuestra base de datos y celebrar tus logros académicos, te
-                    pedimos que subas
-                    una copia de tu título universitario y completes algunos datos clave sobre tu experiencia educativa.
-                </p>
-                 <form>
-                    <div class="mb-4">
-                        <label style="color: var(--alumni-color)">Actualiazr Titulo</label>
-
-                        <div class="card mg-b-20">
-                            <div class="card-header">
-                                <h4 class="card-header-title">
-                                     <div class="preview-img" *ngIf="previsualizacion">
-                                                                <button class="clear-image form-control border-0 cancel-button" type="button"
-                                                                    (click)="clearImage()">
-                                                                    Cancelar
-                                                                </button>
-                                        
-                                                                <div class="image-container text-center" style="margin-top: 3rem;">
-                                                                    <img [src]="previsualizacion" alt=""
-                                                                        style="width: 220px; height: 220px; object-fit: cover;" />
-                                                                </div>
-                                                            </div> 
-                                </h4>
-                                <div class="card-header-btn">
-                                    <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8"
-                                        aria-expanded="true">
-                                        <i class="ion-ios-arrow-down"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-body collapse show" id="collapse8">
-                                
-                                <input type="file" class="dropify" data-show-remove="false"
-                                    accept=".jpg, .jpeg, .png" />
-                            </div>
-                        </div>
-
-                        <div class="wrapper-button">
-                        </div>
-                    </div>
-                </form> 
-            </li> -->
-            <li id="otros">
-                <h1>Settings</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit quaerat magnam sit, nobis sed cum
-                    eius voluptatem quis facilis sunt, quia? Non atque, facere obcaecati veniam! Impedit atque, facilis
-                    similique doloribus quidem quibusdam quod! Quam odit quasi quia accusantium natus eos accusamus
-                    sequi repellat modi reiciendis vitae provident tenetur sint tempora quaerat expedita facere,
-                    assumenda quos consequatur minima quod deleniti.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, sapiente.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error molestias quasi est expedita, a
-                    pariatur deleniti cum reiciendis similique cupiditate?</p>
+                <button class="btn btn-oblong btn-primary btn-block mg-b-10" (click)="updateAdminData()"
+                    [disabled]="!updateAdminDataForm.valid || isSaveButtonDisabled()">Guardar</button>
             </li>
         </ul>
     </div>

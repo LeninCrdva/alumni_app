@@ -3,10 +3,9 @@ import { AuthService } from '../../../data/service/AuthService';
 import { UserService } from '../../../data/service/UserService';
 import { Persona } from '../../../data/model/persona';
 import { PersonaService } from '../../../data/service/PersonService';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Rol } from '../../../data/model/rol';
-import { RolService } from '../../../data/service/rol.service';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { DataTablesService } from '../../../data/DataTables.service';
@@ -26,7 +25,9 @@ import { fechaNacimientoValidator } from '../../authentication/register/fechaNac
 import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
 import { AuditEntryService } from '../../../data/service/auditEntry.service';
 import { AuditEntryDTO } from '../../../data/model/DTO/AuditEntryDTO';
-import { AuditActionType } from '../../../data/model/enum/enums';
+import { AdministradorService } from '../../../data/service/administrador.service';
+import { Administrador } from '../../../data/model/administrador';
+import { DataValidationService } from '../../../data/service/data-validation.service';
 
 @Component({
   selector: 'app-usuarios-lists',
@@ -38,6 +39,7 @@ export class UsuariosListsComponent implements OnInit {
   registerNewUserForm: FormGroup;
   formCase1: FormGroup;
   formCase2: FormGroup;
+  formCase3: FormGroup;
   editMode: boolean = false;
   ciudadesList: Ciudad[] = [];
   businessSectorsList: sectorempresarial[] = [];
@@ -59,6 +61,12 @@ export class UsuariosListsComponent implements OnInit {
   initializeTable: boolean = true;
   dtoptions: DataTables.Settings = {};
   userId!: number;
+  //For validation
+  currentIdentificacion!: string;
+  currentEmail!: string;
+  currentPhone!: string;
+  currentUsername!: string;
+  currentBusinessManEmail!: string;
 
   ngOnInit(): void {
     this.loadData();
@@ -77,34 +85,34 @@ export class UsuariosListsComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private personService: PersonaService,
-    private rolService: RolService,
+    private dataValidationService: DataValidationService,
     private ciudadService: CiudadService,
     private gradutateService: GraduadoService,
     private businessManService: EmpresarioService,
+    private adminService: AdministradorService,
     private authService: AuthService,
     public dtService: DataTablesService,
     public filterService: FiltersService,
     public alertService: AlertsService,
     private AuditService: AuditEntryService,
-    private renderer: Renderer2
   ) {
     this.registerNewUserForm = this.fb.group({
       primerNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
-      cedula: ['', [Validators.required, this.noDuplicateCedulaValidation(), Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
       sexo: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
       fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
-      nombreUsuario: ['', [Validators.required, this.noDuplicateUsernameValidation(), Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
+      nombreUsuario: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
       clave: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternPasswordValidator())]],
     });
 
     this.formCase1 = this.fb.group({
       descripcion: ['', Validators.required],
       anios: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email,]],
       puesto: ['', Validators.required],
     });
 
@@ -114,21 +122,13 @@ export class UsuariosListsComponent implements OnInit {
       emailPersonal: ['', [Validators.required, Validators.email]],
       estadoCivil: ['', Validators.required],
     });
-    this.editMode = true;
+
+    this.formCase3 = this.fb.group({
+      cargo: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+    });
     this.userId = localStorage.getItem('user_id') ? parseInt(localStorage.getItem('user_id')!) : 0;
   };
-
-  onRegistrarClick(): void {
-    this.registerNewUserForm.reset();
-    this.formCase1.reset();
-    this.formCase2.reset();
-    this.alertService.resetInputsValidations(this.renderer);
-    this.editMode = false;
-  }
-
-  onEditarClick(): void {
-    this.editarClicked = true;
-  }
 
   titleHandler(): string {
     return this.editMode ? 'Editar ' + this.roleName : 'Crear nuevo ' + this.roleName;
@@ -141,6 +141,37 @@ export class UsuariosListsComponent implements OnInit {
     if (cancelButton) {
       cancelButton.click();
     }
+  }
+
+  initForm(): void {
+    this.registerNewUserForm = this.fb.group({
+      primerNombre: ['SSAFSAFAF', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      sexo: ['', Validators.required],
+      telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
+      nombreUsuario: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
+      clave: []
+    });
+  }
+
+  initFormCreate(): void {
+    this.registerNewUserForm = this.fb.group({
+      primerNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      sexo: ['', Validators.required],
+      telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
+      nombreUsuario: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
+      clave: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternPasswordValidator())]],
+    });
+
   }
 
   callModal(): void {
@@ -162,6 +193,9 @@ export class UsuariosListsComponent implements OnInit {
       case 'RESPONSABLE_CARRERA':
         this.callModal();
         break;
+      case 'ADMINISTRADOR':
+        this.callModal();
+        break;
       default:
         break;
     }
@@ -178,6 +212,11 @@ export class UsuariosListsComponent implements OnInit {
         <div class="body">
           <div class="">
             <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <label class="option-btn">
+                  <input type="radio" name="option" id="adminBtn" autocomplete="off" value="ADMINISTRADOR"> Administrador
+                </label>
+              </li>
               <li class="list-group-item">            
                 <label class="option-btn">
                   <input type="radio" name="option" id="graduadoBtn" autocomplete="off" value="GRADUADO"> Graduado
@@ -207,26 +246,19 @@ export class UsuariosListsComponent implements OnInit {
           radioButton.addEventListener('click', (event) => {
             const selectedOption = (event.target as HTMLInputElement).value;
             this.roleName = selectedOption;
+            this.editMode = false;
+            this.cleanErrorsForm(this.registerNewUserForm);
+            this.initFormCreate();
+            this.currentBusinessManEmail = '';
+            this.currentEmail = '';
+            this.currentIdentificacion = '';
+            this.currentPhone = '';
+            this.currentUsername = '';
             this.controlOptionsOnCreate(this.roleName);
             Swal.close();
           });
         });
       }
-    });
-  }
-
-  getAllUsersBySelectedRoles(): void {
-    const rolesToShow = ['GRADUADO', 'EMPRESARIO'];
-    this.userService.getUsersDTO().subscribe((users) => {
-      this.usersList = users.filter((user) => rolesToShow.includes(user.rol));
-      this.usersListFiltered = [...this.usersList];
-    });
-  }
-
-  getAllSelectedRoles(): void {
-    const rolesToDisplay = ['GRADUADO', 'EMPRESARIO', 'RESPONSABLE_CARRERA'];
-    this.rolService.getRoles().subscribe(roles => {
-      this.roleList = roles.filter(role => rolesToDisplay.includes(role.nombre));
     });
   }
 
@@ -236,17 +268,6 @@ export class UsuariosListsComponent implements OnInit {
     });
   }
 
-  onSexoChange(event: any, value: string) {
-    if (event.target.checked) {
-      this.registerNewUserForm.patchValue({
-        sexo: value
-      });
-    } else {
-      this.registerNewUserForm.patchValue({
-        sexo: ''
-      });
-    }
-  }
 
   async register() {
     if (this.registerNewUserForm.valid) {
@@ -285,7 +306,6 @@ export class UsuariosListsComponent implements OnInit {
                   this.createAuditEntry(audit);
                 });
             } else {
-              this.showErrorsForm(this.formCase2);
             }
             break;
           case 'EMPRESARIO':
@@ -303,7 +323,7 @@ export class UsuariosListsComponent implements OnInit {
                 nombreUsuario: formData.nombreUsuario,
                 clave: formData.clave,
                 rol: this.roleName,
-                estado: formData.nombreDelRol === 'GRADUADO' ? true : false,
+                estado: false,
                 rutaImagen: '',
                 urlImagen: '',
               };
@@ -324,6 +344,84 @@ export class UsuariosListsComponent implements OnInit {
               this.showErrorsForm(this.formCase1);
             }
             break;
+          case 'ADMINISTRADOR':
+            if (this.formCase3.valid) {
+              const formData = this.registerNewUserForm.value;
+              const aditionalData = this.formCase3.value;
+              this.registerDto = {
+                cedula: formData.cedula,
+                primerNombre: formData.primerNombre,
+                segundoNombre: formData.segundoNombre,
+                fechaNacimiento: formData.fechaNacimiento,
+                telefono: formData.telefono,
+                apellidoPaterno: formData.primerApellido,
+                apellidoMaterno: formData.segundoApellido,
+                sexo: formData.sexo,
+                nombreUsuario: formData.nombreUsuario,
+                clave: formData.clave,
+                rol: this.roleName,
+                estado: true,
+                rutaImagen: '',
+                urlImagen: '',
+              };
+              let Administrador: Administrador = {
+                cargo: aditionalData.cargo,
+                estado: true,
+                email: aditionalData.email,
+                usuario: formData.nombreUsuario
+              };
+              this.authService.signupAdmin(this.registerDto).subscribe(async () => {
+                await this.createAdmin(Administrador);
+                let audit: AuditEntryDTO = {
+                  timeStamp: new Date(),
+                  actionType: 'INSERT',
+                  userId: this.userId,
+                  resourceName: 'Usuario: ' + formData.nombreUsuario,
+                  actionDetails: 'Usuario: ' + formData.nombreUsuario + " Cédula: " + formData.cedula + " Rol: " + this.roleName,
+                  oldValue: '',
+                  newValue: ''
+                }
+                this.createAuditEntry(audit);
+              });
+            } else {
+              this.showErrorsForm(this.formCase3);
+            }
+            break;
+          case 'RESPONSABLE_CARRERA':
+            if (this.registerNewUserForm.valid) {
+              const formData = this.registerNewUserForm.value;
+              this.registerDto = {
+                cedula: formData.cedula,
+                primerNombre: formData.primerNombre,
+                segundoNombre: formData.segundoNombre,
+                fechaNacimiento: formData.fechaNacimiento,
+                telefono: formData.telefono,
+                apellidoPaterno: formData.primerApellido,
+                apellidoMaterno: formData.segundoApellido,
+                sexo: formData.sexo,
+                nombreUsuario: formData.nombreUsuario,
+                clave: formData.clave,
+                rol: this.roleName,
+                estado: true,
+                rutaImagen: '',
+                urlImagen: '',
+              };
+              this.authService.signupAdmin(this.registerDto).subscribe(async () => {
+                let audit: AuditEntryDTO = {
+                  timeStamp: new Date(),
+                  actionType: 'INSERT',
+                  userId: this.userId,
+                  resourceName: 'Usuario: ' + formData.nombreUsuario,
+                  actionDetails: 'Usuario: ' + formData.nombreUsuario + " Cédula: " + formData.cedula + " Rol: " + this.roleName,
+                  oldValue: '',
+                  newValue: ''
+                }
+                this.createAuditEntry(audit);
+              });
+            } else {
+              this.showErrorsForm(this.formCase3);
+            }
+            break;
         }
       }
     } else {
@@ -337,6 +435,12 @@ export class UsuariosListsComponent implements OnInit {
         this.loadData();
         this.closeModal();
       }
+    });
+  }
+
+  async createAdmin(Administrador: any) {
+    this.adminService.createAdministrador(Administrador).subscribe(() => {
+      this.loadData();
     });
   }
 
@@ -359,9 +463,12 @@ export class UsuariosListsComponent implements OnInit {
   }
 
   callAllForms(): void {
-    this.cleanErrorsForm(this.registerNewUserForm);
-    this.cleanErrorsForm(this.formCase1);
-    this.cleanErrorsForm(this.formCase2);
+    if (!this.editMode) {
+      this.registerNewUserForm.reset();
+      this.formCase1.reset();
+      this.formCase2.reset();
+      this.formCase3.reset();
+    }
   }
 
   registerGraduate(user: string): GraduadoDTO | undefined {
@@ -399,11 +506,17 @@ export class UsuariosListsComponent implements OnInit {
 
   loadData() {
     this.userService.getUsersDTO().subscribe(
-      result => {
-        const rolesToShow = ['GRADUADO', 'EMPRESARIO', 'RESPONSABLE_CARRERA'];
+      (result) => {
+        const rolesToShow = ['GRADUADO', 'EMPRESARIO', 'RESPONSABLE_CARRERA', 'ADMINISTRADOR'];
         this.dataForValidation = result;
-        this.usersList = result.filter((user) => rolesToShow.includes(user.rol));
+        this.usersList = result.filter(
+          (user) =>
+            rolesToShow.includes(user.rol) &&
+            (user.id !== this.userId)
+        );
+
         this.usersListFiltered = [...this.usersList];
+
         if (this.initializeTable) {
           this.dtTrigger.next(null);
           this.initializeTable = false;
@@ -412,42 +525,6 @@ export class UsuariosListsComponent implements OnInit {
         }
       }
     );
-  }
-
-  registerUser(): void {
-    this.editMode = false;
-    if (this.registerNewUserForm.valid) {
-      const formData = this.registerNewUserForm.value;
-      this.registerDTO = {
-        cedula: formData.cedula,
-        primerNombre: formData.primerNombre,
-        segundoNombre: formData.segundoNombre,
-        fechaNacimiento: formData.fechaNacimiento,
-        telefono: formData.telefono,
-        apellidoPaterno: formData.primerApellido,
-        apellidoMaterno: formData.segundoApellido,
-        sexo: formData.sexo,
-        nombreUsuario: formData.nombreUsuario,
-        clave: formData.clave,
-        rol: formData.nombreDelRol,
-        estado: false,
-        rutaImagen: '',
-        urlImagen: ''
-      };
-      this.authService.signup(this.registerDTO).subscribe(response => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Usuario registrado',
-          text: 'El usuario ha sido registrado con éxito',
-          timer: 2000
-        });
-        this.closeModal();
-      });
-    } else {
-      Object.values(this.registerNewUserForm.controls).forEach(control => {
-        control.markAsTouched();
-      });
-    }
   }
 
   updateStateUser(id: any, usuarioDTO: UserDTO): void {
@@ -460,11 +537,16 @@ export class UsuariosListsComponent implements OnInit {
     });
   }
 
+  idPersona: any;
+  oldData: any;
   getDataForUpdate(identification: any, id: any, role: any): void {
     this.editMode = true;
     this.personService.getPersonByIdentification(identification).subscribe((person) => {
-      this.id = person.id;
-      this.patchPersonAndUserData(this.id, person);
+      this.idPersona = person.id;
+      this.currentIdentificacion = person.cedula;
+      this.currentPhone = person.telefono;
+
+      this.patchPersonAndUserData(id, person);
       switch (role) {
         case 'GRADUADO':
           this.roleName = 'GRADUADO';
@@ -474,14 +556,22 @@ export class UsuariosListsComponent implements OnInit {
           this.roleName = 'EMPRESARIO';
           this.patchBusinessManData(id);
           break;
+        case 'RESPONSABLE_CARRERA':
+          this.roleName = 'RESPONSABLE_CARRERA';
+          break;
         default:
           break;
       }
     });
   }
 
+  auditInEdit!: AuditEntryDTO;
   patchPersonAndUserData(id: any, person: Persona): void {
     this.userService.getUserDTOById(id).subscribe((user) => {
+      this.currentUsername = user.nombreUsuario;
+      this.oldData = person.primerNombre + ' ' + person.segundoNombre + ' ' + person.apellidoPaterno + ' ' + person.apellidoMaterno + ' ' + person.cedula + ' ' + person.telefono + ' ' + person.fechaNacimiento + ' ' + person.sexo + ' ' + user.nombreUsuario + ' ' + user.rol;
+      this.id = user.id;
+      this.userDTO = user;
       this.registerNewUserForm.patchValue({
         primerNombre: person.primerNombre,
         segundoNombre: person.segundoNombre,
@@ -497,9 +587,12 @@ export class UsuariosListsComponent implements OnInit {
     });
   }
 
+  idGraduate: any;
   patchGraduateData(userId: any): void {
     this.gradutateService.getGraduadoDTOByUserId(userId).subscribe((graduate) => {
       if (graduate) {
+        this.idGraduate = graduate.id;
+        this.currentEmail = graduate.emailPersonal;
         this.formCase2.patchValue({
           ciudad: graduate.ciudad,
           anioGraduacion: graduate.anioGraduacion,
@@ -513,6 +606,8 @@ export class UsuariosListsComponent implements OnInit {
   patchBusinessManData(userId: any): void {
     this.businessManService.getBusinessManByUserId(userId).subscribe((businessMan) => {
       if (businessMan) {
+        this.idBusinessMan = businessMan.id;
+        this.currentBusinessManEmail = businessMan.email;
         this.formCase1.patchValue({
           descripcion: businessMan.descripcion,
           anios: businessMan.anios,
@@ -561,13 +656,27 @@ export class UsuariosListsComponent implements OnInit {
       let userDTO = new UserDTO();
       userDTO.nombreUsuario = formData.nombreUsuario;
       userDTO.rol = this.roleName;
-      this.personService.updatePerson(this.id, this.person).subscribe(() => {
-        this.userService.updateSomeDataUser(this.id, userDTO).subscribe(() => {
-          this.controlCaseUpdate();
-          this.loadData();
-          this.closeModal();
-        });
-      });
+      try {
+        await this.personService.updatePerson(this.idPersona, this.person).toPromise();
+        await this.userService.updateSomeDataUser(this.id, userDTO).toPromise();
+
+        let audit: AuditEntryDTO = {
+          timeStamp: new Date(),
+          actionType: 'UPDATE',
+          userId: this.userId,
+          resourceName: 'Usuario: ' + formData.nombreUsuario + " ID: " + this.id,
+          actionDetails: 'Usuario: ' + formData.nombreUsuario + " Cédula: " + formData.cedula + " Rol: " + this.roleName,
+          oldValue: this.oldData,
+          newValue: this.person.primerNombre + ' ' + this.person.segundoNombre + ' ' + this.person.apellidoPaterno + ' ' + this.person.apellidoMaterno + ' ' + this.person.cedula + ' ' + this.person.telefono + ' ' + this.person.fechaNacimiento + ' ' + this.person.sexo + ' ' + userDTO.nombreUsuario + ' ' + userDTO.rol
+        }
+        this.createAuditEntry(audit);
+        this.editMode = true;
+        await this.controlCaseUpdate(userDTO.nombreUsuario);
+        this.loadData();
+        this.closeModal();
+      } catch (error) {
+        //console.error('Error updating user data:', error);
+      }
     } else {
       Object.values(this.registerNewUserForm.controls).forEach(control => {
         control.markAsTouched();
@@ -575,22 +684,22 @@ export class UsuariosListsComponent implements OnInit {
     }
   }
 
-  controlCaseUpdate(): void {
+  async controlCaseUpdate(username: any) {
     switch (this.roleName) {
       case 'GRADUADO':
-        this.updateGraduate();
+        await this.updateGraduate(username);
         break;
       case 'EMPRESARIO':
-        this.updateBusinessMan();
+        await this.updateBusinessMan(username);
         break;
     }
   }
 
-  async updateGraduate() {
+  async updateGraduate(username: any) {
     if (this.formCase2.valid) {
       const formData = this.formCase2.value;
       let graduate: GraduadoDTO = {
-        usuario: this.userDTO.nombreUsuario,
+        usuario: username,
         ciudad: formData.ciudad,
         anioGraduacion: formData.anioGraduacion,
         emailPersonal: formData.emailPersonal,
@@ -598,7 +707,7 @@ export class UsuariosListsComponent implements OnInit {
         rutaPdf: '',
         urlPdf: ''
       };
-      this.gradutateService.updateGraduadoDTO(this.userDTO.id, graduate).subscribe(() => {
+      this.gradutateService.updateGraduateWithoutTitle(this.idGraduate, graduate).subscribe(() => {
         Swal.fire({
           icon: 'success',
           title: 'Usuario actualizado',
@@ -608,23 +717,23 @@ export class UsuariosListsComponent implements OnInit {
       });
     } else {
       this.showErrorsForm(this.formCase2);
-      console.log('Formulario inválido 2');
     }
   }
 
-  async updateBusinessMan() {
+  idBusinessMan: any;
+  async updateBusinessMan(username: any) {
     if (this.formCase1.valid) {
       const formData = this.formCase1.value;
       let businessMan: EmpresarioDTO = {
-        usuario: this.userDTO.nombreUsuario,
+        usuario: username,
         descripcion: formData.descripcion,
         anios: formData.anios,
         email: formData.email,
         puesto: formData.puesto,
         estado: true
       };
-      if (this.userDTO.id) {
-        this.businessManService.updateEmpresarioDTO(this.userDTO.id, businessMan).subscribe(() => {
+      if (this.idBusinessMan) {
+        this.businessManService.updateEmpresarioDTO(this.idBusinessMan, businessMan).subscribe(() => {
           Swal.fire({
             icon: 'success',
             title: 'Usuario actualizado',
@@ -635,7 +744,6 @@ export class UsuariosListsComponent implements OnInit {
       }
     } else {
       this.showErrorsForm(this.formCase1);
-      console.log('Formulario inválido 1');
     }
   }
 
@@ -658,7 +766,9 @@ export class UsuariosListsComponent implements OnInit {
   }
 
   handleClick(cedula: string, id: any, estado: boolean, role: string) {
+    this.editMode = true;
     if (estado) {
+      this.initForm();
       this.getDataForUpdate(cedula, id, role);
     } else {
       this.showWarningAlert();
@@ -693,25 +803,102 @@ export class UsuariosListsComponent implements OnInit {
     this.loadData();
   }
 
-  noDuplicateUsernameValidation(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const nombreUsuario = control.value;
-      if (nombreUsuario) {
-        const isDuplicate = this.dataForValidation.some(user => user.nombreUsuario.toUpperCase() === nombreUsuario.toUpperCase() && user.nombreUsuario.toUpperCase() !== control.value);
-        return isDuplicate ? { duplicated: true } : null;
+  duplicatedFields: { [key: string]: boolean } = {
+    identityCard: false,
+    phone: false,
+    username: false,
+    businessManEmail: false,
+    graduateEmail: false,
+    adminEmail: false
+  };
+
+  validateUniqueIdentityCard(): void {
+    if (this.registerNewUserForm.get('cedula')?.valid) {
+      const currentIdentityCard = this.currentIdentificacion;
+      const identityCard = this.registerNewUserForm.get('cedula')?.value;
+      if (identityCard !== currentIdentityCard) {
+        this.dataValidationService.validateIdentityCard(identityCard).subscribe(res => {
+          this.duplicatedFields['identityCard'] = res;
+        });
+      } else {
+        this.duplicatedFields['identityCard'] = false;
       }
-      return null;
-    };
+    }
   }
 
-  noDuplicateCedulaValidation(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const cedula = control.value;
-      if (cedula) {
-        const isDuplicate = this.dataForValidation.some(user => user.cedula === cedula);
-        return isDuplicate ? { duplicated: true } : null;
+  validatePhone(): void {
+    if (this.registerNewUserForm.get('telefono')?.valid) {
+      const currentPhone = this.currentPhone;
+      const phone = this.registerNewUserForm.get('telefono')?.value;
+      if (phone !== currentPhone) {
+        this.dataValidationService.validatePhone(phone).subscribe(res => {
+          this.duplicatedFields['phone'] = res;
+        });
+      } else {
+        this.duplicatedFields['phone'] = false;
       }
-      return null;
-    };
+    }
   }
+
+  validateAdminEmail(): void {
+    if (this.formCase3.get('email')?.valid) {
+      const currentEmail = this.currentEmail;
+      const email = this.formCase3.get('email')?.value;
+      if (email !== currentEmail) {
+        this.dataValidationService.validateAdminEmail(email).subscribe(res => {
+          this.duplicatedFields['adminEmail'] = res;
+        });
+      } else {
+        this.duplicatedFields['adminEmail'] = false;
+      }
+    }
+  }
+
+  validateUsername(): void {
+    if (this.registerNewUserForm.get('nombreUsuario')?.valid) {
+      const currentUsername = this.currentUsername.toUpperCase();
+      const username = this.registerNewUserForm.get('nombreUsuario')?.value.toUpperCase();
+      if (username !== currentUsername) {
+        this.dataValidationService.validateUsername(username).subscribe(res => {
+          this.duplicatedFields['username'] = res;
+        });
+      } else {
+        this.duplicatedFields['username'] = false;
+      }
+    }
+  }
+
+  validateBusinessManEmail(): void {
+    if (this.formCase1.get('email')?.valid) {
+      const currentEmail = this.currentBusinessManEmail;
+      const email = this.formCase1.get('email')?.value;
+      if (email !== currentEmail) {
+        this.dataValidationService.validateBusinessEmail(email).subscribe(res => {
+          this.duplicatedFields['businessManEmail'] = res;
+        });
+      } else {
+        this.duplicatedFields['businessManEmail'] = false;
+      }
+    }
+  }
+
+  validateGraduateEmail(): void {
+    if (this.formCase2.get('emailPersonal')?.valid) {
+      const currentEmail = this.currentEmail;
+      const email = this.formCase2.get('emailPersonal')?.value;
+
+      if (email !== currentEmail) {
+        this.dataValidationService.validateGraduateEmail(email).subscribe(res => {
+          this.duplicatedFields['graduateEmail'] = res;
+        });
+      } else {
+        this.duplicatedFields['graduateEmail'] = false;
+      }
+    }
+  }
+
+  isButtonDisabled(): boolean {
+    return Object.values(this.duplicatedFields).some(value => value);
+  }
+
 }

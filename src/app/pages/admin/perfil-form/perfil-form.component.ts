@@ -3,13 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../data/service/UserService';
 import { PersonaService } from '../../../data/service/PersonService';
 import { AdministradorService } from '../../../data/service/administrador.service';
-import { AssetService } from '../../../data/service/Asset.service';
-import { InputsValidations } from '../../../components/Validations/InputsValidations';
 import Swal from 'sweetalert2';
 import { Persona } from '../../../data/model/persona';
-import { HttpEvent, HttpResponse } from '@angular/common/http';
-import { Usuario } from '../../../data/model/usuario';
-import { UserDTO } from '../../../data/model/DTO/UserDTO';
+import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
+import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
+import { fechaNacimientoValidator } from '../../authentication/register/fechaNacimientoValidator';
+import { DataValidationService } from '../../../data/service/data-validation.service';
 
 
 @Component({
@@ -30,16 +29,18 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
     formBuilder: FormBuilder,
     private personaService: PersonaService,
     private adminService: AdministradorService,
-    private assetService: AssetService) {
+    public imageHandlerService: ImageHandlerServiceFoto,
+    private dataValidationService: DataValidationService
+  ) {
 
     this.updateAdminDataForm = formBuilder.group({
-      primerNombre: ['', Validators.required],
-      segundoNombre: ['', Validators.required],
-      apellidoPaterno: ['', Validators.required],
-      apellidoMaterno: ['', Validators.required],
-      cedula: ['', Validators.required],
-      telefono: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
+      primerNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      apellidoPaterno: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      apellidoMaterno: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
       email: ['', [Validators.required, Validators.email]],
     });
   }
@@ -48,17 +49,26 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
     this.getAdminInfo();
   }
 
+  errorMessages = {
+    "cedula": '',
+    'email': '',
+    'telefono': '',
+  }
+
   getAdminInfo() {
     const userIdStorage = localStorage.getItem('name');
     if (userIdStorage !== null) {
       this.userService.getUserByUsername(userIdStorage).subscribe(data => {
-
         this.adminInfo = data;
-        this.urlPhoto = this.adminInfo.rutaImagen;
-        console.log(this.adminInfo);
+        this.urlPhoto = this.adminInfo.urlImagen;
+        this.imageHandlerService.getPrevisualizacion(this.urlPhoto);
         this.getadminInfoById();
       });
     }
+  }
+  capturarImagen(event: any) {
+    this.imageHandlerService.capturarFile(event);
+    this.imageHandlerService.previsualizacion;
   }
 
   getadminInfoById() {
@@ -70,10 +80,10 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
 
   patchAdminData() {
     this.updateAdminDataForm.patchValue({
-      primer_nombre: this.adminInfo.persona.primerNombre,
-      segundo_nombre: this.adminInfo.persona.segundoNombre,
-      apellido_paterno: this.adminInfo.persona.apellidoPaterno,
-      apellido_materno: this.adminInfo.persona.apellidoMaterno,
+      primerNombre: this.adminInfo.persona.primerNombre,
+      segundoNombre: this.adminInfo.persona.segundoNombre,
+      apellidoPaterno: this.adminInfo.persona.apellidoPaterno,
+      apellidoMaterno: this.adminInfo.persona.apellidoMaterno,
       cedula: this.adminInfo.persona.cedula,
       telefono: this.adminInfo.persona.telefono,
       fechaNacimiento: this.adminInfo.persona.fechaNacimiento,
@@ -84,13 +94,10 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
   updateAdminData() {
     if (this.updateAdminDataForm.valid) {
       this.person = this.updateAdminDataForm.value;
-      console.log(this.updateAdminDataForm.value);
-      console.log(this.person);
       this.pureInfo.email = this.updateAdminDataForm.value.email;
       const id = this.adminInfo.persona.id;
       this.personaService.updatePerson(id, this.person).subscribe(() => {
         this.adminService.updateAdministrador(this.pureInfo.id, this.pureInfo).subscribe(() => {
-          this.updatePhoto();
           Swal.fire({
             title: 'Datos actualizados',
             icon: 'success',
@@ -105,26 +112,6 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
         control.markAsTouched();
       });
     }
-  }
-
-  updatePhoto() {
-    const userIdStorage: number = parseInt(localStorage.getItem('user_id') || '0');
-    this.userService.getUserDTOById(userIdStorage).subscribe((data) => {
-      data.rutaImagen = this.urlPhoto;
-      this.userService.updateUserPhoto(userIdStorage, data.rutaImagen).subscribe(() => {
-        this.getAdminInfo();
-      });
-    });
-  }
-
-  uploadPhoto(event: any) {
-    const file = event.target.files[0];
-    this.assetService.upload(file).subscribe((data: HttpEvent<any>) => {
-      if (data instanceof HttpResponse) {
-        const key = data.body?.key;
-        this.urlPhoto = key;
-      }
-    });
   }
 
   ngAfterViewInit() {
@@ -149,6 +136,58 @@ export class PerfilFormComponent implements OnInit, AfterViewInit {
         }
       });
     });
+  }
+
+  duplicatedFields: { [key: string]: boolean } = {
+    identityCard: false,
+    phone: false,
+    adminEmail: false
+  };
+
+  validateUniqueIdentityCard(): void {
+    if (this.updateAdminDataForm.get('cedula')?.valid) {
+      const currentIdentityCard = this.adminInfo.persona.cedula;
+      const identityCard = this.updateAdminDataForm.get('cedula')?.value;
+      if (identityCard !== currentIdentityCard) {
+        this.dataValidationService.validateIdentityCard(identityCard).subscribe(res => {
+          this.duplicatedFields['identityCard'] = res;
+        });
+      } else {
+        this.duplicatedFields['identityCard'] = false;
+      }
+    }
+  }
+
+  validatePhone(): void {
+    if (this.updateAdminDataForm.get('telefono')?.valid) {
+      const currentPhone = this.adminInfo.persona.telefono;
+      const phone = this.updateAdminDataForm.get('telefono')?.value;
+      if (phone !== currentPhone) {
+        this.dataValidationService.validatePhone(phone).subscribe(res => {
+          this.duplicatedFields['phone'] = res;
+        });
+      } else {
+        this.duplicatedFields['phone'] = false;
+      }
+    }
+  }
+
+  validateAdminEmail(): void {
+    if (this.updateAdminDataForm.get('email')?.valid) {
+      const currentEmail = this.pureInfo.email;
+      const email = this.updateAdminDataForm.get('email')?.value;
+      if (email !== currentEmail) {
+        this.dataValidationService.validateAdminEmail(email).subscribe(res => {
+          this.duplicatedFields['adminEmail'] = res;
+        });
+      } else {
+        this.duplicatedFields['adminEmail'] = false;
+      }
+    }
+  }
+
+  isSaveButtonDisabled(): boolean {
+    return Object.values(this.duplicatedFields).some(value => value);
   }
 
 }

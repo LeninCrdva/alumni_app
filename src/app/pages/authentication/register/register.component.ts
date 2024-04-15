@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { RegisterDTO } from '../../../data/model/DTO/RegisterDTO';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom, of } from 'rxjs';
 import { fechaNacimientoValidator } from './fechaNacimientoValidator';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { Ciudad } from '../../../data/model/ciudad';
@@ -20,6 +20,7 @@ import { AlertsService } from '../../../data/Alerts.service';
 import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
 import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
+import { DataValidationService } from '../../../data/service/data-validation.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -61,6 +62,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private renderer: Renderer2,
     private alertService: AlertsService,
+    private dataValidationService: DataValidationService
   ) {
     this.roleName = localStorage.getItem('userRole') ?? '';
 
@@ -234,7 +236,7 @@ export class RegisterComponent implements OnInit {
 
   deleteFile(rutakey: string) {
     this.assetService.delete(rutakey).subscribe(r => {
-      console.log("archivo eliminado")
+      //console.log("archivo eliminado")
     })
   }
 
@@ -255,7 +257,7 @@ export class RegisterComponent implements OnInit {
         }
       }
     } catch (error) {
-      console.error('Error al subir la imagen:', error);
+      //console.error('Error al subir la imagen:', error);
     }
   }
 
@@ -294,7 +296,7 @@ export class RegisterComponent implements OnInit {
       Object.keys(this.registerForm.controls).forEach(key => {
         const control = this.registerForm.get(key);
         if (control != null && control.invalid) {
-          console.warn(`Campo '${key}' tiene errores:`, control.errors);
+          //console.warn(`Campo '${key}' tiene errores:`, control.errors);
         }
       });
     }
@@ -360,15 +362,6 @@ export class RegisterComponent implements OnInit {
         icon: 'info',
         text: 'Su cuenta se ha registrado correctamente, pero necesita ser aprobada por un administrador para poder iniciar sesión.'
       });
-      /*switch (resp.rol) {
-        case 'ADMINISTRADOR':
-          this.openNuevoAdministradorModal();
-          break;
-        case 'EMPRESARIO':
-          this.openNuevoEmpresarioModal();
-          break;
-       
-      }*/
     } else {
       Swal.fire({
         icon: 'success',
@@ -376,4 +369,82 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+  duplicatedFields: { [key: string]: boolean } = {
+    identityCard: false,
+    phone: false,
+    username: false,
+    businessManEmail: false,
+    companyRuc: false,
+    companyName: false,
+    graduateEmail: false
+  };
+
+  validateUniqueIdentityCard(): void {
+    if (this.registerForm.get('cedula')?.valid) {
+      const identityCard = this.registerForm.get('cedula')?.value;
+      this.dataValidationService.validateIdentityCard(identityCard).subscribe(res => {
+        this.duplicatedFields['identityCard'] = res;
+      });
+    }
+  }
+
+  validatePhone(): void {
+    if (this.registerForm.get('telefono')?.valid) {
+      const phone = this.registerForm.get('telefono')?.value;
+      this.dataValidationService.validatePhone(phone).subscribe(res => {
+        this.duplicatedFields['phone'] = res;
+      });
+    }
+  }
+
+  validateUsername(): void {
+    if (this.subRegisterForm.get('nombreUsuario')?.valid) {
+      const username = this.subRegisterForm.get('nombreUsuario')?.value;
+      this.dataValidationService.validateUsername(username).subscribe(res => {
+        this.duplicatedFields['username'] = res;
+      });
+    }
+  }
+
+  validateBusinessManEmail(): void {
+    if (this.formCase1.get('email')?.valid) {
+      const email = this.formCase1.get('email')?.value;
+      this.dataValidationService.validateBusinessEmail(email).subscribe(res => {
+        this.duplicatedFields['businessManEmail'] = res;
+      });
+    }
+  }
+
+  validateGraduateEmail(): void {
+    if (this.formCase2.get('emailPersonal')?.valid) {
+      const email = this.formCase2.get('emailPersonal')?.value;
+      this.dataValidationService.validateGraduateEmail(email).subscribe(res => {
+        this.duplicatedFields['graduateEmail'] = res;
+      });
+    }
+  }
+
+  validateCompanyRuc(): void {
+    if (this.formSubCase1.get('ruc')?.valid) {
+      const ruc = this.formSubCase1.get('ruc')?.value;
+      this.dataValidationService.validateCompanyRuc(ruc).subscribe(res => {
+        this.duplicatedFields['companyRuc'] = res;
+      });
+    }
+  }
+
+  validateCompanyName(): void {
+    if (this.formSubCase1.get('nombre')?.valid) {
+      const name = this.formSubCase1.get('nombre')?.value;
+      this.dataValidationService.validateCompnanyName(name).subscribe(res => {
+        this.duplicatedFields['companyName'] = res;
+      });
+    }
+  }
+
+  isButtonDisabled(): boolean {
+    return Object.values(this.duplicatedFields).some(value => value);
+  }
+
 }
