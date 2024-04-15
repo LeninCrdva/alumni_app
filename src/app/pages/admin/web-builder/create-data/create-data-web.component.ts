@@ -1,4 +1,3 @@
-//  Autor: Angel Cárdenas
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { TextEditorComponent } from '../../text-editor/text-editor.component';
