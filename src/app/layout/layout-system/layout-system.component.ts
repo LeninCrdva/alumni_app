@@ -236,16 +236,16 @@ export class LayoutSystemComponent implements OnInit {
 
   private checkUserRole() {
     const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
-    console.log('prueba de rol', userRole);
+    //console.log('prueba de rol', userRole);
 
     if (userRole === 'ADMINISTRADOR') {
       this.showAdminOptions = true;
       this.rolType = 'Admin';
       this.nuevoAdministrador.usuario = this.usuarioGuardado;
-      console.log('El usuario es', this.nuevoAdministrador);
+     // console.log('El usuario es', this.nuevoAdministrador);
       this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
         (exists) => {
-          console.log(`¿Existe administrador? ${exists}`);
+       //   console.log(`¿Existe administrador? ${exists}`);
           if (!exists) {
             const config = {
               initialState: {
@@ -258,12 +258,12 @@ export class LayoutSystemComponent implements OnInit {
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
-                console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+               // console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
               }
             });
-          } else {
-            console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
-          }
+          } //else {
+            //console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
+         // }
         },
         (error) => {
           console.error('Error al verificar la existencia del administrador:', error);
@@ -274,7 +274,7 @@ export class LayoutSystemComponent implements OnInit {
       this.showEmpresarioOptions = true;
       this.rolType = 'Empresario';
       this.nuevoEmpresario.usuario = this.usuarioGuardado; // Cambiado de this.usuarioEmpresario
-      console.log('El usuario es', this.nuevoEmpresario);
+     // console.log('El usuario es', this.nuevoEmpresario);
       this.empresaservice.getEmpresarioByUsuario(this.usuarioEmpresario).subscribe(
         empresario => {
           if (empresario) {
@@ -291,7 +291,7 @@ export class LayoutSystemComponent implements OnInit {
       this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
         (exists) => {
           localStorage.setItem('exempresario', exists.toString());
-          console.log(`¿Existe empresario? ${exists}`);
+       //   console.log(`¿Existe empresario? ${exists}`);
           if (!exists) {
             const config = {
               initialState: {
@@ -304,11 +304,9 @@ export class LayoutSystemComponent implements OnInit {
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
-                console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+         //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
               }
             });
-          } else {
-            console.error('Ya existe un empresario con este nombre. Elige otro nombre.');
           }
         },
         (error) => {
@@ -320,10 +318,10 @@ export class LayoutSystemComponent implements OnInit {
       this.showAlumniOptions = true;
       this.rolType = 'Alumni';
       this.nuevoGraduado.usuario = this.usuarioGuardado;
-      console.log('El usuario es', this.nuevoGraduado);
+     // console.log('El usuario es', this.nuevoGraduado);
       this.graduadoservice.checkGraduadoExists(this.nuevoGraduado.usuario).subscribe(
         (exists) => {
-          console.log(`¿Existe graduado? ${exists}`);
+       //   console.log(`¿Existe graduado? ${exists}`);
           if (!exists) {
             const config = {
               initialState: {
@@ -336,12 +334,10 @@ export class LayoutSystemComponent implements OnInit {
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
-                console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+         //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
               }
             });
-          } else {
-            console.error('Ya existe un graduado con este nombre. Elige otro nombre.');
-          }
+          } 
         },
         (error) => {
           console.error('Error al verificar la existencia del graduado:', error);

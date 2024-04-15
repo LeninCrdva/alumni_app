@@ -172,4 +172,19 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
 
     this.updateUbicacionForm.get('provincia')?.setValue(this.provincias[0]);
   }
+
+  onPhoneInput(event: any): void {
+    const newValue = event.target.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+    this.updatePersonForm.controls['telefono'].setValue(newValue); // Actualizar el valor en el formulario
+  }
+
+  // Método para manejar el evento de pérdida de foco en el campo de teléfono
+  onPhoneBlur(): void {
+    this.updatePersonForm.controls['telefono'].markAsTouched(); // Marcar el campo como "tocado"
+  }
+
+  // Método para verificar si el campo de teléfono ha sido tocado
+  isPhoneTouched(): boolean {
+    return this.updatePersonForm.controls['telefono'].touched; // Verificar si el campo ha sido tocado
+  }
 }

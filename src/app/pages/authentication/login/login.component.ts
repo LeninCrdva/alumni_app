@@ -52,7 +52,7 @@ export class LoginComponent {
           const user_id = response.usuario_id;
 
           const authorities: string[] = response.authorities.map((authority: { authority: any; }) => authority.authority);
-          console.log("authorities here: " + authorities);
+        //  console.log("authorities here: " + authorities);
           localStorage.setItem('token', accessToken);
 
           localStorage.setItem('authorities', JSON.stringify(authorities));

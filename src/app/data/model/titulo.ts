@@ -10,6 +10,6 @@ export class Titulo {
         public nivel: string,
         public institucion: string,
         public nombreCarrera: string,
-        public idGraduado?: number
+        public cedula: string
     ) { }
 }

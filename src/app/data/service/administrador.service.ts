@@ -43,13 +43,13 @@ export class AdministradorService {
   }
   checkAdministradorExists(nombre: string): Observable<boolean> {
     return this.getAdministradores3().pipe(
-      tap(administradores => console.log('Administradores obtenidos:', administradores)),
+    //  tap(administradores => console.log('Administradores obtenidos:', administradores)),
       map(administradores => {
         const exists = administradores.some(admin => 
           admin.usuario && admin.usuario && 
           admin.usuario.toLowerCase() === nombre.toLowerCase()
         );
-        console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
+      //  console.log(`¿Existe administrador con nombre ${nombre}? ${exists}`);
         return exists;
       }),
       catchError(error => {

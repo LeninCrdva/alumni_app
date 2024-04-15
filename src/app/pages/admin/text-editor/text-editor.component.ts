@@ -3,9 +3,9 @@ import { ImageHandlerServicebyte } from '../../../data/service/ImageHandlerServi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsServicexml } from '../../../data/service/AlertsServicexml';
 
-// Autor: Angel Cárdenas
+
 interface KeyActionMap {
-  [key: string]: () => void | boolean; // Esto permite cualquier clave de tipo string que retorne una función que devuelve void o boolean
+  [key: string]: () => void | boolean; 
 }
 
 @Component({
@@ -17,16 +17,19 @@ export class TextEditorComponent {
 
   @ViewChild('textInput', { static: false }) textInput!: ElementRef;
 
+  
   fontList = [
-    " Arial", "Verdana", "Georgia", "Times New Roman", "Garamond", "Courier New", "monospace", "Lucida Console", "monospace", "sans-serif", "cursive"
+    "Arial", "Verdana", "Georgia", "Times New Roman", "Garamond", "Courier New", "monospace", "Lucida Console", "sans-serif", "cursive",
+    "Open Sans", "Roboto", "Montserrat", "Lato", "Roboto Slab", "Oswald", "Raleway" 
   ];
+  
 
 
   validateInputs: FormGroup;
 
   selectedFont: string = this.fontList[0];
 
-  fontSizeList: number[] = [1, 2, 3, 4, 5, 6, 7];
+  fontSizeList: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
   selectedFontSize: number = 3;
   isFullScreen: boolean = false;
 
@@ -196,6 +199,7 @@ export class TextEditorComponent {
     const value = (event.target as HTMLSelectElement).value;
     document.execCommand(command, defaultUi, value);
   }
+  
 
   downloadContent(): void {
     try {

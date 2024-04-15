@@ -87,7 +87,7 @@ export class TitulosComponent {
     this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar titulos...');
 
     // Para inicializar los dropdowns de los filtros de la tabla.
-    this.obtenerIDGraduado();
+    this.obtenerCedula();
     this.filterService.initializeDropdowns('filterTable', columnTitles);
     this.obtenerCarreras();
     this.loadData();
@@ -105,7 +105,7 @@ export class TitulosComponent {
         this.titulosList = result;
         
 
-        this.titulosList = result.filter(resultData => resultData.idGraduado === this.numeroUndefinido);
+        this.titulosList = result.filter(resultData => resultData.cedula === this.obtenerCedula());
 
         if (this.initializeTable) {
           this.dtTrigger.next(null);
@@ -179,7 +179,7 @@ export class TitulosComponent {
       nivel: this.validateForm.value.nivel,
       institucion: this.validateForm.value.institucion,
       nombreCarrera: this.validateForm.value.nombreCarrera[0].item_text,
-      idGraduado: this.numeroUndefinido
+      cedula: this.obtenerCedula()
     };
   }
 
@@ -187,6 +187,7 @@ export class TitulosComponent {
   createNewData() {
     this.alertService.mostrarAlertaCargando('Guardando...');
     const titulo: Titulo = this.obtenerDatosFormulario();
+    
     this.tituloService.create(titulo).subscribe(
       result => {
         this.alertService.mostrarSweetAlert(true, 'Creado correctamente.', this.modalClose);
@@ -228,10 +229,14 @@ export class TitulosComponent {
     );
   }
   
-  obtenerIDGraduado(): void {
-    this.usuarioGraduado.getGraduadoByUsuario(this.name).subscribe(
-      (graduado) => this.numeroUndefinido = graduado?.id || 0
-    );
+ 
+  obtenerCedula(): string {
+    const userDataString = localStorage.getItem('user_data');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      return userData.persona.cedula;
+    }
+    return '';
   }
   
   

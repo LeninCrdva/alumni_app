@@ -41,13 +41,13 @@ export class EmpresarioService {
   }
   checkEmpresarioExists(nombre: string): Observable<boolean> {
     return this.getEmpresarios2().pipe(
-      tap(empresarios => console.log('Empresarios obtenidos:', empresarios)),
+     // tap(empresarios => console.log('Empresarios obtenidos:', empresarios)),
       map(empresarios => {
         const exists = empresarios.some(empre => 
           empre.usuario && empre.usuario && 
           empre.usuario.toLowerCase() === nombre.toLowerCase()
         );
-        console.log(`¿Existe empresario con nombre ${nombre}? ${exists}`);
+       // console.log(`¿Existe empresario con nombre ${nombre}? ${exists}`);
         return exists;
       }),
       catchError(error => {
