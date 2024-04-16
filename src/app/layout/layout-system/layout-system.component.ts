@@ -21,8 +21,10 @@ import { NuevoEmpresarioModalComponent } from '../../pages/company/nuevo-empresa
 })
 export class LayoutSystemComponent implements OnInit {
   showAdminOptions = false;
+  showResponsableOptions = false;
   showEmpresarioOptions = false;
   showAlumniOptions = false;
+  showResponsableCarreraOptions = false;
   nuevoGraduado: Graduado3 = new Graduado3();
   nuevoAdministrador: Administrador = new Administrador();
   sidebarVisible = false;
@@ -242,10 +244,10 @@ export class LayoutSystemComponent implements OnInit {
       this.showAdminOptions = true;
       this.rolType = 'Admin';
       this.nuevoAdministrador.usuario = this.usuarioGuardado;
-     // console.log('El usuario es', this.nuevoAdministrador);
+      // console.log('El usuario es', this.nuevoAdministrador);
       this.administradorService.checkAdministradorExists(this.nuevoAdministrador.usuario).subscribe(
         (exists) => {
-       //   console.log(`¿Existe administrador? ${exists}`);
+          //   console.log(`¿Existe administrador? ${exists}`);
           if (!exists) {
             const config = {
               initialState: {
@@ -258,12 +260,12 @@ export class LayoutSystemComponent implements OnInit {
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
-               // console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                // console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
               }
             });
           } //else {
-            //console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
-         // }
+          //console.error('Ya existe un administrador con este nombre. Elige otro nombre.');
+          // }
         },
         (error) => {
           console.error('Error al verificar la existencia del administrador:', error);
@@ -274,7 +276,7 @@ export class LayoutSystemComponent implements OnInit {
       this.showEmpresarioOptions = true;
       this.rolType = 'Empresario';
       this.nuevoEmpresario.usuario = this.usuarioGuardado; // Cambiado de this.usuarioEmpresario
-     // console.log('El usuario es', this.nuevoEmpresario);
+      // console.log('El usuario es', this.nuevoEmpresario);
       this.empresaservice.getEmpresarioByUsuario(this.usuarioEmpresario).subscribe(
         empresario => {
           if (empresario) {
@@ -291,7 +293,7 @@ export class LayoutSystemComponent implements OnInit {
       this.empresaservice.checkEmpresarioExists(this.nuevoEmpresario.usuario).subscribe(
         (exists) => {
           localStorage.setItem('exempresario', exists.toString());
-       //   console.log(`¿Existe empresario? ${exists}`);
+          //   console.log(`¿Existe empresario? ${exists}`);
           if (!exists) {
             const config = {
               initialState: {
@@ -304,7 +306,7 @@ export class LayoutSystemComponent implements OnInit {
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
-         //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
               }
             });
           }
@@ -318,10 +320,10 @@ export class LayoutSystemComponent implements OnInit {
       this.showAlumniOptions = true;
       this.rolType = 'Alumni';
       this.nuevoGraduado.usuario = this.usuarioGuardado;
-     // console.log('El usuario es', this.nuevoGraduado);
+      // console.log('El usuario es', this.nuevoGraduado);
       this.graduadoservice.checkGraduadoExists(this.nuevoGraduado.usuario).subscribe(
         (exists) => {
-       //   console.log(`¿Existe graduado? ${exists}`);
+          //   console.log(`¿Existe graduado? ${exists}`);
           if (!exists) {
             const config = {
               initialState: {
@@ -334,15 +336,18 @@ export class LayoutSystemComponent implements OnInit {
 
             this.bsModalRef.content.onClose.subscribe((result: string) => {
               if (result === 'guardadoExitoso') {
-         //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
+                //       console.log('Guardado exitoso, puedes realizar acciones adicionales si es necesario.');
               }
             });
-          } 
+          }
         },
         (error) => {
           console.error('Error al verificar la existencia del graduado:', error);
         }
       );
+    } else if (userRole === 'RESPONSABLE_CARRERA') {
+      this.showResponsableCarreraOptions = true;
+      this.rolType = 'Responsable de Carrera';
     } else {
       console.error('Rol no reconocido:', userRole);
       // Puedes manejar el escenario cuando el rol no es reconocido

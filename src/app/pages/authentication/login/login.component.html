@@ -55,9 +55,11 @@
       </div>
 
       <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
-        <p class="d-inline-block mb-0">¿Todavía no tienes una cuenta?</p>
-        <a href="" class="text-light" [routerLink]="['/account/register']" routerLinkActive="router-link-active"> Crea
-          una cuenta</a>
+        <div *ngIf="ROLE !== 'ROLE_WITHOUT_REGISTER'">
+          <p class="d-inline-block mb-0">¿Todavía no tienes una cuenta?</p>
+          <a href="" class="text-light" [routerLink]="['/account/register']" routerLinkActive="router-link-active"> Crea
+            una cuenta</a>
+        </div>
       </div>
 
     </div>

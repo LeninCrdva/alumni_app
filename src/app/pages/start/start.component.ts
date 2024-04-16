@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class StartComponent implements OnInit {
 
-  private readonly ADMINISTRADOR = 'ADMINISTRADOR';
+  private readonly ROLE_WITHOUT_REGISTER = 'ROLE_WITHOUT_REGISTER';
   private readonly EMPRESARIO = 'EMPRESARIO';
   private readonly GRADUADO = 'GRADUADO';
 
@@ -72,8 +72,8 @@ export class StartComponent implements OnInit {
   }
   
 
-  loginAsAdmin(): void {
-    localStorage.setItem('userRole', this.ADMINISTRADOR);
+  loginAsResponsableCarreraOrAdmin(): void {
+    localStorage.setItem('userRole', this.ROLE_WITHOUT_REGISTER);
     this.router.navigate(['/account/login']);
   }
   loginAsEmpresario(): void {

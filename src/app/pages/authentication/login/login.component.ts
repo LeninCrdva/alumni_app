@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../data/service/AuthService';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AnimationOptions } from 'ngx-lottie';
-import Swal from 'sweetalert2';
 import { AlertsService } from '../../../data/Alerts.service';
 
 @Component({
@@ -18,20 +17,25 @@ export class LoginComponent {
     path: '../../../assets/anims/login_anim.json',
   };
 
+  ROLE!: string
+
   loginForm: FormGroup;
   'mensaje': string;
   'modalRef': BsModalRef;
-
+  
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private alertService: AlertsService
   ) {
+    this.ROLE = localStorage.getItem('userRole') || '';
+    
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+
   }
   passwordVisible = false;
 
@@ -87,6 +91,8 @@ export class LoginComponent {
     } else {
       if (authorities.includes('GRADUADO')) {
         this.router.navigate(['system/alumni']);
+      } else if(authorities.includes('RESPONSABLE_CARRERA')) {
+        this.router.navigate(['system/career-manager']);
       }
     }
   }

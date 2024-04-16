@@ -30,7 +30,8 @@ const routes: Routes = [
     children: [
       { path: 'alumni', loadChildren: () => import('./pages/alumni/alumni.module').then((m) => m.AlumniModule) },
       { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then((m) => m.AdminModule) },
-      { path: 'company', loadChildren: () => import('./pages/company/company.module').then((m) => m.CompanyModule) }
+      { path: 'company', loadChildren: () => import('./pages/company/company.module').then((m) => m.CompanyModule) },
+      { path: 'career-manager', loadChildren: () => import('./pages/responsable-carrera/responsable-carrera.module').then((m) => m.ResponsableCarreraModule) }
     ], 
   },
 
