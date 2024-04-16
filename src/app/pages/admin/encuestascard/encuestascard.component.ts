@@ -5,6 +5,7 @@ import { SurveyDetailsModalComponent } from '../survey-details-modal/survey-deta
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { QuestionType ,Question} from '../../../data/model/Question';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-encuestascard',
   templateUrl: './encuestascard.component.html',
@@ -161,27 +162,37 @@ export class EncuestascardComponent {
   }
   confirmUpdateState(event: any, survey: Survey): void {
     const confirmMessage = `¿Quieres activar/desactivar la encuesta "${survey.title}"?`;
-    const confirmed = confirm(confirmMessage);
-    if (confirmed) {
-      const newEstado = !survey.estado;
   
-      if (survey.id === undefined) {
-        console.error('ID de encuesta indefinido. No se puede actualizar el estado.');
-        return;
-      }
+    Swal.fire({
+      icon: 'question',
+      title: 'Confirmación',
+      text: confirmMessage,
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newEstado = !survey.estado;
   
-      const surveyId = survey.id;
-      this.surveyService.updateSurveyState(surveyId, newEstado).subscribe(
-        updatedSurvey => {
-          survey.estado = newEstado;
+        if (survey.id === undefined) {
+          console.error('ID de encuesta indefinido. No se puede actualizar el estado.');
+          return;
         }
-      );
-    } else {
-     
-      event.target.checked = survey.estado; 
-      console.log('Acción cancelada. No se actualizará el estado.');
-    }
+  
+        const surveyId = survey.id;
+        this.surveyService.updateSurveyState(surveyId, newEstado).subscribe(
+          updatedSurvey => {
+            survey.estado = newEstado;
+          }
+        );
+      } else {
+        // Si el usuario cancela, restaurar el estado original del checkbox
+        event.target.checked = survey.estado; 
+        console.log('Acción cancelada. No se actualizará el estado.');
+      }
+    });
   }
+  
   
 
   saveSurveyChanges(): void {
@@ -231,20 +242,44 @@ export class EncuestascardComponent {
             () => {
               
               ($('#editModal') as any).modal('hide');
-              alert('Actualización completada');
-              location.reload();
+              Swal.fire({
+                icon: 'success',
+                title: 'Actualización completada',
+                showConfirmButton: true, 
+                confirmButtonText: 'Cerrar',
+              }).then((result) => {
+                
+                if (result.isConfirmed) {
+                  
+                  Swal.close();
+                  location.reload();
+                }
+              });
+              
+             
             },
             (error) => {
               
              
-              alert('No se pudo actualizar la encuesta debido a que ya tiene respuestas o esta intentanto poner un titulo ya utilizado por otra encuesta.');
+              Swal.fire({
+                icon: 'error',
+                title: 'No se pudo actualizar la encuesta',
+                text: 'La encuesta no puede ser actualizada porque ya tiene respuestas o el título ya está siendo utilizado por otra encuesta.',
+                confirmButtonText: 'Entendido'
+              });
+              
             }
           );
       
   
     } else {
       // Formulario inválido o ID no disponible
-      alert('Por favor completa el formulario correctamente antes de guardar.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Por favor completa el formulario correctamente antes de guardar.',
+        confirmButtonText: 'Entendido'
+      });
+      
     }
   }
   
