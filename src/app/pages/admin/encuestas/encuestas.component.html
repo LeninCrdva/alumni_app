@@ -9,7 +9,7 @@
         <form [formGroup]="form" (submit)="create()">
           <div class="row mt-4">
             <div class="col-12">
-              <label for="form-title" class="form-label">Título de la Encuesta</label>
+              <label for="form-title" class="form-label">Título de la Encuesta*</label>
               <input id="form-title" type="text" class="form-control" formControlName="title">
       
               <ng-container *ngIf="form.get('title').touched && form.get('title').errors">
@@ -22,7 +22,7 @@
           
           <div class="row mt-4">
             <div class="col-12">
-              <label for="form-description" class="form-label">Descripción de la Encuesta</label>
+              <label for="form-description" class="form-label">Descripción de la Encuesta*</label>
               <textarea id="form-description" class="form-control" formControlName="description"></textarea>
       
               <ng-container *ngIf="form.get('description').touched && form.get('description').errors">

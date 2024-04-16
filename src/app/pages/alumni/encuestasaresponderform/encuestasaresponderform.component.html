@@ -9,11 +9,11 @@
     <ng-container *ngIf="survey">
          <!-- Pregunta abierta: Escriba su correo electrónico -->
     <div class="mb-3">
-        <p class="texto-negrita">Escriba su correo electrónico:</p>
-        <input type="email" class="form-control" placeholder="Correo electrónico" [(ngModel)]="userEmail">
+        <p class="texto-negrita"> su correo electrónico es:*</p>
+        <input type="email" class="form-control" readonly placeholder="Correo electrónico" [(ngModel)]="userEmail">
       </div>
       <div class="mb-3">
-        <p class="texto-negrita">Seleccione su carrera:</p>
+        <p class="texto-negrita">Seleccione su carrera:*</p>
         <div *ngFor="let carrera of carreras">
           <div class="form-check">
             <input
@@ -31,7 +31,7 @@
       <ng-container *ngFor="let question of survey.questions">
         <div class="mb-3">
         
-          <p class="texto-negrita">{{ question.text }}</p>
+          <p class="texto-negrita">{{ question.text }}*</p>
 
           <ng-container *ngIf="isQuestionOpcionMultiple(question)">
             <!-- Pregunta de opción múltiple con checkboxes -->

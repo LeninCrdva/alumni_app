@@ -43,24 +43,49 @@ export class EncuestascardComponent {
  
 
   deleteSurvey(survey: Survey): void {
-    if (confirm('¿Estás seguro de eliminar esta encuesta?')) {
-      if (survey.id === undefined) {
-        console.error('ID de encuesta indefinido. No se puede eliminar.');
-        return;
-      }
-      const surveyId = survey.id;
-      this.surveyService.deleteSurveyById(surveyId).subscribe(
-        () => {
-          this.loadSurveys();
-          alert('Encuesta eliminada exitosamente.');
-        },
-        (error) => {
-          console.error('Error al eliminar encuesta:', error);
-          alert('Error al eliminar encuesta. Debido a que esta encuesta tiene respuestas');
+    const confirmMessage = '¿Estás seguro de eliminar esta encuesta?';
+  
+    Swal.fire({
+      icon: 'warning',
+      title: 'Confirmación',
+      text: confirmMessage,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (survey.id === undefined) {
+          console.error('ID de encuesta indefinido. No se puede eliminar.');
+          return;
         }
-      );
-    }
+  
+        const surveyId = survey.id;
+        this.surveyService.deleteSurveyById(surveyId).subscribe(
+          () => {
+            this.loadSurveys();
+            Swal.fire({
+              icon: 'success',
+              title: 'Encuesta eliminada exitosamente',
+              timer: 1500,
+              showConfirmButton: false
+            });
+          },
+          (error) => {
+            console.error('Error al eliminar encuesta:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar encuesta',
+              text: 'No se pudo eliminar la encuesta debido a que tiene respuestas asociadas.',
+              confirmButtonText: 'Entendido'
+            });
+          }
+        );
+      } else {
+        console.log('Acción cancelada. No se eliminará la encuesta.');
+      }
+    });
   }
+  
 
   //Para modificar la encuesta
   form: FormGroup | any;

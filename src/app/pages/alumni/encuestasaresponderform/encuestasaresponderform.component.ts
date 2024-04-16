@@ -5,6 +5,9 @@ import { Question,QuestionType } from '../../../data/model/Question';
 import { ApiService } from '../../../data/service/api.service';
 import { AnswerSearchDTO } from '../../../data/model/DTO/AnswerSearchDTO';
 import { AnswerService } from '../../../data/service/AnswerService';
+import { GraduadoService } from '../../../data/service/graduado.service';
+import Swal from 'sweetalert2';
+import { Graduado3 } from '../../../data/model/graduado';
 @Component({
   selector: 'app-encuestasaresponderform',
   templateUrl: './encuestasaresponderform.component.html',
@@ -18,8 +21,11 @@ export class EncuestasaresponderformComponent {
      public userEmail: string = '';
      public surveyTitle: string = '';
      public comentario: string = '';
+     usuarioGuardado: string = localStorage.getItem('name') || '';
      public PreguntasRespeustas: Record<number, string> = {};
-    constructor(public bsModalRef: BsModalRef,private apiservice: ApiService, private answerService:AnswerService) {} 
+    constructor(public bsModalRef: BsModalRef,private apiservice: ApiService
+      , private answerService:AnswerService,
+      private graduadoService: GraduadoService) {} 
     ngOnInit(): void {
       this.surveyTitle = this.survey.title;
       this.apiservice.getCarreras().subscribe(
@@ -31,20 +37,43 @@ export class EncuestasaresponderformComponent {
           console.error('Error al obtener el listado de carreras:', error);
         }
       );
+      this.usuarioGuardado = localStorage.getItem('name') || '';
+      this,this.buscarGraduadosPorUsuario();
      
     }
+    graduate: Graduado3 = new Graduado3();
+    
+  buscarGraduadosPorUsuario() {
+    this.graduadoService.searchGraduadosByUsuario(this.usuarioGuardado).subscribe(
+      graduadosEncontrados => {
+        this.graduate = graduadosEncontrados[0];
+        this.userEmail=this.graduate.emailPersonal;
+      }
+    );
+  }
     mandarRespuestas(answerDTO: AnswerSearchDTO): void {
       this.answerService.saveAnswer(answerDTO).subscribe(
         (respuesta) => {
-          alert('Respuesta enviada con éxito'); // Alerta de éxito
-          this.limpiarRespuestas();
-          this.bsModalRef.hide(); 
+          Swal.fire({
+            icon: 'success',
+            title: 'Respuesta enviada con éxito',
+            confirmButtonText: 'Entendido'
+          }).then(() => {
+            this.limpiarRespuestas();
+            this.bsModalRef.hide();
+          });
         },
         (error) => {
-          alert('Error al enviar la respuesta. Por favor inténtalo de nuevo.'); 
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al enviar la respuesta',
+            text: 'Por favor inténtalo de nuevo. y revise el corrreo electronico que esta ingresando',
+            confirmButtonText: 'Entendido'
+          });
         }
       );
     }
+    
   limpiarRespuestas(): void {
     this.userEmail = '';
     this.comentario='';
@@ -92,11 +121,17 @@ export class EncuestasaresponderformComponent {
 
     validarRespuestas(): boolean {
       if (!this.userEmail || !this.selectedCarrera || !this.PreguntasRespeustas || Object.keys(this.PreguntasRespeustas).length === 0) {
-        alert('Por favor completa todos los campos y responde las preguntas.'); // Alerta de advertencia
+        Swal.fire({
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Por favor responda las preguntas.',
+          confirmButtonText: 'Entendido'
+        });
         return false;
       }
       return true;
     }
+    
     
     selectedOptions: SelectedOption[] = [];
   
