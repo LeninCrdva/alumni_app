@@ -203,6 +203,7 @@ export class EncuestasComponent {
         title: this.form.value.title,
         estado:false,
         description: this.form.value.description,
+        carrera: this.form.value.carrera,
         questions: this.form.value.questions.map((question: any) => {
           let options: string[] = [];
         

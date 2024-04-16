@@ -11,4 +11,4 @@ export class Survey {
         this.questions = questions.slice(); 
         this.estado = estado;
     }
-}
+}   

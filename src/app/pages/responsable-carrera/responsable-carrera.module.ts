@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ResponsableCarreraRoutingModule } from './responsable-carrera-routing.module';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RespuestasComponent } from './respuestas/respuestas.component';
+import { EncuestaDetalleModalComponent } from './encuesta-detalle-modal/encuesta-detalle-modal.component';
 
 
 @NgModule({
@@ -12,12 +13,13 @@ import { RespuestasComponent } from './respuestas/respuestas.component';
     EncuestasComponent,
     DashboardComponent,
     RespuestasComponent,
-    
+    EncuestaDetalleModalComponent
   ],
   imports: [
     CommonModule,
     ResponsableCarreraRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,    
   ]
 })
 export class ResponsableCarreraModule { }
