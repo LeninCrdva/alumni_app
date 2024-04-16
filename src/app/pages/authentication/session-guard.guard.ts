@@ -35,6 +35,11 @@ export class sessionGuardGuard {
         this.router.navigate(['/system/admin']);
         this.showMessage();
         return false;
+      } else if (getRole(token) === 'RESPONSABLE_CARRERA') {
+        this.router.navigate(['/system/career-manager']);
+        this.showMessage();
+        return false;
+
       }
     }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { Answer } from '../model/Answer';
@@ -11,9 +11,7 @@ import { SurveyQuestionsAnswersDTO } from '../model/DTO/SurveyQuestionsAnswersDT
 })
 export class AnswerService {
 
-
   private baseUrl = MAIN_ROUTE.API_ENDPOINT + '/api/answer';
-
 
   constructor(private http: HttpClient) { }
 
@@ -41,17 +39,53 @@ export class AnswerService {
       );
   }
 
+  getAllSurveysWithQuestionsAnswersAndStats(): Observable<SurveyQuestionsAnswersDTO[]> {
+    const url = `${this.baseUrl}/all-surveys-questions-answers-stats`;
+    return this.http.get<SurveyQuestionsAnswersDTO[]>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getSurveyQuestionsAnswersByCareerComent(): Observable<any> {
+    const url = `${this.baseUrl}/survey-questions-answers-by-career-coments`;
+    return this.http.get<SurveyQuestionsAnswersDTO[]>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getSurveyQuestionsAnswersByCareer(): Observable<any> {
+    const url = `${this.baseUrl}/survey-questions-answers-by-career`;
+    return this.http.get<SurveyQuestionsAnswersDTO[]>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getGraduadosWithUnansweredSurveys(): Observable<GraduadoWithUnansweredSurveysDTO[]> {
+    const url = `${this.baseUrl}/unanswered-surveys`;
+    return this.http.get<GraduadoWithUnansweredSurveysDTO[]>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  countResponsesByOption2(): Observable<any> {
+    
+  }
+
   private handleError(error: any): Observable<never> {
     //console.error('Error en la petición:', error);
 
     let errorMessage = 'Error en la petición. Por favor, intenta nuevamente.';
 
     if (error.error instanceof ErrorEvent) {
-    
+
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      
-     // errorMessage = `Error código ${error.status}: ${error.error.message}`;
+
+      // errorMessage = `Error código ${error.status}: ${error.error.message}`;
     }
 
     return throwError(errorMessage);

@@ -34,7 +34,7 @@
                     </li>
                     <li><a (click)="setActiveMenuItem('Mi Experiencia')" [routerLink]="['/system/alumni/experiencia']"
                             routerLinkActive="router-link-active">
-                            Mi Experiencia</a>
+                            Mis Experiencias Laborales</a>
                     </li>
                     <li><a (click)="setActiveMenuItem('Mis Capacitaciones')"
                             [routerLink]="['/system/alumni/capacitaciones']" routerLinkActive="router-link-active">
@@ -242,11 +242,11 @@
             <li class="divider" data-text="Gestión">Gestión</li>
 
             <li>
-                <a [class.active]="activeMenuItem === 'Ver Encuestas creadas'" [routerLink]="['admin/encuestascard']"
+                <a [class.active]="activeMenuItem === 'Ver Encuestas creadas'" [routerLink]="['career-manager/encuestas']"
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ver Encuestas creadas')"
                     href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
                 </a>
-                <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'" [routerLink]="['admin/respuestas']"
+                <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'" [routerLink]="['career-manager/respuestas']"
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas de Encuestas')"
                     href="javascript:void(0)"> <i class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
                 </a>
