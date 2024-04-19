@@ -13,15 +13,15 @@
       <div class="row">
         <div class="col-lg-9 col-md-8">
           <div class="section-title">
-            <h4 class="title mb-2">Informes</h4>
+            <h4 class="title mb-2"><strong>Informes</strong></h4>
             <p class="text-muted mb-0">Tabla de informes de graduados</p>
           </div>
         </div><!--end col-->
         <div class="col-lg-3 col-md-4 mt-4 mt-sm-0 pt-2 pt-sm-0">
           <div class="form custom-form">
             <div class="form-group">
-              <label>Tipos</label>
-              <select class="form-control custom-select" (change)="aplicarFiltros($event)">
+              <b>Tipo:</b>
+              <select class="form-select" (change)="aplicarFiltros($event)">
                 <option value="todos">Todos</option>
                 <option value="sinPostular">Graduados sin postular</option>
                 <option value="graduadoMasUnaPostulacion">Graduado +1 postulacion</option>

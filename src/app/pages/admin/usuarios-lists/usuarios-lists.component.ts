@@ -206,7 +206,7 @@ export class UsuariosListsComponent implements OnInit {
       title: "Seleccione una opción",
       icon: "question",
       html: `
-      <b>Seleccione una opción para continuar</b>
+      <b>Seleccione una opción para continuar:</b>
       <br>
       <div class="container mt-4">
         <div class="body">
