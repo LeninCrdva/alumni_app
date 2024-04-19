@@ -29,7 +29,7 @@ export class LayoutSystemComponent implements OnInit {
   nuevoAdministrador: Administrador = new Administrador();
   sidebarVisible = false;
 
-  activeMenuItem: string = localStorage.getItem('activeMenuItem') || 'Dashboard';
+  activeMenuItem: string = localStorage.getItem('activeMenuItem') || 'Inicio';
 
   rolType: string = '';
   activeDropdown: string | null = null;

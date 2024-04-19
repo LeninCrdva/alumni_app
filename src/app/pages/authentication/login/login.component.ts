@@ -63,7 +63,7 @@ export class LoginComponent {
           localStorage.setItem('user_id', user_id);
           this.mensaje = 'success';
 
-          localStorage.setItem('activeMenuItem', "Dashboard");
+          localStorage.setItem('activeMenuItem', "Inicio");
 
           this.alertService.mostrarAlertaMomentanea('Inicio de sesión exitoso');
 

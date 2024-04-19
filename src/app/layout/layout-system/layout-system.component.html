@@ -13,9 +13,9 @@
             [class.hidden]="!showAlumniOptions">
 
             <li>
-                <a [class.active]="activeMenuItem === 'Dashboard'" [routerLink]="['/system/alumni']"
-                    (click)="setActiveMenuItem('Dashboard')">
-                    <i class='bx bxs-dashboard icon'></i> Dashboard
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/alumni']"
+                    (click)="setActiveMenuItem('Inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
                 </a>
             </li>
 
@@ -94,9 +94,10 @@
         <!-- NOTE: ADMINISTRADOR -->
         <ul class="side-menu" [class.hidden]="!showAdminOptions">
 
-            <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/admin']" (click)="setActiveMenuItem('dashboard')">
-                    <i class='bx bxs-dashboard icon'></i> Dashboard
+            <li>
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/admin']"
+                    (click)="setActiveMenuItem('Inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
                 </a>
             </li>
 
@@ -196,9 +197,9 @@
         <!-- NOTE: EMPRESARIO -->
         <ul class="side-menu" [class.hidden]="!showEmpresarioOptions">
 
-            <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/company']" (click)="setActiveMenuItem('dashboard')">
-                    <i class='bx bxs-dashboard icon'></i> Dashboard
+            <li>
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/company']" (click)="setActiveMenuItem('Inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
                 </a>
             </li>
 
@@ -233,22 +234,24 @@
         <!-- NOTE: RESPONSABLE CARRERA -->
         <ul class="side-menu" [class.hidden]="!showResponsableCarreraOptions">
 
-            <li [class.active]="activeMenuItem === 'dashboard'">
-                <a [routerLink]="['/system/career-manager']" (click)="setActiveMenuItem('dashboard')">
-                    <i class='bx bxs-dashboard icon'></i> Dashboard
+            <li [class.active]="activeMenuItem === 'inicio'">
+                <a [routerLink]="['/system/career-manager']" (click)="setActiveMenuItem('inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
                 </a>
             </li>
 
             <li class="divider" data-text="Gestión">Gestión</li>
 
             <li>
-                <a [class.active]="activeMenuItem === 'Ver Encuestas creadas'" [routerLink]="['career-manager/encuestas']"
-                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ver Encuestas creadas')"
-                    href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
+                <a [class.active]="activeMenuItem === 'Ver Encuestas creadas'"
+                    [routerLink]="['career-manager/encuestas']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Ver Encuestas creadas')" href="javascript:void(0)"><i
+                        class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
                 </a>
-                <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'" [routerLink]="['career-manager/respuestas']"
-                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas de Encuestas')"
-                    href="javascript:void(0)"> <i class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
+                <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'"
+                    [routerLink]="['career-manager/respuestas']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Respuestas de Encuestas')" href="javascript:void(0)"> <i
+                        class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
                 </a>
             </li>
 
