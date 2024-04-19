@@ -15,7 +15,8 @@ export class Empresa {
     'ubicacion': string;
     'sitioWeb': string;
     'estado'?:boolean;
-
+    'rutaPdfRuc'?: string;
+    'urlPdfRuc'?: string;
 }
 export class Empresa2 {
     id?: number;
@@ -29,5 +30,6 @@ export class Empresa2 {
     'area': string;
     'ubicacion': string;
     'sitioWeb': string; 
+    'rutaPdfRuc'?: string;
+    'urlPdfRuc'?: string;
 }
-

@@ -1,3 +1,4 @@
+import { SafeResourceUrl } from "@angular/platform-browser";
 import { Ciudad } from "../ciudad";
 import { sectorempresarial } from "../sectorEmpresarial";
 
@@ -14,4 +15,6 @@ export class EmpresaDTO {
     'sitioWeb': string;
     'ubicacion': string;
     'estado': boolean;
+    'rutaPdfRuc': string;
+    'urlPdfRuc': SafeResourceUrl;
 }
