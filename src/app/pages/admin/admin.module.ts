@@ -31,6 +31,7 @@ import { WebBuilderComponent } from './web-builder/web-builder.component';
 import { CreateDataWebComponent } from './web-builder/create-data/create-data-web.component';
 import { GestionProgramasComponent } from './gestion-programas/gestion-programas.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -57,7 +58,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     WebBuilderComponent,
     CreateDataWebComponent,
     GestionProgramasComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    SeguimientoComponent
 
   ],
   imports: [

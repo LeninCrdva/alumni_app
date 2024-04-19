@@ -33,6 +33,14 @@ export class AnswerService {
       );
   }
 
+  getSurveyQuestionsAnswersByCareercoment(): Observable<any> {
+    const url = `${this.baseUrl}/survey-questions-answers-by-career-coments`;
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getAllSurveysWithQuestionsAndAnswers(): Observable<SurveyQuestionsAnswersDTO[]> {
     const url = `${this.baseUrl}/all-surveys-questions-answers`;
     return this.http.get<SurveyQuestionsAnswersDTO[]>(url)
@@ -81,6 +89,7 @@ export class AnswerService {
         catchError(this.handleError)
       );
   }
+
 
   getSurveyQuestionsAnswersByCareerWithCareerName(carreraNombre: string = ''): Observable<any> {
     const url = `${this.baseUrl}/survey-questions-answers-by-career-report?carreraNombre=${carreraNombre}`;

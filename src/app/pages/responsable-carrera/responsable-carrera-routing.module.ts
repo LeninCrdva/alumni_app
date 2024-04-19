@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { RespuestasComponent } from './respuestas/respuestas.component';
 import { EncuestaDetalleModalComponent } from './encuesta-detalle-modal/encuesta-detalle-modal.component';
+import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'encuestas', component: EncuestasComponent },
   { path: 'detalle', component: EncuestaDetalleModalComponent },
   { path: 'respuestas', component: RespuestasComponent },
+  { path: 'seguimiento', component: SeguimientoComponent },
 ];
 
 @NgModule({

@@ -41,6 +41,7 @@ export class UsuariosListsComponent implements OnInit {
   formCase2: FormGroup;
   formCase3: FormGroup;
   editMode: boolean = false;
+  passwordVisible = false;
   ciudadesList: Ciudad[] = [];
   businessSectorsList: sectorempresarial[] = [];
   roleName!: string;
@@ -156,6 +157,12 @@ export class UsuariosListsComponent implements OnInit {
       nombreUsuario: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
       clave: []
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+    const passwordInput = document.getElementById('InputPassword1') as HTMLInputElement;
+    passwordInput.type = this.passwordVisible ? 'text' : 'password';
   }
 
   initFormCreate(): void {
@@ -856,8 +863,8 @@ export class UsuariosListsComponent implements OnInit {
 
   validateUsername(): void {
     if (this.registerNewUserForm.get('nombreUsuario')?.valid) {
-      const currentUsername = this.currentUsername.toUpperCase();
-      const username = this.registerNewUserForm.get('nombreUsuario')?.value.toUpperCase();
+     const currentUsername = this.currentUsername;
+      const username = this.registerNewUserForm.get('nombreUsuario')?.value.toLowerCase();
       if (username !== currentUsername) {
         this.dataValidationService.validateUsername(username).subscribe(res => {
           this.duplicatedFields['username'] = res;

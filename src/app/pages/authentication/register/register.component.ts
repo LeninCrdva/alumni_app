@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
     });
 
     this.subRegisterForm = this.fb.group({
-      nombreUsuario: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
+      nombreUsuario: [this.generateRandomUsername(), [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersAndNumbersValidator())]],
       clave: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternPasswordValidator())]],
     });
 
@@ -116,7 +116,20 @@ export class RegisterComponent implements OnInit {
     this.controlByRole(this.roleName);
   }
 
-  ngAferViewInit(): void {
+  passwordVisible = false;
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+    const passwordInput = document.getElementById('InputPassword1') as HTMLInputElement;
+    passwordInput.type = this.passwordVisible ? 'text' : 'password';
+  }
+  generateRandomUsername(): string {
+    const allowedChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let username = '';
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * allowedChars.length);
+      username += allowedChars[randomIndex];
+    }
+    return username;
   }
 
   simpleControl(): void {

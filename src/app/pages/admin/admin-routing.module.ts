@@ -22,6 +22,7 @@ import { EncuestascardComponent } from './encuestascard/encuestascard.component'
 import { WebBuilderComponent } from './web-builder/web-builder.component';
 import { CreateDataWebComponent } from './web-builder/create-data/create-data-web.component';
 import { GestionProgramasComponent } from './gestion-programas/gestion-programas.component';
+import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
     { path: 'ofertas-laborales', component: OfertasLaboralesComponent },
     { path: 'encuestascard', component: EncuestascardComponent },
     { path: 'respuestas', component: RequestencuestaComponent },
+    { path: 'seguimiento', component: SeguimientoComponent },
     { path: 'gestion-programas', component: GestionProgramasComponent },
     { path: 'gestion-web-builder', component: WebBuilderComponent },
     { path: 'gestion-web-builder/crud/:id', component: CreateDataWebComponent },

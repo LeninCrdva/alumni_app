@@ -196,7 +196,8 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-                <button class="btn btn-primary nextBtn" [disabled]="!registerForm.valid || isButtonDisabled()">Siguiente</button>
+                <button class="btn btn-primary nextBtn"
+                  [disabled]="!registerForm.valid || isButtonDisabled()">Siguiente</button>
               </div>
             </div>
           </form>
@@ -207,7 +208,7 @@
               <div class="mb-4">
                 <div class="form-group has-validation">
                   <input type="text" class="form-input" required placeholder=" " id="InputNombreUsuario"
-                    (blur)="validateUsername()" formControlName="nombreUsuario" aria-describedby="usernameError">
+                    (blur)="validateUsername()" formControlName="nombreUsuario">
                   <label for="" class="form-label">Ingresa tu nombre de usuario</label>
                   <i class="ri-at-line form-icon"></i>
                   <div class="invalid-feedback">
@@ -222,13 +223,16 @@
                   <strong>Error</strong> - El nombre de usuario ya está registrado.
                 </div>
               </div>
-
               <div class="mb-4">
                 <div class="form-group has-validation">
                   <input type="password" class="form-input" required placeholder=" " id="InputPassword1"
-                    formControlName="clave" aria-describedby="passwordError">
+                    formControlName="clave">
                   <label for="" class="form-label">Ingresa tu contraseña</label>
                   <i class="ri-lock-line form-icon"></i>
+                  <span (click)="togglePasswordVisibility()" class="toggle-password">
+                    <i class="ri-eye-fill" *ngIf="passwordVisible"></i>
+                    <i class="ri-eye-off-fill" *ngIf="!passwordVisible"></i>
+                  </span>
                   <div class="invalid-feedback">
                     <strong>Dato Faltante</strong> - La contraseña es obligatoria.
                   </div>
@@ -348,7 +352,8 @@
                   </div>
                   <div class="d-flex justify-content-end">
                     <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
-                    <button class="btn btn-primary nextBtn  ms-2" [disabled]="!formCase1.valid || isButtonDisabled()">Siguiente</button>
+                    <button class="btn btn-primary nextBtn  ms-2"
+                      [disabled]="!formCase1.valid || isButtonDisabled()">Siguiente</button>
                   </div>
                 </div>
               </form>
@@ -489,7 +494,8 @@
                         <div class="card-header">
                           <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
                             <div class="embed-responsive-19by9">
-                              <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf" width="100%" height="500px">
+                              <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf" width="100%"
+                                height="500px">
                             </div>
                             <div>
                               <button class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
@@ -508,7 +514,7 @@
                         El PDF es obligatorio.
                       </div>
                     </div>
-    
+
                     <div class="d-flex justify-content-end">
                       <button class="btn btn-outline-primary prevBtn mr-2">Anterior</button>
                       <button class="btn btn-primary nextBtn  ms-2" (click)="register()"

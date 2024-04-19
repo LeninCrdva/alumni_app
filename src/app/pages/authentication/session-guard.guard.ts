@@ -29,17 +29,15 @@ export class sessionGuardGuard {
       } else if (getRole(token) === 'ROLE_EMPRESARIO') {
         this.router.navigate(['/system/company']);
         this.showMessage();
-
         return false;
       } else if (getRole(token) === 'ROLE_ADMINISTRADOR') {
         this.router.navigate(['/system/admin']);
         this.showMessage();
         return false;
-      } else if (getRole(token) === 'RESPONSABLE_CARRERA') {
+      } else if (getRole(token) === 'ROLE_RESPONSABLE_CARRERA') {
         this.router.navigate(['/system/career-manager']);
         this.showMessage();
         return false;
-
       }
     }
 
