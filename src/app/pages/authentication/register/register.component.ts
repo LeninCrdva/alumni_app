@@ -349,7 +349,9 @@ export class RegisterComponent implements OnInit {
         area: formData.area,
         sitioWeb: formData.sitioWeb,
         ubicacion: formData.ubicacion,
-        estado: false
+        estado: false,
+        rutaPdfRuc: this.rutaPdf,
+        urlPdfRuc: ''
       };
       return company;
     }

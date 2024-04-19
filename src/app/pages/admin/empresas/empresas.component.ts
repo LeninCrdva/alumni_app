@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { EmpresaService } from '../../../data/service/empresa.service';
 import { Empresa } from '../../../data/model/empresa';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-empresas',
@@ -16,11 +17,14 @@ export class EmpresasComponent implements OnInit {
     this.getAllCompanies();
   }
 
-  constructor(private companyService: EmpresaService) { }
+  constructor(private companyService: EmpresaService, private sanitizer: DomSanitizer) {
+    this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.company.urlPdfRuc ?? '');
+  }
 
   companyList: Empresa[] = [];
   filterCompanyList: Empresa[] = [];
   company: Empresa = new Empresa();
+  companyUrl: SafeResourceUrl;
 
   getAllCompanies(): void {
     this.companyService.getEmpresas().subscribe(data => {
@@ -46,6 +50,7 @@ export class EmpresasComponent implements OnInit {
   showCompanyDetails(id: any): void {
     this.companyService.getCompanyById(id).subscribe(data => {
       this.company = data;
+      this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.company.urlPdfRuc ?? '');
     });
   }
 
