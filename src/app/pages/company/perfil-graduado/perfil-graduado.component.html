@@ -1,5 +1,6 @@
 <!-- Hero Start -->
-<section class="bg-half-260 pb-4 d-table w-100" style="background: url('../../../../assets/imgs/bg/Isuta_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
+<section class="bg-half-260 pb-4 d-table w-100"
+    style="background: url('../../../../assets/imgs/bg/Isuta_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="bg-overlay"></div>
     <div *ngIf="graduado" class="container">
         <div class="row">
@@ -11,8 +12,10 @@
                                 <img [src]="graduado?.usuario?.urlImagen" alt="Imagen de usuario"
                                     class="avatar avatar-medium rounded-circle shadow mr-md-3" alt="">
                                 <div class="content mt-4 mt-sm-0" style="padding-left: 20px;">
-                                    <h4 class="mb-0">{{graduado?.usuario?.persona?.primerNombre}} 
-                                        {{graduado?.usuario?.persona?.segundoNombre}} {{graduado?.usuario?.persona?.apellidoPaterno}} {{graduado?.usuario?.persona?.apellidoMaterno}} </h4>
+                                    <h4 class="mb-0">{{graduado?.usuario?.persona?.primerNombre}}
+                                        {{graduado?.usuario?.persona?.segundoNombre}}
+                                        {{graduado?.usuario?.persona?.apellidoPaterno}}
+                                        {{graduado?.usuario?.persona?.apellidoMaterno}} </h4>
                                     <p class="mb-0"><i data-feather="map-pin" class="fas fa-church n-sm mr-1"></i><span
                                             class="text-muted h6">{{graduado.estadoCivil}}</span></p>
                                 </div>
@@ -38,7 +41,7 @@
                     </div>
 
                     <div class="p-4">
-                        <div class="d-flex align-items-center mt-3">
+                        <div class="d-flex align-items-center">
                             <i data-feather="mail" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
                                 <h6 class="mb-0">Email :</h6>
@@ -49,14 +52,15 @@
                             <i data-feather="map-pin" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
                                 <h6 class="mb-0">Ubicación :</h6>
-                                <p class="text-muted mb-0">{{graduado?.ciudad?.nombre}}, {{graduado?.ciudad?.provincia?.pais}}</p>
+                                <p class="text-muted mb-0">{{graduado?.ciudad?.nombre}},
+                                    {{graduado?.ciudad?.provincia?.pais}}</p>
                             </div>
                         </div>
 
                         <div class="d-flex align-items-center mt-3">
                             <i data-feather="monitor" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Titulo :</h6>
+                                <h6 class="mb-0">Título :</h6>
                                 <p class="text-muted mb-0">Tecnologo superior en desarrollo de software</p>
                             </div>
                         </div>
@@ -64,7 +68,7 @@
                         <div class="d-flex align-items-center mt-3">
                             <i data-feather="award" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
-                                <h6 class="mb-0">Telefono :</h6>
+                                <h6 class="mb-0">Teléfono :</h6>
                                 <p class="text-muted mb-0">{{graduado?.usuario?.persona?.telefono}}</p>
                             </div>
                         </div>
@@ -85,7 +89,8 @@
                         <h5 class="mt-4">Hoja de vida: </h5>
                     </div>
                     <div class="embed-responsive embed-responsive-19by9">
-                        <iframe [src]="pdfUrl" width="100%" height="600px" frameborder="0">"No es posible visualizar el contenido"</iframe>
+                        <iframe [src]="pdfUrl" width="100%" height="600px" frameborder="0">"No es posible visualizar el
+                            contenido"</iframe>
                     </div>
                 </div>
             </div><!--end col-->

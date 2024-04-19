@@ -13,7 +13,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-white bg-primary">
-                <h5 class="modal-title">PERFIL DEL GRADUADO</h5>
+                <h5 class="modal-title">Perfil del Graduado</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -36,13 +36,14 @@
                                 <div class="text-center mt-auto">
                                     <label class="form-label">Título:</label>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <a href="{{ selectedGraduado?.urlPdf }}" target="_blank" class="btn btn-primary btn-sm">
+                                        <a href="{{ selectedGraduado?.urlPdf }}" target="_blank"
+                                            class="btn btn-primary btn-sm">
                                             <i class="fas fa-file-pdf mr-1"></i> Ver Título
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-lg-6">
                                 <div class="text-center">
                                     <div class="mb-3">
@@ -55,11 +56,11 @@
                                         </ng-container>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
 
@@ -69,9 +70,6 @@
         </div>
     </div>
 </div>
-
-<!--/ Nuevo Modal -->
-
 
 
 <div class="card">
@@ -118,7 +116,7 @@
                                 <button data-bs-toggle="modal"
                                     (click)="contactarPorWhatsapp(graduadoItem.usuario.persona.telefono)" type="button"
                                     class="btn btn-oblong btn-outline-primary btn-block">
-                                    Contacta
+                                    Contactar
                                 </button>
                             </td>
                         </tr>

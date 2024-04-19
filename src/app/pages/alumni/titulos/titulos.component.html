@@ -2,7 +2,7 @@
     style="background-image: url(../../../../assets/imgs/headers/Postulaciones.jpg);">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Mis Titulos</h1>
+            <h1>Mis Títulos</h1>
         </div>
     </div>
 </section>
@@ -16,21 +16,21 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header text-white" [class.bg-dark]="!editarClicked" [class.bg-primary]="editarClicked">
-                <h5 [innerText]="editarClicked ? 'Modificar Titulo' : 'Agregar Titulo'">
+                <h5 [innerText]="editarClicked ? 'Modificar Título' : 'Agregar Título'">
                 </h5>
             </div>
             <div class="modal-body">
                 <form class="row g-3 needs-validation" [formGroup]="validateForm">
                     <div class="form-group col-lg-6">
-                        <label for="nombre_titulo" class="form-label">NOMBRE DEL TITULO:</label>
+                        <label for="nombre_titulo" class="form-label">NOMBRE DEL TÍTULO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-signature"></i>
                             </a>
                             <input type="text" class="form-control" id="nombre_titulo"
-                                placeholder="Ingrese el nombre del titulo." formControlName="nombreTitulo" required>
+                                placeholder="Ingrese el nombre del título." formControlName="nombreTitulo" required>
                             <div class="oaerror danger  invalid-feedback">
-                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Titulo.
+                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Título.
                             </div>
                         </div>
                     </div>
@@ -60,16 +60,16 @@
                             <span class="input-group-text">
                                 <i class="fa-solid fa-clipboard"></i>
                             </span>
-                            <input type="text" class="form-control" id="tipo" placeholder="Ingrese el tipo del titulo."
+                            <input type="text" class="form-control" id="tipo" placeholder="Ingrese el tipo del título."
                                 formControlName="tipo" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el tipo de titulo que usted posee.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el tipo de título que usted posee.
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group col-lg-6">
-                        <label for="num_registro" class="form-label">Número de Registro:</label>
+                        <label for="num_registro" class="form-label">NÚMERO DE REGISTRO:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
                                 <i class="fa-solid fa-hashtag"></i>
@@ -77,7 +77,7 @@
                             <input type="number" class="form-control" id="num_registro"
                                 placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="numRegistro" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del titulo.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
                             </div>
                         </div>
                     </div>
@@ -89,10 +89,10 @@
                                 <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fecha_emision"
-                                placeholder="Ingrese el número de registro del titulo." formControlName="fechaEmision"
+                                placeholder="Ingrese el número de registro del título." formControlName="fechaEmision"
                                 required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del titulo.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                             <input type="date" class="form-control" id="fecha_registro"
                                 placeholder="Ingrese la fecha de registro." formControlName="fechaRegistro" required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de registro titulo.
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de registro título.
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
             <div class="modal-footer">
                 <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
                     [class.btn-primary]="editarClicked">
-                    {{ editarClicked ? 'Actualizar Titulo' : 'Registrar Titulo' }}
+                    {{ editarClicked ? 'Actualizar Título' : 'Registrar Título' }}
                 </button>
 
                 <button type="button" #myModalClose data-bs-dismiss="modal"
@@ -187,7 +187,7 @@
 
             <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
                 class="btn btn-primary ms-2" style="width: 18rem;">
-                Agregar Titulo
+                Agregar Título
             </button>
         </div>
 
@@ -215,7 +215,7 @@
                                     <i class="fa fa-pencil"></i> Editar
                                 </button>
                                 <button (click)="onDeleteClick(item.id)"
-                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    class="btn btn-label-danger btn-sm mg-y-5 mt-2">
                                     <i class="fa fa-trash"></i> Eliminar
                                 </button>
                             </td>

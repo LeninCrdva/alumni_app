@@ -14,7 +14,7 @@
         <h1 class="font-weight-bold mb-4" style="color: var(--alumni-color); font-weight: bold;">Bienvenido</h1>
 
         <div class="mb-4">
-          <p style="color: var(--alumni-color)">Por favor, ingrese sus credenciales</p>
+          <p style="color: var(--alumni-color)">Por favor, ingrese sus credenciales:</p>
         </div>
 
         <form [formGroup]="loginForm" class="mb-5" (ngSubmit)="login()">
@@ -50,7 +50,7 @@
           </div>
           <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
           <p class="text-end  mt-3"><a routerLink="/account/login/request-password"
-              class=" font-weight-bold text-decoration-none fs-6">¿Has olvidado la contraseña?</a>.</p>
+              class="text-decoration-none fs-6">¿Has olvidado la contraseña?</a>.</p>
         </form>
       </div>
 

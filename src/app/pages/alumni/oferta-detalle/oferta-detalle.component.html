@@ -43,7 +43,7 @@
         <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
           <div class="sticky-bar rounded bg-white shadow">
             <div class="border-bottom p-4">
-              <h5 class="mb-0">Informacion del Trabajo</h5>
+              <h5 class="mb-0">Información del Trabajo</h5>
             </div>
 
             <div class="p-4">
@@ -64,7 +64,7 @@
               <div class="d-flex align-items-center mt-3">
                 <i data-feather="map-pin" class="float-left mr-3"></i>
                 <div class="overflow-hidden d-block">
-                  <h6 class="mb-0">Ubicacion:</h6>
+                  <h6 class="mb-0">Ubicación:</h6>
                   <p class="text-primary mb-0">
                     {{ ofertaDetail.empresa && ofertaDetail.empresa.ciudad && ofertaDetail.empresa.ciudad.nombre ? ofertaDetail.empresa.ciudad.nombre : 'Ciudad no especificada' }},
                     {{ ofertaDetail.empresa && ofertaDetail.empresa.ciudad && ofertaDetail.empresa.ciudad.provincia && ofertaDetail.empresa.ciudad.provincia.pais ? ofertaDetail.empresa.ciudad.provincia.pais : 'País no especificado' }}
@@ -105,7 +105,7 @@
               <div class="d-flex align-items-center mt-3">
                 <i data-feather="clock" class="float-left mr-3"></i>
                 <div class="overflow-hidden d-block">
-                  <h6 class="mb-0">Fecha publicacion:</h6>
+                  <h6 class="mb-0">Fecha publicación:</h6>
                   <p class="text-primary mb-0">{{ ofertaDetail.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
                 </div>
               </div>

@@ -26,7 +26,7 @@
                                 <a class="input-group-text">
                                     <i class="fa-solid fa-spell-check"></i>
                                 </a>
-                                <select class="form-control" formControlName="tipo" (change)="selectStyle()"
+                                <select class="form-select" formControlName="tipo" (change)="selectStyle()"
                                     [value]="validateForm.get('tipo')?.value" required>
                                     <option value="estilo1">Estilo 1</option>
                                     <option value="estilo2">Estilo 2</option>
@@ -58,7 +58,7 @@
                             <a class="input-group-text">
                                 <i class="fa-solid fa-building"></i>
                             </a>
-                            <select class="form-control" name="nombreEmpresa" formControlName="nombreEmpresa" required>
+                            <select class="form-select" name="nombreEmpresa" formControlName="nombreEmpresa" required>
                                 <option value="" disabled selected>-- Seleccione una opción --</option>
                                 <option *ngFor="let empresa of empresas">{{empresa.nombre}}</option>
                             </select>
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="form-group col-lg-6">
-                        <label class="form-label active">FECHA PUBLICACION:</label>
+                        <label class="form-label active">FECHA PUBLICACIÓN:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-calendar-alt"></i>
@@ -89,7 +89,7 @@
                             <a class="input-group-text">
                                 <i class="fa-solid fa-clock"></i>
                             </a>
-                            <select class="form-control" name="tiempo" formControlName="tiempo" required>
+                            <select class="form-select" name="tiempo" formControlName="tiempo" required>
                                 <option value="" disabled selected>-- Seleccione una opción --</option>
                                 <option value="COMPLETO" [selected]="ofertaslaboralesCarga.tiempo === 'COMPLETO'">
                                     Completo</option>
@@ -117,7 +117,7 @@
                                 [max]="validateForm.get('fechaCierre')?.value" required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - La fecha de apertura es obligatoria o es anterior a
-                                la fecha de publicacion.
+                                la fecha de publicación.
                             </div>
                         </div>
 
@@ -131,22 +131,22 @@
                                 required>
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - La fecha de cierre es obligatoria o es anterior a
-                                la fecha de publicacion o la fecha de apertura.
+                                la fecha de publicación o la fecha de apertura.
                             </div>
                         </div>
 
                     </div>
                     <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
-                        <label class="form-label active">AREA CONOCIMIENTO:</label>
+                        <label class="form-label active">ÁREA CONOCIMIENTO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-book"></i>
                             </a>
                             <textarea class="form-control" name="areaConocimiento" rows="4"
-                                placeholder="Ingrese el area de conocimiento para su oferta de trabajo"
+                                placeholder="Ingrese el área de conocimiento para su oferta de trabajo"
                                 formControlName="areaConocimiento" required></textarea>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - El area de conocimiento es obligatorio.
+                                <strong>Dato Faltante</strong> - El área de conocimiento es obligatorio.
                             </div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
                             <a class="input-group-text">
                                 <i class="fa-solid fa-user-graduate"></i>
                             </a>
-                            <select class="form-control" name="experiencia" formControlName="experiencia" required>
+                            <select class="form-select" name="experiencia" formControlName="experiencia" required>
                                 <option value="" disabled>-- Seleccione una opción --</option>
                                 <option value="SIN EXPERIENCIA"
                                     [selected]="ofertaslaboralesCarga.experiencia === 'Sin Experiencia'">

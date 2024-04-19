@@ -67,7 +67,7 @@ export class ReferenciasPersonalesComponent {
 
   // Note: Cargar la tabla con los datos despues de que la vista se haya inicializado
   ngOnInit(): void {
-    const columnTitles = ['#', 'Nombre', 'Telefono', 'Email'];
+    const columnTitles = ['#', 'Nombre', 'Teléfono', 'Email'];
     this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar referencia...');
     // Para inicializar los dropdowns de los filtros de la tabla.
     this.filterService.initializeDropdowns('filterTable', columnTitles,);

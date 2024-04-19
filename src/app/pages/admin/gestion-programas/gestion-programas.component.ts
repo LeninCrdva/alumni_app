@@ -74,7 +74,7 @@ export class GestionProgramasComponent {
   }
 
   ngAfterViewInit(): void {
-    const columnTitles = ['#', 'Titulo', 'Subtitulo', 'Resumen', 'Tipo xml'];
+    const columnTitles = ['#', 'Título', 'Subtitulo', 'Resumen', 'Tipo xml'];
 
     this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar programa...');
     this.filterService.initializeDropdowns(columnTitles, this.dtElement);
