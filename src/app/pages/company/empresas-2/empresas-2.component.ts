@@ -14,6 +14,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangeDetectorRef } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { NgModel } from '@angular/forms';
+import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
+import { AssetService } from '../../../data/service/Asset.service';
+import { HttpEvent, HttpResponse } from '@angular/common/http';
+import { Observable, lastValueFrom, of } from 'rxjs';
+import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-empresas-2',
   templateUrl: './empresas-2.component.html',
@@ -23,6 +30,7 @@ export class Empresas2Component {
 
   editarClicked = false;
   idEdit: number = 0;
+  
   
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
@@ -44,7 +52,7 @@ export class Empresas2Component {
   empresacargar: any = {};
   ciudades: Ciudad[] = [];
   sectoresEmpresariales: sectorempresarial[] = [];
-
+  companyUrl: SafeResourceUrl;
   ID_Ciudad: number | undefined;
   ID_Sector: number | undefined;
 
@@ -54,11 +62,17 @@ export class Empresas2Component {
   constructor(
     public bsModalRef: BsModalRef,
     private cd: ChangeDetectorRef,
+    public pdfHandlerService: PdfHandlerService,
+    public imageHandlerService: ImageHandlerServiceFoto,
     private empresaService: EmpresaService,
     private ciudadService: CiudadService,
+    private assetService: AssetService,
     private sectorempresarialService: SectorEmpresarialService,
-    private serviceempresario: EmpresarioService
-  ) { }
+    private serviceempresario: EmpresarioService,
+    private sanitizer: DomSanitizer
+  ) { 
+    this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.empresacargar.rutaPdfRuc ?? '');
+  }
   closeModal2(modalId: string): void {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -114,6 +128,11 @@ export class Empresas2Component {
     this.getSectoresEmpresariales();
   }
 
+  onPdfSelected(event: any): void {
+    this.pdfHandlerService.handlePdfFile(event);
+    this.pdfHandlerService.pdfUrl;
+  }
+
   obtenerYAlmacenarUsuarioEmpresario(): void {
     this.serviceempresario.getEmpresario().subscribe(
       empresario => {
@@ -161,7 +180,7 @@ export class Empresas2Component {
   }
 
   validateEmpresasPerFields(): boolean {
-    if (!this.empresanueva.ruc || !this.empresanueva.nombre || !this.empresanueva.tipoEmpresa || !this.empresanueva.razonSocial || !this.empresanueva.area || !this.empresanueva.ubicacion || !this.empresanueva.sitioWeb || !this.empresanueva.ciudad || !this.empresanueva.sectorEmpresarial) {
+    if (!this.empresanueva.ruc || !this.empresanueva.nombre || !this.empresanueva.tipoEmpresa || !this.empresanueva.razonSocial || !this.empresanueva.area || !this.empresanueva.ubicacion || !this.empresanueva.ciudad || !this.empresanueva.sectorEmpresarial) {
       return false;
     }
 
@@ -169,12 +188,35 @@ export class Empresas2Component {
   }
 
   validateEmpresasPerFieldsEdicion(): boolean {
-    if (!this.empresacargar.ruc || !this.empresacargar.nombre || !this.empresacargar.tipoEmpresa || !this.empresacargar.razonSocial || !this.empresacargar.area || !this.empresacargar.ubicacion || !this.empresacargar.sitioWeb || !this.empresacargar.ciudad || !this.empresacargar.sectorEmpresarial) {
+    if (!this.empresacargar.ruc || !this.empresacargar.nombre || !this.empresacargar.tipoEmpresa || !this.empresacargar.razonSocial || !this.empresacargar.area || !this.empresacargar.ubicacion  || !this.empresacargar.ciudad || !this.empresacargar.sectorEmpresarial) {
       return false;
     }
 
     return true;
   }
+  rutaPdf: any;
+  rutaImagen: any;
+  async uploadAndSetRutaImagen(file: File, type: string = 'image') {
+    try {
+      const observable = this.assetService.upload(file);
+      const data: HttpEvent<any> | undefined = await lastValueFrom(observable);
+
+      if (type === 'image') {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaImagen = key;
+        }
+      } else {
+        if (data instanceof HttpResponse) {
+          const key = data.body?.key;
+          this.rutaPdf = key;
+        }
+      }
+    } catch (error) {
+      //console.error('Error al subir la imagen:', error);
+    }
+  }
+
 
 
   crearEmpresa() {
@@ -182,10 +224,16 @@ export class Empresas2Component {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
+    if (this.imageHandlerService.archivos) {
+      
+       this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
+    }
 
     if (this.empresanueva) {
+      this.empresanueva.rutaPdfRuc= this.rutaPdf;
       this.empresanueva.empresario = this.empresariouser;
-
+      this.empresanueva.urlPdfRuc='';
+       //console.log(this.empresanueva);
       if (this.validarCampos()) {
         this.empresaService.createEmpresa(this.empresanueva).subscribe(
           empresa => {
@@ -195,7 +243,7 @@ export class Empresas2Component {
             this.onClose.emit('guardadoExitoso');
           },
           error => {
-            this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la referencia personal.');
+            this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la Empresa.');
           }
         );
       } else {
@@ -227,6 +275,7 @@ export class Empresas2Component {
     }
     
     this.editarClicked = true;
+   
     this.empresacargar.empresario = this.empresariouser;
     if (this.validarCampos()) {
       this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
@@ -378,11 +427,16 @@ export class Empresas2Component {
       }
     );
   }
+// Método para sanitizar la URL
+public sanitizeUrl(url: string): SafeResourceUrl {
+  return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+}
 
   getEmpresaById(id: number) {
     this.empresaService.getEmpresaById(id).subscribe(
       empresa => {
         this.empresacargar = empresa;
+        this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(empresa.rutaPdfRuc ?? '');
         this.ID_Sector = empresa.sectorEmpresarial.id;
         this.ID_Ciudad = empresa.ciudad.id;
       },
@@ -413,7 +467,7 @@ export class Empresas2Component {
   @ViewChild('razonSocialInput', { read: NgModel }) razonSocialInput!: NgModel;
   @ViewChild('areaInput', { read: NgModel }) areaInput!: NgModel;
   @ViewChild('ubicacionInput', { read: NgModel }) ubicacionInput!: NgModel;
-  @ViewChild('sitioWebInput', { read: NgModel }) sitioWebInput!: NgModel;
+  //@ViewChild('sitioWebInput', { read: NgModel }) sitioWebInput!: NgModel;
   @ViewChild('ciudadInput', { read: NgModel }) ciudadInput!: NgModel;
   @ViewChild('sectorInput', { read: NgModel }) sectorInput!: NgModel;
   validarCampos(): boolean {
@@ -465,11 +519,11 @@ export class Empresas2Component {
 
     //console.log("¿Ubicación válida?", isUbicacionValida ? "Sí" : "No");
 
-    const isSitioWebValido =
+   /* const isSitioWebValido =
       !(
         this.sitioWebInput?.invalid &&
         (this.sitioWebInput?.dirty || this.sitioWebInput?.touched)
-      );
+      );*/
 
     //console.log("¿Sitio Web válido?", isSitioWebValido ? "Sí" : "No");
 
@@ -489,7 +543,7 @@ export class Empresas2Component {
 
     //console.log("¿Sector válido?", isSectorValido ? "Sí" : "No");
 
-    const isValid = isNombreValido && isRucValido && isTipoEmpresaValido && isRazonSocialValida && isAreaValida && isUbicacionValida && isSitioWebValido && isCiudadValida && isSectorValido;
+    const isValid = isNombreValido && isRucValido && isTipoEmpresaValido && isRazonSocialValida && isAreaValida && isUbicacionValida  && isCiudadValida && isSectorValido;
 
     console.log("¿Campos válidos?", isValid ? "Sí" : "No");
 
