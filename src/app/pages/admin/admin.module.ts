@@ -32,6 +32,10 @@ import { CreateDataWebComponent } from './web-builder/create-data/create-data-we
 import { GestionProgramasComponent } from './gestion-programas/gestion-programas.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { PieChartpostulantesactivosComponent } from './reports/visual_reports/graficas/pie-chartpostulantesactivos/pie-chartpostulantesactivos.component';
+import { PieChartpostulantesseleccioandosComponent } from './reports/visual_reports/graficas/pie-chartpostulantesseleccioandos/pie-chartpostulantesseleccioandos.component';
+import { AreaChartpostulantescarreraComponent } from './reports/visual_reports/graficas/area-chartpostulantescarrera/area-chartpostulantescarrera.component';
+import { AreaChartpostulantesempresaComponent } from './reports/visual_reports/graficas/area-chartpostulantesempresa/area-chartpostulantesempresa.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -59,7 +63,11 @@ import { SeguimientoComponent } from './seguimiento/seguimiento.component';
     CreateDataWebComponent,
     GestionProgramasComponent,
     TextEditorComponent,
-    SeguimientoComponent
+    SeguimientoComponent,
+    PieChartpostulantesactivosComponent,
+    PieChartpostulantesseleccioandosComponent,
+    AreaChartpostulantescarreraComponent,
+    AreaChartpostulantesempresaComponent
 
   ],
   imports: [

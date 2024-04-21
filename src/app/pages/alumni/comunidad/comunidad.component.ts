@@ -81,7 +81,7 @@ export class ComunidadComponent {
       (result) => {
 
         this.graduadosList = result;
-        //console.log("Graduados obtenidos:", this.graduadosList);
+        console.log("Graduados obtenidos:", this.graduadosList);
 
       },
       () => this.dtTrigger.next(null)

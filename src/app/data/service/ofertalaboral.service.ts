@@ -92,4 +92,17 @@ export class OfertalaboralService {
   deleteOfertabyID  (id: number): Observable<any> {
     return this.http.delete(`${this.urlEndPoint}/${id}`);
   }
+  //Reportes
+  
+  obtenerReportePostulacionesYAceptados(): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/reporte-postulaciones-aceptados`);
+  }
+
+  obtenerReportePostulacionesActivasPorEmpresa(): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/reporte-postulaciones-activas-por-empresa`);
+  }
+
+  generarReportePostulantesPorCarrera(): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/reporte-postulantes-activos-y-seleccionados-por-carrera`);
+  }
 }

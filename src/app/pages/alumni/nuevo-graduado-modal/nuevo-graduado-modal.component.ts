@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AssetService } from '../../../data/service/Asset.service';
 import Swal from 'sweetalert2';
+import { MAIN_ROUTE } from '../../../data/service/MAIN_ROUTE';
 @Component({
   selector: 'app-nuevo-graduado-modal',
   templateUrl: './nuevo-graduado-modal.component.html',
@@ -126,7 +127,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
         formularioDeDatos.append('multipartFile', archivo, archivo.name);
       });
 
-      this.assetService.post('http://localhost:8080/assets/upload', formularioDeDatos)
+      this.assetService.post(MAIN_ROUTE.API_ENDPOINT+'/assets/upload', formularioDeDatos)
         .subscribe(
           (res: any) => {
             this.loading = false;
