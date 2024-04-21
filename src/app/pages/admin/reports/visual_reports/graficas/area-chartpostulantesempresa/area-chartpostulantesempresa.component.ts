@@ -26,116 +26,110 @@ export type ChartOptions = {
   templateUrl: './area-chartpostulantesempresa.component.html',
   styleUrl: './area-chartpostulantesempresa.component.css'
 })
-export class AreaChartpostulantesempresaComponent {
+export class AreaChartpostulantesempresaComponent implements OnInit {
   public chartOptions!: ChartOptions;
-
-  public response: any [] = [];
+  public response: any[] = [];
   public cargos: string[] = [];
   public cantidades: number[] = [];
 
-  constructor(private apiservice: ApiService,private ofertalaboralService:OfertalaboralService) { }
+  constructor(private apiservice: ApiService, private ofertalaboralService: OfertalaboralService) { }
 
   ngOnInit(): void {
+    this.loadChartData();
+  }
+
+  private loadChartData(): void {
     this.ofertalaboralService.obtenerReportePostulacionesActivasPorEmpresa().subscribe(
       (data) => {
         if (data && Array.isArray(data)) {
-        this.response = data || {}; // Manejo de datos nulos
+          this.response = data || {};
+          this.cargos = data.map((item: any) => item.nombreEmpresa);
+          this.cantidades = data.map((item: any) => item.cantidadPostulacionesActivas);
 
-        this.cargos = data.map((item: any) => item.nombreEmpresa);
-        this.cantidades = data.map((item: any) => item.cantidadPostulacionesActivas);
-       
+          if (this.cargos.length > 0 && this.cantidades.length > 0) {
+            const dataPoints = this.cargos.map((cargo, index) => ({
+              x: cargo,
+              y: this.cantidades[index],
+            }));
 
-       //console.log('Ofertas:', this.cargos);
-       // console.log('Cantidades:', this.cantidades);
-       
-
-        if (this.cargos.length > 0 && this.cantidades.length > 0) {
-          // Crear un array de objetos { x, y } para cada fecha y cantidad
-          const dataPoints = this.cargos.map((cargo, index) => ({
-            x: cargo,
-            y: this.cantidades[index],
-          }));
-
-          this.chartOptions = {
-            series: [
-              {
-                name: 'CANTIDAD DE POSTULACIONES',
-                data: dataPoints,
-              },
-            ],
-            chart: {
-              type: 'area',
-              width: "100%",
-              animations: {
-                enabled: true,
-                easing: 'easeinout',
-                speed: 800,
-                animateGradually: {
-                  enabled: true,
-                  delay: 150
+            this.chartOptions = {
+              series: [
+                {
+                  name: 'CANTIDAD DE POSTULACIONES',
+                  data: dataPoints,
                 },
-                dynamicAnimation: {
+              ],
+              chart: {
+                type: 'area',
+                width: '100%',
+                animations: {
                   enabled: true,
-                  speed: 350
+                  easing: 'easeinout',
+                  speed: 800,
+                  animateGradually: {
+                    enabled: true,
+                    delay: 150
+                  },
+                  dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                  }
+                },
+                zoom: {
+                  enabled: false,
+                },
+              },
+              options: {
+                area: {
+                  fillTo: 'end'
                 }
               },
-              zoom: {
-                enabled: false,
+              dataLabels: {
+                style: {
+                  colors: ['#1ed760']
+                },
+                enabled: true,
               },
-            },
-            options: {
-              area: {
-                fillTo:'end'
-              }
-            },
-            dataLabels: {
-              style: {
-                colors: ['#1ed760']
+              stroke: {
+                curve: 'smooth',
+                width: 2.25,
               },
-              enabled: true,
-            },
-            stroke: {
-              curve: 'smooth',
-              width: 2.25,
-            },
-            fill: {
-              type: 'gradient',
-              gradient: {
-                gradientToColors: ["#28b2bc"],
-                inverseColors: true,
-                stops: [20, 80]
+              fill: {
+                type: 'gradient',
+                gradient: {
+                  gradientToColors: ['#28b2bc'],
+                  inverseColors: true,
+                  stops: [20, 80]
+                },
               },
-            },
-            title: {
-              text: 'Postulaciones por Empresa',
-              align: 'center',
-            },
-            subtitle: {
-              text: '',
-              align: 'left',
-            },
-            xaxis: {
-              type: 'category',
-            },
-            yaxis: {
-              opposite: true,
-            },
-            legend: {
-              horizontalAlign: 'left',
-            },
-            labels: this.cargos,
-          };
+              title: {
+                text: 'Postulaciones por Empresa',
+                align: 'center',
+              },
+              subtitle: {
+                text: '',
+                align: 'left',
+              },
+              xaxis: {
+                type: 'category',
+              },
+              yaxis: {
+                opposite: true,
+              },
+              legend: {
+                horizontalAlign: 'left',
+              },
+              labels: this.cargos,
+            };
 
-          // Llama al evento "resize", actualizando el chart.
-          this.onResize();
+            this.onResize(); 
+          } else {
+            console.warn('No hay datos válidos para el gráfico.');
+          }
         } else {
-          console.warn('No hay datos válidos para el gráfico.');
+          console.warn('La respuesta del servicio no es válida.');
         }
-      }else {
-        console.warn('La respuesta del servicio no es válida.');
-      }
-      }
-      ,
+      },
       (error) => {
         console.error('Error al obtener postulaciones por día:', error);
       }
@@ -151,5 +145,4 @@ export class AreaChartpostulantesempresaComponent {
   }
 
   private lastBodyHeight = 0;
-
 }
