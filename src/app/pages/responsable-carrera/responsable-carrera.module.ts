@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RespuestasComponent } from './respuestas/respuestas.component';
 import { EncuestaDetalleModalComponent } from './encuesta-detalle-modal/encuesta-detalle-modal.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { RespuestasEncuestaCarreraComponent } from './respuestas-encuesta-carrera/respuestas-encuesta-carrera.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SeguimientoComponent } from './seguimiento/seguimiento.component';
     DashboardComponent,
     RespuestasComponent,
     EncuestaDetalleModalComponent,
-    SeguimientoComponent
+    SeguimientoComponent,
+    RespuestasEncuestaCarreraComponent
   ],
   imports: [
     CommonModule,

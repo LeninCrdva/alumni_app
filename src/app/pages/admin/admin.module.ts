@@ -36,6 +36,7 @@ import { PieChartpostulantesactivosComponent } from './reports/visual_reports/gr
 import { PieChartpostulantesseleccioandosComponent } from './reports/visual_reports/graficas/pie-chartpostulantesseleccioandos/pie-chartpostulantesseleccioandos.component';
 import { AreaChartpostulantescarreraComponent } from './reports/visual_reports/graficas/area-chartpostulantescarrera/area-chartpostulantescarrera.component';
 import { AreaChartpostulantesempresaComponent } from './reports/visual_reports/graficas/area-chartpostulantesempresa/area-chartpostulantesempresa.component';
+import { RespuestasEncuestaCarreraComponent } from './respuestas-encuesta-carrera/respuestas-encuesta-carrera.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -67,7 +68,8 @@ import { AreaChartpostulantesempresaComponent } from './reports/visual_reports/g
     PieChartpostulantesactivosComponent,
     PieChartpostulantesseleccioandosComponent,
     AreaChartpostulantescarreraComponent,
-    AreaChartpostulantesempresaComponent
+    AreaChartpostulantesempresaComponent,
+    RespuestasEncuestaCarreraComponent
 
   ],
   imports: [

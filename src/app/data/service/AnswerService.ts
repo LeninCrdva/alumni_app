@@ -109,6 +109,15 @@ export class AnswerService {
       );
   }
 
+  getSurveyQuestionsAnswersByCareerWithCareerNameAndSurveyTitle(carreraNombre: string, surveyTitle: string) {
+    const url = `${this.baseUrl}/survey-questions-answers-by-careerandsurveytitle-report?carreraNombre=${carreraNombre}&surveyTitle=${surveyTitle}`;
+    // Realiza la solicitud HTTP con los parámetros
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: any): Observable<never> {
     //console.error('Error en la petición:', error);
 
