@@ -42,6 +42,11 @@ export class EmpresaService {
     return this.http.put<Empresa>(url, empresa, { headers: this.httpHeaders });
   }
 
+  updatePdfRuc(id: number, pdfRuc: string): Observable<Empresa> {
+    const url = `${this.urlEndPoint}/pdf-ruc/${id}/${pdfRuc}`;
+    return this.http.put<Empresa>(url, { headers: this.httpHeaders });
+  }
+
   getEmpresarioByUsuarioId(id: any): Observable<Empresario> {
     return this.http.get<Empresario>(`${this.urlEndPoint}/usuario/${id}`)
   }

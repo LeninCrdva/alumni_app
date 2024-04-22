@@ -30,8 +30,9 @@ export class Empresas2Component {
 
   editarClicked = false;
   idEdit: number = 0;
-  
-  
+  fileName!: string;
+  notActive = true;
+
   onEditarClick(id: number | undefined = 0): void {
     this.editarClicked = true;
     this.idEdit = id || 0;
@@ -40,6 +41,7 @@ export class Empresas2Component {
   }
 
   onRegistrarClick(): void {
+    this.pdfHandlerService.pdfUrl = '';
     this.editarClicked = false;
   }
 
@@ -70,7 +72,7 @@ export class Empresas2Component {
     private sectorempresarialService: SectorEmpresarialService,
     private serviceempresario: EmpresarioService,
     private sanitizer: DomSanitizer
-  ) { 
+  ) {
     this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.empresacargar.rutaPdfRuc ?? '');
   }
   closeModal2(modalId: string): void {
@@ -131,6 +133,7 @@ export class Empresas2Component {
   onPdfSelected(event: any): void {
     this.pdfHandlerService.handlePdfFile(event);
     this.pdfHandlerService.pdfUrl;
+    this.notActive = false;
   }
 
   obtenerYAlmacenarUsuarioEmpresario(): void {
@@ -188,7 +191,7 @@ export class Empresas2Component {
   }
 
   validateEmpresasPerFieldsEdicion(): boolean {
-    if (!this.empresacargar.ruc || !this.empresacargar.nombre || !this.empresacargar.tipoEmpresa || !this.empresacargar.razonSocial || !this.empresacargar.area || !this.empresacargar.ubicacion  || !this.empresacargar.ciudad || !this.empresacargar.sectorEmpresarial) {
+    if (!this.empresacargar.ruc || !this.empresacargar.nombre || !this.empresacargar.tipoEmpresa || !this.empresacargar.razonSocial || !this.empresacargar.area || !this.empresacargar.ubicacion || !this.empresacargar.ciudad || !this.empresacargar.sectorEmpresarial) {
       return false;
     }
 
@@ -210,6 +213,7 @@ export class Empresas2Component {
         if (data instanceof HttpResponse) {
           const key = data.body?.key;
           this.rutaPdf = key;
+          this.fileName = key;
         }
       }
     } catch (error) {
@@ -220,20 +224,21 @@ export class Empresas2Component {
 
 
   crearEmpresa() {
+    console.log(this.pdfHandlerService.pdfUrl);
     if (!this.validateEmpresasPerFields()) {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
     if (this.imageHandlerService.archivos) {
-      
-       this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
+
+      this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
     }
 
     if (this.empresanueva) {
-      this.empresanueva.rutaPdfRuc= this.rutaPdf;
+      this.empresanueva.rutaPdfRuc = this.rutaPdf;
       this.empresanueva.empresario = this.empresariouser;
-      this.empresanueva.urlPdfRuc='';
-       //console.log(this.empresanueva);
+      this.empresanueva.urlPdfRuc = '';
+      //console.log(this.empresanueva);
       if (this.validarCampos()) {
         this.empresaService.createEmpresa(this.empresanueva).subscribe(
           empresa => {
@@ -273,9 +278,9 @@ export class Empresas2Component {
       this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
       return;
     }
-    
+
     this.editarClicked = true;
-   
+
     this.empresacargar.empresario = this.empresariouser;
     if (this.validarCampos()) {
       this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
@@ -288,9 +293,6 @@ export class Empresas2Component {
           this.obtenerYAlmacenarUsuarioEmpresario();
           this.editarClicked = false;
 
-        },
-        error => {
-          this.mostrarSweetAlert(false, 'La empresa no se ha actualizado');
         }
       );
     } else {
@@ -427,23 +429,42 @@ export class Empresas2Component {
       }
     );
   }
-// Método para sanitizar la URL
-public sanitizeUrl(url: string): SafeResourceUrl {
-  return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-}
+  // Método para sanitizar la URL
+  public sanitizeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 
   getEmpresaById(id: number) {
     this.empresaService.getEmpresaById(id).subscribe(
       empresa => {
         this.empresacargar = empresa;
+        let urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl(empresa.urlPdfRuc ?? '');
+        console.log('URL PDF:', urlPdf);
+        this.pdfHandlerService.pdfUrl = urlPdf;
         this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(empresa.rutaPdfRuc ?? '');
         this.ID_Sector = empresa.sectorEmpresarial.id;
         this.ID_Ciudad = empresa.ciudad.id;
-      },
-      error => console.error('Error al obtener empresa:', error)
-    );
+      });
   }
 
+  async updatePdfRuc() {
+    if (this.imageHandlerService.archivos) {
+      this.notActive = false;
+      await this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
+      if (this.rutaPdf) {
+        this.empresaService.updatePdfRuc(this.idEdit, this.fileName).subscribe(
+          empresa => {
+            this.mostrarSweetAlert(true, 'El PDF se ha actualizado exitosamente.');
+            console.log('PDF actualizado:', empresa);
+          }
+        );
+      }
+    }
+  }
+
+  disableButton() {
+    this.notActive = true;
+  }
 
   private createEmpresaVacia(): Empresa {
     return {
@@ -460,7 +481,7 @@ public sanitizeUrl(url: string): SafeResourceUrl {
       sitioWeb: ''
     };
   }
-  
+
   @ViewChild('nombreInput', { read: NgModel }) nombreInput!: NgModel;
   @ViewChild('rucInput', { read: NgModel }) rucInput!: NgModel;
   @ViewChild('TipoEmpresaInput', { read: NgModel }) TipoEmpresaInput!: NgModel;
@@ -519,11 +540,11 @@ public sanitizeUrl(url: string): SafeResourceUrl {
 
     //console.log("¿Ubicación válida?", isUbicacionValida ? "Sí" : "No");
 
-   /* const isSitioWebValido =
-      !(
-        this.sitioWebInput?.invalid &&
-        (this.sitioWebInput?.dirty || this.sitioWebInput?.touched)
-      );*/
+    /* const isSitioWebValido =
+       !(
+         this.sitioWebInput?.invalid &&
+         (this.sitioWebInput?.dirty || this.sitioWebInput?.touched)
+       );*/
 
     //console.log("¿Sitio Web válido?", isSitioWebValido ? "Sí" : "No");
 
@@ -543,7 +564,7 @@ public sanitizeUrl(url: string): SafeResourceUrl {
 
     //console.log("¿Sector válido?", isSectorValido ? "Sí" : "No");
 
-    const isValid = isNombreValido && isRucValido && isTipoEmpresaValido && isRazonSocialValida && isAreaValida && isUbicacionValida  && isCiudadValida && isSectorValido;
+    const isValid = isNombreValido && isRucValido && isTipoEmpresaValido && isRazonSocialValida && isAreaValida && isUbicacionValida && isCiudadValida && isSectorValido;
 
     console.log("¿Campos válidos?", isValid ? "Sí" : "No");
 

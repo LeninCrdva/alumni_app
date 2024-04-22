@@ -202,39 +202,40 @@
                                                     (ngModelChange)="editarClicked ? empresacargar.sitioWeb = $event : empresanueva.sitioWeb = $event"
                                                     required pattern="https?://.*" #sitioWebInput="ngModel">
                                             </div>
-                                           
+
                                         </div>
                                         <div class="form-group">
                                             <label style="color: var(--alumni-color)">Subir Comprobante de RUC</label>
                                             <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                              <div class="card-header">
-                                                <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
-                                                  <div class="embed-responsive-19by9">
-                                                    
-                                                    <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf" width="100%"
-                                                      height="500px">
-                                                      
-                                                  </div>
-                                                  <div>
-                                                    <button class="clear-image form-control border-0 mt-3 custom-cancel-button"
-                                                    type="button"
-                                                    (click)="pdfHandlerService.clearPdf()"
-                                                    style="background-color: blue; color: white;">
-                                                Cancelar
-                                            </button>
-                                            
-                                                  </div>
+                                                <div class="card-header">
+                                                    <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
+                                                        <div class="embed-responsive-19by9">
+
+                                                            <embed [src]="pdfHandlerService.pdfUrl"
+                                                                type="application/pdf" width="100%" height="500px">
+
+                                                        </div>
+                                                        <div>
+                                                            <button
+                                                                class="clear-image form-control border-0 mt-3 custom-cancel-button"
+                                                                type="button" (click)="pdfHandlerService.clearPdf()"
+                                                                style="background-color: blue; color: white;">
+                                                                Cancelar
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                              </div>
-                                              <div class="card-body collapse show" id="collapse8">
-                                                <input id="pdfFile" type="file" class="dropify" data-show-remove="false"
-                                                  (change)="onPdfSelected($event)" accept=".pdf" />
-                                              </div>
+                                                <div class="card-body collapse show" id="collapse8">
+                                                    <input id="pdfFile" type="file" class="dropify"
+                                                        data-show-remove="false" (change)="onPdfSelected($event)"
+                                                        accept=".pdf" [disabled]="editarClicked" />
+                                                </div>
                                             </div>
                                             <div class="text-danger" *ngIf="!pdfHandlerService.pdfUrl">
-                                              El PDF del Ruc es obligatorio.
+                                                El PDF del Ruc es obligatorio.
                                             </div>
-                                          </div>
+                                        </div>
 
 
                                     </div>
@@ -346,13 +347,91 @@
                                     data-bs-target="#m_modal_4" class="table-action mg-r-10">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
+
                                 <a (click)="deleteEmpresa(empresa.id)" class="table-action ms-2 text-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
+                                <button data-bs-toggle="modal" (click)="onEditarClick(empresa.id)"
+                                    data-bs-target="#m_modal_5" class="btn btn-primary btn-sm mg-r-10 ms-2 text-decoration-none">
+                                    Nuevo Documento RUC
+                                    <i class="fa-solid fa-file"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_5"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div [class.bg-primary]="true" class="modal-header text-white">
+                <h5>Nuevo Documento RUC</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25" data-parsley-validate>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label style="color: var(--alumni-color)">Número de RUC</label>
+                                    <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                                        <div class="card-body collapse show" id="collapse8">
+                                            <p>{{empresacargar.ruc}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label style="color: var(--alumni-color)">Subir Nuevo Comprobante de RUC</label>
+                                    <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                                        <div class="card-header">
+                                            <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
+                                                <div class="embed-responsive-19by9">
+
+                                                    <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf"
+                                                        width="100%" height="500px">
+
+                                                </div>
+                                                <div>
+                                                    <button
+                                                        class="clear-image form-control border-0 mt-3 custom-cancel-button"
+                                                        type="button" (click)="pdfHandlerService.clearPdf()"
+                                                        style="background-color: blue; color: white;">
+                                                        Cancelar
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body collapse show" id="collapse8">
+                                            <input id="pdfFile" type="file" class="dropify" data-show-remove="false"
+                                                (change)="onPdfSelected($event)" accept=".pdf" />
+                                        </div>
+                                    </div>
+                                    <div class="text-danger" *ngIf="!pdfHandlerService.pdfUrl">
+                                        El PDF del Ruc es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button (click)="updatePdfRuc()" [disabled]="notActive" data-bs-toggle="modal"
+                    data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
+                    Actualizar Documento
+                </button>
+                <button data-bs-dismiss="modal" (click)="disableButton()"
+                    class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
             </div>
         </div>
     </div>
