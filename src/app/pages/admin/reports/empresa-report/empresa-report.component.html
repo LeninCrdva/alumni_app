@@ -39,6 +39,7 @@
           <thead class="table-light">
               <tr>
                   <th>#</th>
+                  <th>RUC</th>
                   <th>Nombre Empresa</th>
                   <th>Tipo De Empresa</th>
                   <th>Ciudad</th>                  
@@ -47,6 +48,7 @@
           <tbody>
               <tr *ngFor="let empresas of empresa; let i = index">
                   <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ empresas.ruc }}</td>
                   <td>{{ empresas.nombre }}</td>
                   <td>{{ empresas.tipoEmpresa }}</td>
                   <td>{{ empresas.ciudad.nombre}}</td>

@@ -286,6 +286,17 @@
                         class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
                 </a>
             </li>
+            <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'" [routerLink]="['career-manager/seguimiento']"
+                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Seguimiento a Graduados')"
+                href="javascript:void(0)"> <i class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
+            </a>
+        </li>
+            
+        <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'" [routerLink]="['career-manager/respuestas-carrera']"
+            routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas Encuestas Carrera')"
+            href="javascript:void(0)"> <i class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
+        </a>
+    </li>
 
         </ul>
 

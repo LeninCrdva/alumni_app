@@ -1,4 +1,5 @@
 /* Estilos para las tarjetas de encuesta */
+
 .card {
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -13,7 +14,7 @@
 .card::before {
   content: '';
   /* Pseudo-elemento para añadir capa de color translúcida */
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
