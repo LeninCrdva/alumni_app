@@ -27,8 +27,6 @@ export class DocumentosComponent implements OnInit {
   dtoptions: DataTables.Settings = {};
   columnTitles: string[] = ['#', 'Cédula', 'Nombre Graduado', 'Email', 'Teléfonos'];
 
-  @ViewChild('content') content!: ElementRef;
-
   constructor(
     private graduadoService: GraduadoService,
     public dtService: DataTablesService,
@@ -119,10 +117,14 @@ export class DocumentosComponent implements OnInit {
 
     this.dtoptions.pageLength = -1;
 
-    this.dtElement?.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
+    if (this.initializeTable) {
       this.dtTrigger.next(null);
+      this.initializeTable = false;
+    } else {
+      this.dtService.rerender(this.dtElement, this.dtTrigger);
+    }
 
+    setTimeout(() => {
       const DATA: any = document.getElementById('htmlData');
       const doc = new jsPDF('p', 'pt', 'a4');
 
@@ -162,45 +164,78 @@ export class DocumentosComponent implements OnInit {
 
         // Guardar el PDF después de añadir la imagen
         try {
-          doc.save(`${new Date().toISOString()}_tutorial.pdf`);
+          doc.save(`${new Date().toISOString()}_REPORTE_GRADUADOS.pdf`);
           this.alertService.detenerAlertaCargando();
+
+          this.dtoptions.pageLength = 10;
+
+          if (this.initializeTable) {
+            this.dtTrigger.next(null);
+            this.initializeTable = false;
+          } else {
+            this.dtService.rerender(this.dtElement, this.dtTrigger);
+          }
         } catch (error) {
           console.error('Error al guardar el PDF:', error);
         }
       }).catch((error) => {
         console.error('Error al generar el PDF:', error);
       });
-    });
+    }, 2000);
   }
 
   exportarExcel(): void {
+    this.alertService.mostrarAlertaCargando();
+    this.dtoptions.pageLength = -1;
+
+    if (this.initializeTable) {
+      this.dtTrigger.next(null);
+      this.initializeTable = false;
+    } else {
+      this.dtService.rerender(this.dtElement, this.dtTrigger);
+    }
+
     const excelData: any[] = [];
 
     // Obtener los títulos de las columnas y agregarlos como la primera fila
-    const tableHeaders = this.content.nativeElement.querySelectorAll('table thead th:not(:first-child)');
+    const content = document.getElementById('htmlData');
+    const tableHeaders = content?.querySelectorAll('table thead th:not(:first-child)');
     const columnTitles: string[] = [];
-    tableHeaders.forEach((header: any) => {
-      columnTitles.push(header.innerText);
-    });
-    excelData.push(columnTitles);
 
-    // Obtener los datos de la tabla y agregarlos al arreglo excelData
-    const tableRows = this.content.nativeElement.querySelectorAll('table tbody tr');
-    tableRows.forEach((row: any) => {
-      const rowData: any[] = [];
-      const columns = row.querySelectorAll('td:not(:first-child)');
-      columns.forEach((column: any) => {
-        rowData.push(column.innerText);
+    setTimeout(() => {
+      tableHeaders?.forEach((header: any) => {
+        columnTitles.push(header.innerText);
       });
-      excelData.push(rowData);
-    });
+      excelData.push(columnTitles);
 
-    // Crear un nuevo libro de Excel y agregar la hoja de trabajo
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(excelData);
-    XLSX.utils.book_append_sheet(wb, ws, 'Graduados');
+      // Obtener los datos de la tabla y agregarlos al arreglo excelData
+      const tableRows = content?.querySelectorAll('table tbody tr');
+      tableRows?.forEach((row: any) => {
+        const rowData: any[] = [];
+        const columns = row.querySelectorAll('td:not(:first-child)');
+        columns.forEach((column: any) => {
+          rowData.push(column.innerText);
+        });
+        excelData.push(rowData);
+      });
 
-    // Guardar el libro de Excel como un archivo
-    XLSX.writeFile(wb, 'graduados.xlsx');
+      // Crear un nuevo libro de Excel y agregar la hoja de trabajo
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(excelData);
+      XLSX.utils.book_append_sheet(wb, ws, 'Graduados');
+
+      // Guardar el libro de Excel como un archivo
+      XLSX.writeFile(wb, 'reporte_graduados.xlsx');
+
+      this.alertService.detenerAlertaCargando();
+      this.dtoptions.pageLength = 10;
+
+      if (this.initializeTable) {
+        this.dtTrigger.next(null);
+        this.initializeTable = false;
+      } else {
+        this.dtService.rerender(this.dtElement, this.dtTrigger);
+      }
+    }, 2000);
   }
 }
