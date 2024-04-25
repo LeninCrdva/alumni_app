@@ -10,10 +10,9 @@ import { LayoutBaseComponent } from './layout/layout-client/layout-base.componen
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CommonModule } from '@angular/common';
-import {PerfilUsuarioComponent} from '../app/pages/company/perfil-usuario/perfil-usuario.component';
-import {NuevoEmpresarioModalComponent} from '../app/pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
+import { PerfilUsuarioComponent } from '../app/pages/company/perfil-usuario/perfil-usuario.component';
+import { NuevoEmpresarioModalComponent } from '../app/pages/company/nuevo-empresario-modal/nuevo-empresario-modal.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { PerfilGraduadoComponent } from './pages/company/perfil-graduado/perfil-graduado.component';
 import { WhatsAppBtnComponent } from './components/whats-app-btn/whats-app-btn.component';
@@ -24,7 +23,7 @@ export function playerFactory() {
   return player;
 }
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgApexchartsModule,FormsModule,ReactiveFormsModule, CommonModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgApexchartsModule, FormsModule, ReactiveFormsModule, CommonModule, ModalModule.forRoot(), LottieModule.forRoot({ player: playerFactory })],
   declarations: [
     AppComponent,
     LayoutBaseComponent,
@@ -32,11 +31,8 @@ export function playerFactory() {
     ScrollToTopComponent,
     PerfilUsuarioComponent,
     NuevoEmpresarioModalComponent,
-    NotFoundComponent,
     PerfilGraduadoComponent,
     WhatsAppBtnComponent,
-  
-   
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

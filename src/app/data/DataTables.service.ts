@@ -11,12 +11,16 @@ export class DataTablesService {
 
     constructor() { }
 
-    setupDtOptions(columnTitles: string[], searchPlaceholder: string) {
+    setupDtOptions(columnTitles: string[], searchPlaceholder: string, includeActionsColumn: boolean = true) {
+        const columns = columnTitles.map(title => ({ title }));
+        if (includeActionsColumn) {
+            columns.push({ title: 'Acciones' });
+        }
         return {
             pagingType: 'full_numbers',
             searching: true,
             lengthChange: true,
-            columns: [...columnTitles.map(title => ({ title })), { title: 'Acciones' }],
+            columns,
             language: {
                 search: 'Buscar:',
                 searchPlaceholder,

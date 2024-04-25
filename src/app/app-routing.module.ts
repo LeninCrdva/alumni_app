@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutBaseComponent } from './layout/layout-client/layout-base.component';
 import { LayoutSystemComponent } from './layout/layout-system/layout-system.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthGuard } from './pages/authentication/login/AuthGuard';
 const routes: Routes = [
   {
@@ -34,9 +33,6 @@ const routes: Routes = [
       { path: 'career-manager', loadChildren: () => import('./pages/responsable-carrera/responsable-carrera.module').then((m) => m.ResponsableCarreraModule) }
     ], 
   },
-
-  // Ruta para manejar errores 404
-  { path: '404', component: NotFoundComponent },
 
   // Ruta inicial
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },

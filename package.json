@@ -25,6 +25,7 @@
     "datatables.net": "^1.11.3",
     "datatables.net-bs5": "^1.11.3",
     "footable": "^2.0.6",
+    "html2canvas": "^1.4.1",
     "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
@@ -39,6 +40,7 @@
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.6.13",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
