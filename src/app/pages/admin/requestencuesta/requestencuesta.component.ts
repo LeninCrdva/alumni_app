@@ -4,8 +4,10 @@ import { AnswerService } from '../../../data/service/AnswerService';
 import { Observable } from 'rxjs';
 import { SurveyQuestionsAnswersStatsDTO } from '../../../data/model/DTO/SurveyQuestionsAnswersStatsDTO';
 import * as XLSX from 'xlsx';
-
 import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
 @Component({
   selector: 'app-requestencuesta',
   templateUrl: './requestencuesta.component.html',
@@ -13,7 +15,17 @@ import jsPDF from 'jspdf';
 })
 export class RequestencuestaComponent {
   surveyQuestionsAnswersStatsList$: Observable<SurveyQuestionsAnswersStatsDTO[]> = new Observable<SurveyQuestionsAnswersStatsDTO[]>();
-  constructor(private answerService: AnswerService) { }
+  constructor(private answerService: AnswerService) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.fonts = {
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      }
+    };
+   }
 
   ngOnInit(): void {
     this.loadsurveysWithQuestionsAnswersAndStats();
@@ -72,32 +84,88 @@ export class RequestencuestaComponent {
     doc.text(`Encuesta: ${survey.surveyTitle}`, 10, yPos);
     yPos += 10;
     doc.text(`Descripción: ${survey.surveyDescription}`, 10, yPos);
-    yPos += 10;
+    yPos += 15; // Incrementar más para dejar espacio después de la descripción
     doc.text('Respuestas:', 10, yPos);
-    yPos += 10;
+    yPos += 10; // Espacio después del encabezado de respuestas
 
     // Iterar sobre las preguntas y respuestas
     survey.questionsWithAnswers.forEach((question, index) => {
-      let answersText = '';
-
-      if (question.typeQuestion === 'ABIERTA') {
-        // Para preguntas abiertas, unir las respuestas con saltos de línea
-        answersText = question.questionAnswers.join('\n');
-      } else {
-        // Para otros tipos de preguntas, construir el texto de las respuestas
-        for (const [key, value] of Object.entries(question.responsesByOption)) {
-          answersText += `${key}: ${value}\n`;
-        }
-      }
-
       const questionText = `${index + 1}. ${question.questionText}`;
       doc.text(questionText, 10, yPos);
-      yPos += 5;
-      doc.text(answersText, 15, yPos);
-      yPos += 10; // Espacio entre preguntas
+
+      // Calcular el espacio necesario para las respuestas
+      const answersText = this.formatAnswers(question);
+      const answersTextLines = doc.splitTextToSize(answersText, doc.internal.pageSize.width - 50); // Ancho disponible para texto
+
+      // Obtener la altura del texto de las respuestas
+      const answersTextHeight = doc.getTextDimensions(answersTextLines).h;
+
+      yPos += 5; // Aumentar yPos para dejar espacio antes de las respuestas
+      doc.text(answersTextLines, 25, yPos); // Mostrar las respuestas
+      yPos += answersTextHeight + 10; // Espacio adicional entre preguntas
     });
 
     // Guardar y descargar el archivo PDF
     doc.save(`${survey.surveyTitle}.pdf`);
   }
+
+  // Método para formatear las respuestas según el tipo de pregunta
+  private formatAnswers(question: any): string {
+    if (question.typeQuestion === 'ABIERTA') {
+      return question.questionAnswers.join('\n'); // Respuestas abiertas separadas por salto de línea
+    } else {
+      let answersText = '';
+      for (const [key, value] of Object.entries(question.responsesByOption)) {
+        answersText += `${key}: ${value}\n`; // Opciones de respuesta formateadas
+      }
+      return answersText;
+    }
+  }
+
+  downloadAsPDF2(survey: SurveyQuestionsAnswersStatsDTO): void {
+    const docDefinition = {
+      content: [
+        { text: `Encuesta: ${survey.surveyTitle}`, style: 'header' },
+        { text: `Descripción: ${survey.surveyDescription}`, style: 'subheader' },
+        { text: `Tipo de Pregunta:`, style: 'subheader' },
+        { text: 'Respuestas:', style: 'subheader' },
+        {
+          table: {
+            widths: ['auto', 'auto', 'auto'], // Ancho de las columnas
+            body: [
+              ['Pregunta', 'Tipo', 'Respuestas'], // Encabezados de la tabla
+              ...this.buildTableRows(survey.questionsWithAnswers) // Filas de la tabla
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: { fontSize: 18, bold: true, margin: [0, 10, 0, 10] as [number, number, number, number] },
+        subheader: { fontSize: 14, bold: true, margin: [0, 10, 0, 5] as [number, number, number, number] }
+      }
+    };
+
+    const pdfDoc = pdfMake.createPdf(docDefinition);
+    pdfDoc.download(`${survey.surveyTitle}.pdf`);
+  }
+
+  // Método para construir las filas de la tabla con preguntas, tipos y respuestas
+  private buildTableRows(questions: any[]): Array<Array<string>> {
+    const rows: Array<Array<string>> = [];
+    questions.forEach((question, index) => {
+      let answersText = '';
+      if (question.typeQuestion === 'ABIERTA') {
+        answersText = question.questionAnswers.join('\n'); // Respuestas abiertas
+      } else {
+        for (const [key, value] of Object.entries(question.responsesByOption)) {
+          answersText += `${key}: ${value}\n`; // Opciones de respuesta
+        }
+      }
+      const questionText = `${index + 1}. ${question.questionText}`;
+      const typeQuestion = question.typeQuestion;
+      rows.push([questionText, typeQuestion, answersText]);
+    });
+    return rows;
+  }
+
 }

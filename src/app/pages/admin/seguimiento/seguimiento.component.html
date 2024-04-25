@@ -19,6 +19,8 @@
                     <h2 class="my-4">Listado de Encuestas No Respondidas</h2>
                 </option>
             </select>
+
+           
         </div>
     </div>
 
@@ -88,6 +90,16 @@
                     </ng-container>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button title="Descargar Excel" (click)="downloadAsExcel()" class="btn btn-success ms-2">
+                <i class="fas fa-file-excel"></i> Descargar Excel
+            </button>
+            <button title="Descargar PDF" (click)="downloadAsPDF2()" class="btn btn-danger ms-2">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </button>
         </div>
     </div>
 </div>
