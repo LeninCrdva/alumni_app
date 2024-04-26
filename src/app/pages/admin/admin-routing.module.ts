@@ -24,6 +24,7 @@ import { CreateDataWebComponent } from './web-builder/create-data/create-data-we
 import { GestionProgramasComponent } from './gestion-programas/gestion-programas.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { RespuestasEncuestaCarreraComponent } from './respuestas-encuesta-carrera/respuestas-encuesta-carrera.component';
+import { GraduadosTituloCarreraComponent } from './reports/graduados-titulo-carrera/graduados-titulo-carrera.component';
 const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'dashboard', component: DashboardComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
     { path: 'usuarios-list', component: UsuariosListsComponent },
     { path: 'usuarios-form', component: UsuariosFormComponent },
     { path: 'documentos', component: DocumentosComponent },
+    { path: 'graduado-carrera-document', component: GraduadosTituloCarreraComponent },
     { path: 'empresa-document', component: EmpresaReportComponent },
     { path: 'update-perfil', component: PerfilFormComponent },
     { path: 'encuestas', component: EncuestasComponent },

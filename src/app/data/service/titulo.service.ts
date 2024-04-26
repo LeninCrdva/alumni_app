@@ -27,6 +27,10 @@ export class TituloService {
     return this.http.get<Titulo>(`${this.urlEndPoint}/${id}`);
   }
 
+  getGraduatedWithTitleAndCareer(): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/graduados/carrera`);
+  }
+
   update(id: number, titulo: any): Observable<Titulo> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Titulo>(url, titulo, { headers: this.httpHeaders });
