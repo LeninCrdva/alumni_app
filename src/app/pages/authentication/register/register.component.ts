@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../../data/service/AuthService';
 import { AssetService } from '../../../data/service/Asset.service';
 import Swal from 'sweetalert2';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { RegisterDTO } from '../../../data/model/DTO/RegisterDTO';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, lastValueFrom, of } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { fechaNacimientoValidator } from './fechaNacimientoValidator';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { Ciudad } from '../../../data/model/ciudad';
@@ -21,6 +21,7 @@ import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidato
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
 import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
 import { DataValidationService } from '../../../data/service/data-validation.service';
+import { ValidatorEc } from '../../../data/ValidatorEc.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -62,7 +63,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private renderer: Renderer2,
     private alertService: AlertsService,
-    private dataValidationService: DataValidationService
+    private dataValidationService: DataValidationService,
+    private validatorEc: ValidatorEc
   ) {
     this.roleName = localStorage.getItem('userRole') ?? '';
 
@@ -71,7 +73,7 @@ export class RegisterComponent implements OnInit {
       segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
-      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator()), this.validateIdentityCard()]],
       sexo: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
       fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
@@ -93,7 +95,7 @@ export class RegisterComponent implements OnInit {
     this.formSubCase1 = this.fb.group({
       ciudad: ['', Validators.required],
       sectorEmpresarial: ['', Validators.required],
-      ruc: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternRucValidator())]],
+      ruc: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternRucValidator()), this.validateRuc()]],
       nombre: ['', Validators.required],
       tipoEmpresa: ['', Validators.required],
       razonSocial: ['', Validators.required],
@@ -462,4 +464,25 @@ export class RegisterComponent implements OnInit {
     return Object.values(this.duplicatedFields).some(value => value);
   }
 
+  validateIdentityCard(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const identityCard = control.value;
+      return this.validatorEc.validarCedula(identityCard) ? null : { invalidIdentityCard: true };
+    };
+  }
+
+  validateRuc(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const ruc = control.value;
+      return this.validatorEc.validarRucSociedadPrivada(ruc) || this.validatorEc.validarRucPersonaNatural(ruc) || this.validatorEc.validarRucSociedadPublica(ruc) ? null : { invalidRuc: true };
+    };
+  }
+
+  getMinDate(): string {
+    return new Date(2000, 0, 1).toISOString().split('T')[0];
+  }
+
+  getCurrentDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
 }

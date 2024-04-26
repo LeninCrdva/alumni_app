@@ -112,9 +112,14 @@
                     (blur)="validateUniqueIdentityCard()" id="InputCedula">
                   <label for="InputCedula" class="form-label">Ingrese su Cédula</label>
                   <i class="fa-solid fa-id-card form-icon"></i>
-                  <div class="invalid-feedback">
+                  <div *ngIf="registerForm.get('cedula')?.errors?.['required']" class="invalid-feedback">
                     <strong>Dato Faltante</strong> - La cédula es obligatoria.
                   </div>
+                </div>
+
+                <div class="text-danger"
+                  *ngIf="registerForm.get('cedula')?.hasError('invalidIdentityCard') && registerForm.get('cedula')?.dirty">
+                  <strong>Cédula Inválida</strong> - La cédula ingresada no es válida.
                 </div>
 
                 <div class="text-danger"
@@ -374,6 +379,10 @@
                         </div>
 
                         <div class="text-danger"
+                          *ngIf="formSubCase1.get('ruc')?.hasError('invalidRuc') && formSubCase1.get('ruc')?.dirty">
+                          <strong>RUC Inválido</strong> - El RUC ingresado no es válido.
+                        </div>
+                        <div class="text-danger"
                           *ngIf="formSubCase1.get('ruc')?.hasError('pattern') && formSubCase1.get('ruc')?.touched">
                           <strong>Dato Erróneo</strong> - Solo números y 13 caracteres.
                         </div>
@@ -577,8 +586,8 @@
 
                   <div class="mx-1 flex-grow-1">
                     <div class="form-group has-validation">
-                      <input class="form-input" required type="date" formControlName="anioGraduacion" min="2000-01-01"
-                        id="anioGraduacion">
+                      <input class="form-input" required type="date" formControlName="anioGraduacion" [min]="getMinDate()" [max]="getCurrentDate()"
+                      id="anioGraduacion">
                       <label for="anioGraduacion" style="color: var(--alumni-color)">Fecha de Graduación</label>
                     </div>
 
