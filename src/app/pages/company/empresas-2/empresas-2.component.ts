@@ -5,21 +5,20 @@ import { sectorempresarial } from '../../../data/model/sectorEmpresarial';
 import { EmpresaService } from '../../../data/service/empresa.service';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { SectorEmpresarialService } from '../../../data/service/sectorempresarial.service';
-import { Empresario } from '../../../data/model/empresario';
-import { Usuario } from '../../../data/model/usuario';
 import { EmpresarioService } from '../../../data/service/empresario.service';
 import { Provincia } from '../../../data/model/provincia';
 import Swal from 'sweetalert2';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangeDetectorRef } from '@angular/core';
-import { ViewChild, ElementRef } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
 import { AssetService } from '../../../data/service/Asset.service';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, lastValueFrom, of } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ValidatorEc } from '../../../data/ValidatorEc.service';
 
 @Component({
   selector: 'app-empresas-2',
@@ -71,7 +70,8 @@ export class Empresas2Component {
     private assetService: AssetService,
     private sectorempresarialService: SectorEmpresarialService,
     private serviceempresario: EmpresarioService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private validatorEc: ValidatorEc
   ) {
     this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.empresacargar.rutaPdfRuc ?? '');
   }
@@ -569,5 +569,11 @@ export class Empresas2Component {
     console.log("¿Campos válidos?", isValid ? "Sí" : "No");
 
     return isValid;
+  }
+
+  validateRuc(ruc: string): boolean {
+    return this.validatorEc.validarRucSociedadPrivada(ruc) || 
+           this.validatorEc.validarRucPersonaNatural(ruc) || 
+           this.validatorEc.validarRucSociedadPublica(ruc);
   }
 }

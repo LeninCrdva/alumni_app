@@ -36,6 +36,10 @@
                                                     required pattern="^\d{13}$" #rucInput="ngModel">
                                             </div>
 
+                                            <div *ngIf="!validateRuc(rucInput.value) && rucInput.dirty" class="text-danger mt-2">
+                                                <strong>RUC Inválido</strong> - El RUC ingresado no es válido.
+                                            </div>
+
                                             <div *ngIf="rucInput.invalid && rucInput.errors && (rucInput.dirty || rucInput.touched)"
                                                 class="text-danger">
                                                 <div *ngIf="rucInput.errors['required']">
