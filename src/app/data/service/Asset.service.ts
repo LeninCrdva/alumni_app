@@ -3,8 +3,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
-const FILES_API = MAIN_ROUTE.API_ENDPOINT+'/assets/';
+import { environment } from '../../../environments/environment';
+const FILES_API = environment.apiURL+'/assets/';
 
 @Injectable({
   providedIn: 'root'

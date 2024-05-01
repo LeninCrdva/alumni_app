@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
   })
   export class ApiService {
-    baseUrl = MAIN_ROUTE.API_ENDPOINT;
+    baseUrl = environment.apiURL;
   
     constructor(private http: HttpClient) { }
   

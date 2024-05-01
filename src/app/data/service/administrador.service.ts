@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Administrador } from '../model/administrador';
@@ -8,12 +7,13 @@ import { Administrador3 } from '../model/administrador';
 import { map } from 'rxjs/operators';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AdministradorService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/administradores';
+  urlEndPoint = environment.apiURL + '/administradores';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

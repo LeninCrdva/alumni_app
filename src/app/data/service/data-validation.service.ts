@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class DataValidationService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT;
+  urlEndPoint = environment.apiURL;
 
   constructor(private http: HttpClient) { }
 

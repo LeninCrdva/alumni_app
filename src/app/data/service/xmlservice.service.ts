@@ -4,13 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { componentxml } from '../model/componentxml';
 import { map } from 'rxjs';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
 @Injectable({
   providedIn: 'root'
 })
 export class XmlserviceService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/componentxml';
+  urlEndPoint = environment.apiURL + '/componentxml';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

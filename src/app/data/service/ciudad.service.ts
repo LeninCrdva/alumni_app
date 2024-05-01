@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ciudad } from '../model/ciudad';
@@ -10,7 +10,7 @@ import { map ,filter } from 'rxjs/operators';
 })
 export class CiudadService {
   
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/ciudades';
+  urlEndPoint = environment.apiURL + '/ciudades';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

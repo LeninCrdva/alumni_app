@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { Rol } from '../model/rol';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Rol } from '../model/rol';
 })
 export class RolService {
 
-    urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/roles';
+    urlEndPoint = environment.apiURL + '/roles';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

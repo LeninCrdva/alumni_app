@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Carrera } from '../model/carrera';
 
@@ -9,7 +9,7 @@ import { Carrera } from '../model/carrera';
 })
 export class CarreraService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/carreras';
+  urlEndPoint = environment.apiURL + '/carreras';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

@@ -5,7 +5,7 @@ import { RecoveryDTO } from '../model/Mail/RecoveryDTO';
 import { Empresa } from '../model/empresa';
 import { GraduadoDTO } from '../model/DTO/GraduadoDTO';
 import { Empresario } from '../model/empresario';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { EmpresarioDTO } from '../model/DTO/EmpresarioDTO';
 import { EmpresaDTO } from '../model/DTO/EmpresaDTO';
 
@@ -20,7 +20,7 @@ interface SignupRequestBody {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = MAIN_ROUTE.API_ENDPOINT + '/auth';
+  private baseUrl = environment.apiURL + '/auth';
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 
   constructor(private http: HttpClient) { }

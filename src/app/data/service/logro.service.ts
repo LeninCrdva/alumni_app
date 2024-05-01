@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Logro } from '../model/logro';
@@ -9,7 +9,7 @@ import { Logro } from '../model/logro';
 })
 export class LogroService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/logros';
+  urlEndPoint = environment.apiURL + '/logros';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

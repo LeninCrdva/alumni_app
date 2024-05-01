@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuditEntryDTO } from '../model/DTO/AuditEntryDTO';
@@ -9,7 +9,7 @@ import { AuditEntryDTO } from '../model/DTO/AuditEntryDTO';
 })
 export class AuditEntryService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/audit-entry';
+  urlEndPoint = environment.apiURL + '/audit-entry';
 
   constructor(private http: HttpClient) { }
 

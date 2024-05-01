@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Persona } from '../model/persona';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 @Injectable({
     providedIn: 'root'
   })
   export class PersonaService {
   
-    urlEndPoint = MAIN_ROUTE.API_ENDPOINT;
+    urlEndPoint = environment.apiURL;
     uthEndPoint = 'auth/signup';
     urlCreate = this.urlEndPoint + '/personas';
   

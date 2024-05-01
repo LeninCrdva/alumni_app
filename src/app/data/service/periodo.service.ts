@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Periodo } from '../model/periodo';
@@ -9,7 +9,7 @@ import { Periodo } from '../model/periodo';
 })
 export class PeriodoService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/peridos';
+  urlEndPoint = environment.apiURL + '/peridos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

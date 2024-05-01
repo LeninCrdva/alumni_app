@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { sectorempresarial } from '../model/sectorEmpresarial';
 import { map } from 'rxjs/operators';
 @Injectable({
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class SectorEmpresarialService {
 
-    urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/sectoresEmpresariales';
+    urlEndPoint = environment.apiURL + '/sectoresEmpresariales';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

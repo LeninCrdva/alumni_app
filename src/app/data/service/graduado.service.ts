@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Graduado } from '../model/graduado';
@@ -17,7 +17,7 @@ import { GraduadoDTO } from '../model/DTO/GraduadoDTO';
 })
 export class GraduadoService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/graduados';
+  urlEndPoint = environment.apiURL + '/graduados';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

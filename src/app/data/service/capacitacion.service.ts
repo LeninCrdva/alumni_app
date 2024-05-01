@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Capacitacion } from '../model/capacitacion';
@@ -9,7 +9,7 @@ import { Capacitacion } from '../model/capacitacion';
 })
 export class CapacitacionService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/capacitacion';
+  urlEndPoint = environment.apiURL + '/capacitacion';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

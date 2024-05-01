@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Usuario } from '../model/usuario';
 import { UserDTO } from '../model/DTO/UserDTO';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = MAIN_ROUTE.API_ENDPOINT;
+  private apiUrl = environment.apiURL;
 
   urlCreateUsuario = this.apiUrl + '/usuarios';
 

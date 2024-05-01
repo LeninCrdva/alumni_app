@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { Eventos } from '../model/Eventos';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Eventos } from '../model/Eventos';
 })
 export class Eventos_Service {
 
-    urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/programasM';
+    urlEndPoint = environment.apiURL + '/programasM';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

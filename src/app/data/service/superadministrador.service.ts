@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Superadmin } from '../model/superadmin';
@@ -9,7 +9,7 @@ import { Superadmin } from '../model/superadmin';
 })
 export class SuperAdministradorService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/superadmin';
+  urlEndPoint = environment.apiURL + '/superadmin';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

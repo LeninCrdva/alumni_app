@@ -3,13 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Survey } from '../model/Survey';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class SurveyService {
 
-  private baseUrl = MAIN_ROUTE.API_ENDPOINT + '/api/surveys';
+  private baseUrl = environment.apiURL + '/api/surveys';
 
   constructor(private http: HttpClient) { }
 

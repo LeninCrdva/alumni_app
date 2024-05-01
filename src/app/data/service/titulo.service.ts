@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Titulo } from '../model/titulo';
@@ -9,7 +9,7 @@ import { Titulo } from '../model/titulo';
 })
 export class TituloService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/titulos';
+  urlEndPoint = environment.apiURL + '/titulos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

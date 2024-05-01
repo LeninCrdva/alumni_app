@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ofertaLaboral } from '../model/ofertaLaboral';
 import { ofertaLaboralDTO } from '../model/DTO/ofertaLaboralDTO';
@@ -12,7 +12,7 @@ import { contratacion } from '../model/contratacion';
 })
 export class OfertalaboralService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/ofertas-laborales';
+  urlEndPoint = environment.apiURL + '/ofertas-laborales';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

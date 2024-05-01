@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Postulacion } from '../model/postulacion';
@@ -10,7 +10,7 @@ import { PostulacionDTO } from '../model/DTO/postulacionDTO';
 })
 export class PostulacionService {
 
-  urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/postulaciones';
+  urlEndPoint = environment.apiURL + '/postulaciones';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 

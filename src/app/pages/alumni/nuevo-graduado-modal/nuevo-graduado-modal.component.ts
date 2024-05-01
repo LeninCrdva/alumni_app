@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { GraduadoService } from '../../../data/service/graduado.service';
 import { Graduado3 } from '../../../data/model/graduado';
@@ -6,11 +6,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ciudad } from '../../../data/model/ciudad';
 import { CiudadService } from '../../../data/service/ciudad.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AssetService } from '../../../data/service/Asset.service';
 import Swal from 'sweetalert2';
-import { MAIN_ROUTE } from '../../../data/service/MAIN_ROUTE';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-nuevo-graduado-modal',
   templateUrl: './nuevo-graduado-modal.component.html',
@@ -127,7 +126,7 @@ export class NuevoGraduadoModalComponent implements OnInit {
         formularioDeDatos.append('multipartFile', archivo, archivo.name);
       });
 
-      this.assetService.post(MAIN_ROUTE.API_ENDPOINT+'/assets/upload', formularioDeDatos)
+      this.assetService.post(environment.apiURL+'/assets/upload', formularioDeDatos)
         .subscribe(
           (res: any) => {
             this.loading = false;

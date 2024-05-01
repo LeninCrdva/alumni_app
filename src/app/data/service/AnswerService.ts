@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { Answer } from '../model/Answer';
 import { AnswerSearchDTO } from '../model/DTO/AnswerSearchDTO';
 import { SurveyQuestionsAnswersDTO } from '../model/DTO/SurveyQuestionsAnswersDTO';
@@ -13,7 +13,7 @@ import { SurveyQuestionsAnswersStatsDTO } from '../model/DTO/SurveyQuestionsAnsw
 })
 export class AnswerService {
 
-  private baseUrl = MAIN_ROUTE.API_ENDPOINT + '/api/answer';
+  private baseUrl = environment.apiURL + '/api/answer';
 
   constructor(private http: HttpClient) { }
 

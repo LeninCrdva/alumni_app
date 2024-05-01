@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MAIN_ROUTE } from './MAIN_ROUTE';
+import { environment } from '../../../environments/environment';
 import { MailRequest } from '../model/Mail/MailRequest';
 import { Observable } from 'rxjs';
 import { MailResponse } from '../model/Mail/MailResponse';
@@ -10,7 +10,7 @@ import { MailResponse } from '../model/Mail/MailResponse';
 })
 export class MailService {
 
-    urlEndPoint = MAIN_ROUTE.API_ENDPOINT + '/mail';
+    urlEndPoint = environment.apiURL + '/mail';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 
