@@ -1,9 +1,18 @@
+<section class="page-title bg-overlay-black parallax mb-4"
+  style="background-image: url(../../../../assets/imgs/headers/Postulaciones.jpg);">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Detalle De La Oferta De Trabajo</h1>
+    </div>
+  </div>
+</section>
+
 <!-- Start Section -->
 <section class="section">
   <div class="container">
-    <div class="row mt-5 pt-4">
+    <div class="row mt-2 pt-4">
       <div class="col-12">
-        <div class="job-detail rounded shadow bg-white">
+        <div class="job-detail rounded shadow" style="background-color: var(--side-bg-color); color: var(--text-color);">
           <div class="detail-top p-4">
             <h4>El cargo ofertado es para: {{ofertaDetail.cargo}}</h4>
             <p class="text-muted mt-4" *ngIf="ofertaDetail.empresa">
@@ -41,7 +50,7 @@
       <div class="d-flex align-items-center justify-content-center">
 
         <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-          <div class="sticky-bar rounded bg-white shadow">
+          <div class="sticky-bar rounded shadow" style="background-color: var(--side-bg-color); color: var(--text-color);">
             <div class="border-bottom p-4">
               <h5 class="mb-0">Información del Trabajo</h5>
             </div>
@@ -114,7 +123,7 @@
         </div>
         <div class="col-lg-1 col-md-4 col-12 mt-4 pt-2"></div>
         <div class="col-lg-6 col-md-8 col-12 mt-4 pt-2" *ngIf="ofertaDetail.fotoPortada">
-          <div class="sticky-bar rounded bg-white shadow">
+          <div class="sticky-bar rounded shadow" style="background-color: var(--side-bg-color); color: var(--text-color);">
               <div class="border-bottom p-4">
                   <h5 class="mb-0">Oferta laboral</h5>
               </div>
