@@ -34,6 +34,9 @@
                                                 *ngIf="registerCareerForm.get('nombreCarrera')?.hasError('required') && registerCareerForm.get('nombreCarrera')?.touched">
                                                 El nombre de la carrera es obligatorio.
                                             </div>
+                                            <div class="text-danger" *ngIf="registerCareerForm.get('nombreCarrera')?.hasError('pattern') && registerCareerForm.get('nombreCarrera')?.touched">
+                                                El nombre de la carrera solo puede contener letras, números, espacios, comas, puntos y guiones.
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -41,6 +44,9 @@
                                                     class="tx-danger"></span></label>
                                             <input type="text" placeholder="Ejem: Carrera de tecnología..."
                                                 formControlName="descripcionCarrera">
+                                                <div class="text-danger" *ngIf="registerCareerForm.get('descripcionCarrera')?.hasError('pattern') && registerCareerForm.get('descripcionCarrera')?.touched">
+                                                    La descripción de la carrera solo puede contener letras, números, espacios, comas, puntos y guiones.
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

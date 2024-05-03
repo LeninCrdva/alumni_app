@@ -304,8 +304,9 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let oferta of ofertaslaboraleslist; let i ">
-                            <th scope="row">{{oferta.id}}</th>
+                        <tr *ngFor="let oferta of ofertaslaboraleslist; let i=index ">
+                            <th scope="row">{{i+1}}</th>
+                           <!-- <td>{{oferta.id}}</td>-->
                             <td>{{oferta.salario > 0 ? '$ ' + oferta.salario : 'ADJUNTADO EN LA IMAGEN'}}</td>
                             <td>{{oferta.fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
                             <td>{{ oferta.estado }} </td>

@@ -20,12 +20,13 @@ export class ProvinciaComponent implements OnInit {
 
   constructor(private provinciaService: ProvinciaService, private ciudadService: CiudadService, formBuilder: FormBuilder) {
     this.registerProvinceForm = formBuilder.group({
-      nombre: ['', Validators.required],
-      pais: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      pais: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+
 
     });
     this.registerCityForm = formBuilder.group({
-      nombreCiudad: ['', Validators.required],
+      nombreCiudad: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
       provinciaNombre: ['', Validators.required]
     })
   };

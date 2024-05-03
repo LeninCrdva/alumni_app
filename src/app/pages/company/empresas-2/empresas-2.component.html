@@ -341,8 +341,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let empresa of empresass">
-                            <th scope="row">{{empresa.id}}</th>
+                        <tr *ngFor="let empresa of empresass; let i = index">
+                            <th scope="row">{{i+1}}</th>
+                            <!--<td>{{empresa.id}}</td>-->
                             <td>{{empresa.ruc}}</td>
                             <td>{{empresa.nombre}}</td>
                             <td>{{empresa.razonSocial}}</td>
