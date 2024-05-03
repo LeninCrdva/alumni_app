@@ -103,8 +103,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let company of filterCompanyList;">
-                                <td>{{ company.id }}</td>
+                            <tr *ngFor="let company of filterCompanyList;let i=index">
+                                <td>{{ i+1 }}</td>
                                 <td>
                                     {{ company.nombre }}
                                 </td>
