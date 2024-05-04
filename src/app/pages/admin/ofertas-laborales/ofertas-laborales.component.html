@@ -38,7 +38,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
         <div class="d-flex">
             <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
@@ -51,8 +51,9 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let ofert of ofertasLaboralesList;">
-                            <th scope="row">{{ ofert.id }}</th>
+                        <tr *ngFor="let ofert of ofertasLaboralesList;let i=index">
+                            <!--<th scope="row">{{ ofert.id }}</th>-->
+                            <th scope="row">{{ i+1}}</th>
                             <td>{{ ofert.areaConocimiento ? ofert.areaConocimiento : 'ADJUNTO EN LA IMAGEN' }}</td>
                             <td>{{ ofert.cargo ? ofert.cargo : 'ADJUNTO EN LA IMAGEN' }}</td>
                             <td>{{ ofert.experiencia ? ofert.experiencia : 'ADJUNTO EN LA IMAGEN' }}</td>

@@ -116,8 +116,19 @@ export class OfertasLaboralesComponent {
   loadData() {
     this.ofertalaburoService.OfertasLaborales(this.name || "").subscribe(
       ofertas => {
+        // Ordenar las ofertas por su identificador (id)
+        ofertas.sort((a, b) => {
+          // Comprobar si a.id o b.id son undefined
+          if (a.id === undefined || b.id === undefined) {
+            // Si alguno es undefined, no se realiza la comparación y se mantiene el orden actual
+            return 0;
+          }
+          // Si ambos son definidos, se realiza la comparación normalmente
+          return a.id - b.id;
+        });
+  
         this.ofertaslaboraleslist = ofertas;
-
+  
         if (this.initializeTable) {
           this.dtTrigger.next(null);
           this.initializeTable = false;
@@ -128,6 +139,8 @@ export class OfertasLaboralesComponent {
       (error: any) => console.error(error)
     );
   }
+  
+  
 
   selectStyle(): void {
     const estilo = this.validateForm.get('tipo')?.value;
