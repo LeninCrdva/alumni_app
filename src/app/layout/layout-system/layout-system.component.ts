@@ -242,9 +242,6 @@ export class LayoutSystemComponent implements OnInit {
   }
 
   cerrarSesionconclick() {
-    localStorage.setItem('darkMode', String(false));
-    this.changeStyleMode();
-    
     Swal.fire({
       icon: 'info',
       title: 'Sesión Cerrada',
