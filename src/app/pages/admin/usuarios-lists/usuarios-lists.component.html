@@ -7,7 +7,7 @@
   </div>
 </section>
 
-<div class="card">
+<div class="card" style="background-color: var(--side-bg-color)">
   <div class="card-body collapse show" id="collapse1">
     <!-- Modal -->
     <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
@@ -190,8 +190,7 @@
                         *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('pattern') && registerNewUserForm.get('nombreUsuario')?.touched">
                         Solo letras y números y de 2 a 10 caracteres.
                       </div>
-                      <div class="text-danger"
-                      *ngIf="duplicatedFields['username']">
+                      <div class="text-danger" *ngIf="duplicatedFields['username']">
                         El nombre de usuario ya existe.
                       </div>
                     </div>
@@ -391,7 +390,8 @@
 
                       <div class="mx-2 flex-grow-1">
                         <div class="form-group">
-                          <input type="email" class="form-input" placeholder=" " formControlName="email" id="email" (blur)="validateAdminEmail()">
+                          <input type="email" class="form-input" placeholder=" " formControlName="email" id="email"
+                            (blur)="validateAdminEmail()">
                           <label for="email" class="form-label">Email</label>
                           <i class="ri-user-smile-line form-icon"></i>
                         </div>
@@ -419,7 +419,7 @@
           <div class="modal-footer">
             <button (click)="!editMode ? register() : updateUserData()" type="submit" [disabled]="isButtonDisabled()"
               class="btn btn-oblong btn-primary">
-              {{ editMode ? 'Actualizar' : 'Enviar Formulario' }} 
+              {{ editMode ? 'Actualizar' : 'Enviar Formulario' }}
             </button>
 
             <button data-bs-dismiss="modal" (click)="closeModal()" id="close-button"
@@ -471,7 +471,8 @@
                   (click)="showUserData(user.cedula, user.id)">
                   <i class="fa-regular fa-eye"></i>
                 </a>
-                <button style="background-color: transparent; border: none;" *ngIf="user.rol !== 'ADMINISTRADOR'" [attr.data-bs-toggle]="user.estado ? 'modal' : null"
+                <button style="background-color: transparent; border: none;" *ngIf="user.rol !== 'ADMINISTRADOR'"
+                  [attr.data-bs-toggle]="user.estado ? 'modal' : null"
                   [attr.data-bs-target]="user.estado ? '#m_modal_4' : null" class="mg-r-10 ms-1 text-secondary"
                   (click)="handleClick(user.cedula, user.id, user.estado, user.rol)">
                   <i class="fa-regular fa-pen-to-square"></i>
@@ -485,7 +486,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" style="background-color: var(--side-bg-color)">
   <div class="modal fade" id="user_data_modal" tabindex="-1" role="dialog" aria-labelledby="user_data_modal"
     aria-hidden="true">
 

@@ -82,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div *ngIf="!this.showThirdStyle" class="form-group col-lg-6">
                         <label class="form-label active">TIEMPO:</label>
                         <div class="input-group has-validation">
@@ -105,10 +105,10 @@
                         </div>
                     </div>
 
-                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
-                        <label *ngIf="!showSecondStyle && !showThirdStyle" class="form-label active">FECHA
-                            APERTURA:</label>
-                        <div *ngIf="!showSecondStyle && !showThirdStyle" class="input-group has-validation mb-2">
+
+                    <div class="form-group col-lg-6" *ngIf="!showSecondStyle && !showThirdStyle">
+                        <label class="form-label active">FECHA APERTURA:</label>
+                        <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-calendar-check"></i>
                             </a>
@@ -120,7 +120,9 @@
                                 la fecha de publicación.
                             </div>
                         </div>
-
+                    </div>
+                    
+                    <div class="form-group col-lg-6" *ngIf="!showThirdStyle">
                         <label class="form-label active">FECHA CIERRE:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
@@ -134,9 +136,23 @@
                                 la fecha de publicación o la fecha de apertura.
                             </div>
                         </div>
-
                     </div>
-                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
+
+                    <div class="form-group col-lg-12">
+                        <label class="form-label active">ESTADO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </a>
+                            <input class="form-select wd-250" type="text" name="estado" formControlName="estado"
+                                readonly required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El estado es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!showThirdStyle" class="form-group col-lg-12">
                         <label class="form-label active">ÁREA CONOCIMIENTO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
@@ -151,38 +167,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-lg-6">
-                        <label class="form-label active">ESTADO:</label>
-                        <div class="input-group has-validation">
-                            <a class="input-group-text">
-                                <i class="fa-solid fa-briefcase"></i>
-                            </a>
-                            <input class="form-control wd-250" type="text" name="estado" formControlName="estado"
-                                readonly required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - El estado es obligatorio.
-                            </div>
-                        </div>
-                    </div>
                     <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6">
                         <label class="form-label active" for="salario">SALARIO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-dollar-sign"></i>
                             </a>
-                            <input class="form-control" 
-                                   type="number" 
-                                   name="salario" 
-                                   placeholder="Ingrese el Salario"
-                                   id="salario" 
-                                   formControlName="salario" 
-                                   required
-                                   min="1">
+                            <input class="form-control" type="number" name="salario" placeholder="Ingrese el Salario"
+                                id="salario" formControlName="salario" required min="1">
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - El salario es obligatorio.
                             </div>
                         </div>
-                    </div>                    
+                    </div>
 
                     <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6 mb-3">
                         <label class="form-label active">EXPERIENCIA:</label>
@@ -213,7 +210,7 @@
                             <label class="form-label">Subir Foto De La Portada</label>
 
                             <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                <div class="card-header">
+                                <div class="card-header" style="background: var(--side-bg-color);">
                                     <div class="preview-img"
                                         *ngIf="imageHandlerService.previsualizacion || (editarClicked && imageHandlerService.previsualizacion)">
                                         <div class="image-container text-center" style="margin: 2rem;">
@@ -230,7 +227,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body collapse show" id="collapse8">
+                                <div class="card-body collapse show" id="collapse8"
+                                    style="background: var(--side-bg-color);">
                                     <input type="file" max-file-size="1024" class="form-control"
                                         aria-label="file example"
                                         [required]="(showSecondStyle && !showThirdStyle) || (showThirdStyle && !showSecondStyle)"
@@ -306,7 +304,7 @@
                     <tbody>
                         <tr *ngFor="let oferta of ofertaslaboraleslist; let i=index ">
                             <th scope="row">{{i+1}}</th>
-                           <!-- <td>{{oferta.id}}</td>-->
+                            <!-- <td>{{oferta.id}}</td>-->
                             <td>{{oferta.salario > 0 ? '$ ' + oferta.salario : 'ADJUNTADO EN LA IMAGEN'}}</td>
                             <td>{{oferta.fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
                             <td>{{ oferta.estado }} </td>

@@ -863,7 +863,7 @@ export class UsuariosListsComponent implements OnInit {
 
   validateUsername(): void {
     if (this.registerNewUserForm.get('nombreUsuario')?.valid) {
-     const currentUsername = this.currentUsername;
+      const currentUsername = this.currentUsername;
       const username = this.registerNewUserForm.get('nombreUsuario')?.value.toLowerCase();
       if (username !== currentUsername) {
         this.dataValidationService.validateUsername(username).subscribe(res => {

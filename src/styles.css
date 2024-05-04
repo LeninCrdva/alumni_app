@@ -21,6 +21,7 @@
     --body-bg-color: #f0f3f6;
     --side-bg-color: #ffffff;
     --title-text-color: #212121;
+    --text-editor-color: #12205f;
     --text-color: #000000;
     --slide-hover-color: #F1F0F6;
     --text-place-color: #888;
@@ -39,6 +40,7 @@
     --indicator-color: linear-gradient(to right bottom, #1775f1, #7722ff);
     --scroll-bar-color: linear-gradient(to right bottom, #7517f1, #1775f1);
     --indicator-bar-color: #ffffff;
+    --text-editor-color: #ffb300;
 }
 
 .dark-mode input::placeholder {
@@ -339,7 +341,6 @@ table.dataTable thead th:hover {
 }
 
 .dark-mode .form-label {
-    background-color: var(--side-bg-color);
     color: #ffffff;
 }
 
