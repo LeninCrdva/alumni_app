@@ -22,70 +22,45 @@ export class ComunidadComponent {
   public idstring: string = '';
   public nombres: string = '';
   public apellidos: string = '';
+  searchTerm: string = '';
+  filteredGraduadosList: Graduado1[] = [];
+
   graduado: Graduado1 = { id: 0, usuario: new Usuario(), ciudad: new Ciudad(), anioGraduacion: new Date(), emailPersonal: '', estadoCivil: '', rutaPdf: '', urlPdf: '' };
 
   graduadosList: Graduado1[] = [];
-  dtoptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+
+  public isTable: boolean = false;
 
   constructor(private graduadoService: GraduadoService, private userservice: UserService) { }
 
   ngOnInit(): void {
-    this.setupDtOptions();
     this.loadData();
-
-    // this.loadUserDataByUsername();
-    // this.idstring = localStorage.getItem('idGraduado') || '';
-    // this.graduadoid = parseInt(this.idstring, 10);
   }
-  showGraduadoDetails(graduado: Graduado1) {
-    this.selectedGraduado = graduado;
-  }
-  contactarPorWhatsapp(numeroTelefono: string): void {
-    const numeroCorregido = numeroTelefono.substring(1);
-    const numeroConCodigoPais = `593${numeroCorregido}`;
-    const mensaje = "Hola, estoy interesado en contactarte.";
-    const enlaceWhatsapp = `https://wa.me/${numeroConCodigoPais}?text=${encodeURIComponent(mensaje)}`;
-    window.open(enlaceWhatsapp, "_blank");
-}
-
-
-
-  setupDtOptions() {
-    this.dtoptions = {
-      pagingType: 'fullNumbers',
-      searching: true,
-      lengthChange: true,
-      language: {
-        search: 'Buscar:',
-        searchPlaceholder: 'Buscar graduado...',
-        info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        infoEmpty: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-        paginate: {
-          first: 'Primera',
-          last: 'Última',
-          next: 'Siguiente',
-          previous: 'Anterior',
-        },
-        lengthMenu: 'Mostrar MENU_ registros por página',
-        zeroRecords: 'No se encontraron registros coincidentes'
-      },
-      lengthMenu: [10, 25, 50]
-    };
-  }
-
 
   loadData() {
     const userId = localStorage.getItem('user_id');
     this.graduadoService.getGraduadosNotIn(userId ? parseInt(userId) : 0).subscribe(
       (result) => {
-
         this.graduadosList = result;
-       // console.log("Graduados obtenidos:", this.graduadosList);
-
+        this.filteredGraduadosList = result;
       },
-      () => this.dtTrigger.next(null)
     );
+  }
+
+  toggleModeView(state: boolean): void {
+    this.isTable = state;
+  }
+
+  updateFilteredGraduadosList(): void {
+    if (this.searchTerm.trim() !== '') {
+      this.filteredGraduadosList = this.graduadosList.filter(graduado =>
+        Object.values(graduado).some(value =>
+          (typeof value === 'string' && value.toLowerCase().includes(this.searchTerm.toLowerCase()))
+        )
+      );
+    } else {
+      this.filteredGraduadosList = this.graduadosList;
+    }
   }
 
   private mapGraduado(graduado: Graduado1): Graduado1 {
@@ -159,4 +134,17 @@ export class ComunidadComponent {
       console.error('La información de imagen no está disponible en localStorage.');
     }
   }
+
+  showGraduadoDetails(graduado: Graduado1) {
+    this.selectedGraduado = graduado;
+  }
+
+  contactarPorWhatsapp(numeroTelefono: string): void {
+    const numeroCorregido = numeroTelefono.substring(1);
+    const numeroConCodigoPais = `593${numeroCorregido}`;
+    const mensaje = "Hola, estoy interesado en contactarte.";
+    const enlaceWhatsapp = `https://wa.me/${numeroConCodigoPais}?text=${encodeURIComponent(mensaje)}`;
+    window.open(enlaceWhatsapp, "_blank");
+  }
+
 }

@@ -19,6 +19,8 @@
 
     /*========== Light Mode Colors ==========*/
     --body-bg-color: #f0f3f6;
+    --card-comunity: linear-gradient(to right bottom, #fff6eb, #f1f2ff);
+    --filter-bg: linear-gradient(to right bottom, #fffbf6, #f4f9ff);
     --side-bg-color: #ffffff;
     --title-text-color: #212121;
     --text-editor-color: #12205f;
@@ -32,6 +34,7 @@
 
 .dark-mode {
     --body-bg-color: #222527;
+    --card-comunity: #222527;
     --side-bg-color: #121212;
     --title-text-color: #e6e6e6;
     --text-color: #ffffff;
@@ -39,6 +42,7 @@
     --slide-hover-color: #26252a;
     --indicator-color: linear-gradient(to right bottom, #1775f1, #7722ff);
     --scroll-bar-color: linear-gradient(to right bottom, #7517f1, #1775f1);
+    --filter-bg: linear-gradient(to right bottom, #212121, #1d1d1d);
     --indicator-bar-color: #ffffff;
     --text-editor-color: #ffb300;
 }
@@ -375,7 +379,7 @@ table.dataTable thead th:hover {
     background-color: #1ca010 !important;
     border: none !important;
     border-radius: 7px !important;
-    max-width: 350px !important;
+    max-width: 275px !important;
     padding: 0 10px !important;
     transition: 250ms all ease-in-out;
 }
