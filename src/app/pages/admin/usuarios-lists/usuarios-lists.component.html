@@ -454,8 +454,9 @@
 
         <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
           <tbody>
-            <tr *ngFor="let user of usersList;">
-              <th scope="row">{{ user.id }}</th>
+            <tr *ngFor="let user of usersList;let i = index">
+              <th scope="row">{{ i+1 }}</th>
+             <!-- <th scope="row">{{ user.id }}</th>-->
               <td>{{ user.nombreUsuario }}</td>
               <td>{{ user.cedula }}</td>
               <td>{{ user.rol }}</td>
