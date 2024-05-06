@@ -145,7 +145,7 @@
                                     <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
                                         data-bs-target="#m_modal_4" type="button"
                                         class="btn btn-oblong btn-outline-primary btn-block">
-                                       Mas datos para Contactar
+                                        Mas datos para Contactar
                                     </button>
                                 </td>
                                 <td class="text-center table-actions align-middle justify-content-center">
@@ -179,11 +179,23 @@
                                 + " - " + graduadoItem.ciudad.provincia.nombre + " - " +
                                 graduadoItem.ciudad.provincia.pais}}</button>
                             <button class="search-buttons detail-button">{{graduadoItem.estadoCivil}}</button>
-                            <button class="search-buttons detail-button">DESARROLLO DE SOFTWARE</button>
+                            <ng-container
+                                *ngIf="graduadoItem.id && careerNameLists[graduadoItem.id]?.length; else noCareerNames">
+                                <button class="search-buttons detail-button"
+                                    *ngFor="let careerName of careerNameLists[graduadoItem.id]">
+                                    <li>
+                                       {{ careerName[1] }}
+                                    </li>
+                                </button>
+                            </ng-container>
+                            <ng-template #noCareerNames>
+                                <button class="search-buttons detail-button">No hay carreras asociadas</button>
+                            </ng-template>
                         </div>
-                        <div class="job-card-buttons">
+                        <div class=" job-card-buttons">
                             <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
-                                data-bs-target="#m_modal_4" class="search-buttons card-buttons"> Mas datos para Contactar</button>
+                                data-bs-target="#m_modal_4" class="search-buttons card-buttons"> Mas datos para
+                                Contactar</button>
                             <button class="search-buttons card-buttons-msg">Contactar</button>
                         </div>
                     </div>

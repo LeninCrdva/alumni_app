@@ -24,6 +24,8 @@ export class ComunidadComponent {
   public apellidos: string = '';
   searchTerm: string = '';
   filteredGraduadosList: Graduado1[] = [];
+  careerNameList: any[] = [];
+  careerNameLists: { [idGraduado: number]: string[] } = {};
 
   graduado: Graduado1 = { id: 0, usuario: new Usuario(), ciudad: new Ciudad(), anioGraduacion: new Date(), emailPersonal: '', estadoCivil: '', rutaPdf: '', urlPdf: '' };
 
@@ -43,10 +45,15 @@ export class ComunidadComponent {
       (result) => {
         this.graduadosList = result;
         this.filteredGraduadosList = result;
+        this.graduadosList.forEach((graduado) => {
+          this.getCareerName(graduado.id);
+        });
       },
     );
   }
 
+
+  
   toggleModeView(state: boolean): void {
     this.isTable = state;
   }
@@ -90,6 +97,21 @@ export class ComunidadComponent {
     graduadoMapped.urlPdf = graduado.urlPdf;
 
     return graduadoMapped;
+  }
+
+  getCareerName(idGraduado: any): void {
+    this.graduadoService.getCareerListByGraduateId(idGraduado).subscribe(
+      (careerNames: string[]) => {
+        this.careerNameLists[idGraduado] = careerNames;
+      }
+    );
+  }
+
+  getCareerNames(idGraduado: any): string[] {
+    const careers = this.careerNameList.filter(career => career[0] === idGraduado);
+    console.log(idGraduado)
+    console.log(careers);
+    return careers.map(career => career[1]);
   }
 
   private mapPersona(persona: Persona): Persona {
