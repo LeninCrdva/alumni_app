@@ -46,6 +46,28 @@ thead tr th {
   padding: 0 25px 0 80px;
 }
 
+.search-clear-button {
+  position: absolute;
+  /* Agregado */
+  right: 10px;
+  /* Agregado */
+  top: 50%;
+  /* Agregado */
+  transform: translateY(-50%);
+  /* Agregado */
+  background: none;
+  /* Agregado */
+  border: none;
+  /* Agregado */
+  cursor: pointer;
+  /* Agregado */
+}
+
+.search-clear-button i {
+  color: #555;
+  /* Cambia el color del icono según lo necesites */
+}
+
 .search-button {
   background-color: #0162ff;
   height: 55px;
