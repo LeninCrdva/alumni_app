@@ -188,9 +188,10 @@
                                                             <select class="form-input" formControlName="state"
                                                                 id="state">
                                                                 <option value="EN_EVALUACION">En evaluación</option>
-                                                                <option value="EN_CONVOCATORIA">Aprobar</option>
+                                                                <option value="EN_CONVOCATORIA" [disabled]="estadoSeleccionado === 'OTHER_STATE'">Aprobar</option>
                                                                 <option value="RECHAZADA_POR_ADMINISTRADOR">Rechazar
                                                                 </option>
+                                                                <option value="OTHER_STATE" disabled>Aprobada</option>
                                                             </select>
                                                             <label for="" class="form-label">Estado</label>
                                                             <i class="ri-user-smile-line form-icon"></i>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OfertalaboralService } from '../../../data/service/ofertalaboral.service';
 import { GraduadoDTO } from '../../../data/model/DTO/GraduadoDTO';
-import Swal from 'sweetalert2';
 import { MailRequest } from '../../../data/model/Mail/MailRequest';
 import { PostulacionService } from '../../../data/service/postulacion.service';
 import { PostulacionDTO } from '../../../data/model/DTO/postulacionDTO';
@@ -95,5 +94,26 @@ export class OfertasDeTrabajoComponent implements OnInit {
 
   reloadPage(): void {
     window.location.reload();
+  }
+
+  obtenerTiempoFaltante(oferta: ofertaLaboralDTO): string {
+    const hoy: Date = new Date();
+    const fechaPublicacion: Date = new Date(oferta.fechaCierre);
+
+    const diferenciaMilisegundos: number = fechaPublicacion.getTime() - hoy.getTime();
+    const diferenciaDias: number = Math.floor(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+
+    if (diferenciaDias === 0) {
+      return 'Cierra hoy';
+    } else if (diferenciaDias === 1) {
+      return 'Cierra hace 1 día';
+    } else if (diferenciaDias < 7) {
+      return `Cierra en ${diferenciaDias} días`;
+    } else if (diferenciaDias === 7) {
+      return 'Cierra en 1 semana';
+    } else {
+      const diferenciaSemanas: number = Math.floor(diferenciaDias / 7);
+      return `Cierra en ${diferenciaSemanas} semanas`;
+    }
   }
 }
