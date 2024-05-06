@@ -43,6 +43,7 @@
             <div class="col-lg-4 mb-0" *ngFor="let oferta of listOfertas">
                 <!-- Card de ofertas -->
                 <div class="card">
+                    <div class="flag"> {{obtenerTiempoFaltante(oferta)}} </div>
                     <img [src]="oferta.fotoPortada ? oferta.fotoPortada : '../../../../assets/imgs/Logo_Isuta.png'"
                         [class.small-img]="!oferta.fotoPortada" [class.content-img]="oferta.fotoPortada"
                         style="cursor: pointer;" [routerLink]="['/system/alumni/oferta-detalle', oferta.id]">

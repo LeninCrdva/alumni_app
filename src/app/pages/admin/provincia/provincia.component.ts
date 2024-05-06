@@ -17,6 +17,7 @@ export class ProvinciaComponent implements OnInit {
   registerProvinceForm: FormGroup;
 
   registerCityForm: FormGroup;
+  showModal: boolean = false;
 
   constructor(private provinciaService: ProvinciaService, private ciudadService: CiudadService, formBuilder: FormBuilder) {
     this.registerProvinceForm = formBuilder.group({
@@ -108,6 +109,7 @@ export class ProvinciaComponent implements OnInit {
     this.editModeCity=false;
     this.editarClicked = false;
     this.registerCityForm.reset();
+    this.showModal = false;
     const cancelButton = document.getElementById('close-button') as HTMLElement;
     if (cancelButton) {
       cancelButton.click();
@@ -133,6 +135,8 @@ export class ProvinciaComponent implements OnInit {
         });
         this.closeModal();
       })
+    }else{
+      this.showModal = true;
     }
   }
 
@@ -153,6 +157,8 @@ export class ProvinciaComponent implements OnInit {
         });
         this.closeModal();
       })
+    }else{
+      this.showModal = true;
     }
   }
 
@@ -185,23 +191,27 @@ export class ProvinciaComponent implements OnInit {
   UpdateProv(): void {
     const id = this.newProvince.id;
     if (id !== undefined) {
-      const formData = this.registerProvinceForm.value;
-
-      const provinciaEdit: Provincia = {
-        id: id,
-        nombre: formData.nombre,
-        pais: formData.pais
-      };
-      this.editProvince(id, provinciaEdit);
+      if (this.registerProvinceForm.valid) { // Verificar si el formulario es válido
+        const formData = this.registerProvinceForm.value;
+  
+        const provinciaEdit: Provincia = {
+          id: id,
+          nombre: formData.nombre,
+          pais: formData.pais
+        };
+        this.editProvince(id, provinciaEdit);
+      } else {
+        console.error('Error: El formulario no es válido.'); // Mensaje de error si el formulario no es válido
+      }
     } else {
       console.error('Fatal Error: No se proporcionó un ID válido.');
     }
   }
+  
 
   editProvince(id: any, prov: Provincia) {
     this.provinciaService.updateProvincia(id, prov).subscribe(updatedProvince => {
       const index = this.provincesList.findIndex(u => u.id === updatedProvince.id);
-      ($('#m_modal_4') as any).modal('hide'); 
       this.getAllProvinces();
       if (index !== -1) {
         this.provincesList[index] = updatedProvince;
@@ -210,25 +220,31 @@ export class ProvinciaComponent implements OnInit {
         icon: 'success',
         text: 'Provincia actualizada'
       });
+      this.closeModal(); // Cerrar el modal solo si la actualización es exitosa
     });
   }
 
   UpdateCity(): void {
     const id = this.newCity.id;
     if (id !== undefined) {
-      const formData = this.registerCityForm.value;
-
-      const cityEdit: CiudadDTO = {
-        id: id,
-        nombre: formData.nombreCiudad,
-        provincia: formData.provinciaNombre
-      };
-      
-      this.editCityEndPoint(id, cityEdit);
+      if (this.registerCityForm.valid) { // Verificar si el formulario es válido
+        const formData = this.registerCityForm.value;
+  
+        const cityEdit: CiudadDTO = {
+          id: id,
+          nombre: formData.nombreCiudad,
+          provincia: formData.provinciaNombre
+        };
+  
+        this.editCityEndPoint(id, cityEdit);
+      } else {
+        console.error('Error: El formulario no es válido.'); // Mensaje de error si el formulario no es válido
+      }
     } else {
       console.error('Fatal Error: No se proporcionó un ID válido.');
     }
   }
+  
 
   editCityEndPoint(id: any, cityDTO: CiudadDTO) {
     this.ciudadService.updateCityDTO(id, cityDTO).subscribe(updatedCity => {

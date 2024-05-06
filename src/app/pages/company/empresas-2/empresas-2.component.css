@@ -12,3 +12,8 @@
 .form-control-label {
     font-weight: bold;
 }
+
+.cancel-button {
+    background-color:#0c6efd !important;
+    color: #ffffff;
+}

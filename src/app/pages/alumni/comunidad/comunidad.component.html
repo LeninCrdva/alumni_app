@@ -13,7 +13,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-white bg-primary">
-                <h5 class="modal-title">Perfil del Graduado</h5>
+                <h5 class="modal-title">Perfil del Graduado - {{selectedGraduado?.usuario?.persona?.primerNombre +" "+
+                    selectedGraduado?.usuario?.persona?.apellidoPaterno}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -21,19 +22,45 @@
                 <form>
                     <div class="form-layout form-layout-1">
                         <!-- Contenido del formulario -->
-                        <div class="row mb-3">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="nombres">Cédula:</label>
-                                    <input class="form-control" type="text" id="nombres"
-                                        [value]="selectedGraduado?.usuario?.persona?.cedula" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="apellidos">Correo:</label>
-                                    <input class="form-control" type="text" id="apellidos"
-                                        [value]="selectedGraduado?.emailPersonal" disabled>
-                                </div>
-                                <div class="text-center mt-auto">
+                        <div class="row mb-3 g-3">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <img [src]="selectedGraduado?.usuario?.urlImagen" alt="Foto"
+                                    style="width: 200px; height: 200px; object-fit: cover; border-radius: 8rem;">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label" for="nombres">Nombres:</label><input class="form-control"
+                                    type="text" id="nombres"
+                                    [value]="(selectedGraduado?.usuario?.persona?.primerNombre || '') + ' ' + (selectedGraduado?.usuario?.persona?.segundoNombre || '')"
+                                    disabled>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label" for="apellidos">Apellidos:</label><input class="form-control"
+                                    type="text" id="nombres"
+                                    [value]="(selectedGraduado?.usuario?.persona?.apellidoPaterno || '') + ' ' + (selectedGraduado?.usuario?.persona?.apellidoMaterno || '')"
+                                    disabled>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label" for="cedula">Cédula:</label>
+                                <input class="form-control" type="text" id="cedula"
+                                    [value]="selectedGraduado?.usuario?.persona?.cedula" disabled>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label" for="edad">Edad:</label>
+                                <input class="form-control" type="text" id="edad"
+                                    [value]="edad + ' años'" 
+                                    disabled>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label" for="correo">Correo:</label>
+                                <input class="form-control" type="text" id="correo"
+                                    [value]="selectedGraduado?.emailPersonal" disabled>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label" for="telefono">Teléfono</label>
+                                <input class="form-control" type="text" id="telefono"
+                                    [value]="selectedGraduado?.usuario?.persona?.telefono" disabled>
+                            </div>
+                            <!--<div class="text-center mt-auto">
                                     <label class="form-label">Título:</label>
                                     <div class="d-flex justify-content-center align-items-center">
                                         <a href="{{ selectedGraduado?.urlPdf }}" target="_blank"
@@ -41,11 +68,12 @@
                                             <i class="fas fa-file-pdf mr-1"></i> Ver Título
                                         </a>
                                     </div>
-                                </div>
-                            </div>
+                                </div>-->
+                        </div>
 
-                            <div class="col-lg-6">
+                        <!-- <div class="col-lg-6">
                                 <div class="text-center">
+                                    <label class="form-label">Foto de Perfil</label>
                                     <div class="mb-3">
                                         <ng-container *ngIf="selectedGraduado && selectedGraduado.usuario">
                                             <img [src]="selectedGraduado.usuario.urlImagen" alt="Foto"
@@ -56,73 +84,151 @@
                                         </ng-container>
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
+                            </div> -->
                     </div>
-
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="card" style="background: var(--side-bg-color);">
-    <div class="card-body collapse show">
 
-        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
-            <div class="table-responsive">
-                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
-                    class="table table-bordered custom-table table-hover">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th>#</th>
-                            <th>NOMBRES</th>
-                            <th>APELLIDOS</th>
-                            <th>TELEFONO</th>
-                            <th>FECHA DE GRADUACIÓN</th>
-                            <th>CIUDAD</th>
-                            <th>ESTADO CIVIL</th>
-                            <th class="text-center w-100px">Acciones</th>
-                            <th class="text-center w-100px">Contactar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let graduadoItem of graduadosList;">
-                            <th scope="row">{{ graduadoItem.id }}</th>
-                            <!-- <td>{{ graduadoItem.usuario.persona.primer_nombre + graduadoItem.usuario.persona.segundo_nombre }}</td> -->
-                            <td>{{ graduadoItem.usuario.persona.primerNombre }} {{
-                                graduadoItem.usuario.persona.segundoNombre}}</td>
-                            <td>{{ graduadoItem.usuario.persona.apellidoPaterno }} {{
-                                graduadoItem.usuario.persona.apellidoMaterno}}</td>
-                            <td>{{ graduadoItem.usuario.persona.telefono }}</td>
-                            <td>{{ graduadoItem['anioGraduacion'] }} </td>
-                            <td>{{ graduadoItem.ciudad.nombre }} - {{graduadoItem.ciudad.provincia.nombre}} -
-                                {{graduadoItem.ciudad.provincia.pais}}</td>
-                            <td>{{ graduadoItem.estadoCivil }}</td>
-                            <td class="text-center table-actions align-middle justify-content-center">
-                                <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" type="button"
-                                    class="btn btn-oblong btn-outline-primary btn-block">
-                                    Ver Perfil
-                                </button>
-                            </td>
-                            <td class="text-center table-actions align-middle justify-content-center">
-                                <button data-bs-toggle="modal"
-                                    (click)="contactarPorWhatsapp(graduadoItem.usuario.persona.telefono)" type="button"
-                                    class="btn btn-oblong btn-outline-primary btn-block">
-                                    Contactar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<div class="job">
+    <div class="wrapper">
+        <div class="search-menu">
+            <div class="search-bar">
+                <input type="text" class="form-control" placeholder="Buscar graduado..." [(ngModel)]="searchTerm"
+                    (input)="updateFilteredGraduadosList()">
+                <button class="search-clear-button" *ngIf="searchTerm" (click)="clearSearchTerm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <button class="search-button">Buscar</button>
+            <button class='filters-toggle '> <!-- active -->
+                <span class='filters-toggle__text'>
+                    <svg height='16' viewbox='0 0 14 16' width='14' xmlns='http://www.w3.org/2000/svg'>
+                        <g fill-rule='evenodd' fill='none' id='UI' stroke-linecap='round' stroke-linejoin='round'>
+                            <path d='M1 1h12L9.2 6.5v5.292l-3.95 2.81V6.5z' id='Path-3' stroke-width='1.1'
+                                stroke='#666'></path>
+                        </g>
+                    </svg>
+                    Filtrar
+                </span>
+            </button>
+            <div class="content-menu_i">
+                <div class="item menu" (click)="toggleModeView(true)">
+                    <div class="linee linee1" [class.white-background]="!isTable"></div>
+                    <div class="linee linee2" [class.white-background]="!isTable"></div>
+                    <div class="linee linee3" [class.white-background]="!isTable"></div>
+                </div>
+
+                <div class="item gallery" (click)="toggleModeView(false)">
+                    <div class="dot dot1" [class.white-background]="isTable"></div>
+                    <div class="dot dot2" [class.white-background]="isTable"></div>
+                    <div class="dot dot3" [class.white-background]="isTable"></div>
+                    <div class="dot dot4" [class.white-background]="isTable"></div>
+                    <div class="dot dot5" [class.white-background]="isTable"></div>
+                    <div class="dot dot6" [class.white-background]="isTable"></div>
+                </div>
             </div>
         </div>
+        <div class="main-container">
 
+            <!-- VISTA EN MODO TABLA -->
+            <div class="card-body collapse show collapse animate__animated animate__fadeIn animate__fast mt-3"
+                *ngIf="isTable">
+                <div class="table-responsive">
+                    <table class="table table-bordered custom-table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NOMBRES</th>
+                                <th>APELLIDOS</th>
+                                <th>TELEFONO</th>
+                                <th>FECHA DE GRADUACIÓN</th>
+                                <th>CIUDAD</th>
+                                <th>ESTADO CIVIL</th>
+                                <th class="text-center w-100px">Acciones</th>
+                                <th class="text-center w-100px">Contactar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let graduadoItem of filteredGraduadosList;">
+                                <th scope="row">{{ graduadoItem.id }}</th>
+                                <!-- <td>{{ graduadoItem.usuario.persona.primer_nombre + graduadoItem.usuario.persona.segundo_nombre }}</td> -->
+                                <td>{{ graduadoItem.usuario.persona.primerNombre }} {{
+                                    graduadoItem.usuario.persona.segundoNombre}}</td>
+                                <td>{{ graduadoItem.usuario.persona.apellidoPaterno }} {{
+                                    graduadoItem.usuario.persona.apellidoMaterno}}</td>
+                                <td>{{ graduadoItem.usuario.persona.telefono }}</td>
+                                <td>{{ graduadoItem['anioGraduacion'] }} </td>
+                                <td>{{ graduadoItem.ciudad.nombre }} - {{graduadoItem.ciudad.provincia.nombre}} -
+                                    {{graduadoItem.ciudad.provincia.pais}}</td>
+                                <td>{{ graduadoItem.estadoCivil }}</td>
+                                <td class="text-center table-actions align-middle justify-content-center">
+                                    <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
+                                        data-bs-target="#m_modal_4" type="button"
+                                        class="btn btn-oblong btn-outline-primary btn-block">
+                                        Mas datos para Contactar
+                                    </button>
+                                </td>
+                                <td class="text-center table-actions align-middle justify-content-center">
+                                    <button data-bs-toggle="modal"
+                                        (click)="contactarPorWhatsapp(graduadoItem.usuario.persona.telefono)"
+                                        type="button" class="btn btn-oblong btn-success btn-block">
+                                        Contactar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VISTA EN CUADRICULA -->
+            <div class="searched-jobs" *ngIf="!isTable">
+                <div class="job-cards">
+                    <div class="job-card" *ngFor="let graduadoItem of filteredGraduadosList;">
+                        <div class="perfil">
+                            <img src="{{graduadoItem.usuario.urlImagen}}" alt="Foto De Perfil">
+                            <span>{{ graduadoItem.usuario.persona.primerNombre }} {{
+                                graduadoItem.usuario.persona.apellidoPaterno}}</span>
+                        </div>
+                        <div class="job-card-title"><b>Fecha de graduación:</b> {{graduadoItem.anioGraduacion}}</div>
+                        <div class="job-card-subtitle">
+                            --- AQUI VA LA DESCRIPCIÓN ---
+                        </div>
+                        <div class="job-detail-buttons">
+                            <button class="search-buttons detail-button">{{graduadoItem.ciudad.nombre
+                                + " - " + graduadoItem.ciudad.provincia.nombre + " - " +
+                                graduadoItem.ciudad.provincia.pais}}</button>
+                            <button class="search-buttons detail-button">{{graduadoItem.estadoCivil}}</button>
+                            <!-- <ng-container
+                                *ngIf="graduadoItem.id && careerNameLists[graduadoItem.id]?.length; else noCareerNames">
+                                <button class="search-buttons detail-button"
+                                    *ngFor="let careerName of careerNameLists[graduadoItem.id]">
+                                    <li>
+                                        {{ careerName[1] }}
+                                    </li>
+                                </button>
+                            </ng-container> -->
+                            <ng-template #noCareerNames>
+                                <button class="search-buttons detail-button">No hay carreras asociadas</button>
+                            </ng-template>
+                        </div>
+                        <div class=" job-card-buttons">
+                            <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
+                                data-bs-target="#m_modal_4" class="search-buttons card-buttons"> Mas datos para
+                                Contactar</button>
+                            <button class="search-buttons card-buttons-msg">Contactar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -119,7 +119,7 @@
                         <label for="InputFechaNacimiento" style="color: var(--text-color)">Fecha de Nacimiento</label>
 
                         <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
-                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento" min="1960-01-01" max="2005-12-31">
                         <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
                         <div class="text-danger"
                             *ngIf="updatePersonForm.get('fechaNacimiento')?.hasError('required') && updatePersonForm.get('fechaNacimiento')?.touched">

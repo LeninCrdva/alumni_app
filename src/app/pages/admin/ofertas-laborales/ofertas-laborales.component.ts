@@ -25,6 +25,7 @@ export class OfertasLaboralesComponent implements OnInit {
   stateForm: FormGroup;
   ofertasLaboralesList: ofertaLaboralDTO[] = [];
   ofertaLaboralDTO: ofertaLaboralDTO = new ofertaLaboralDTO();
+  estadoSeleccionado: string = '';
 
   idEdit: number = 0;
 
@@ -106,8 +107,11 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   patchStateForm(estado: string) {
+    const estadosPermitidos = ['EN_EVALUACION', 'EN_CONVOCATORIA', 'RECHAZADA_POR_ADMINISTRADOR'];
+    this.estadoSeleccionado = estadosPermitidos.includes(estado) ? estado : 'OTHER_STATE';
+  
     this.stateForm.patchValue({
-      state: estado
+      state: this.estadoSeleccionado
     });
   }
 
