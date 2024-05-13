@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { Empresa } from '../model/empresa';
 import { Empresario } from '../model/empresario';
 import { Empresa2 } from '../model/empresa';
-import { EmpresaDTO } from '../model/DTO/EmpresaDTO';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,8 +25,8 @@ export class EmpresaService {
     return this.http.get<Empresa[]>(url);
   }
 
-  createEmpresa(empresa: EmpresaDTO): Observable<EmpresaDTO> {
-    return this.http.post<EmpresaDTO>(this.urlEndPoint, empresa, { headers: this.httpHeaders })
+  createEmpresa(empresa: Empresa): Observable<Empresa> {
+    return this.http.post<Empresa>(this.urlEndPoint, empresa, { headers: this.httpHeaders })
   }
 
   getEmpresaById(id: any): Observable<Empresa2> {
